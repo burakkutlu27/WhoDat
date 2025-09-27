@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import ClientLayout from '@/components/ClientLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'WhoDat',
-  description: 'A Next.js 14 application with Supabase integration',
+  title: 'KimBu - Ünlü Tahmin Oyunu',
+  description: 'Ünlü kişileri tahmin et, puan kazan! Eğlenceli tahmin oyunu.',
 }
 
 export default function RootLayout({
@@ -15,8 +16,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="tr" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ClientLayout>
+          {children}
+        </ClientLayout>
+      </body>
     </html>
   )
 }
