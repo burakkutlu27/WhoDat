@@ -18,59 +18,88 @@ export type Database = {
       rooms: {
         Row: {
           id: string
+          room_code: string
           created_at: string
-          status: 'waiting' | 'collecting_names' | 'assigned' | 'playing' | 'finished'
-          host_id: string
-          current_turn_player_id: string | null
-          game_status: 'waiting' | 'collecting_names' | 'playing' | 'finished'
+          status: 'waiting' | 'playing' | 'finished' | 'closed'
+          current_player_id: string | null
+          current_identity_id: string | null
+          game_round: number
+          is_game_active: boolean
+          used_names: string[]
         }
         Insert: {
           id?: string
+          room_code: string
           created_at?: string
-          status?: 'waiting' | 'collecting_names' | 'assigned' | 'playing' | 'finished'
-          host_id: string
-          current_turn_player_id?: string | null
-          game_status?: 'waiting' | 'collecting_names' | 'playing' | 'finished'
+          status?: 'waiting' | 'playing' | 'finished' | 'closed'
+          current_player_id?: string | null
+          current_identity_id?: string | null
+          game_round?: number
+          is_game_active?: boolean
+          used_names?: string[]
         }
         Update: {
           id?: string
+          room_code?: string
           created_at?: string
-          status?: 'waiting' | 'collecting_names' | 'assigned' | 'playing' | 'finished'
-          host_id?: string
-          current_turn_player_id?: string | null
-          game_status?: 'waiting' | 'collecting_names' | 'playing' | 'finished'
+          status?: 'waiting' | 'playing' | 'finished' | 'closed'
+          current_player_id?: string | null
+          current_identity_id?: string | null
+          game_round?: number
+          is_game_active?: boolean
+          used_names?: string[]
         }
       }
       players: {
         Row: {
           id: string
           room_id: string
-          name: string
-          assigned_identity: string | null
-          is_ready: boolean
-          has_submitted_names: boolean
-          score: number
+          nickname: string
           is_host: boolean
+          score: number
         }
         Insert: {
           id?: string
           room_id: string
-          name: string
-          assigned_identity?: string | null
-          is_ready?: boolean
-          has_submitted_names?: boolean
-          score?: number
+          nickname: string
           is_host?: boolean
+          score?: number
         }
         Update: {
           id?: string
           room_id?: string
-          name?: string
-          assigned_identity?: string | null
-          is_ready?: boolean
-          has_submitted_names?: boolean
-          score?: number
+          nickname?: string
           is_host?: boolean
+          score?: number
+        }
+      }
+      names: {
+        Row: {
+          id: string
+          room_id: string
+          submitted_by: string
+          name_text: string
+          assigned_to: string | null
+          created_at: string
+          used_in_round: number | null
+        }
+        Insert: {
+          id?: string
+          room_id: string
+          submitted_by: string
+          name_text: string
+          assigned_to?: string | null
+          created_at?: string
+          used_in_round?: number | null
+        }
+        Update: {
+          id?: string
+          room_id?: string
+          submitted_by?: string
+          name_text?: string
+          assigned_to?: string | null
+          created_at?: string
+          used_in_round?: number | null
         }
       }
       identities: {
@@ -242,339 +271,456 @@ export const supabaseHelpers = {
 // WhoDat specific helper functions
 export const whoDatHelpers = {
   // Room operations
-  async createRoom(hostId: string, status: 'waiting' | 'collecting_names' | 'assigned' | 'playing' | 'finished' = 'waiting') {
+  async createRoom(roomCode: string, status: 'waiting' | 'playing' | 'finished' | 'closed' = 'waiting') {
     return await supabaseHelpers.create('rooms', { 
-      status, 
-      host_id: hostId,
-      game_status: 'waiting'
+      room_code: roomCode,
+      status
     })
   },
 
   async getRoom(roomId: string) {
-    return await supabaseHelpers.getById('rooms', roomId)
+    const result = await supabaseHelpers.getById('rooms', roomId)
+    return result as any
   },
 
-  async updateRoomStatus(roomId: string, status: 'waiting' | 'collecting_names' | 'assigned' | 'playing' | 'finished') {
+  async getRoomByCode(roomCode: string) {
+    const { data, error } = await supabase
+      .from('rooms')
+      .select('*')
+      .eq('room_code', roomCode)
+      .single()
+
+    if (error) throw error
+    return data
+  },
+
+  async updateRoomStatus(roomId: string, status: 'waiting' | 'playing' | 'finished' | 'closed') {
     return await supabaseHelpers.update('rooms', roomId, { status })
   },
 
-  async updateGameStatus(roomId: string, gameStatus: 'waiting' | 'collecting_names' | 'playing' | 'finished') {
-    return await supabaseHelpers.update('rooms', roomId, { game_status: gameStatus })
-  },
-
-  async setCurrentTurnPlayer(roomId: string, playerId: string | null) {
-    return await supabaseHelpers.update('rooms', roomId, { current_turn_player_id: playerId })
-  },
-
   // Player operations
-  async addPlayerToRoom(roomId: string, name: string, isHost: boolean = false) {
+  async addPlayerToRoom(roomId: string, nickname: string, isHost: boolean = false) {
     return await supabaseHelpers.create('players', { 
       room_id: roomId, 
-      name,
-      is_ready: false,
-      has_submitted_names: false,
-      score: 0,
-      is_host: isHost
+      nickname,
+      is_host: isHost,
+      score: 0
     })
   },
 
   async getPlayersInRoom(roomId: string) {
-    return await supabaseHelpers.read('players', {
+    const result = await supabaseHelpers.read('players', {
       filter: { room_id: roomId }
     })
-  },
-
-  async updatePlayerReady(playerId: string, isReady: boolean) {
-    return await supabaseHelpers.update('players', playerId, { is_ready: isReady })
-  },
-
-  async updatePlayerSubmittedNames(playerId: string, hasSubmitted: boolean) {
-    return await supabaseHelpers.update('players', playerId, { has_submitted_names: hasSubmitted })
+    return result as any[]
   },
 
   async updatePlayerScore(playerId: string, score: number) {
     return await supabaseHelpers.update('players', playerId, { score })
   },
 
-  async assignIdentityToPlayer(playerId: string, identity: string) {
-    return await supabaseHelpers.update('players', playerId, { 
-      assigned_identity: identity 
+  async removePlayerFromRoom(playerId: string) {
+    return await supabaseHelpers.delete('players', playerId)
+  },
+
+  // Check if room is empty and close it
+  async checkAndCloseEmptyRoom(roomId: string): Promise<boolean> {
+    const players = await whoDatHelpers.getPlayersInRoom(roomId)
+    if (players.length === 0) {
+      await whoDatHelpers.updateRoomStatus(roomId, 'closed')
+      return true
+    }
+    return false
+  },
+
+  // Get room status with player count
+  async getRoomStatus(roomId: string) {
+    const room = await whoDatHelpers.getRoom(roomId)
+    const players = await whoDatHelpers.getPlayersInRoom(roomId)
+    return {
+      ...room,
+      playerCount: players.length,
+      isEmpty: players.length === 0
+    }
+  },
+
+  // Names operations
+  async submitName(roomId: string, submittedBy: string, nameText: string) {
+    return await supabaseHelpers.create('names', {
+      room_id: roomId,
+      submitted_by: submittedBy,
+      name_text: nameText
     })
   },
 
-  // Identity operations
-  async submitIdentity(roomId: string, submittedBy: string, name: string) {
-    return await supabaseHelpers.create('identities', {
-      room_id: roomId,
-      submitted_by: submittedBy,
-      name
-    })
-  },
-
-  async submitMultipleIdentities(roomId: string, submittedBy: string, names: string[]) {
-    // First, delete any existing identities for this player in this room
-    await supabase
-      .from('identities')
-      .delete()
-      .eq('room_id', roomId)
-      .eq('submitted_by', submittedBy)
-
-    // Insert new identities
-    const identitiesToInsert = names.map(name => ({
-      room_id: roomId,
-      submitted_by: submittedBy,
-      name
-    }))
-
-    const { error } = await supabase
-      .from('identities')
-      .insert(identitiesToInsert)
-
-    if (error) throw error
-    return true
-  },
-
-  async getIdentitiesInRoom(roomId: string) {
-    return await supabaseHelpers.read('identities', {
+  async getNamesInRoom(roomId: string) {
+    const result = await supabaseHelpers.read('names', {
       filter: { room_id: roomId }
     })
+    return result as any[]
   },
 
-  async getIdentitiesByPlayer(playerId: string) {
-    return await supabaseHelpers.read('identities', {
+  async getNamesByPlayer(playerId: string) {
+    return await supabaseHelpers.read('names', {
       filter: { submitted_by: playerId }
     })
   },
 
-  // Game operations
-  async addQuestion(roomId: string, askedBy: string, question: string) {
-    return await supabaseHelpers.create('game_questions', {
-      room_id: roomId,
-      asked_by: askedBy,
-      question
-    })
+  async assignName(nameId: string, assignedTo: string | null) {
+    return await supabaseHelpers.update('names', nameId, { assigned_to: assignedTo })
   },
 
-  async addGuess(roomId: string, guessedBy: string, guessedIdentity: string, isCorrect: boolean) {
-    return await supabaseHelpers.create('game_guesses', {
-      room_id: roomId,
-      guessed_by: guessedBy,
-      guessed_identity: guessedIdentity,
-      is_correct: isCorrect
-    })
-  },
-
-  async getGameQuestions(roomId: string) {
-    return await supabaseHelpers.read('game_questions', {
-      filter: { room_id: roomId },
-      orderBy: { column: 'created_at', ascending: true }
-    })
-  },
-
-  async getGameGuesses(roomId: string) {
-    return await supabaseHelpers.read('game_guesses', {
-      filter: { room_id: roomId },
-      orderBy: { column: 'created_at', ascending: true }
-    })
-  },
-
-  // Complex queries
-  async getRoomWithPlayersAndIdentities(roomId: string) {
+  async getAssignedNames(roomId: string) {
     const { data, error } = await supabase
-      .from('rooms')
-      .select(`
-        *,
-        players:players(*),
-        identities:identities(*)
-      `)
-      .eq('id', roomId)
-      .single()
+      .from('names')
+      .select('*')
+      .eq('room_id', roomId)
+      .not('assigned_to', 'is', null)
 
     if (error) throw error
     return data
   },
 
-  async getPlayerWithIdentities(playerId: string) {
-    const { data, error } = await supabase
-      .from('players')
-      .select(`
-        *,
-        identities:identities(*)
-      `)
-      .eq('id', playerId)
-      .single()
-
-    if (error) throw error
-    return data
-  }
-}
-
-// Game flow functions for WhoDat
-export const gameFlowHelpers = {
-  // 1. Create a new room with host
-  async createRoom(hostName: string): Promise<{ roomId: string; playerId: string }> {
-    // Create room first
-    const room = await supabaseHelpers.create('rooms', { 
-      status: 'waiting',
-      host_id: '', // Will be updated after player creation
-      game_status: 'waiting'
-    })
-    
-    // Create host player
-    const hostPlayer = await supabaseHelpers.create('players', {
-      room_id: room.id,
-      name: hostName,
-      is_ready: false,
-      has_submitted_names: false,
-      score: 0,
-      is_host: true
-    })
-    
-    // Update room with host_id
-    await supabaseHelpers.update('rooms', room.id, { host_id: hostPlayer.id })
-    
-    return { roomId: room.id, playerId: hostPlayer.id }
-  },
-
-  // 2. Join a room as a player
-  async joinRoom(roomId: string, playerName: string): Promise<string> {
-    const player = await supabaseHelpers.create('players', {
-      room_id: roomId,
-      name: playerName,
-      is_ready: false,
-      has_submitted_names: false,
-      score: 0,
-      is_host: false
-    })
-    return player.id
-  },
-
-  // 3. Submit identities for a player
-  async submitIdentities(roomId: string, playerId: string, names: string[]): Promise<void> {
-    // Submit multiple identities
-    await whoDatHelpers.submitMultipleIdentities(roomId, playerId, names)
-    
-    // Mark player as having submitted names
-    await whoDatHelpers.updatePlayerSubmittedNames(playerId, true)
-  },
-
-  // 4. Start name collection phase
-  async startNameCollection(roomId: string): Promise<void> {
-    await whoDatHelpers.updateGameStatus(roomId, 'collecting_names')
-    await whoDatHelpers.updateRoomStatus(roomId, 'collecting_names')
-  },
-
-  // 5. Check if all players have submitted names
-  async allPlayersSubmittedNames(roomId: string): Promise<boolean> {
-    const players = await whoDatHelpers.getPlayersInRoom(roomId)
-    return players.every((player: any) => player.has_submitted_names)
-  },
-
-  // 6. Assign identities to players
-  async assignIdentities(roomId: string): Promise<string> {
-    // Get all players in the room
+  // Assign names to players - each player gets names from OTHER players only
+  async assignNamesToPlayers(roomId: string): Promise<void> {
+    // Get all players in room
     const players = await whoDatHelpers.getPlayersInRoom(roomId)
     if (!players || players.length === 0) {
       throw new Error('No players found in room')
     }
 
-    // Get all identities in the room
-    const identities = await whoDatHelpers.getIdentitiesInRoom(roomId)
-    if (!identities || identities.length === 0) {
-      throw new Error('No identities found in room')
+    // Get all names in room
+    const names = await whoDatHelpers.getNamesInRoom(roomId)
+    if (!names || names.length === 0) {
+      throw new Error('No names found in room')
     }
 
-    // Create a map of player IDs to their submitted identities
-    const playerIdentities = new Map<string, string[]>()
-    identities.forEach((identity: any) => {
-      if (!playerIdentities.has(identity.submitted_by)) {
-        playerIdentities.set(identity.submitted_by, [])
-      }
-      playerIdentities.get(identity.submitted_by)!.push(identity.name)
-    })
+    // Reset all assignments first
+    for (const name of names) {
+      await whoDatHelpers.assignName((name as any).id, null)
+    }
 
-    // Shuffle identities for random assignment
-    const shuffledIdentities = [...identities].sort(() => Math.random() - 0.5)
-
-    // Assign identities to each player
+    // For each player, assign them names from OTHER players
     for (const player of players) {
-      const playerSubmittedIdentities = playerIdentities.get((player as any).id) || []
+      const playerId = (player as any).id
       
-      // Get all identities except the ones this player submitted
-      const availableIdentities = shuffledIdentities.filter(
-        (identity: any) => !playerSubmittedIdentities.includes(identity.name)
-      )
-
-      if (availableIdentities.length === 0) {
-        throw new Error(`No available identities for player ${(player as any).name}`)
+      // Get names submitted by OTHER players (not this player)
+      const otherPlayersNames = names.filter((name: any) => name.submitted_by !== playerId)
+      
+      if (otherPlayersNames.length === 0) {
+        throw new Error(`No names from other players available for ${(player as any).nickname}`)
       }
 
-      // Randomly select an identity for this player
-      const randomIndex = Math.floor(Math.random() * availableIdentities.length)
-      const assignedIdentity = (availableIdentities[randomIndex] as any).name
+      // Shuffle the other players' names
+      const shuffledOtherNames = [...otherPlayersNames].sort(() => Math.random() - 0.5)
 
-      // Update player's assigned identity
-      await whoDatHelpers.assignIdentityToPlayer((player as any).id, assignedIdentity)
-
-      // Remove the assigned identity from available identities to avoid duplicates
-      const identityIndex = shuffledIdentities.findIndex((id: any) => id.name === assignedIdentity)
-      if (identityIndex > -1) {
-        shuffledIdentities.splice(identityIndex, 1)
+      // Assign ALL of the other players' names to this player
+      for (const name of shuffledOtherNames) {
+        await whoDatHelpers.assignName((name as any).id, playerId)
       }
     }
-
-    // Set first player as current turn
-    await whoDatHelpers.setCurrentTurnPlayer(roomId, (players[0] as any).id)
-
-    // Update room status to 'playing'
-    await whoDatHelpers.updateRoomStatus(roomId, 'playing')
-    await whoDatHelpers.updateGameStatus(roomId, 'playing')
-
-    return 'playing'
   },
 
-  // 7. Get next turn player
-  async getNextTurnPlayer(roomId: string): Promise<string | null> {
+  // Generate random 6-character room code
+  generateRoomCode(): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    let result = ''
+    for (let i = 0; i < 6; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    return result
+  },
+
+  // Get room with players
+  async getRoomWithPlayers(roomId: string) {
+    // First get the room
+    const room = await whoDatHelpers.getRoom(roomId)
+    
+    // Then get players separately
+    const players = await whoDatHelpers.getPlayersInRoom(roomId)
+    
+    return {
+      ...room,
+      players
+    }
+  }
+}
+
+// Simple room flow functions for WhoDat
+export const roomFlowHelpers = {
+  // Create a new room with host
+  async createRoom(hostNickname: string): Promise<{ roomId: string; roomCode: string; playerId: string }> {
+    // Generate unique room code
+    let roomCode: string = ''
+    let isUnique = false
+    
+    while (!isUnique) {
+      roomCode = whoDatHelpers.generateRoomCode()
+      try {
+        await whoDatHelpers.getRoomByCode(roomCode)
+        // If we get here, room code already exists, try again
+      } catch {
+        // Room code doesn't exist, we can use it
+        isUnique = true
+      }
+    }
+    
+    // Create room
+    const room = await whoDatHelpers.createRoom(roomCode, 'waiting')
+    
+    // Create host player
+    const hostPlayer = await whoDatHelpers.addPlayerToRoom(room.id, hostNickname, true)
+    
+    return { roomId: room.id, roomCode, playerId: hostPlayer.id }
+  },
+
+  // Join a room by room code
+  async joinRoom(roomCode: string, playerNickname: string): Promise<{ roomId: string; playerId: string }> {
+    // Find room by code
+    const room = await whoDatHelpers.getRoomByCode(roomCode)
+    
+    if (!room) {
+      throw new Error('Room not found')
+    }
+    
+    // Allow joining only if room is waiting or playing (not finished or closed)
+    if (room.status === 'finished' || room.status === 'closed') {
+      throw new Error('Room is not accepting new players')
+    }
+    
+    // Add player to room
+    const player = await whoDatHelpers.addPlayerToRoom(room.id, playerNickname, false)
+    
+    return { roomId: room.id, playerId: player.id }
+  },
+
+  // Start game (host only)
+  async startGame(roomId: string): Promise<void> {
+    await whoDatHelpers.updateRoomStatus(roomId, 'playing')
+  },
+
+  // Assign names to players (host only)
+  async assignNames(roomId: string): Promise<void> {
+    await whoDatHelpers.assignNamesToPlayers(roomId)
+  },
+
+  // Start active game
+  async startActiveGame(roomId: string): Promise<void> {
+    // Get all players in room
+    const players = await whoDatHelpers.getPlayersInRoom(roomId)
+    if (players.length === 0) {
+      throw new Error('No players in room')
+    }
+
+    // Set first player as current player
+    const firstPlayer = players[0]
+    
+    // Get names assigned to the first player (names they should guess)
+    const assignedNames = await whoDatHelpers.getAssignedNames(roomId)
+    const playerAssignedNames = assignedNames.filter((name: any) => name.assigned_to === firstPlayer.id)
+    
+    if (playerAssignedNames.length === 0) {
+      throw new Error('No names assigned to first player')
+    }
+
+    const randomName = playerAssignedNames[Math.floor(Math.random() * playerAssignedNames.length)]
+
+    // Update room with game state
+    await supabaseHelpers.update('rooms', roomId, {
+      current_player_id: firstPlayer.id,
+      current_identity_id: randomName.id,
+      game_round: 1,
+      is_game_active: true
+    })
+  },
+
+  // Get current game state
+  async getGameState(roomId: string) {
     const room = await whoDatHelpers.getRoom(roomId)
     const players = await whoDatHelpers.getPlayersInRoom(roomId)
-    
-    if (!(room as any).current_turn_player_id) {
-      return (players[0] as any)?.id || null
+    const currentIdentity = room.current_identity_id ? 
+      await supabaseHelpers.getById('names', room.current_identity_id) : null
+
+    return {
+      room,
+      players,
+      currentIdentity,
+      isActive: room.is_game_active,
+      currentPlayerId: room.current_player_id,
+      round: room.game_round
     }
-    
-    const currentIndex = players.findIndex((p: any) => p.id === (room as any).current_turn_player_id)
-    const nextIndex = (currentIndex + 1) % players.length
-    
-    return (players[nextIndex] as any)?.id || null
   },
 
-  // 8. Pass turn to next player
-  async passTurn(roomId: string): Promise<string | null> {
-    const nextPlayerId = await gameFlowHelpers.getNextTurnPlayer(roomId)
-    await whoDatHelpers.setCurrentTurnPlayer(roomId, nextPlayerId)
-    return nextPlayerId
-  },
-
-  // 9. Make a guess
-  async makeGuess(roomId: string, guessedBy: string, guessedIdentity: string): Promise<boolean> {
-    // Get the player's assigned identity
-    const players = await whoDatHelpers.getPlayersInRoom(roomId)
-    const player = players.find((p: any) => p.id === guessedBy)
+  // Make a guess
+  async makeGuess(roomId: string, playerId: string, guess: string): Promise<{ isCorrect: boolean; message: string }> {
+    const gameState = await roomFlowHelpers.getGameState(roomId)
     
-    if (!player || !(player as any).assigned_identity) {
-      throw new Error('Player not found or no assigned identity')
+    if (!gameState.isActive) {
+      throw new Error('Game is not active')
     }
-    
-    const isCorrect = (player as any).assigned_identity.toLowerCase() === guessedIdentity.toLowerCase()
-    
-    // Record the guess
-    await whoDatHelpers.addGuess(roomId, guessedBy, guessedIdentity, isCorrect)
-    
+
+    if (gameState.currentPlayerId !== playerId) {
+      throw new Error('Not your turn')
+    }
+
+    if (!gameState.currentIdentity) {
+      throw new Error('No current identity')
+    }
+
+    const correctName = gameState.currentIdentity.name_text
+    const isCorrect = roomFlowHelpers.fuzzyMatch(guess, correctName)
+
     if (isCorrect) {
-      // Update player score
-      await whoDatHelpers.updatePlayerScore(guessedBy, (player as any).score + 10)
+      // Add score to player
+      const currentPlayer = gameState.players.find((p: any) => p.id === playerId)
+      if (currentPlayer) {
+        await whoDatHelpers.updatePlayerScore(playerId, currentPlayer.score + 10)
+      }
+
+      // Move to next player and select new identity
+      await roomFlowHelpers.nextTurn(roomId)
+      
+      return { isCorrect: true, message: 'Doğru tahmin! +10 puan' }
+    } else {
+      return { isCorrect: false, message: 'Yanlış tahmin, tekrar deneyin' }
+    }
+  },
+
+  // Move to next turn
+  async nextTurn(roomId: string): Promise<void> {
+    const gameState = await roomFlowHelpers.getGameState(roomId)
+    const players = gameState.players
+    
+    // Check if game should end
+    const totalNames = await whoDatHelpers.getNamesInRoom(roomId)
+    const totalRounds = totalNames.length
+    
+    if (gameState.round >= totalRounds) {
+      // Game is over - set status to finished
+      await whoDatHelpers.updateRoomStatus(roomId, 'finished')
+      return
     }
     
-    return isCorrect
+    // Find current player index
+    const currentIndex = players.findIndex((p: any) => p.id === gameState.currentPlayerId)
+    const nextIndex = (currentIndex + 1) % players.length
+    const nextPlayer = players[nextIndex]
+
+    // Get names assigned to the next player (names they should guess)
+    const assignedNames = await whoDatHelpers.getAssignedNames(roomId)
+    const playerAssignedNames = assignedNames.filter((name: any) => name.assigned_to === nextPlayer.id)
+    
+    if (playerAssignedNames.length === 0) {
+      throw new Error('No names assigned to next player')
+    }
+
+    // Get names that have been used in previous rounds
+    const usedNames = await roomFlowHelpers.getUsedNamesInGame(roomId)
+    const availableNames = playerAssignedNames.filter((name: any) => !usedNames.includes(name.id))
+    
+    // If all names have been used, reset and use any name
+    const namesToChooseFrom = availableNames.length > 0 ? availableNames : playerAssignedNames
+    const randomName = namesToChooseFrom[Math.floor(Math.random() * namesToChooseFrom.length)]
+
+    // Mark this name as used
+    await roomFlowHelpers.markNameAsUsed(roomId, randomName.id, gameState.round + 1)
+
+    // Update room with next player and identity
+    await supabaseHelpers.update('rooms', roomId, {
+      current_player_id: nextPlayer.id,
+      current_identity_id: randomName.id,
+      game_round: gameState.round + 1
+    })
+  },
+
+  // Fuzzy string matching for guesses
+  fuzzyMatch(guess: string, correct: string): boolean {
+    // Normalize strings: lowercase, remove accents, remove punctuation
+    const normalize = (str: string) => {
+      return str
+        .toLowerCase()
+        .replace(/[çğıöşü]/g, (match) => {
+          const map: { [key: string]: string } = {
+            'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u'
+          }
+          return map[match] || match
+        })
+        .replace(/[^a-z0-9]/g, '') // Remove all non-alphanumeric
+    }
+
+    const normalizedGuess = normalize(guess)
+    const normalizedCorrect = normalize(correct)
+
+    // Exact match
+    if (normalizedGuess === normalizedCorrect) {
+      return true
+    }
+
+    // Levenshtein distance check (allow 1-2 character differences)
+    const distance = roomFlowHelpers.levenshteinDistance(normalizedGuess, normalizedCorrect)
+    const maxLength = Math.max(normalizedGuess.length, normalizedCorrect.length)
+    const similarity = 1 - (distance / maxLength)
+
+    return similarity >= 0.8 // 80% similarity threshold
+  },
+
+  // Levenshtein distance calculation
+  levenshteinDistance(str1: string, str2: string): number {
+    const matrix = Array(str2.length + 1).fill(null).map(() => Array(str1.length + 1).fill(null))
+
+    for (let i = 0; i <= str1.length; i++) matrix[0][i] = i
+    for (let j = 0; j <= str2.length; j++) matrix[j][0] = j
+
+    for (let j = 1; j <= str2.length; j++) {
+      for (let i = 1; i <= str1.length; i++) {
+        const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1
+        matrix[j][i] = Math.min(
+          matrix[j][i - 1] + 1,
+          matrix[j - 1][i] + 1,
+          matrix[j - 1][i - 1] + indicator
+        )
+      }
+    }
+
+    return matrix[str2.length][str1.length]
+  },
+
+  // Get used names in current game (all names that have been used)
+  async getUsedNamesInGame(roomId: string): Promise<string[]> {
+    // Get all names that have been used in current game
+    const { data, error } = await supabase
+      .from('names')
+      .select('id')
+      .eq('room_id', roomId)
+      .not('used_in_round', 'is', null)
+
+    if (error) throw error
+    return data?.map(name => name.id) || []
+  },
+
+  // Mark name as used in current game
+  async markNameAsUsed(roomId: string, nameId: string, round: number): Promise<void> {
+    // Update the name record to mark it as used in this round
+    await supabaseHelpers.update('names', nameId, {
+      used_in_round: round
+    })
+  },
+
+  // Reset game for new round
+  async resetGame(roomId: string): Promise<void> {
+    // Reset game state
+    await supabaseHelpers.update('rooms', roomId, {
+      current_player_id: null,
+      current_identity_id: null,
+      game_round: 1,
+      is_game_active: false,
+      used_names: []
+    })
+    
+    // Reset all names used_in_round to null
+    await supabase
+      .from('names')
+      .update({ used_in_round: null })
+      .eq('room_id', roomId)
   }
 }
