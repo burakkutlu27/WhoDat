@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { whoDatHelpers } from '@/utils/supabaseClient'
+import { supabase } from '@/utils/supabaseClient'
 
 interface PlayerScore {
   id: string
@@ -22,7 +22,7 @@ export default function ScoresPage() {
     const loadScores = async () => {
       try {
         // Get all players with their scores
-        const { data: players, error } = await whoDatHelpers.supabase
+        const { data: players, error } = await supabase
           .from('players')
           .select('id, name, score, is_host, created_at')
           .order('score', { ascending: false })

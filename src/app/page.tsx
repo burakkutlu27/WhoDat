@@ -26,7 +26,7 @@ export default function Home() {
               KimBu
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-md mx-auto">
-              "Ben Kimim" oyunu - Kimliğini bul, puan kazan!
+              &ldquo;Ben Kimim&rdquo; oyunu - Kimliğini bul, puan kazan!
             </p>
           </div>
 

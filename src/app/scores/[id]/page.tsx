@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase, whoDatHelpers, roomFlowHelpers } from '@/utils/supabaseClient'
 
@@ -24,6 +24,30 @@ export default function ScoresPage({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true)
   const [playerId, setPlayerId] = useState<string | null>(null)
   const [isHost, setIsHost] = useState(false)
+
+  const loadRoom = useCallback(async () => {
+    try {
+      const roomData = await whoDatHelpers.getRoomWithPlayers(params.id)
+      
+      if (!roomData) {
+        router.push('/')
+        return
+      }
+
+      // Sort players by score (highest first)
+      const sortedPlayers = roomData.players.sort((a: any, b: any) => b.score - a.score)
+      
+      setRoom({
+        ...roomData,
+        players: sortedPlayers
+      })
+    } catch (err) {
+      console.error('Error loading room:', err)
+      router.push('/')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [params.id, router])
 
   useEffect(() => {
     // Get player info from localStorage
@@ -65,31 +89,7 @@ export default function ScoresPage({ params }: { params: { id: string } }) {
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [params.id, router])
-
-  const loadRoom = async () => {
-    try {
-      const roomData = await whoDatHelpers.getRoomWithPlayers(params.id)
-      
-      if (!roomData) {
-        router.push('/')
-        return
-      }
-
-      // Sort players by score (highest first)
-      const sortedPlayers = roomData.players.sort((a: any, b: any) => b.score - a.score)
-      
-      setRoom({
-        ...roomData,
-        players: sortedPlayers
-      })
-    } catch (err) {
-      console.error('Error loading room:', err)
-      router.push('/')
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  }, [params.id, router, loadRoom])
 
   const handlePlayAgain = async () => {
     try {

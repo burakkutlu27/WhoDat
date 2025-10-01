@@ -40,7 +40,11 @@ export default function GameInterface({ room, currentPlayer }: GameInterfaceProp
   }
 
   const revealIdentity = (playerId: string) => {
-    setRevealedIdentities(prev => new Set([...prev, playerId]))
+    setRevealedIdentities(prev => {
+      const newSet = new Set(prev)
+      newSet.add(playerId)
+      return newSet
+    })
   }
 
   const hideIdentity = (playerId: string) => {
@@ -160,9 +164,9 @@ export default function GameInterface({ room, currentPlayer }: GameInterfaceProp
         <h3 className="text-lg font-bold text-gray-800 mb-3">📋 Nasıl Oynanır?</h3>
         <div className="space-y-2 text-sm text-gray-600">
           <p>1. Sıradaki oyuncu kimliğini tahmin etmeye çalışır</p>
-          <p>2. Diğer oyuncular "Evet" veya "Hayır" ile cevap verir</p>
+          <p>2. Diğer oyuncular &ldquo;Evet&rdquo; veya &ldquo;Hayır&rdquo; ile cevap verir</p>
           <p>3. Doğru tahmin edilirse oyuncu kazanır!</p>
-          <p>4. Sırayı geçmek için "Sırayı Geç" butonuna basın</p>
+          <p>4. Sırayı geçmek için &ldquo;Sırayı Geç&rdquo; butonuna basın</p>
         </div>
       </div>
     </div>
