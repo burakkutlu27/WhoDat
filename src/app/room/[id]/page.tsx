@@ -29,7 +29,6 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   const [names, setNames] = useState<string[]>(['', '', ''])
   const [submittedNames, setSubmittedNames] = useState<string[]>([])
   const [isSubmittingNames, setIsSubmittingNames] = useState(false)
-  const [isAssigningNames, setIsAssigningNames] = useState(false)
   const [allPlayersSubmittedNames, setAllPlayersSubmittedNames] = useState(false)
 
   const loadRoom = useCallback(async () => {
@@ -175,22 +174,25 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     setIsStarting(true)
     setError('')
     try {
-      // First assign names if not already assigned
-      if (allPlayersSubmittedNames) {
-        await roomFlowHelpers.assignNames(params.id)
-      }
+      console.log('Starting game...')
+      
+      // Assign names to players
+      console.log('Assigning names...')
+      await roomFlowHelpers.assignNames(params.id)
       
       // Start the room (set status to playing)
+      console.log('Setting room status to playing...')
       await roomFlowHelpers.startGame(params.id)
       
       // Start the active game (set up game state)
+      console.log('Starting active game...')
       await roomFlowHelpers.startActiveGame(params.id)
       
-      // Force reload to get updated room status
-      await loadRoom()
-      // The realtime subscription will handle the redirect
-    } catch (err) {
-      setError('Oyun başlatılırken bir hata oluştu')
+      console.log('Game started successfully, redirecting...')
+      // Direct redirect instead of waiting for realtime
+      router.push(`/game/${params.id}`)
+    } catch (err: any) {
+      setError(err.message || 'Oyun başlatılırken bir hata oluştu')
       console.error('Error starting game:', err)
     } finally {
       setIsStarting(false)
@@ -228,23 +230,6 @@ export default function RoomPage({ params }: { params: { id: string } }) {
       console.error('Error submitting names:', err)
     } finally {
       setIsSubmittingNames(false)
-    }
-  }
-
-  const handleAssignNames = async () => {
-    if (!isHost) return
-    
-    setIsAssigningNames(true)
-    setError('')
-
-    try {
-      await roomFlowHelpers.assignNames(params.id)
-      // Names will be assigned, realtime will handle the update
-    } catch (err) {
-      setError('İsimler atanırken bir hata oluştu')
-      console.error('Error assigning names:', err)
-    } finally {
-      setIsAssigningNames(false)
     }
   }
 
@@ -467,43 +452,23 @@ export default function RoomPage({ params }: { params: { id: string } }) {
                 </div>
               )}
 
-              <div className="space-y-4">
-                <button
-                  onClick={handleAssignNames}
-                  disabled={isAssigningNames || !allPlayersSubmittedNames || room.players.length < 2}
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
-                >
-                  {isAssigningNames ? (
-                    <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      İsimler Atanıyor...
-                    </span>
-                  ) : (
-                    'İsimleri Ata'
-                  )}
-                </button>
-
-                <button
-                  onClick={handleStartGame}
-                  disabled={isStarting || !allPlayersSubmittedNames || room.players.length < 2 || room.players.length > 6}
-                  className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
-                >
-                  {isStarting ? (
-                    <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Oyun Başlatılıyor...
-                    </span>
-                  ) : (
-                    'Oyunu Başlat'
-                  )}
-                </button>
-              </div>
+              <button
+                onClick={handleStartGame}
+                disabled={isStarting || !allPlayersSubmittedNames || room.players.length < 2 || room.players.length > 6}
+                className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
+              >
+                {isStarting ? (
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Oyun Başlatılıyor...
+                  </span>
+                ) : (
+                  'Oyunu Başlat'
+                )}
+              </button>
               
               {room.players.length < 2 && (
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">

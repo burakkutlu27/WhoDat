@@ -381,7 +381,8 @@ export const whoDatHelpers = {
     return data
   },
 
-  // Assign names to players - each player gets names from OTHER players only
+  // Assign names to players - distribute names evenly among all players
+  // Each name is assigned to ONE player only, but players can guess any name during the game
   async assignNamesToPlayers(roomId: string): Promise<void> {
     // Get all players in room
     const players = await whoDatHelpers.getPlayersInRoom(roomId)
@@ -400,25 +401,18 @@ export const whoDatHelpers = {
       await whoDatHelpers.assignName((name as any).id, null)
     }
 
-    // For each player, assign them names from OTHER players only
-    for (const player of players) {
-      const playerId = (player as any).id
+    // Shuffle all names for random distribution
+    const shuffledNames = [...names].sort(() => Math.random() - 0.5)
+    
+    // Distribute names evenly among players using round-robin
+    // Each name gets assigned to exactly ONE player
+    for (let i = 0; i < shuffledNames.length; i++) {
+      const name = shuffledNames[i]
+      const playerIndex = i % players.length
+      const assignedPlayer = players[playerIndex]
       
-      // Get names submitted by OTHER players (not this player)
-      const otherPlayersNames = names.filter((name: any) => name.submitted_by !== playerId)
-      
-      if (otherPlayersNames.length === 0) {
-        throw new Error(`No names from other players available for ${(player as any).nickname}`)
-      }
-
-      // Shuffle the other players' names for this player
-      const shuffledOtherNames = [...otherPlayersNames].sort(() => Math.random() - 0.5)
-
-      // Assign ALL of the other players' names to this player
-      // This ensures each player can guess all names from other players
-      for (const name of shuffledOtherNames) {
-        await whoDatHelpers.assignName((name as any).id, playerId)
-      }
+      // Assign this name to the current player in rotation
+      await whoDatHelpers.assignName((name as any).id, (assignedPlayer as any).id)
     }
   },
 
@@ -525,47 +519,25 @@ export const roomFlowHelpers = {
     const firstPlayer = players[0]
     console.log(`First player: ${firstPlayer.nickname} (${firstPlayer.id})`)
     
-    // Get names assigned to the first player (names they should guess)
-    const assignedNames = await whoDatHelpers.getAssignedNames(roomId)
-    console.log(`Total assigned names in room: ${assignedNames.length}`)
+    // Get all names in the room
+    const allNames = await whoDatHelpers.getNamesInRoom(roomId)
+    console.log(`Total names in room: ${allNames.length}`)
     
-    const playerAssignedNames = assignedNames.filter((name: any) => name.assigned_to === firstPlayer.id)
-    console.log(`Names assigned to first player: ${playerAssignedNames.length}`)
-    
-    if (playerAssignedNames.length === 0) {
-      // Try to assign names again if none are assigned
-      console.log('No names assigned to first player, attempting to assign names...')
-      await whoDatHelpers.assignNamesToPlayers(roomId)
-      
-      // Check again after assignment
-      const reassignedNames = await whoDatHelpers.getAssignedNames(roomId)
-      const newPlayerAssignedNames = reassignedNames.filter((name: any) => name.assigned_to === firstPlayer.id)
-      
-      if (newPlayerAssignedNames.length === 0) {
-        throw new Error(`No names could be assigned to first player ${firstPlayer.nickname}. This might be due to insufficient names from other players.`)
-      }
-      
-      console.log(`After reassignment, first player has ${newPlayerAssignedNames.length} names`)
-      const randomName = newPlayerAssignedNames[Math.floor(Math.random() * newPlayerAssignedNames.length)]
-      
-      // Update room with game state
-      await supabaseHelpers.update('rooms', roomId, {
-        current_player_id: firstPlayer.id,
-        current_identity_id: randomName.id,
-        game_round: 1,
-        is_game_active: true
-      })
-    } else {
-      const randomName = playerAssignedNames[Math.floor(Math.random() * playerAssignedNames.length)]
-
-      // Update room with game state
-      await supabaseHelpers.update('rooms', roomId, {
-        current_player_id: firstPlayer.id,
-        current_identity_id: randomName.id,
-        game_round: 1,
-        is_game_active: true
-      })
+    if (allNames.length === 0) {
+      throw new Error('No names found in room')
     }
+
+    // Pick a random name from all available names for the first turn
+    const randomName = allNames[Math.floor(Math.random() * allNames.length)]
+    console.log(`Selected random name: ${randomName.name_text}`)
+
+    // Update room with game state
+    await supabaseHelpers.update('rooms', roomId, {
+      current_player_id: firstPlayer.id,
+      current_identity_id: randomName.id,
+      game_round: 1,
+      is_game_active: true
+    })
     
     console.log(`Game started successfully for room ${roomId}`)
   },
@@ -642,21 +614,18 @@ export const roomFlowHelpers = {
     const nextIndex = (currentIndex + 1) % players.length
     const nextPlayer = players[nextIndex]
 
-    // Get names assigned to the next player (names they should guess)
-    const assignedNames = await whoDatHelpers.getAssignedNames(roomId)
-    const playerAssignedNames = assignedNames.filter((name: any) => name.assigned_to === nextPlayer.id)
-    
-    if (playerAssignedNames.length === 0) {
-      throw new Error('No names assigned to next player')
-    }
-
     // Get names that have been used in previous rounds
     const usedNames = await roomFlowHelpers.getUsedNamesInGame(roomId)
-    const availableNames = playerAssignedNames.filter((name: any) => !usedNames.includes(name.id))
+    const availableNames = totalNames.filter((name: any) => !usedNames.includes(name.id))
     
-    // If all names have been used, reset and use any name
-    const namesToChooseFrom = availableNames.length > 0 ? availableNames : playerAssignedNames
-    const randomName = namesToChooseFrom[Math.floor(Math.random() * namesToChooseFrom.length)]
+    // If all names have been used, game is over
+    if (availableNames.length === 0) {
+      await whoDatHelpers.updateRoomStatus(roomId, 'finished')
+      return
+    }
+    
+    // Pick a random unused name
+    const randomName = availableNames[Math.floor(Math.random() * availableNames.length)]
 
     // Mark this name as used
     await roomFlowHelpers.markNameAsUsed(roomId, randomName.id, gameState.round + 1)
