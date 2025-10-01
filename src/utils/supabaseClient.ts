@@ -400,23 +400,34 @@ export const whoDatHelpers = {
       await whoDatHelpers.assignName((name as any).id, null)
     }
 
-    // For each player, assign them names from OTHER players
+    // Create a pool of all names from all players
+    const allNames = [...names]
+    
+    // Shuffle all names
+    const shuffledNames = allNames.sort(() => Math.random() - 0.5)
+    
+    // Assign names to players in round-robin fashion
+    // Each player gets names from OTHER players only
+    let nameIndex = 0
+    
     for (const player of players) {
       const playerId = (player as any).id
       
       // Get names submitted by OTHER players (not this player)
-      const otherPlayersNames = names.filter((name: any) => name.submitted_by !== playerId)
+      const otherPlayersNames = shuffledNames.filter((name: any) => name.submitted_by !== playerId)
       
       if (otherPlayersNames.length === 0) {
         throw new Error(`No names from other players available for ${(player as any).nickname}`)
       }
 
-      // Shuffle the other players' names
-      const shuffledOtherNames = [...otherPlayersNames].sort(() => Math.random() - 0.5)
-
-      // Assign ALL of the other players' names to this player
-      for (const name of shuffledOtherNames) {
-        await whoDatHelpers.assignName((name as any).id, playerId)
+      // Assign names to this player from the pool of other players' names
+      // Each player gets at least 2-3 names to guess
+      const namesToAssign = Math.min(3, otherPlayersNames.length)
+      
+      for (let i = 0; i < namesToAssign && nameIndex < otherPlayersNames.length; i++) {
+        const nameToAssign = otherPlayersNames[nameIndex % otherPlayersNames.length]
+        await whoDatHelpers.assignName((nameToAssign as any).id, playerId)
+        nameIndex++
       }
     }
   },
@@ -488,6 +499,12 @@ export const roomFlowHelpers = {
       throw new Error('Room is not accepting new players')
     }
     
+    // Check current player count
+    const players = await whoDatHelpers.getPlayersInRoom(room.id)
+    if (players.length >= 6) {
+      throw new Error('Room is full (maximum 6 players allowed)')
+    }
+    
     // Add player to room
     const player = await whoDatHelpers.addPlayerToRoom(room.id, playerNickname, false)
     
@@ -512,26 +529,55 @@ export const roomFlowHelpers = {
       throw new Error('No players in room')
     }
 
+    console.log(`Starting game for room ${roomId} with ${players.length} players`)
+
     // Set first player as current player
     const firstPlayer = players[0]
+    console.log(`First player: ${firstPlayer.nickname} (${firstPlayer.id})`)
     
     // Get names assigned to the first player (names they should guess)
     const assignedNames = await whoDatHelpers.getAssignedNames(roomId)
+    console.log(`Total assigned names in room: ${assignedNames.length}`)
+    
     const playerAssignedNames = assignedNames.filter((name: any) => name.assigned_to === firstPlayer.id)
+    console.log(`Names assigned to first player: ${playerAssignedNames.length}`)
     
     if (playerAssignedNames.length === 0) {
-      throw new Error('No names assigned to first player')
+      // Try to assign names again if none are assigned
+      console.log('No names assigned to first player, attempting to assign names...')
+      await whoDatHelpers.assignNamesToPlayers(roomId)
+      
+      // Check again after assignment
+      const reassignedNames = await whoDatHelpers.getAssignedNames(roomId)
+      const newPlayerAssignedNames = reassignedNames.filter((name: any) => name.assigned_to === firstPlayer.id)
+      
+      if (newPlayerAssignedNames.length === 0) {
+        throw new Error(`No names could be assigned to first player ${firstPlayer.nickname}. This might be due to insufficient names from other players.`)
+      }
+      
+      console.log(`After reassignment, first player has ${newPlayerAssignedNames.length} names`)
+      const randomName = newPlayerAssignedNames[Math.floor(Math.random() * newPlayerAssignedNames.length)]
+      
+      // Update room with game state
+      await supabaseHelpers.update('rooms', roomId, {
+        current_player_id: firstPlayer.id,
+        current_identity_id: randomName.id,
+        game_round: 1,
+        is_game_active: true
+      })
+    } else {
+      const randomName = playerAssignedNames[Math.floor(Math.random() * playerAssignedNames.length)]
+
+      // Update room with game state
+      await supabaseHelpers.update('rooms', roomId, {
+        current_player_id: firstPlayer.id,
+        current_identity_id: randomName.id,
+        game_round: 1,
+        is_game_active: true
+      })
     }
-
-    const randomName = playerAssignedNames[Math.floor(Math.random() * playerAssignedNames.length)]
-
-    // Update room with game state
-    await supabaseHelpers.update('rooms', roomId, {
-      current_player_id: firstPlayer.id,
-      current_identity_id: randomName.id,
-      game_round: 1,
-      is_game_active: true
-    })
+    
+    console.log(`Game started successfully for room ${roomId}`)
   },
 
   // Get current game state

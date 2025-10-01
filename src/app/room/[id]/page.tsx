@@ -488,7 +488,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
                 <button
                   onClick={handleStartGame}
-                  disabled={isStarting || !allPlayersSubmittedNames || room.players.length < 2}
+                  disabled={isStarting || !allPlayersSubmittedNames || room.players.length < 2 || room.players.length > 6}
                   className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
                 >
                   {isStarting ? (
@@ -508,6 +508,12 @@ export default function RoomPage({ params }: { params: { id: string } }) {
               {room.players.length < 2 && (
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
                   Oyunu başlatmak için en az 2 oyuncu gerekli
+                </p>
+              )}
+              
+              {room.players.length >= 6 && (
+                <p className="text-sm text-red-500 dark:text-red-400 mt-3">
+                  Oda dolu (maksimum 6 oyuncu)
                 </p>
               )}
               

@@ -36,6 +36,8 @@ export default function JoinRoom() {
         setError('Oda bulunamadı. Oda kodunu kontrol edin.')
       } else if (err.message === 'Room is not accepting new players') {
         setError('Bu oda yeni oyuncu kabul etmiyor.')
+      } else if (err.message === 'Room is full (maximum 6 players allowed)') {
+        setError('Oda dolu (maksimum 6 oyuncu).')
       } else {
         setError('Odaya katılırken bir hata oluştu. Lütfen tekrar deneyin.')
       }
