@@ -527,9 +527,17 @@ export const roomFlowHelpers = {
       throw new Error('No names found in room')
     }
 
-    // Pick a random name from all available names for the first turn
-    const randomName = allNames[Math.floor(Math.random() * allNames.length)]
-    console.log(`Selected random name: ${randomName.name_text}`)
+    // Get names from OTHER players only (not the current player)
+    const otherPlayersNames = allNames.filter((name: any) => name.submitted_by !== firstPlayer.id)
+    console.log(`Names from other players: ${otherPlayersNames.length}`)
+    
+    if (otherPlayersNames.length === 0) {
+      throw new Error('No names from other players available')
+    }
+
+    // Pick a random name from OTHER players' names only
+    const randomName = otherPlayersNames[Math.floor(Math.random() * otherPlayersNames.length)]
+    console.log(`Selected random name from other players: ${randomName.name_text}`)
 
     // Update room with game state
     await supabaseHelpers.update('rooms', roomId, {
@@ -624,8 +632,14 @@ export const roomFlowHelpers = {
       return
     }
     
-    // Pick a random unused name
-    const randomName = availableNames[Math.floor(Math.random() * availableNames.length)]
+    // Get names from OTHER players only (not the current player)
+    const otherPlayersNames = availableNames.filter((name: any) => name.submitted_by !== nextPlayer.id)
+    
+    // If no names from other players available, use any available name
+    const namesToChooseFrom = otherPlayersNames.length > 0 ? otherPlayersNames : availableNames
+    
+    // Pick a random name from the filtered list
+    const randomName = namesToChooseFrom[Math.floor(Math.random() * namesToChooseFrom.length)]
 
     // Mark this name as used
     await roomFlowHelpers.markNameAsUsed(roomId, randomName.id, gameState.round + 1)
