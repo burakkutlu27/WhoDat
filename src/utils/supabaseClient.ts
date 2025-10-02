@@ -539,6 +539,9 @@ export const roomFlowHelpers = {
     const randomName = otherPlayersNames[Math.floor(Math.random() * otherPlayersNames.length)]
     console.log(`Selected random name from other players: ${randomName.name_text}`)
 
+    // Mark this name as used in round 1
+    await roomFlowHelpers.markNameAsUsed(roomId, randomName.id, 1)
+
     // Update room with game state
     await supabaseHelpers.update('rooms', roomId, {
       current_player_id: firstPlayer.id,
@@ -709,20 +712,26 @@ export const roomFlowHelpers = {
     // Get all names that have been used in current game
     const { data, error } = await supabase
       .from('names')
-      .select('id')
+      .select('id, name_text, used_in_round')
       .eq('room_id', roomId)
       .not('used_in_round', 'is', null)
 
     if (error) throw error
-    return data?.map(name => name.id) || []
+    
+    const usedNames = data?.map(name => name.id) || []
+    console.log(`Used names in game: ${usedNames.length}`, data?.map(n => `${n.name_text} (round ${n.used_in_round})`))
+    
+    return usedNames
   },
 
   // Mark name as used in current game
   async markNameAsUsed(roomId: string, nameId: string, round: number): Promise<void> {
+    console.log(`Marking name ${nameId} as used in round ${round}`)
     // Update the name record to mark it as used in this round
     await supabaseHelpers.update('names', nameId, {
       used_in_round: round
     })
+    console.log(`Name ${nameId} marked as used in round ${round}`)
   },
 
   // Reset game for new round
