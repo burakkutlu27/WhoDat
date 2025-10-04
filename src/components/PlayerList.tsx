@@ -10,9 +10,10 @@ interface PlayerListProps {
   players: Player[]
   currentPlayer: Player
   roomStatus: string
+  playersWithNames?: Set<string>
 }
 
-export default function PlayerList({ players, currentPlayer, roomStatus }: PlayerListProps) {
+export default function PlayerList({ players, currentPlayer, roomStatus, playersWithNames }: PlayerListProps) {
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6">
       <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
@@ -40,6 +41,21 @@ export default function PlayerList({ players, currentPlayer, roomStatus }: Playe
                   {player.name}
                   {player.id === currentPlayer.id && ' (Sen)'}
                 </span>
+                {playersWithNames && (
+                  <div className="flex items-center space-x-2">
+                    {playersWithNames.has(player.id) ? (
+                      <span className="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full flex items-center">
+                        <span className="mr-1">✅</span>
+                        İsim Gönderdi
+                      </span>
+                    ) : (
+                      <span className="bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded-full flex items-center">
+                        <span className="mr-1">⏳</span>
+                        Bekliyor
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
               
               {roomStatus === 'assigned' && player.assigned_identity && (
