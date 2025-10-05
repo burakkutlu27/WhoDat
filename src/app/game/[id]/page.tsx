@@ -29,6 +29,7 @@ export default function GamePage({ params }: { params: { id: string } }) {
   const [isHost, setIsHost] = useState(false)
   const [guess, setGuess] = useState('')
   const [isSubmittingGuess, setIsSubmittingGuess] = useState(false)
+  const [isPassing, setIsPassing] = useState(false)
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState<'success' | 'error' | 'info'>('info')
   const [hasRedirected, setHasRedirected] = useState(false)
@@ -148,6 +149,10 @@ export default function GamePage({ params }: { params: { id: string } }) {
         // Force reload game state to get updated scores and turn
         setTimeout(async () => {
           await loadGameState()
+          // Clear message after game state reload
+          setTimeout(() => {
+            setMessage('')
+          }, 2000) // Clear message after 2 seconds
         }, 500) // Small delay to ensure database updates are complete
       } else {
         setMessageType('error')
@@ -159,6 +164,36 @@ export default function GamePage({ params }: { params: { id: string } }) {
       console.error('Error making guess:', err)
     } finally {
       setIsSubmittingGuess(false)
+    }
+  }
+
+  const handlePass = async () => {
+    if (!playerId) return
+
+    setIsPassing(true)
+    setMessage('')
+
+    try {
+      const result = await roomFlowHelpers.passTurn(params.id, playerId)
+      
+      if (result.success) {
+        setMessageType('success')
+        setMessage(result.message)
+        // Force reload game state to get updated turn
+        setTimeout(async () => {
+          await loadGameState()
+          // Clear message after game state reload
+          setTimeout(() => {
+            setMessage('')
+          }, 2000) // Clear message after 2 seconds
+        }, 500) // Small delay to ensure database updates are complete
+      }
+    } catch (err: any) {
+      setMessageType('error')
+      setMessage(err.message || 'Sıra geçilirken bir hata oluştu')
+      console.error('Error passing turn:', err)
+    } finally {
+      setIsPassing(false)
     }
   }
 
@@ -328,13 +363,24 @@ export default function GamePage({ params }: { params: { id: string } }) {
                         />
                       </div>
 
-                      <button
-                        type="submit"
-                        disabled={isSubmittingGuess || !guess.trim()}
-                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
-                      >
-                        {isSubmittingGuess ? 'Tahmin Ediliyor...' : 'Tahmin Et'}
-                      </button>
+                      <div className="flex space-x-3">
+                        <button
+                          type="submit"
+                          disabled={isSubmittingGuess || !guess.trim()}
+                          className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
+                        >
+                          {isSubmittingGuess ? 'Tahmin Ediliyor...' : 'Tahmin Et'}
+                        </button>
+                        
+                        <button
+                          type="button"
+                          onClick={handlePass}
+                          disabled={isPassing || isSubmittingGuess}
+                          className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
+                        >
+                          {isPassing ? 'Geçiliyor...' : 'Pas'}
+                        </button>
+                      </div>
                     </form>
 
                     {/* Message Display */}

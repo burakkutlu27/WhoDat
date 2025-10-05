@@ -605,6 +605,24 @@ export const roomFlowHelpers = {
     }
   },
 
+  // Pass turn (skip without penalty)
+  async passTurn(roomId: string, playerId: string): Promise<{ success: boolean; message: string }> {
+    const gameState = await roomFlowHelpers.getGameState(roomId)
+    
+    if (!gameState.isActive) {
+      throw new Error('Game is not active')
+    }
+
+    if (gameState.currentPlayerId !== playerId) {
+      throw new Error('Not your turn')
+    }
+
+    // Move to next player and select new identity
+    await roomFlowHelpers.nextTurn(roomId)
+    
+    return { success: true, message: 'Sıra atlanıyor' }
+  },
+
   // Move to next turn
   async nextTurn(roomId: string): Promise<void> {
     const gameState = await roomFlowHelpers.getGameState(roomId)
