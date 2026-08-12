@@ -1,77 +1,29 @@
 'use client'
 
+import { Moon, Sun } from 'lucide-react'
+
 import { useTheme } from '@/contexts/ThemeContext'
-import { useEffect, useState } from 'react'
 
+/**
+ * Hangi ikonun görüneceğine JS değil CSS karar verir: her ikisi de render edilir ve
+ * Tailwind'in `dark:` varyantı <html> üzerindeki sınıfa göre birini gizler.
+ *
+ * Bunun nedeni hidrasyon: sunucu kullanıcının temasını bilemez. Önceki sürüm bunu bir
+ * `mounted` bayrağıyla çözüyordu, yani düğme ilk render'da hep güneş ikonu gösterip
+ * sonra değişiyordu. CSS ile ikon daha ilk boyamada doğru oluyor.
+ */
 export default function ThemeSwitcher() {
-  const [mounted, setMounted] = useState(false)
-  const { theme, toggleTheme } = useTheme()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return (
-      <button
-        className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
-        aria-label="Toggle theme"
-      >
-        <svg
-          className="h-5 w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-          />
-        </svg>
-      </button>
-    )
-  }
+  const { toggleTheme } = useTheme()
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
-      aria-label="Toggle theme"
+      aria-label="Açık ve koyu tema arasında geçiş yap"
+      className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-900 shadow-sm transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
     >
-      {theme === 'light' ? (
-        <svg
-          className="h-5 w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-          />
-        </svg>
-      ) : (
-        <svg
-          className="h-5 w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-          />
-        </svg>
-      )}
+      <Sun className="hidden h-5 w-5 dark:block" aria-hidden="true" />
+      <Moon className="h-5 w-5 dark:hidden" aria-hidden="true" />
     </button>
   )
 }

@@ -1,297 +1,197 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { Crown } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { supabase, whoDatHelpers, roomFlowHelpers } from '@/utils/supabaseClient'
+import { use, useEffect, useState } from 'react'
 
-interface Player {
-  id: string
-  nickname: string
-  is_host: boolean
-  score: number
-}
+import { ApiClientError, apiRequest } from '@/lib/apiClient'
+import { useGameState } from '@/lib/useGameState'
 
-interface Room {
-  id: string
-  room_code: string
-  status: 'waiting' | 'playing' | 'finished' | 'closed'
-  players: Player[]
-}
-
-export default function ScoresPage({ params }: { params: { id: string } }) {
+export default function RoomScoresPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: roomId } = use(params)
   const router = useRouter()
-  const [room, setRoom] = useState<Room | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [playerId, setPlayerId] = useState<string | null>(null)
-  const [isHost, setIsHost] = useState(false)
+  const { state, phase, error, refresh } = useGameState(roomId)
 
-  const loadRoom = useCallback(async () => {
-    try {
-      const roomData = await whoDatHelpers.getRoomWithPlayers(params.id)
-      
-      if (!roomData) {
-        router.push('/')
-        return
-      }
+  const [isBusy, setIsBusy] = useState(false)
+  const [actionError, setActionError] = useState<string | null>(null)
 
-      // Sort players by score (highest first)
-      const sortedPlayers = roomData.players.sort((a: any, b: any) => b.score - a.score)
-      
-      setRoom({
-        ...roomData,
-        players: sortedPlayers
-      })
-    } catch (err) {
-      console.error('Error loading room:', err)
-      router.push('/')
-    } finally {
-      setIsLoading(false)
-    }
-  }, [params.id, router])
+  const status = state?.room.status
+
+  // Oda sahibi yeni tur başlattığında herkes bekleme odasına döner.
+  useEffect(() => {
+    if (status === 'waiting') router.replace(`/room/${roomId}`)
+    else if (status === 'playing') router.replace(`/game/${roomId}`)
+    else if (status === 'closed') router.replace('/')
+  }, [status, roomId, router])
 
   useEffect(() => {
-    // Get player info from localStorage
-    const storedPlayerId = localStorage.getItem('playerId')
-    const storedIsHost = localStorage.getItem('isHost')
-    
-    if (!storedPlayerId) {
-      router.push('/')
-      return
+    if (error?.status === 401 || error?.code === 'wrong_room' || error?.code === 'player_not_in_room') {
+      router.replace('/')
     }
-    
-    setPlayerId(storedPlayerId)
-    setIsHost(storedIsHost === 'true')
-    
-    loadRoom()
-    
-    // Setup realtime subscription to prevent redirect
-    const channel = supabase
-      .channel(`scores-${params.id}`)
-      .on('postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'rooms',
-          filter: `id=eq.${params.id}`
-        },
-        (payload) => {
-          console.log('Room status change detected:', payload.new.status)
-          // If room status changes from finished, reload
-          if (payload.new.status !== 'finished') {
-            loadRoom()
-          }
-        }
-      )
-      .subscribe((status) => {
-        console.log('Scores realtime subscription status:', status)
-      })
-
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [params.id, router, loadRoom])
+  }, [error, router])
 
   const handlePlayAgain = async () => {
+    setIsBusy(true)
+    setActionError(null)
     try {
-      // Reset game state
-      await whoDatHelpers.updateRoomStatus(params.id, 'waiting')
-      await roomFlowHelpers.resetGame(params.id)
-      
-      // Redirect to room
-      router.push(`/room/${params.id}`)
-    } catch (err) {
-      console.error('Error resetting game:', err)
+      await apiRequest(`/api/rooms/${roomId}/reset`, { method: 'POST' })
+      router.push(`/room/${roomId}`)
+    } catch (caught) {
+      setActionError(
+        caught instanceof ApiClientError ? caught.message : 'Yeni tur başlatılamadı.',
+      )
+      setIsBusy(false)
     }
   }
 
-  const handleLeaveGame = async () => {
+  const handleLeave = async () => {
     try {
-      if (playerId) {
-        await whoDatHelpers.removePlayerFromRoom(playerId)
-        await whoDatHelpers.checkAndCloseEmptyRoom(params.id)
-      }
-    } catch (err) {
-      console.error('Error leaving game:', err)
+      await apiRequest(`/api/rooms/${roomId}/leave`, { method: 'POST' })
     } finally {
-      localStorage.removeItem('playerId')
-      localStorage.removeItem('playerNickname')
-      localStorage.removeItem('isHost')
       router.push('/')
     }
   }
 
-  if (isLoading) {
+  if (phase === 'loading') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300">Sonuçlar yükleniyor...</p>
+      <div className="min-h-[calc(100vh-4rem)] bg-gray-50 p-4 dark:bg-gray-900">
+        <div className="mx-auto max-w-3xl space-y-6" aria-busy="true" aria-label="Sonuçlar yükleniyor">
+          <div className="h-32 animate-pulse rounded-2xl bg-white dark:bg-gray-800" />
+          <div className="h-72 animate-pulse rounded-2xl bg-white dark:bg-gray-800" />
         </div>
       </div>
     )
   }
 
-  if (!room) {
+  if (phase === 'error' || !state) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">❌</span>
-          </div>
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">Oyun Bulunamadı</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">Oyun bilgileri yüklenemedi</p>
-          <button
-            onClick={() => router.push('/')}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-xl transition-colors"
-          >
-            Ana Sayfaya Dön
-          </button>
-        </div>
-      </div>
-    )
-  }
-
-  const winner = room.players[0] // Highest score (already sorted)
-  const isWinner = winner && playerId === winner.id
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 dark:from-gray-900 dark:to-gray-800 p-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-                🏆 Oyun Bitti!
-              </h1>
-              <div className="flex items-center space-x-4">
-                <div className="bg-purple-100 dark:bg-purple-900/20 px-3 py-1 rounded-full">
-                  <span className="text-purple-600 dark:text-purple-400 font-mono text-lg">
-                    {room.room_code}
-                  </span>
-                </div>
-                <span className="text-gray-600 dark:text-gray-300">
-                  {room.players.length} oyuncu
-                </span>
-              </div>
-            </div>
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+        <div className="max-w-md text-center">
+          <h1 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+            Sonuçlar açılamadı
+          </h1>
+          <p className="mb-6 text-gray-600 dark:text-gray-300">
+            {error?.message ?? 'Sonuç bilgileri yüklenemedi.'}
+          </p>
+          <div className="flex justify-center gap-3">
             <button
-              onClick={handleLeaveGame}
-              className="bg-red-100 dark:bg-red-900/20 hover:bg-red-200 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 px-4 py-2 rounded-xl transition-colors"
+              onClick={() => void refresh()}
+              className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
             >
-              Oyundan Çık
+              Tekrar dene
+            </button>
+            <button
+              onClick={() => router.push('/')}
+              className="rounded-xl bg-gray-100 px-6 py-3 font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200"
+            >
+              Ana sayfa
             </button>
           </div>
         </div>
+      </div>
+    )
+  }
 
-        {/* Winner Announcement */}
-        <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl shadow-xl p-8 mb-6 text-center">
-          <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-4xl">👑</span>
-          </div>
-          <h2 className="text-2xl font-bold text-white mb-2">
-            {isWinner ? 'Tebrikler! Sen Kazandın!' : `${winner?.nickname} Kazandı!`}
-          </h2>
-          <p className="text-white/90 text-lg">
-            {winner?.score} puan ile birinci oldu!
+  const standings = [...state.players].sort((a, b) => b.score - a.score)
+  const topScore = standings[0]?.score ?? 0
+  // Beraberlikte birden fazla kazanan olabilir.
+  const winners = standings.filter((player) => player.score === topScore && topScore > 0)
+
+  return (
+    <div className="min-h-[calc(100vh-4rem)] bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="mx-auto max-w-3xl space-y-6">
+        <header className="rounded-2xl bg-white p-6 text-center shadow-sm dark:bg-gray-800">
+          <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Oyun bitti</h1>
+          {winners.length === 0 ? (
+            <p className="text-gray-600 dark:text-gray-300">Bu turda kimse puan alamadı.</p>
+          ) : winners.length === 1 ? (
+            <p className="text-gray-600 dark:text-gray-300">
+              <span className="font-semibold text-gray-900 dark:text-white">
+                {winners[0]!.nickname}
+              </span>{' '}
+              {topScore} puanla kazandı.
+            </p>
+          ) : (
+            <p className="text-gray-600 dark:text-gray-300">
+              Beraberlik: {winners.map((winner) => winner.nickname).join(', ')} — {topScore} puan.
+            </p>
+          )}
+          <p className="mt-3 font-mono text-sm tracking-widest text-gray-500 dark:text-gray-400">
+            {state.room.roomCode}
           </p>
-        </div>
+        </header>
 
-        {/* Leaderboard */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
-          <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6 text-center">
-            🏅 Puan Tablosu
-          </h3>
-          
-          <div className="space-y-4">
-            {room.players.map((player, index) => {
-              const isCurrentPlayer = player.id === playerId
-              const isPodium = index < 3
-              
+        <section className="rounded-2xl bg-white p-6 shadow-sm dark:bg-gray-800">
+          <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Puan tablosu</h2>
+          <ol className="space-y-3">
+            {standings.map((player, index) => {
+              const isYou = player.id === state.you.playerId
               return (
-                <div
+                <li
                   key={player.id}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    isCurrentPlayer
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                      : isPodium
-                      ? 'border-yellow-400 bg-yellow-50 dark:bg-yellow-900/20'
-                      : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700'
+                  className={`flex items-center gap-4 rounded-xl border p-4 ${
+                    isYou
+                      ? 'border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-900/20'
+                      : 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-700/40'
                   }`}
                 >
-                  <div className="flex items-center space-x-4">
-                    {/* Rank */}
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-                      index === 0 
-                        ? 'bg-yellow-400 text-yellow-900' 
-                        : index === 1 
-                        ? 'bg-gray-300 text-gray-700' 
-                        : index === 2 
-                        ? 'bg-orange-400 text-orange-900'
-                        : 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
-                    }`}>
-                      {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : index + 1}
-                    </div>
-                    
-                    {/* Player Info */}
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-bold text-gray-800 dark:text-white text-lg">
-                          {player.nickname}
-                        </span>
-                        {player.is_host && (
-                          <span className="bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 text-xs px-2 py-1 rounded-full">
-                            Host
-                          </span>
-                        )}
-                        {isCurrentPlayer && (
-                          <span className="bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded-full">
-                            Sen
-                          </span>
-                        )}
-                        {isPodium && (
-                          <span className="bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 text-xs px-2 py-1 rounded-full">
-                            Podium
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        {player.score} puan
-                      </p>
-                    </div>
-                    
-                    {/* Score Display */}
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-gray-800 dark:text-white">
-                        {player.score}
-                      </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        puan
-                      </div>
-                    </div>
+                  <span className="w-8 shrink-0 text-center text-lg font-bold text-gray-500 dark:text-gray-400">
+                    {index + 1}
+                  </span>
+                  <div className="flex min-w-0 flex-1 items-center gap-2">
+                    {player.isHost && (
+                      <Crown className="h-4 w-4 shrink-0 text-amber-500" aria-label="Oda sahibi" />
+                    )}
+                    <span className="truncate font-semibold text-gray-900 dark:text-white">
+                      {player.nickname}
+                    </span>
+                    {isYou && (
+                      <span className="shrink-0 rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
+                        Sen
+                      </span>
+                    )}
                   </div>
-                </div>
+                  <span className="shrink-0 text-xl font-bold text-gray-900 dark:text-white">
+                    {player.score}
+                  </span>
+                </li>
               )
             })}
+          </ol>
+        </section>
+
+        {actionError && (
+          <div
+            role="alert"
+            className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300"
+          >
+            {actionError}
           </div>
+        )}
+
+        <div className="flex flex-col gap-3 sm:flex-row">
+          {state.you.isHost && (
+            <button
+              onClick={() => void handlePlayAgain()}
+              disabled={isBusy}
+              className="flex-1 rounded-xl bg-green-600 px-6 py-3 font-semibold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+            >
+              {isBusy ? 'Hazırlanıyor...' : 'Yeni tur'}
+            </button>
+          )}
+          <button
+            onClick={() => void handleLeave()}
+            className="flex-1 rounded-xl bg-gray-100 px-6 py-3 font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+          >
+            Odadan çık
+          </button>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button
-            onClick={handlePlayAgain}
-            className="flex-1 bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
-          >
-            🔄 Tekrar Oyna
-          </button>
-          
-          <button
-            onClick={() => router.push('/')}
-            className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
-          >
-            🏠 Ana Sayfa
-          </button>
-        </div>
+        {!state.you.isHost && (
+          <p className="text-center text-sm text-gray-600 dark:text-gray-400" aria-live="polite">
+            Oda sahibi yeni bir tur başlatabilir.
+          </p>
+        )}
       </div>
     </div>
   )

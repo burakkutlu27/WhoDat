@@ -75,13 +75,6 @@ export default function Home() {
               Odaya Katıl
             </button>
             
-            <button
-              onClick={() => router.push('/scores')}
-              className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium py-3 px-6 rounded-xl transition-colors"
-            >
-              <span className="mr-2">🏆</span>
-              Skorları Gör
-            </button>
           </div>
         </div>
       </div>

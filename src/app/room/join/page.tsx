@@ -1,135 +1,120 @@
 'use client'
 
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { roomFlowHelpers } from '@/utils/supabaseClient'
+import { useState } from 'react'
 
-export default function JoinRoom() {
+import { ApiClientError, apiRequest } from '@/lib/apiClient'
+
+export default function JoinRoomPage() {
   const router = useRouter()
   const [roomCode, setRoomCode] = useState('')
   const [nickname, setNickname] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleJoinRoom = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!roomCode.trim() || !nickname.trim()) {
-      setError('Lütfen oda kodu ve takma adınızı girin')
-      return
-    }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    if (!roomCode.trim() || !nickname.trim() || isSubmitting) return
 
-    setIsLoading(true)
-    setError('')
+    setIsSubmitting(true)
+    setError(null)
 
     try {
-      const { roomId, playerId } = await roomFlowHelpers.joinRoom(roomCode.trim().toUpperCase(), nickname.trim())
-      
-      // Store player info in localStorage for the session
-      localStorage.setItem('playerId', playerId)
-      localStorage.setItem('playerNickname', nickname.trim())
-      localStorage.setItem('isHost', 'false')
-      
-      // Redirect to room waiting screen
+      const { roomId } = await apiRequest<{ roomId: string }>('/api/rooms/join', {
+        method: 'POST',
+        body: { roomCode: roomCode.trim(), nickname: nickname.trim() },
+      })
       router.push(`/room/${roomId}`)
-    } catch (err: any) {
-      if (err.message === 'Room not found') {
-        setError('Oda bulunamadı. Oda kodunu kontrol edin.')
-      } else if (err.message === 'Room is not accepting new players') {
-        setError('Bu oda yeni oyuncu kabul etmiyor.')
-      } else if (err.message === 'Room is full (maximum 6 players allowed)') {
-        setError('Oda dolu (maksimum 6 oyuncu).')
-      } else {
-        setError('Odaya katılırken bir hata oluştu. Lütfen tekrar deneyin.')
-      }
-      console.error('Error joining room:', err)
-    } finally {
-      setIsLoading(false)
+    } catch (caught) {
+      // Sunucu her hata için kullanıcıya gösterilebilir bir mesaj döndürüyor;
+      // burada ayrıca metin eşlemeye gerek yok.
+      setError(
+        caught instanceof ApiClientError ? caught.message : 'Odaya katılınamadı. Tekrar deneyin.',
+      )
+      setIsSubmitting(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">🚪</span>
-            </div>
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-              Odaya Katıl
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              Oda kodunu girerek mevcut bir oyuna katılın
-            </p>
-          </div>
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="w-full max-w-md">
+        <div className="rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800">
+          <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">Odaya Katıl</h1>
+          <p className="mb-8 text-gray-600 dark:text-gray-300">
+            Arkadaşınızın paylaştığı 6 haneli oda kodunu girin.
+          </p>
 
-          {/* Form */}
-          <form onSubmit={handleJoinRoom} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" noValidate>
             <div>
-              <label htmlFor="roomCode" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Oda Kodu
+              <label
+                htmlFor="roomCode"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Oda kodu
               </label>
               <input
-                type="text"
                 id="roomCode"
+                type="text"
+                inputMode="text"
                 value={roomCode}
-                onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
-                placeholder="Örn: ABC123"
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors text-center text-lg font-mono tracking-wider"
+                onChange={(event) => setRoomCode(event.target.value.toUpperCase())}
+                placeholder="ABCDEF"
                 maxLength={6}
-                disabled={isLoading}
+                autoCapitalize="characters"
+                autoComplete="off"
+                spellCheck={false}
+                disabled={isSubmitting}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-center font-mono text-lg tracking-[0.3em] transition-colors focus:border-transparent focus:ring-2 focus:ring-blue-500 disabled:opacity-60 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>
 
             <div>
-              <label htmlFor="nickname" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Takma Adınız
+              <label
+                htmlFor="nickname"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Takma adınız
               </label>
               <input
-                type="text"
                 id="nickname"
+                type="text"
                 value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                placeholder="Örn: Ahmet, Oyuncu123"
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
+                onChange={(event) => setNickname(event.target.value)}
+                placeholder="Örn: Ayşe"
                 maxLength={20}
-                disabled={isLoading}
+                autoComplete="nickname"
+                disabled={isSubmitting}
+                aria-describedby={error ? 'join-room-error' : undefined}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-blue-500 disabled:opacity-60 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>
 
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
-                <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+              <div
+                id="join-room-error"
+                role="alert"
+                className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300"
+              >
+                {error}
               </div>
             )}
 
             <div className="space-y-3">
               <button
                 type="submit"
-                disabled={isLoading || !roomCode.trim() || !nickname.trim()}
-                className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
+                disabled={isSubmitting || !roomCode.trim() || !nickname.trim()}
+                className="w-full rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:bg-gray-400"
               >
-                {isLoading ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Odaya Katılıyor...
-                  </span>
-                ) : (
-                  'Odaya Katıl'
-                )}
+                {isSubmitting ? 'Katılınıyor...' : 'Odaya katıl'}
               </button>
 
               <button
                 type="button"
                 onClick={() => router.push('/')}
-                className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium py-3 px-6 rounded-xl transition-colors"
-                disabled={isLoading}
+                disabled={isSubmitting}
+                className="w-full rounded-xl bg-gray-100 px-6 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
               >
-                Geri Dön
+                Geri dön
               </button>
             </div>
           </form>

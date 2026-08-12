@@ -1,538 +1,315 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { Check, Clock, Crown } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { supabase, whoDatHelpers, roomFlowHelpers } from '@/utils/supabaseClient'
-import { Check, Clock } from 'lucide-react'
+import { use, useEffect, useState } from 'react'
 
-interface Player {
-  id: string
-  nickname: string
-  is_host: boolean
-  score: number
-}
+import { ApiClientError, apiRequest } from '@/lib/apiClient'
+import type { SubmitNamesResult } from '@/lib/game/types'
+import { useGameState } from '@/lib/useGameState'
 
-interface Room {
-  id: string
-  room_code: string
-  status: 'waiting' | 'playing' | 'finished'
-  players: Player[]
-}
+const NAME_SLOTS = 3
 
-export default function RoomPage({ params }: { params: { id: string } }) {
+export default function RoomPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: roomId } = use(params)
   const router = useRouter()
-  const [room, setRoom] = useState<Room | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const { state, phase, error, degraded, refresh } = useGameState(roomId)
+
+  const [names, setNames] = useState<string[]>(Array(NAME_SLOTS).fill(''))
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isStarting, setIsStarting] = useState(false)
-  const [error, setError] = useState('')
-  const [playerId, setPlayerId] = useState<string | null>(null)
-  const [isHost, setIsHost] = useState(false)
-  const [names, setNames] = useState<string[]>(['', '', ''])
-  const [submittedNames, setSubmittedNames] = useState<string[]>([])
-  const [isSubmittingNames, setIsSubmittingNames] = useState(false)
-  const [allPlayersSubmittedNames, setAllPlayersSubmittedNames] = useState(false)
-  const [playersWithNames, setPlayersWithNames] = useState<Set<string>>(new Set())
+  const [actionError, setActionError] = useState<string | null>(null)
+  const [duplicates, setDuplicates] = useState<string[]>([])
 
-  const loadRoom = useCallback(async () => {
-    try {
-      const roomData = await whoDatHelpers.getRoomWithPlayers(params.id)
-      setRoom(roomData)
-      
-      // Check if room is closed
-      if (roomData.status === 'closed') {
-        router.push('/')
-        return
-      }
-      
-      // Check if game has started
-      if (roomData.status === 'playing') {
-        router.push(`/game/${params.id}`)
-        return
-      }
-      
-      // Check if all players have submitted names
-      if (playerId) {
-        const namesInRoom = await whoDatHelpers.getNamesInRoom(params.id)
-        const playerNames = namesInRoom.filter((name: any) => name.submitted_by === playerId)
-        setSubmittedNames(playerNames.map((name: any) => name.name_text))
-        
-        // Check if all players have submitted at least one name
-        const allPlayers = roomData.players
-        const playersWithNamesSet = new Set(namesInRoom.map((name: any) => name.submitted_by))
-        setPlayersWithNames(playersWithNamesSet)
-        const allSubmitted = allPlayers.every((player: any) => playersWithNamesSet.has(player.id))
-        setAllPlayersSubmittedNames(allSubmitted)
-      }
-    } catch (err) {
-      setError('Oda bilgileri yüklenirken bir hata oluştu')
-      console.error('Error loading room:', err)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [params.id, router, playerId])
+  const status = state?.room.status
 
+  // Oyun durumu değiştiğinde doğru ekrana yönlendir.
   useEffect(() => {
-    // Get player info from localStorage
-    const storedPlayerId = localStorage.getItem('playerId')
-    const storedIsHost = localStorage.getItem('isHost')
-    
-    if (!storedPlayerId) {
-      router.push('/')
+    if (!status) return
+    if (status === 'playing') router.replace(`/game/${roomId}`)
+    else if (status === 'finished') router.replace(`/scores/${roomId}`)
+    else if (status === 'closed') router.replace('/')
+  }, [status, roomId, router])
+
+  // Oturum yoksa oyuncu bu odaya ait değildir.
+  useEffect(() => {
+    if (error?.status === 401 || error?.code === 'wrong_room' || error?.code === 'player_not_in_room') {
+      router.replace('/')
+    }
+  }, [error, router])
+
+  const handleSubmitNames = async () => {
+    const filled = names.map((name) => name.trim()).filter(Boolean)
+    if (filled.length === 0) {
+      setActionError('En az bir isim girmelisiniz.')
       return
     }
-    
-    setPlayerId(storedPlayerId)
-    setIsHost(storedIsHost === 'true')
-    
-    // Load initial room data
-    loadRoom()
-    
-    // Setup realtime subscription with better error handling
-    const channel = supabase
-      .channel(`room-${params.id}`, {
-        config: {
-          broadcast: { self: true },
-          presence: { key: storedPlayerId }
-        }
-      })
-      .on('postgres_changes', 
-        { 
-          event: 'INSERT', 
-          schema: 'public', 
-          table: 'players',
-          filter: `room_id=eq.${params.id}`
-        }, 
-        (payload) => {
-          console.log('New player joined:', payload.new)
-          loadRoom()
-        }
-      )
-      .on('postgres_changes', 
-        { 
-          event: 'DELETE', 
-          schema: 'public', 
-          table: 'players',
-          filter: `room_id=eq.${params.id}`
-        }, 
-        (payload) => {
-          console.log('Player left:', payload.old)
-          loadRoom()
-        }
-      )
-      .on('postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'rooms',
-          filter: `id=eq.${params.id}`
-        },
-        (payload) => {
-          console.log('Room status change detected:', payload.new.status)
-          // Check if room status changed to playing
-          if (payload.new.status === 'playing') {
-            router.push(`/game/${params.id}`)
-          } else {
-            // Reload room data for other status changes
-            loadRoom()
-          }
-        }
-      )
-      .on('postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'names',
-          filter: `room_id=eq.${params.id}`
-        },
-        (payload) => {
-          console.log('Names table change detected:', payload)
-          loadRoom()
-        }
-      )
-      .subscribe((status) => {
-        console.log('Realtime subscription status:', status)
-        if (status === 'SUBSCRIBED') {
-          console.log('Successfully subscribed to room updates')
-        } else if (status === 'CHANNEL_ERROR') {
-          console.error('Realtime subscription error')
-        }
-      })
 
-    // Fallback: Polling every 3 seconds if realtime fails
-    const pollingInterval = setInterval(() => {
-      console.log('Polling for room updates...')
-      loadRoom()
-    }, 3000)
+    setIsSubmitting(true)
+    setActionError(null)
+    setDuplicates([])
 
-    return () => {
-      console.log('Cleaning up realtime subscription and polling')
-      supabase.removeChannel(channel)
-      clearInterval(pollingInterval)
-    }
-  }, [params.id, router, loadRoom])
-
-  const handleStartGame = async () => {
-    if (!isHost) return
-    
-    setIsStarting(true)
-    setError('')
     try {
-      console.log('Starting game...')
-      
-      // Assign names to players
-      console.log('Assigning names...')
-      await roomFlowHelpers.assignNames(params.id)
-      
-      // Start the room (set status to playing)
-      console.log('Setting room status to playing...')
-      await roomFlowHelpers.startGame(params.id)
-      
-      // Start the active game (set up game state)
-      console.log('Starting active game...')
-      await roomFlowHelpers.startActiveGame(params.id)
-      
-      console.log('Game started successfully, redirecting...')
-      // Direct redirect instead of waiting for realtime
-      router.push(`/game/${params.id}`)
-    } catch (err: any) {
-      setError(err.message || 'Oyun başlatılırken bir hata oluştu')
-      console.error('Error starting game:', err)
+      const result = await apiRequest<SubmitNamesResult>(`/api/rooms/${roomId}/names`, {
+        method: 'POST',
+        body: { names: filled },
+      })
+      setDuplicates(result.duplicates)
+      setNames(Array(NAME_SLOTS).fill(''))
+      await refresh()
+    } catch (caught) {
+      setActionError(caught instanceof ApiClientError ? caught.message : 'İsimler kaydedilemedi.')
     } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleStart = async () => {
+    setIsStarting(true)
+    setActionError(null)
+    try {
+      await apiRequest(`/api/rooms/${roomId}/start`, { method: 'POST' })
+      router.push(`/game/${roomId}`)
+    } catch (caught) {
+      setActionError(caught instanceof ApiClientError ? caught.message : 'Oyun başlatılamadı.')
       setIsStarting(false)
     }
   }
 
-  const handleNameChange = (index: number, value: string) => {
-    const newNames = [...names]
-    newNames[index] = value
-    setNames(newNames)
-  }
-
-  const handleSubmitNames = async () => {
-    if (!playerId) return
-    
-    const validNames = names.filter(name => name.trim() !== '')
-    if (validNames.length === 0) {
-      setError('En az bir isim girmelisiniz')
-      return
-    }
-
-    setIsSubmittingNames(true)
-    setError('')
-
+  const handleLeave = async () => {
     try {
-      // Submit each name
-      for (const name of validNames) {
-        await whoDatHelpers.submitName(params.id, playerId, name.trim())
-      }
-      
-      setSubmittedNames(validNames)
-      setNames(['', '', ''])
-    } catch (err) {
-      setError('İsimler kaydedilirken bir hata oluştu')
-      console.error('Error submitting names:', err)
+      await apiRequest(`/api/rooms/${roomId}/leave`, { method: 'POST' })
     } finally {
-      setIsSubmittingNames(false)
-    }
-  }
-
-  const handleLeaveRoom = async () => {
-    try {
-      // Remove player from database if playerId exists
-      if (playerId) {
-        await whoDatHelpers.removePlayerFromRoom(playerId)
-        
-        // Check if room is now empty and close it
-        await whoDatHelpers.checkAndCloseEmptyRoom(params.id)
-      }
-    } catch (err) {
-      console.error('Error removing player from room:', err)
-    } finally {
-      // Clean up localStorage
-      localStorage.removeItem('playerId')
-      localStorage.removeItem('playerNickname')
-      localStorage.removeItem('isHost')
       router.push('/')
     }
   }
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300">Oda yükleniyor...</p>
-        </div>
-      </div>
-    )
+  if (phase === 'loading') {
+    return <RoomSkeleton />
   }
 
-  if (!room) {
+  if (phase === 'error' || !state) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">❌</span>
-          </div>
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">Oda Bulunamadı</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">{error}</p>
-          <button
-            onClick={() => router.push('/')}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-xl transition-colors"
-          >
-            Ana Sayfaya Dön
-          </button>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 dark:from-gray-900 dark:to-gray-800 p-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                Oda Bekleme Ekranı
-              </h1>
-              <div className="flex items-center space-x-4">
-                <div className="bg-purple-100 dark:bg-purple-900/20 px-3 py-1 rounded-full">
-                  <span className="text-purple-600 dark:text-purple-400 font-mono text-lg">
-                    {room.room_code}
-                  </span>
-                </div>
-                <span className="text-gray-600 dark:text-gray-300">
-                  {room.players.length} oyuncu
-                </span>
-              </div>
-            </div>
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+        <div className="max-w-md text-center">
+          <h1 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Oda açılamadı</h1>
+          <p className="mb-6 text-gray-600 dark:text-gray-300">
+            {error?.message ?? 'Oda bilgileri yüklenemedi.'}
+          </p>
+          <div className="flex justify-center gap-3">
             <button
-              onClick={handleLeaveRoom}
-              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-xl transition-colors"
+              onClick={() => void refresh()}
+              className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
             >
-              Odadan Çık
+              Tekrar dene
+            </button>
+            <button
+              onClick={() => router.push('/')}
+              className="rounded-xl bg-gray-100 px-6 py-3 font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200"
+            >
+              Ana sayfa
             </button>
           </div>
         </div>
+      </div>
+    )
+  }
 
-        {/* Name Input Form */}
-        {submittedNames.length === 0 && (
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
-            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
-              İsimlerinizi Girin
+  const hasSubmitted = state.you.submittedNames.length > 0
+
+  return (
+    <div className="min-h-[calc(100vh-4rem)] bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="mx-auto max-w-4xl space-y-6">
+        <header className="rounded-2xl bg-white p-6 shadow-sm dark:bg-gray-800">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h1 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
+                Bekleme odası
+              </h1>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="rounded-full bg-blue-50 px-3 py-1 font-mono text-lg tracking-widest text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                  {state.room.roomCode}
+                </span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  {state.players.length} oyuncu
+                </span>
+                {degraded && (
+                  <span className="text-sm text-amber-600 dark:text-amber-400">
+                    Canlı bağlantı kurulamadı, güncellemeler gecikebilir
+                  </span>
+                )}
+              </div>
+            </div>
+            <button
+              onClick={() => void handleLeave()}
+              className="rounded-xl bg-gray-100 px-4 py-2.5 font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+            >
+              Odadan çık
+            </button>
+          </div>
+        </header>
+
+        {!hasSubmitted && (
+          <section className="rounded-2xl bg-white p-6 shadow-sm dark:bg-gray-800">
+            <h2 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
+              İsimlerinizi girin
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Her oyuncu 3 isim yazabilir (ünlü, karakter, tanıdık vb.)
+            <p className="mb-6 text-gray-600 dark:text-gray-300">
+              En fazla {NAME_SLOTS} isim yazın: ünlü, film karakteri, ortak tanıdık...
             </p>
-            
+
             <div className="space-y-4">
               {names.map((name, index) => (
                 <div key={index}>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label
+                    htmlFor={`name-${index}`}
+                    className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
                     İsim {index + 1}
                   </label>
                   <input
+                    id={`name-${index}`}
                     type="text"
                     value={name}
-                    onChange={(e) => handleNameChange(index, e.target.value)}
-                    placeholder={`İsim ${index + 1} girin...`}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
-                    disabled={isSubmittingNames}
+                    maxLength={60}
+                    disabled={isSubmitting}
+                    onChange={(event) => {
+                      const next = [...names]
+                      next[index] = event.target.value
+                      setNames(next)
+                    }}
+                    className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500 disabled:opacity-60 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               ))}
             </div>
 
-            {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 mt-4">
-                <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+            {actionError && (
+              <div
+                role="alert"
+                className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300"
+              >
+                {actionError}
               </div>
             )}
 
             <button
-              onClick={handleSubmitNames}
-              disabled={isSubmittingNames || names.every(name => name.trim() === '')}
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg mt-6"
+              onClick={() => void handleSubmitNames()}
+              disabled={isSubmitting || names.every((name) => !name.trim())}
+              className="mt-6 w-full rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
             >
-              {isSubmittingNames ? 'İsimler Kaydediliyor...' : 'İsimleri Gönder'}
+              {isSubmitting ? 'Kaydediliyor...' : 'İsimleri gönder'}
             </button>
-          </div>
+          </section>
         )}
 
-        {/* Submitted Names Display */}
-        {submittedNames.length > 0 && (
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 mb-6">
-            <h3 className="text-lg font-semibold text-green-800 dark:text-green-400 mb-2">
-              ✅ İsimleriniz Kaydedildi
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {submittedNames.map((name, index) => (
-                <span
-                  key={index}
-                  className="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm"
+        {hasSubmitted && (
+          <section className="rounded-2xl border border-green-200 bg-green-50 p-5 dark:border-green-800 dark:bg-green-900/20">
+            <h2 className="mb-3 font-semibold text-green-800 dark:text-green-300">
+              İsimleriniz kaydedildi
+            </h2>
+            <ul className="flex flex-wrap gap-2">
+              {state.you.submittedNames.map((name) => (
+                <li
+                  key={name}
+                  className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-800 dark:bg-green-800/50 dark:text-green-200"
                 >
                   {name}
-                </span>
+                </li>
               ))}
-            </div>
-          </div>
+            </ul>
+            {duplicates.length > 0 && (
+              <p className="mt-3 text-sm text-amber-700 dark:text-amber-400">
+                Şunlar bu odada zaten yazılmıştı, atlandı: {duplicates.join(', ')}
+              </p>
+            )}
+          </section>
         )}
 
-        {/* Players List */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
-            Oyuncular ({room.players.length})
+        <section className="rounded-2xl bg-white p-6 shadow-sm dark:bg-gray-800">
+          <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+            Oyuncular ({state.players.length})
           </h2>
-          
-          {room.players.length === 0 ? (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">👥</span>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300">Henüz oyuncu yok</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {room.players.map((player) => (
-                <div
+
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {state.players.map((player) => {
+              const isYou = player.id === state.you.playerId
+              return (
+                <li
                   key={player.id}
-                  className={`p-4 rounded-xl border-2 transition-colors ${
-                    player.id === playerId
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                      : playersWithNames.has(player.id)
-                      ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
-                      : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700'
+                  className={`flex items-center justify-between rounded-xl border p-4 ${
+                    isYou
+                      ? 'border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-900/20'
+                      : 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-700/40'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        player.is_host 
-                          ? 'bg-yellow-100 dark:bg-yellow-900/20' 
-                          : 'bg-purple-100 dark:bg-purple-900/20'
-                      }`}>
-                        <span className="text-lg">
-                          {player.is_host ? '👑' : '👤'}
-                        </span>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2">
-                          <span className="font-medium text-gray-800 dark:text-white">
-                            {player.nickname}
-                          </span>
-                          {player.is_host && (
-                            <span className="bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 text-xs px-2 py-1 rounded-full">
-                              Host
-                            </span>
-                          )}
-                          {player.id === playerId && (
-                            <span className="bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded-full">
-                              Sen
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          Skor: {player.score}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {/* Status Icon */}
-                    <div className="flex items-center justify-center">
-                      {playersWithNames.has(player.id) ? (
-                        <div className="w-8 h-8 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
-                          <Check className="w-5 h-5 text-green-600 dark:text-green-400" />
-                        </div>
-                      ) : (
-                        <div className="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center">
-                          <Clock className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
-                        </div>
-                      )}
-                    </div>
+                  <div className="flex min-w-0 items-center gap-2">
+                    {player.isHost && (
+                      <Crown className="h-4 w-4 shrink-0 text-amber-500" aria-label="Oda sahibi" />
+                    )}
+                    <span className="truncate font-medium text-gray-900 dark:text-white">
+                      {player.nickname}
+                    </span>
+                    {isYou && (
+                      <span className="shrink-0 rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
+                        Sen
+                      </span>
+                    )}
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
 
-        {/* Host Controls */}
-        {isHost && (
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-                Host Kontrolleri
-              </h3>
-              
-              {error && (
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 mb-6">
-                  <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
-                </div>
-              )}
+                  {player.hasSubmittedNames ? (
+                    <span className="flex shrink-0 items-center gap-1 text-sm text-green-700 dark:text-green-400">
+                      <Check className="h-4 w-4" aria-hidden="true" />
+                      Hazır
+                    </span>
+                  ) : (
+                    <span className="flex shrink-0 items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                      <Clock className="h-4 w-4" aria-hidden="true" />
+                      Bekleniyor
+                    </span>
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        </section>
 
+        <section className="rounded-2xl bg-white p-6 shadow-sm dark:bg-gray-800">
+          {state.you.isHost ? (
+            <>
               <button
-                onClick={handleStartGame}
-                disabled={isStarting || !allPlayersSubmittedNames || room.players.length < 2 || room.players.length > 6}
-                className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
+                onClick={() => void handleStart()}
+                disabled={isStarting || !state.canStart}
+                className="w-full rounded-xl bg-green-600 px-6 py-3 font-semibold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-400"
               >
-                {isStarting ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Oyun Başlatılıyor...
-                  </span>
-                ) : (
-                  'Oyunu Başlat'
-                )}
+                {isStarting ? 'Başlatılıyor...' : 'Oyunu başlat'}
               </button>
-              
-              {room.players.length < 2 && (
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-                  Oyunu başlatmak için en az 2 oyuncu gerekli
-                </p>
-              )}
-              
-              {room.players.length >= 6 && (
-                <p className="text-sm text-red-500 dark:text-red-400 mt-3">
-                  Oda dolu (maksimum 6 oyuncu)
-                </p>
-              )}
-              
-              {!allPlayersSubmittedNames && room.players.length >= 2 && (
-                <p className="text-sm text-orange-500 dark:text-orange-400 mt-3">
-                  Tüm oyuncuların isim göndermesini bekleyin
-                </p>
-              )}
-              
-              {allPlayersSubmittedNames && room.players.length >= 2 && (
-                <p className="text-sm text-green-500 dark:text-green-400 mt-3">
-                  ✅ Tüm oyuncular isimlerini gönderdi, oyunu başlatabilirsiniz
-                </p>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Waiting Message for Non-Hosts */}
-        {!isHost && (
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">⏳</span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
-                Host Oyunu Başlatmayı Bekliyor
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Oyun başladığında otomatik olarak yönlendirileceksiniz
+              <p className="mt-3 text-center text-sm text-gray-600 dark:text-gray-400" aria-live="polite">
+                {state.players.length < 2
+                  ? 'Oyunu başlatmak için en az 2 oyuncu gerekli.'
+                  : !state.allPlayersSubmittedNames
+                    ? 'Tüm oyuncuların isimlerini göndermesi bekleniyor.'
+                    : 'Herkes hazır, oyunu başlatabilirsiniz.'}
               </p>
-            </div>
-          </div>
-        )}
+            </>
+          ) : (
+            <p className="text-center text-gray-600 dark:text-gray-300" aria-live="polite">
+              Oda sahibinin oyunu başlatması bekleniyor. Başladığında otomatik yönlendirileceksiniz.
+            </p>
+          )}
+        </section>
+      </div>
+    </div>
+  )
+}
+
+function RoomSkeleton() {
+  return (
+    <div className="min-h-[calc(100vh-4rem)] bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="mx-auto max-w-4xl space-y-6" aria-busy="true" aria-label="Oda yükleniyor">
+        <div className="h-28 animate-pulse rounded-2xl bg-white dark:bg-gray-800" />
+        <div className="h-64 animate-pulse rounded-2xl bg-white dark:bg-gray-800" />
+        <div className="h-40 animate-pulse rounded-2xl bg-white dark:bg-gray-800" />
       </div>
     </div>
   )

@@ -4,17 +4,14 @@ import { useState } from 'react'
 
 interface VersionInfo {
   version: string
-  buildDate: string
   environment: string
 }
 
 export default function VersionDisplay() {
   const [isVisible, setIsVisible] = useState(false)
-  
-  // Doğrudan versiyon bilgisi
+
   const versionInfo: VersionInfo = {
     version: '1.0.0',
-    buildDate: new Date().toISOString().split('T')[0],
     environment: process.env.NODE_ENV || 'development'
   }
 
@@ -54,10 +51,6 @@ export default function VersionDisplay() {
               }`}>
                 {versionInfo.environment === 'production' ? 'Canlı' : 'Geliştirme'}
               </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Tarih:</span>
-              <span className="text-gray-800 dark:text-gray-200">{versionInfo.buildDate}</span>
             </div>
             <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
               <p className="text-xs text-gray-500 dark:text-gray-400">
