@@ -1,11 +1,17 @@
 import type { Metadata } from 'next'
-import { JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google'
+import { Caveat, JetBrains_Mono, Nunito } from 'next/font/google'
 import './globals.css'
 import ClientLayout from '@/components/ClientLayout'
 
-const jakarta = Plus_Jakarta_Sans({
+const caveat = Caveat({
   subsets: ['latin'],
-  variable: '--font-jakarta',
+  variable: '--font-caveat',
+  display: 'swap',
+})
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  variable: '--font-nunito',
   display: 'swap',
 })
 
@@ -46,6 +52,7 @@ export const metadata: Metadata = {
 /**
  * Tema sınıfını React hidrasyonundan önce uygular.
  * Ilk boyamadan önce çalıştığı için temasal parlamalar (flash) engellenir.
+ * Varsayılan tema dark olarak ayarlandı.
  */
 const themeInitScript = `
 (function(){try{
@@ -63,11 +70,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="tr" className={`${jakarta.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="tr" className={`${caveat.variable} ${nunito.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="bg-slate-50 font-sans text-slate-900 antialiased selection:bg-indigo-500 selection:text-white dark:bg-[#0B0F17] dark:text-slate-100">
+      <body className="bg-paper-bg font-sans text-ink antialiased">
         <ClientLayout>
           {children}
         </ClientLayout>
@@ -75,4 +82,3 @@ export default function RootLayout({
     </html>
   )
 }
-

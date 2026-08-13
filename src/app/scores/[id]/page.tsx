@@ -1,10 +1,11 @@
 'use client'
 
-import { Crown, Loader2, LogOut, Medal, RefreshCw, Trophy } from 'lucide-react'
+import { Award, BarChart2, Check, Copy, Crown, Loader2, LogOut, Medal, RefreshCw, Trophy } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 
+import Confetti from '@/components/Confetti'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { useGameState } from '@/lib/useGameState'
 
@@ -15,6 +16,8 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
 
   const [isBusy, setIsBusy] = useState(false)
   const [actionError, setActionError] = useState<string | null>(null)
+  const [showConfetti, setShowConfetti] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   const status = state?.room.status
 
@@ -29,6 +32,23 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
       router.replace('/')
     }
   }, [error, router])
+
+  useEffect(() => {
+    if (phase === 'ready' && state) {
+      setShowConfetti(true)
+    }
+  }, [phase, state])
+
+  const handleCopyCode = async () => {
+    if (!state?.room.roomCode) return
+    try {
+      await navigator.clipboard.writeText(state.room.roomCode)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // Fallback
+    }
+  }
 
   const handlePlayAgain = async () => {
     setIsBusy(true)
@@ -56,8 +76,8 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
     return (
       <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
         <div className="mx-auto max-w-3xl space-y-6" aria-busy="true" aria-label="Sonuçlar yükleniyor">
-          <div className="h-32 animate-pulse rounded-3xl bg-white/70 dark:bg-[#151D2A]/70" />
-          <div className="h-72 animate-pulse rounded-3xl bg-white/70 dark:bg-[#151D2A]/70" />
+          <div className="h-32 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />
+          <div className="h-72 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />
         </div>
       </div>
     )
@@ -67,22 +87,22 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
     return (
       <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
         <div className="max-w-md text-center">
-          <h1 className="mb-2 font-display text-xl font-bold text-slate-900 dark:text-white">
+          <h1 className="mb-2 font-display text-3xl font-bold text-ink">
             Sonuçlar Açılamadı
           </h1>
-          <p className="mb-6 text-sm text-slate-600 dark:text-slate-400">
+          <p className="mb-6 text-sm text-ink-faded">
             {error?.message ?? 'Sonuç bilgileri yüklenemedi.'}
           </p>
           <div className="flex justify-center gap-3">
             <button
               onClick={() => void refresh()}
-              className="rounded-xl bg-indigo-600 px-6 py-3 font-display font-semibold text-white hover:bg-indigo-500"
+              className="btn-pencil-red px-6 py-3 font-display text-base"
             >
               Tekrar Dene
             </button>
             <button
               onClick={() => router.push('/')}
-              className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-display font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+              className="btn-outline px-6 py-3 font-display text-base"
             >
               Ana Sayfa
             </button>
@@ -97,104 +117,138 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
   const winners = standings.filter((player) => player.score === topScore && topScore > 0)
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
+    <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
+      <Confetti trigger={showConfetti} />
       <div className="mx-auto max-w-3xl space-y-6">
         {/* Victory Header Card */}
         <motion.header
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="rounded-3xl border border-slate-200/80 bg-white/90 p-8 text-center shadow-xl shadow-slate-200/40 backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#151D2A]/90 dark:shadow-indigo-950/20"
+          initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+          className="paper-card-lg p-8 text-center shadow-xl"
         >
-          <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 shadow-md dark:bg-amber-950/60 dark:text-amber-400">
-            <Trophy className="h-8 w-8" />
-          </div>
+          <motion.div
+            initial={{ scale: 0, rotate: -30 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 15, delay: 0.2 }}
+            className="mb-3 inline-block rounded-2xl border-2 border-paper-border bg-paper-card p-3 text-pencil-yellow shadow-md animate-trophy-bounce"
+          >
+            <Trophy className="h-12 w-12" />
+          </motion.div>
 
-          <h1 className="font-display text-3xl font-black text-slate-900 dark:text-white">
+          <h1 className="font-display text-5xl font-bold text-ink">
             Oyun Bitti!
           </h1>
 
           {winners.length === 0 ? (
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+            <p className="mt-2 text-sm text-ink-faded">
               Bu turda kimse puan alamadı.
             </p>
           ) : winners.length === 1 ? (
-            <p className="mt-2 text-base text-slate-700 dark:text-slate-300">
-              <span className="font-display font-black text-amber-600 dark:text-amber-400">
+            <p className="mt-2 text-lg text-ink-faded">
+              <span className="highlight-yellow font-display text-2xl font-bold text-pencil-yellow">
                 {winners[0]!.nickname}
               </span>{' '}
-              toplam <span className="font-bold text-slate-900 dark:text-white">{topScore} Puan</span> alarak şampiyon oldu!
+              toplam <span className="font-bold text-ink">{topScore} Puan</span> alarak şampiyon oldu!
             </p>
           ) : (
-            <p className="mt-2 text-base text-slate-700 dark:text-slate-300">
+            <p className="mt-2 text-lg text-ink-faded">
               Beraberlik!{' '}
-              <span className="font-display font-black text-amber-600 dark:text-amber-400">
+              <span className="highlight-yellow font-display text-xl font-bold text-pencil-yellow">
                 {winners.map((winner) => winner.nickname).join(', ')}
               </span>{' '}
               — {topScore} Puan
             </p>
           )}
 
-          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 font-mono text-xs font-bold tracking-widest text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
-            Oda Kodu: {state.room.roomCode}
+          <div className="mt-5 flex justify-center">
+            <button
+              type="button"
+              onClick={() => void handleCopyCode()}
+              className="group relative inline-flex items-center gap-2 border-2 border-dashed border-pencil-red bg-paper-card px-5 py-2 font-mono text-base font-bold tracking-widest text-pencil-red transition-all hover:bg-pencil-red hover:text-white"
+              style={{ borderRadius: '6px 10px 4px 12px' }}
+            >
+              <span>ODA KODU: {state.room.roomCode}</span>
+              {copied ? (
+                <Check className="h-4 w-4 text-pencil-green" />
+              ) : (
+                <Copy className="h-4 w-4 opacity-60 group-hover:opacity-100" />
+              )}
+              {copied && (
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded bg-ink px-2 py-0.5 font-sans text-xs font-semibold text-paper-card shadow-md">
+                  Kopyalandı!
+                </span>
+              )}
+            </button>
           </div>
         </motion.header>
 
         {/* Final Standings List */}
-        <section className="rounded-3xl border border-slate-200/80 bg-white/90 p-6 shadow-xl shadow-slate-200/40 backdrop-blur-xl sm:p-8 dark:border-slate-800/80 dark:bg-[#151D2A]/90 dark:shadow-indigo-950/20">
-          <h2 className="mb-6 font-display text-xl font-bold text-slate-900 dark:text-white">
-            Final Puan Tablosu
+        <section className="paper-card p-6 sm:p-8">
+          <h2 className="mb-6 flex items-center gap-2 font-display text-3xl font-bold text-ink">
+            <BarChart2 className="h-6 w-6 text-pencil-blue" />
+            <span>Final Puan Tablosu</span>
           </h2>
 
           <ol className="space-y-3">
             {standings.map((player, index) => {
               const isYou = player.id === state.you.playerId
               const isWinner = index === 0 && player.score > 0
+
               return (
                 <motion.li
                   key={player.id}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.08 }}
-                  className={`flex items-center justify-between rounded-2xl border p-4 transition-all ${
+                  className={`flex items-center justify-between border-2 p-4 transition-all ${
                     isWinner
-                      ? 'border-amber-300 bg-amber-50/60 shadow-md dark:border-amber-700/60 dark:bg-amber-950/30'
+                      ? 'border-solid border-pencil-yellow bg-paper-card shadow-sm'
                       : isYou
-                        ? 'border-indigo-300 bg-indigo-50/50 dark:border-indigo-700/60 dark:bg-indigo-950/20'
-                        : 'border-slate-200/80 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/40'
+                        ? 'border-solid border-pencil-blue bg-paper-card'
+                        : 'border-dashed border-paper-border bg-paper-card'
                   }`}
+                  style={{ borderRadius: '10px 6px 12px 4px' }}
                 >
                   <div className="flex items-center gap-4 min-w-0">
                     <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-display text-base font-black ${
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center font-display text-lg font-bold ${
                         index === 0
-                          ? 'bg-amber-500 text-white shadow-md'
+                          ? 'bg-pencil-yellow text-white'
                           : index === 1
-                            ? 'bg-slate-400 text-white'
+                            ? 'bg-ink-faded text-white'
                             : index === 2
-                              ? 'bg-amber-700 text-white'
-                              : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-400'
+                              ? 'bg-pencil-orange text-white'
+                              : 'bg-paper-card text-ink-faded border-2 border-dashed border-paper-border'
                       }`}
+                      style={{ borderRadius: '8px 4px 10px 6px' }}
                     >
-                      {index === 0 ? <Medal className="h-5 w-5" /> : index + 1}
+                      {index === 0 ? (
+                        <Crown className="h-5 w-5 text-white" />
+                      ) : index === 1 ? (
+                        <Medal className="h-5 w-5 text-white" />
+                      ) : index === 2 ? (
+                        <Award className="h-5 w-5 text-white" />
+                      ) : (
+                        index + 1
+                      )}
                     </div>
 
                     <div className="flex min-w-0 items-center gap-2">
                       {player.isHost && (
-                        <Crown className="h-4 w-4 shrink-0 text-amber-500" aria-label="Oda Sahibi" />
+                        <Crown className="h-4 w-4 shrink-0 text-pencil-yellow" aria-label="Oda Sahibi" />
                       )}
-                      <span className="truncate font-display text-base font-bold text-slate-900 dark:text-white">
+                      <span className="truncate font-display text-xl font-bold text-ink">
                         {player.nickname}
                       </span>
                       {isYou && (
-                        <span className="shrink-0 rounded-full bg-indigo-100 px-2 py-0.5 text-[10px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
-                          SEN
-                        </span>
+                        <span className="tag tag-you">SEN</span>
                       )}
                     </div>
                   </div>
 
-                  <span className="shrink-0 font-display text-xl font-black text-slate-900 dark:text-white">
-                    {player.score} <span className="text-xs font-semibold text-slate-400">Puan</span>
+                  <span className="shrink-0 font-display text-2xl font-bold text-ink">
+                    {player.score} <span className="text-xs text-ink-extra-faded">Puan</span>
                   </span>
                 </motion.li>
               )
@@ -203,10 +257,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
         </section>
 
         {actionError && (
-          <div
-            role="alert"
-            className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-xs font-semibold text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/30 dark:text-rose-300"
-          >
+          <div role="alert" className="alert-error">
             {actionError}
           </div>
         )}
@@ -215,11 +266,11 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
         <div className="flex flex-col gap-3 sm:flex-row">
           {state.you.isHost && (
             <motion.button
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.02, rotate: -0.5 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => void handlePlayAgain()}
               disabled={isBusy}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3.5 font-display text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-400 dark:disabled:bg-slate-800"
+              className="btn-pencil-green flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-xl"
             >
               {isBusy ? (
                 <>
@@ -239,7 +290,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => void handleLeave()}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-100/80 py-3.5 font-display text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-200/80 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="btn-outline flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-base"
           >
             <LogOut className="h-4 w-4" />
             <span>Odadan Çık</span>
@@ -247,7 +298,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
         </div>
 
         {!state.you.isHost && (
-          <p className="text-center text-xs text-slate-500 dark:text-slate-400" aria-live="polite">
+          <p className="text-center font-display text-base text-ink-faded" aria-live="polite">
             Oda sahibinin yeni bir tur başlatması bekleniyor.
           </p>
         )}
@@ -255,4 +306,3 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
     </div>
   )
 }
-

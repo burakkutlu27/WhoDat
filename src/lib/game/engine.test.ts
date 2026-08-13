@@ -83,14 +83,14 @@ describe('makeGuess', () => {
     })
   })
 
-  it('yanlış tahminde sırayı ve puanı değiştirmez', async () => {
-    const { room, host, tables } = playingRoom()
+  it('yanlış tahminde puanı değiştirmez, 1 can düşer ve sırayı devreder', async () => {
+    const { room, host, guest, tables } = playingRoom()
     fake = createSupabaseFake(tables)
 
     const result = await makeGuess(room.id, host.id, 'Cem Yılmaz')
 
     expect(result.correct).toBe(false)
-    expect(tables.rooms[0]!.current_player_id).toBe(host.id)
+    expect(tables.rooms[0]!.current_player_id).toBe(guest.id)
     expect(tables.players.find((player) => player.id === host.id)!.score).toBe(0)
   })
 

@@ -13,6 +13,7 @@ export interface PublicPlayer {
   isHost: boolean
   score: number
   hasSubmittedNames: boolean
+  livesLeft: number
 }
 
 export interface GameState {
@@ -30,6 +31,7 @@ export interface GameState {
     isHost: boolean
     isYourTurn: boolean
     submittedNames: string[]
+    livesLeft: number
   }
   /** Tahmin sırası sizdeyse null: doğru cevap tahmin edene gönderilmez. */
   currentName: string | null
@@ -37,6 +39,7 @@ export interface GameState {
   namesRemaining: number
   allPlayersSubmittedNames: boolean
   canStart: boolean
+  maxLives: number
 }
 
 export interface SubmitNamesResult {
@@ -48,4 +51,8 @@ export interface GuessResult {
   correct: boolean
   message: string
   finished?: boolean
+  livesLeft?: number
+  turnPassed?: boolean
 }
+
+

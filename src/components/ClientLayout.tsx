@@ -1,8 +1,9 @@
 'use client'
 
-import { ThemeProvider } from '@/contexts/ThemeContext'
+import FloatingDoodles from '@/components/FloatingDoodles'
 import Navbar from '@/components/Navbar'
 import VersionDisplay from '@/components/VersionDisplay'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 
 export default function ClientLayout({
   children,
@@ -11,11 +12,13 @@ export default function ClientLayout({
 }) {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+      <div className="relative min-h-screen bg-paper-bg transition-colors">
+        <FloatingDoodles />
         <Navbar />
-        <main>{children}</main>
+        <main className="relative z-10">{children}</main>
         <VersionDisplay />
       </div>
     </ThemeProvider>
   )
 }
+

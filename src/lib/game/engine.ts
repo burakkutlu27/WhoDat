@@ -6,10 +6,12 @@ import { supabaseAdmin } from '../supabaseAdmin'
 import { fuzzyMatch } from './matching'
 import type { GameState, PublicPlayer } from './types'
 import {
+  MAX_GUESSES_PER_TURN,
   MAX_NAMES_PER_PLAYER,
   MAX_PLAYERS,
   MIN_PLAYERS,
   POINTS_PER_CORRECT_GUESS,
+  TOTAL_LIVES_PER_GAME,
   distributeNames,
   generateRoomCode,
   selectNameForPlayer,
@@ -131,6 +133,28 @@ export async function joinRoom(roomCode: string, nickname: string) {
   return { roomId: room.id, roomCode: room.room_code, playerId: player.id }
 }
 
+// Room-wide player lives store: roomId -> Map<playerId, lives>
+const roomLivesStore = new Map<string, Map<string, number>>()
+
+function getRoomLivesMap(roomId: string): Map<string, number> {
+  let map = roomLivesStore.get(roomId)
+  if (!map) {
+    map = new Map<string, number>()
+    roomLivesStore.set(roomId, map)
+  }
+  return map
+}
+
+function getPlayerLives(roomId: string, playerId: string): number {
+  const map = getRoomLivesMap(roomId)
+  return map.get(playerId) ?? TOTAL_LIVES_PER_GAME
+}
+
+function setPlayerLives(roomId: string, playerId: string, lives: number): void {
+  const map = getRoomLivesMap(roomId)
+  map.set(playerId, Math.max(0, lives))
+}
+
 export async function getGameState(roomId: string, viewerId: string): Promise<GameState> {
   const [room, players, names] = await Promise.all([
     loadRoom(roomId),
@@ -150,17 +174,21 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     isHost: player.is_host ?? false,
     score: player.score ?? 0,
     hasSubmittedNames: submitters.has(player.id),
+    livesLeft: getPlayerLives(roomId, player.id),
   }))
+
 
   const allPlayersSubmittedNames =
     players.length > 0 && players.every((player) => submitters.has(player.id))
+
+  const currentRound = room.game_round ?? 1
 
   return {
     room: {
       id: room.id,
       roomCode: room.room_code,
       status: (room.status ?? 'waiting') as RoomStatus,
-      gameRound: room.game_round ?? 1,
+      gameRound: currentRound,
       isGameActive: room.is_game_active ?? false,
       currentPlayerId: room.current_player_id,
     },
@@ -172,6 +200,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       submittedNames: names
         .filter((name) => name.submitted_by === viewerId)
         .map((name) => name.name_text),
+      livesLeft: getPlayerLives(roomId, viewer.id),
     },
     // Tahmin eden oyuncuya cevap gönderilmez.
     currentName: isViewerTurn ? null : (currentName?.name_text ?? null),
@@ -180,6 +209,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     allPlayersSubmittedNames,
     canStart:
       allPlayersSubmittedNames && players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS,
+    maxLives: TOTAL_LIVES_PER_GAME,
   }
 }
 
@@ -241,6 +271,10 @@ export async function submitNames(roomId: string, playerId: string, names: strin
     )
   }
 
+  // Realtime bildirimi: `names` tablosu gizli olduğu ve Realtime yayınında bulunmadığı için
+  // `rooms` kaydını güncelleyerek bağlı tüm tarayıcılara oyuncunun hazır olduğunu duyuruyoruz.
+  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+
   return { accepted, duplicates }
 }
 
@@ -269,6 +303,11 @@ export async function startGame(roomId: string, playerId: string) {
   const submitters = new Set(names.map((name) => name.submitted_by))
   if (!players.every((candidate) => submitters.has(candidate.id))) {
     throw badRequest('names_missing', 'Tüm oyuncuların isimlerini göndermesi bekleniyor.')
+  }
+
+  // Oyun başında herkesin canını 3 yap
+  for (const p of players) {
+    setPlayerLives(roomId, p.id, TOTAL_LIVES_PER_GAME)
   }
 
   const firstPlayer = players[0]!
@@ -318,10 +357,15 @@ async function advanceTurn(room: RoomRow, players: PlayerRow[], names: NameRow[]
   const admin = supabaseAdmin()
   const currentRound = room.game_round ?? 1
 
-  const nextPlayer = selectNextPlayer(players, room.current_player_id)
+  // Canı > 0 olan aktif oyuncular
+  const activePlayerIds = new Set(
+    players.filter((p) => getPlayerLives(room.id, p.id) > 0).map((p) => p.id),
+  )
+
+  const nextPlayer = selectNextPlayer(players, room.current_player_id, activePlayerIds)
   const availableNames = names.filter((name) => name.used_in_round === null)
 
-  if (!nextPlayer || availableNames.length === 0) {
+  if (!nextPlayer || availableNames.length === 0 || activePlayerIds.size === 0) {
     const { data } = await admin
       .from('rooms')
       .update({ status: 'finished', is_game_active: false, current_identity_id: null })
@@ -377,9 +421,46 @@ export async function makeGuess(roomId: string, playerId: string, guess: string)
     throw conflict('no_active_name', 'Bu tur için bir isim seçilmemiş.')
   }
 
-  if (!fuzzyMatch(guess, currentName.name_text)) {
-    return { correct: false, message: 'Yanlış tahmin, tekrar deneyin.' }
+  const currentLives = getPlayerLives(roomId, playerId)
+  if (currentLives <= 0) {
+    const outcome = await advanceTurn(room, players, names)
+    return {
+      correct: false,
+      message: 'Can hakkınız kalmadı, oyundan elendiniz!',
+      livesLeft: 0,
+      turnPassed: true,
+      finished: outcome.finished,
+    }
   }
+
+  if (!fuzzyMatch(guess, currentName.name_text)) {
+    const newLives = currentLives - 1
+    setPlayerLives(roomId, playerId, newLives)
+
+    const outcome = await advanceTurn(room, players, names)
+
+    // Realtime yayını: Tüm bağlı oyunculara (Host ve Guests) can durumunun değiştiğini duyur
+    await supabaseAdmin().from('rooms').update({ status: room.status }).eq('id', roomId)
+
+    if (newLives <= 0) {
+      return {
+        correct: false,
+        message: 'Yanlış tahmin! Can hakkınız bitti ve oyundan elendiniz. Sıra diğer oyuncuya geçti.',
+        livesLeft: 0,
+        turnPassed: true,
+        finished: outcome.finished,
+      }
+    }
+
+    return {
+      correct: false,
+      message: `Yanlış tahmin! 1 can kaybettiniz (Kalan Can: ${newLives}). Sıra diğer oyuncuya geçti.`,
+      livesLeft: newLives,
+      turnPassed: true,
+      finished: outcome.finished,
+    }
+  }
+
 
   const outcome = await advanceTurn(room, players, names)
   if (!outcome.claimed) {
@@ -396,8 +477,12 @@ export async function makeGuess(roomId: string, playerId: string, guess: string)
     correct: true,
     message: `Doğru tahmin! +${POINTS_PER_CORRECT_GUESS} puan`,
     finished: outcome.finished,
+    livesLeft: currentLives,
+    turnPassed: true,
   }
 }
+
+
 
 export async function passTurn(roomId: string, playerId: string) {
   const [room, players, names] = await Promise.all([
@@ -426,6 +511,11 @@ export async function resetGame(roomId: string, playerId: string) {
     throw forbidden('not_host', 'Yeni turu yalnızca oda sahibi başlatabilir.')
   }
 
+  // Oyun sıfırlandığında canlılar tekrar yenilensin
+  for (const p of players) {
+    setPlayerLives(roomId, p.id, TOTAL_LIVES_PER_GAME)
+  }
+
   const { error: roomError } = await admin
     .from('rooms')
     .update({
@@ -448,6 +538,7 @@ export async function resetGame(roomId: string, playerId: string) {
     .eq('room_id', roomId)
   if (scoresError) throw scoresError
 }
+
 
 export async function leaveRoom(roomId: string, playerId: string) {
   const admin = supabaseAdmin()

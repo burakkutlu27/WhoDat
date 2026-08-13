@@ -6,8 +6,11 @@
 export const MIN_PLAYERS = 2
 export const MAX_PLAYERS = 6
 export const MAX_NAMES_PER_PLAYER = 3
+export const TOTAL_LIVES_PER_GAME = 3
+export const MAX_GUESSES_PER_TURN = 3
 export const POINTS_PER_CORRECT_GUESS = 10
 export const ROOM_CODE_LENGTH = 6
+
 
 /**
  * 0/O ve 1/I gibi karıştırılabilecek karakterler alfabede yok: oda kodu genelde
@@ -39,19 +42,24 @@ export interface NameLike {
 }
 
 /**
- * Sıradaki oyuncuyu döndürür. Mevcut oyuncu listede yoksa (odadan ayrılmışsa)
- * sıra baştan başlar.
+ * Sıradaki oyuncuyu döndürür. Canlı/aktif oyuncular filtrelenmiş olarak geçebilir.
+ * Mevcut oyuncu listede yoksa sıra baştan başlar.
  */
 export function selectNextPlayer<T extends PlayerLike>(
   players: T[],
   currentPlayerId: string | null,
+  activePlayerIds?: Set<string>,
 ): T | null {
-  if (players.length === 0) return null
+  const candidates = activePlayerIds
+    ? players.filter((player) => activePlayerIds.has(player.id))
+    : players
 
-  const currentIndex = players.findIndex((player) => player.id === currentPlayerId)
-  if (currentIndex === -1) return players[0]!
+  if (candidates.length === 0) return null
 
-  return players[(currentIndex + 1) % players.length]!
+  const currentIndex = candidates.findIndex((player) => player.id === currentPlayerId)
+  if (currentIndex === -1) return candidates[0]!
+
+  return candidates[(currentIndex + 1) % candidates.length]!
 }
 
 /**

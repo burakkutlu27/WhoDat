@@ -100,12 +100,15 @@ export function useGameState(roomId: string): UseGameStateResult {
     }
   }, [roomId, refresh, scheduleRefresh])
 
-  // Emniyet ağı: yalnızca Realtime bağlanamadıysa.
+  // Emniyet ağı & Canlı Senkronizasyon: lobide, oyunda ve Realtime kesintilerinde düzenli yenile.
   useEffect(() => {
-    if (realtimeConnected) return
-    const interval = setInterval(() => void refresh(), FALLBACK_POLL_MS)
+    const isWaiting = state?.room.status === 'waiting'
+    const isPlaying = state?.room.status === 'playing'
+    const intervalMs = isWaiting ? 2000 : isPlaying ? 2000 : FALLBACK_POLL_MS
+    const interval = setInterval(() => void refresh(), intervalMs)
     return () => clearInterval(interval)
-  }, [realtimeConnected, refresh])
+  }, [state?.room.status, refresh])
+
 
   return { state, phase, error, degraded: !realtimeConnected, refresh }
 }
