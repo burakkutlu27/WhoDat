@@ -8,26 +8,55 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        sans: ['var(--font-jakarta)', 'Inter', 'sans-serif'],
+        display: ['var(--font-jakarta)', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       colors: {
-        // Custom dark mode colors
-        dark: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-        }
-      }
+        game: {
+          bg: {
+            dark: '#0B0F17',
+            light: '#F8FAFC',
+          },
+          card: {
+            dark: '#151D2A',
+            light: '#FFFFFF',
+          },
+          border: {
+            dark: '#26334D',
+            light: '#E2E8F0',
+          },
+          primary: {
+            DEFAULT: '#6366F1',
+            hover: '#4F46E5',
+          },
+          cyan: '#06B6D4',
+          emerald: '#10B981',
+          amber: '#F59E0B',
+          rose: '#F43F5E',
+        },
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '50%': { transform: 'translateY(-10px) rotate(2deg)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { boxShadow: '0 0 15px rgba(99, 102, 241, 0.2)' },
+          '50%': { boxShadow: '0 0 30px rgba(99, 102, 241, 0.6)' },
+        },
+        shake: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '20%, 60%': { transform: 'translateX(-6px)' },
+          '40%, 80%': { transform: 'translateX(6px)' },
+        },
+      },
+      animation: {
+        float: 'float 4s ease-in-out infinite',
+        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+        shake: 'shake 0.4s ease-in-out',
+      },
     },
   },
   plugins: [],
