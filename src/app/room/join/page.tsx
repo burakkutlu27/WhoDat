@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowLeft, KeyRound, Loader2, LogIn, User } from 'lucide-react'
+import { ArrowLeft, DoorOpen, KeyRound, Loader2, Pencil, User } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
@@ -48,33 +48,36 @@ function JoinRoomForm() {
     <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 15, rotate: 0.5 }}
+          animate={{ opacity: 1, y: 0, rotate: 0 }}
           transition={{ duration: 0.4 }}
-          className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-[#151D2A] dark:shadow-none"
+          className="paper-card p-8"
         >
           <div className="mb-6 text-center">
-            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
-              <LogIn className="h-6 w-6" />
+            <div className="mb-3 inline-block rounded-xl border border-paper-border bg-paper-card p-2.5 text-pencil-blue shadow-sm">
+              <DoorOpen className="h-8 w-8" />
             </div>
-            <h1 className="font-display text-2xl font-black text-slate-900 dark:text-white">
+            <h1 className="font-display text-4xl font-bold text-ink">
               Odaya Katıl
             </h1>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p className="mt-1 text-sm text-ink-faded">
               Arkadaşının paylaştığı 6 haneli oda kodunu gir.
             </p>
           </div>
+
+          <div className="divider-sketch mb-6" />
 
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
             <div>
               <label
                 htmlFor="roomCode"
-                className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+                className="mb-2 flex items-center gap-1.5 font-display text-xl font-bold text-ink"
               >
-                Oda Kodu
+                <KeyRound className="h-4 w-4 text-pencil-yellow" />
+                <span>Oda Kodu</span>
               </label>
               <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-ink-extra-faded">
                   <KeyRound className="h-4 w-4" />
                 </div>
                 <input
@@ -89,7 +92,7 @@ function JoinRoomForm() {
                   autoComplete="off"
                   spellCheck={false}
                   disabled={isSubmitting}
-                  className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-4 py-3.5 text-center font-mono text-xl font-bold tracking-[0.3em] text-indigo-600 uppercase transition-all placeholder:font-sans placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-indigo-400 dark:focus:border-indigo-400"
+                  className="paper-input-boxed pl-10 text-center font-mono text-2xl font-bold tracking-[0.3em] text-pencil-red uppercase"
                 />
               </div>
             </div>
@@ -97,12 +100,14 @@ function JoinRoomForm() {
             <div>
               <label
                 htmlFor="nickname"
-                className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+                className="mb-2 flex items-center gap-1.5 font-display text-xl font-bold text-ink"
               >
-                Takma Adınız
+                <Pencil className="h-4 w-4 text-pencil-green" />
+                <span>Takma Adınız</span>
               </label>
+
               <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-ink-extra-faded">
                   <User className="h-4 w-4" />
                 </div>
                 <input
@@ -115,7 +120,7 @@ function JoinRoomForm() {
                   autoComplete="nickname"
                   disabled={isSubmitting}
                   aria-describedby={error ? 'join-room-error' : undefined}
-                  className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-4 py-3.5 text-base font-semibold text-slate-900 transition-all placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:focus:border-indigo-400"
+                  className="paper-input pl-10 font-display text-2xl"
                 />
               </div>
             </div>
@@ -127,7 +132,7 @@ function JoinRoomForm() {
                 transition={{ duration: 0.4 }}
                 id="join-room-error"
                 role="alert"
-                className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-xs font-semibold text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/30 dark:text-rose-300"
+                className="alert-error"
               >
                 {error}
               </motion.div>
@@ -136,10 +141,10 @@ function JoinRoomForm() {
             <div className="space-y-3 pt-2">
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.01 }}
+                whileHover={{ scale: 1.02, rotate: -0.5 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isSubmitting || !roomCode.trim() || !nickname.trim()}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3.5 font-display text-sm font-bold text-white shadow-lg shadow-indigo-500/25 transition-all hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none dark:disabled:bg-slate-800"
+                className="btn-pencil-red flex w-full items-center justify-center gap-2 py-3.5 font-display text-xl"
               >
                 {isSubmitting ? (
                   <>
@@ -157,7 +162,7 @@ function JoinRoomForm() {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => router.push('/')}
                 disabled={isSubmitting}
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-100/80 py-3.5 font-display text-sm font-semibold text-slate-700 transition-all hover:bg-slate-200/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-800"
+                className="btn-outline flex w-full items-center justify-center gap-2 py-3.5 font-display text-base"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Geri Dön</span>
@@ -175,7 +180,7 @@ export default function JoinRoomPage() {
     <Suspense
       fallback={
         <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-indigo-600" />
+          <Loader2 className="h-6 w-6 animate-spin text-pencil-red" />
         </div>
       }
     >
@@ -183,5 +188,3 @@ export default function JoinRoomPage() {
     </Suspense>
   )
 }
-
-

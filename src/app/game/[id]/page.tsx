@@ -1,10 +1,11 @@
 'use client'
 
-import { Crown, Gamepad2, HelpCircle, Loader2, LogOut, Send, SkipForward, Target, Trophy } from 'lucide-react'
+import { Crown, Gamepad2, Heart, HelpCircle, Loader2, LogOut, Pencil, Send, SkipForward, Target, Trophy } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 
+import Confetti from '@/components/Confetti'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import type { GuessResult } from '@/lib/game/types'
 import { useGameState } from '@/lib/useGameState'
@@ -19,6 +20,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const [guess, setGuess] = useState('')
   const [isBusy, setIsBusy] = useState(false)
   const [feedback, setFeedback] = useState<Feedback | null>(null)
+  const [showConfetti, setShowConfetti] = useState(false)
 
   const status = state?.room.status
 
@@ -57,9 +59,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
       if (result.correct) {
         setFeedback({ tone: 'success', text: result.message })
         setGuess('')
+        setShowConfetti(true)
+        setTimeout(() => setShowConfetti(false), 1600)
         await refresh()
       } else {
         setFeedback({ tone: 'error', text: result.message })
+        setGuess('')
+        await refresh()
       }
     } catch (caught) {
       setFeedback({
@@ -102,8 +108,8 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     return (
       <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
         <div className="mx-auto max-w-5xl space-y-6" aria-busy="true" aria-label="Oyun yükleniyor">
-          <div className="h-24 animate-pulse rounded-3xl bg-white/70 dark:bg-[#151D2A]/70" />
-          <div className="h-80 animate-pulse rounded-3xl bg-white/70 dark:bg-[#151D2A]/70" />
+          <div className="h-24 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />
+          <div className="h-80 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />
         </div>
       </div>
     )
@@ -113,13 +119,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     return (
       <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
         <div className="max-w-md text-center">
-          <h1 className="mb-2 font-display text-xl font-bold text-slate-900 dark:text-white">Oyun Açılamadı</h1>
-          <p className="mb-6 text-sm text-slate-600 dark:text-slate-400">
+          <h1 className="mb-2 font-display text-3xl font-bold text-ink">Oyun Açılamadı</h1>
+          <p className="mb-6 text-sm text-ink-faded">
             {error?.message ?? 'Oyun bilgileri yüklenemedi.'}
           </p>
           <button
             onClick={() => void refresh()}
-            className="rounded-xl bg-indigo-600 px-6 py-3 font-display font-semibold text-white hover:bg-indigo-500"
+            className="btn-pencil-red px-6 py-3 font-display text-base"
           >
             Tekrar Dene
           </button>
@@ -129,39 +135,45 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   }
 
   const currentPlayer = state.players.find((player) => player.id === state.room.currentPlayerId)
+  const myLives = state.you.livesLeft ?? 3
+  const activePlayerLives = currentPlayer ? (currentPlayer.livesLeft ?? 3) : 3
+  const maxLives = state.maxLives ?? 3
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
+    <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
+      <Confetti trigger={showConfetti} />
       <div className="mx-auto max-w-5xl space-y-6">
         {/* Game Header Bar */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-3xl border border-slate-200/80 bg-white/90 p-6 shadow-xl shadow-slate-200/40 backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#151D2A]/90 dark:shadow-indigo-950/20"
+          className="paper-card-lg p-6"
         >
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-display text-xl font-black text-slate-900 dark:text-white">KimBu</span>
-                <span className="rounded-lg border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 font-mono text-xs font-bold text-indigo-700 dark:border-indigo-900/60 dark:bg-indigo-950/40 dark:text-indigo-300">
+                <span className="font-display text-3xl font-bold text-ink">
+                  KimBu<span className="inline-block animate-wiggle text-pencil-yellow">?</span>
+                </span>
+                <span className="tag font-mono text-xs font-bold tracking-widest text-pencil-red tag-animate">
                   {state.room.roomCode}
                 </span>
               </div>
-              <div className="mt-2 flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-600 dark:text-slate-400">
-                <span className="rounded-full bg-slate-100 px-2.5 py-1 dark:bg-slate-800 dark:text-slate-300">
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <span className="tag">
                   Tur {state.room.gameRound}
                 </span>
-                <span className="rounded-full bg-slate-100 px-2.5 py-1 dark:bg-slate-800 dark:text-slate-300">
+                <span className="tag">
                   {state.namesRemaining} İsim Kaldı
                 </span>
-                {degraded && <span className="text-amber-500">Canlı bağlantı yok</span>}
+                {degraded && <span className="tag border-pencil-orange text-pencil-orange">Canlı bağlantı yok</span>}
               </div>
             </div>
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => void handleLeave()}
-              className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-100/80 px-4 py-2.5 font-display text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-200/80 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-800"
+              className="btn-outline flex items-center gap-2 px-4 py-2.5 font-display text-sm"
             >
               <LogOut className="h-4 w-4" />
               <span>Oyundan Çık</span>
@@ -175,130 +187,172 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              className={`rounded-3xl border p-6 shadow-xl backdrop-blur-xl sm:p-8 transition-all ${
+              className={`p-6 sm:p-8 transition-all duration-300 ${
                 state.you.isYourTurn
-                  ? 'border-amber-400/80 bg-white/95 ring-2 ring-amber-400/30 dark:border-amber-500/60 dark:bg-[#151D2A]/95 dark:ring-amber-500/20'
-                  : 'border-slate-200/80 bg-white/90 dark:border-slate-800/80 dark:bg-[#151D2A]/90'
+                  ? 'paper-card-lg border-pencil-yellow turn-active shadow-lg'
+                  : 'paper-card'
               }`}
+              style={state.you.isYourTurn ? { borderColor: 'var(--pencil-yellow)', borderWidth: '3px' } : undefined}
             >
               {/* Turn Banner */}
-              <div className="mb-8 text-center">
+              <div className="mb-6 text-center">
                 {state.you.isYourTurn ? (
                   <motion.div
-                    initial={{ scale: 0.9 }}
-                    animate={{ scale: 1 }}
-                    className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-amber-700 shadow-sm dark:border-amber-800/60 dark:bg-amber-950/40 dark:text-amber-300"
+                    initial={{ scale: 0.8, rotate: -3 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                    className="inline-block"
                   >
-                    <Gamepad2 className="h-3.5 w-3.5 text-amber-500" />
-                    <span>SENİN SIRAN!</span>
+                    <span className="highlight-yellow font-display text-2xl font-bold text-pencil-yellow tracking-wide flex items-center justify-center gap-2">
+                      <Gamepad2 className="h-6 w-6 animate-bounce text-pencil-yellow" />
+                      <span>SENİN SIRAN!</span>
+                    </span>
                   </motion.div>
                 ) : (
-                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-4 py-1.5 text-xs font-semibold tracking-wider text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-300">
-                    <Target className="h-3.5 w-3.5 text-indigo-500" />
+                  <div className="tag tag-turn mx-auto inline-flex items-center gap-1.5 text-sm tag-animate">
+                    <Target className="h-3.5 w-3.5 animate-spin" style={{ animationDuration: '6s' }} />
                     <span>{currentPlayer?.nickname ?? 'Oyuncu'} Tahmin Ediyor</span>
                   </div>
                 )}
 
-                <h2 className="mt-4 font-display text-2xl font-black text-slate-900 sm:text-3xl dark:text-white">
+                <h2 className="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">
                   {state.you.isYourTurn
                     ? 'Ben Kimim? Soru Sor & Tahmin Et!'
                     : `${currentPlayer?.nickname ?? 'Oyuncu'} İpucu Arıyor`}
                 </h2>
-                <p className="mx-auto mt-2 max-w-md text-sm text-slate-600 dark:text-slate-400">
+                <p className="mx-auto mt-2 max-w-md text-sm text-ink-faded">
                   {state.you.isYourTurn
                     ? 'Arkadaşlarına evet/hayır soruları sor. Emin olduğunda tahminini yaz!'
                     : 'Sana sorulan sorulara dürüstçe yalnızca evet veya hayır deyin.'}
                 </p>
+
+                {/* Arena Ortasındaki Can Göstergesi */}
+                <div className="mt-4 flex items-center justify-center gap-2">
+                  <span className="font-display text-sm font-bold text-ink-faded">
+                    {state.you.isYourTurn ? 'Kalan Canınız:' : `${currentPlayer?.nickname ?? 'Oyuncu'} Kalan Canı:`}
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    {Array.from({ length: maxLives }).map((_, index) => {
+                      const displayLives = state.you.isYourTurn ? myLives : activePlayerLives
+                      const isFilled = index < displayLives
+                      return (
+                        <motion.div
+                          key={index}
+                          initial={false}
+                          animate={{ scale: isFilled ? 1 : 0.85, opacity: isFilled ? 1 : 0.3 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Heart
+                            className={`h-6 w-6 ${
+                              isFilled
+                                ? 'fill-pencil-red text-pencil-red'
+                                : 'fill-transparent text-ink-extra-faded opacity-30'
+                            }`}
+                          />
+                        </motion.div>
+                      )
+                    })}
+                  </div>
+                </div>
               </div>
 
               {/* Action Form or Secret Card */}
               {state.you.isYourTurn ? (
-                <form onSubmit={handleGuess} className="mx-auto max-w-md space-y-4">
-                  <div>
-                    <label
-                      htmlFor="guess"
-                      className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
-                    >
-                      Tahmininiz
-                    </label>
-                    <input
-                      id="guess"
-                      type="text"
-                      value={guess}
-                      onChange={(event) => setGuess(event.target.value)}
-                      placeholder="Örn: Kemal Sunal"
-                      maxLength={60}
-                      autoComplete="off"
-                      disabled={isBusy}
-                      className="w-full rounded-2xl border border-slate-300 bg-white px-5 py-4 text-center font-display text-lg font-bold text-slate-900 transition-all placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900/80 dark:text-white dark:focus:border-amber-400"
-                    />
-                  </div>
+                myLives > 0 ? (
+                  <form onSubmit={handleGuess} className="mx-auto max-w-md space-y-4">
+                    <div>
+                      <label
+                        htmlFor="guess"
+                        className="mb-2 flex items-center justify-center gap-1.5 font-display text-xl font-bold text-ink"
+                      >
+                        <Pencil className="h-5 w-5 text-pencil-red" />
+                        <span>Tahmininiz</span>
+                      </label>
+                      <input
+                        id="guess"
+                        type="text"
+                        value={guess}
+                        onChange={(event) => setGuess(event.target.value)}
+                        placeholder="Örn: Kemal Sunal"
+                        maxLength={60}
+                        autoComplete="off"
+                        disabled={isBusy}
+                        className="paper-input-boxed text-center font-display text-2xl transition-all duration-200 focus:scale-[1.02]"
+                      />
+                    </div>
 
-                  <div className="flex flex-col gap-3 sm:flex-row">
-                    <motion.button
-                      type="submit"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      disabled={isBusy || !guess.trim()}
-                      className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3.5 font-display text-sm font-bold text-white shadow-lg shadow-indigo-500/25 transition-all hover:bg-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none dark:disabled:bg-slate-800"
-                    >
-                      {isBusy ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4" />
-                          <span>Tahmin Et</span>
-                        </>
-                      )}
-                    </motion.button>
-                    <motion.button
-                      type="button"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => void handlePass()}
-                      disabled={isBusy}
-                      className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-100/80 px-6 py-3.5 font-display text-sm font-semibold text-slate-700 transition-all hover:bg-slate-200/80 disabled:opacity-60 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-800"
-                    >
-                      <SkipForward className="h-4 w-4" />
-                      <span>Pas Geç</span>
-                    </motion.button>
+                    <div className="flex flex-col gap-3 sm:flex-row">
+                      <motion.button
+                        type="submit"
+                        whileHover={{ scale: 1.03, rotate: -0.5 }}
+                        whileTap={{ scale: 0.97 }}
+                        disabled={isBusy || !guess.trim()}
+                        className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-lg shadow-md"
+                      >
+                        {isBusy ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <>
+                            <Send className="h-4 w-4" />
+                            <span>Tahmin Et</span>
+                          </>
+                        )}
+                      </motion.button>
+                      <motion.button
+                        type="button"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => void handlePass()}
+                        disabled={isBusy}
+                        className="btn-outline flex items-center justify-center gap-2 px-6 py-3.5 font-display text-sm"
+                      >
+                        <SkipForward className="h-4 w-4" />
+                        <span>Pas Geç</span>
+                      </motion.button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="p-4 text-center font-display text-lg font-bold text-pencil-red">
+                    Canınız bittiği için tahmin hakkınız bulunmamaktadır. Sıranız otomatik olarak devredilmiştir.
                   </div>
-                </form>
+                )
               ) : (
                 state.currentName && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mx-auto max-w-md rounded-2xl border border-emerald-200/80 bg-emerald-50/70 p-6 text-center shadow-inner dark:border-emerald-900/50 dark:bg-emerald-950/30"
+                    initial={{ opacity: 0, y: 15, rotate: -2, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+                    transition={{ duration: 0.45, ease: [0.34, 1.56, 0.64, 1] }}
+                    className="sticky-note sticky-note-green animate-envelope-open mx-auto max-w-md p-6 text-center shadow-lg"
                   >
-                    <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                      GİZLİ KART (SADECE SİZ GÖRÜYORSUNUZ)
+                    <span className="flex items-center justify-center gap-1.5 font-display text-lg font-bold text-pencil-green">
+                      <HelpCircle className="h-5 w-5" />
+                      <span>GİZLİ KART (SADECE SEN GÖRÜYORSUN)</span>
                     </span>
-                    <p className="mt-2 font-display text-2xl font-black text-emerald-900 dark:text-emerald-200">
+                    <p className="mt-2 font-display text-4xl font-bold text-ink tracking-wide">
                       {state.currentName}
                     </p>
-                    <p className="mt-2 text-xs text-emerald-700 dark:text-emerald-400">
+                    <p className="mt-2 text-xs text-ink-faded">
                       {currentPlayer?.nickname ?? 'Sıradaki oyuncu'} bu ismi tahmin etmeye çalışıyor.
                     </p>
                   </motion.div>
                 )
               )}
 
-              {/* Guess Feedback Toast Notification */}
+              {/* Guess Feedback */}
               <div aria-live="polite" className="mt-6 min-h-[3rem]">
                 {feedback && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.85 }}
                     animate={
                       feedback.tone === 'error'
-                        ? { opacity: 1, scale: 1, x: [0, -8, 8, -4, 4, 0] }
+                        ? { opacity: 1, scale: 1, x: [0, -10, 10, -5, 5, 0] }
                         : { opacity: 1, scale: 1 }
                     }
                     transition={{ duration: 0.4 }}
-                    className={`mx-auto max-w-md rounded-xl border p-4 text-center text-xs font-semibold ${
+                    className={`mx-auto max-w-md text-center font-display text-base font-bold tag-animate ${
                       feedback.tone === 'success'
-                        ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300'
-                        : 'border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300'
+                        ? 'alert-success'
+                        : 'alert-error'
                     }`}
                   >
                     {feedback.text}
@@ -310,12 +364,12 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
           {/* Live Scoreboard Sidebar */}
           <aside className="lg:col-span-1">
-            <div className="rounded-3xl border border-slate-200/80 bg-white/90 p-6 shadow-xl shadow-slate-200/40 backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#151D2A]/90 dark:shadow-indigo-950/20">
+            <div className="paper-card-alt p-6">
               <div className="mb-4 flex items-center justify-between">
-                <h3 className="font-display font-bold text-slate-900 dark:text-white">
-                  Skor Tablosu
+                <h3 className="font-display text-2xl font-bold text-ink flex items-center gap-2">
+                  <Trophy className="h-5 w-5 text-pencil-yellow" />
+                  <span>Skor Tablosu</span>
                 </h3>
-                <Trophy className="h-4 w-4 text-amber-500" />
               </div>
 
               <div className="space-y-2.5">
@@ -323,48 +377,63 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   const isCurrent = player.id === state.room.currentPlayerId
                   const isYou = player.id === state.you.playerId
                   const initial = player.nickname.charAt(0).toUpperCase()
+                  const pLives = typeof player.livesLeft === 'number' ? player.livesLeft : maxLives
+
                   return (
                     <motion.div
                       key={player.id}
                       layout
-                      className={`flex items-center justify-between rounded-2xl border p-3 transition-all ${
+                      className={`flex items-center justify-between border-2 p-3 transition-all ${
                         isCurrent
-                          ? 'border-amber-400 bg-amber-50/70 dark:border-amber-500/60 dark:bg-amber-950/30'
-                          : 'border-slate-200/80 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/40'
+                          ? 'border-solid border-pencil-yellow bg-paper-card shadow-sm'
+                          : 'border-dashed border-paper-border bg-paper-card'
                       }`}
+                      style={{ borderRadius: '8px 4px 10px 6px' }}
                     >
                       <div className="flex min-w-0 items-center gap-2.5">
                         <div
-                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-display text-xs font-bold text-white ${
+                          className={`flex h-8 w-8 shrink-0 items-center justify-center font-display text-sm font-bold text-white ${
                             isCurrent
-                              ? 'bg-amber-500 shadow-sm'
-                              : 'bg-slate-700 dark:bg-slate-800'
+                              ? 'bg-pencil-yellow'
+                              : 'bg-ink-faded'
                           }`}
+                          style={{ borderRadius: '6px 3px 8px 4px' }}
                         >
                           {initial}
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5">
                             {isCurrent && (
-                              <Target className="h-3.5 w-3.5 shrink-0 text-amber-600 dark:text-amber-400" aria-label="Sırası" />
+                              <Target className="h-3.5 w-3.5 shrink-0 text-pencil-yellow animate-pulse" aria-label="Sırası" />
                             )}
                             {player.isHost && !isCurrent && (
-                              <Crown className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-label="Oda Sahibi" />
+                              <Crown className="h-3.5 w-3.5 shrink-0 text-pencil-yellow" aria-label="Oda Sahibi" />
                             )}
-                            <span className="truncate font-display text-sm font-semibold text-slate-900 dark:text-white">
+                            <span className="truncate font-display text-lg font-bold text-ink">
                               {player.nickname}
                             </span>
                             {isYou && (
-                              <span className="shrink-0 rounded-full bg-indigo-100 px-1.5 py-0.5 text-[9px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
-                                SEN
-                              </span>
+                              <span className="tag tag-you text-[9px]">SEN</span>
                             )}
+                          </div>
+                          {/* Her Oyuncu İçin Canlı Kalan Kalpler */}
+                          <div className="mt-1 flex items-center gap-1">
+                            {Array.from({ length: maxLives }).map((_, idx) => (
+                              <Heart
+                                key={idx}
+                                className={`h-3.5 w-3.5 transition-all ${
+                                  idx < pLives
+                                    ? 'fill-pencil-red text-pencil-red'
+                                    : 'fill-transparent text-ink-extra-faded opacity-30'
+                                }`}
+                              />
+                            ))}
                           </div>
                         </div>
                       </div>
 
-                      <span className="shrink-0 font-display text-base font-black text-slate-900 dark:text-white">
-                        {player.score} <span className="text-[10px] font-normal text-slate-400">P</span>
+                      <span className="shrink-0 font-display text-xl font-bold text-ink">
+                        {player.score} <span className="text-xs text-ink-extra-faded">P</span>
                       </span>
                     </motion.div>
                   )
@@ -377,4 +446,3 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     </div>
   )
 }
-

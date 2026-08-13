@@ -1,3 +1,549 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ═══════════════════════════════════════════════
+   KimBu — Kağıt / Tahta Oyunu Tema Sistemi
+   ═══════════════════════════════════════════════ */
+
+@layer base {
+  :root {
+    /* Kağıt Renkleri — Light */
+    --paper-bg: #F5F0E8;
+    --paper-card: #FFFDF7;
+    --paper-border: #C9BFA8;
+    --paper-border-strong: #A89A82;
+    --ink: #2D2A26;
+    --ink-faded: #7A746B;
+    --ink-extra-faded: #A49E94;
+
+    /* Kalem Renkleri */
+    --pencil-red: #D94F3D;
+    --pencil-red-hover: #C4412F;
+    --pencil-green: #2B7A78;
+    --pencil-green-hover: #1F5F5D;
+    --pencil-blue: #3B6B9A;
+    --pencil-yellow: #E8A838;
+    --pencil-orange: #D97B3D;
+    --pencil-purple: #7B5EA7;
+
+    /* Kağıt Gölgesi */
+    --paper-shadow: 2px 3px 0px rgba(0,0,0,0.06), 4px 6px 0px rgba(0,0,0,0.03);
+    --paper-shadow-lg: 3px 4px 0px rgba(0,0,0,0.08), 6px 8px 0px rgba(0,0,0,0.04);
+
+    /* Grain opacity */
+    --grain-opacity: 0.03;
+  }
+
+  .dark {
+    --paper-bg: #1A1814;
+    --paper-card: #252118;
+    --paper-border: #3D362C;
+    --paper-border-strong: #554B3E;
+    --ink: #E8E0D4;
+    --ink-faded: #9B9488;
+    --ink-extra-faded: #6B6359;
+
+    --pencil-red: #E8614F;
+    --pencil-red-hover: #F07462;
+    --pencil-green: #3AAFA9;
+    --pencil-green-hover: #4DC4BE;
+    --pencil-blue: #5A9BD4;
+    --pencil-yellow: #F0B84A;
+    --pencil-orange: #E89A5A;
+    --pencil-purple: #9B7EC8;
+
+    --paper-shadow: 2px 3px 0px rgba(0,0,0,0.2), 4px 6px 0px rgba(0,0,0,0.1);
+    --paper-shadow-lg: 3px 4px 0px rgba(0,0,0,0.25), 6px 8px 0px rgba(0,0,0,0.12);
+
+    --grain-opacity: 0.04;
+  }
+
+  /* Global Kağıt Dokusu */
+  body {
+    background-color: var(--paper-bg);
+    color: var(--ink);
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  /* Selection rengi */
+  ::selection {
+    background-color: var(--pencil-yellow);
+    color: var(--ink);
+  }
+}
+
+@layer components {
+
+  /* ── Elle Çizilmiş Kart ── */
+  .paper-card {
+    background-color: var(--paper-card);
+    border: 2px solid var(--paper-border);
+    border-radius: 12px 8px 14px 6px;
+    box-shadow: var(--paper-shadow);
+    position: relative;
+  }
+
+  /* Farklı köşe varyasyonları */
+  .paper-card-alt {
+    background-color: var(--paper-card);
+    border: 2px solid var(--paper-border);
+    border-radius: 6px 14px 8px 12px;
+    box-shadow: var(--paper-shadow);
+  }
+
+  .paper-card-lg {
+    background-color: var(--paper-card);
+    border: 2.5px solid var(--paper-border);
+    border-radius: 14px 6px 16px 8px;
+    box-shadow: var(--paper-shadow-lg);
+  }
+
+  /* ── Yapışkan Not (Post-it) ── */
+  .sticky-note {
+    position: relative;
+    padding: 1rem 1.25rem;
+    border: none;
+    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 2px 2px 14px 2px;
+  }
+
+  .sticky-note-yellow {
+    background-color: #FFF3C4;
+  }
+  .dark .sticky-note-yellow {
+    background-color: #3D3520;
+  }
+
+  .sticky-note-pink {
+    background-color: #FFD6E0;
+  }
+  .dark .sticky-note-pink {
+    background-color: #3D2029;
+  }
+
+  .sticky-note-blue {
+    background-color: #D4EDFF;
+  }
+  .dark .sticky-note-blue {
+    background-color: #1E2D3D;
+  }
+
+  .sticky-note-green {
+    background-color: #D4F5E0;
+  }
+  .dark .sticky-note-green {
+    background-color: #1E3D28;
+  }
+
+  /* ── Sketchy Border Butonlar ── */
+  .btn-pencil-red {
+    background-color: var(--pencil-red);
+    color: #fff;
+    border: 2.5px solid transparent;
+    border-radius: 10px 6px 12px 4px;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    font-weight: 800;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  }
+  .btn-pencil-red:hover:not(:disabled) {
+    background-color: var(--pencil-red-hover);
+    transform: translate(-1px, -1px) rotate(-0.5deg);
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.12);
+  }
+  .btn-pencil-red:active:not(:disabled) {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+  }
+  .btn-pencil-red:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-pencil-green {
+    background-color: var(--pencil-green);
+    color: #fff;
+    border: 2.5px solid transparent;
+    border-radius: 6px 10px 4px 12px;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    font-weight: 800;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  }
+  .btn-pencil-green:hover:not(:disabled) {
+    background-color: var(--pencil-green-hover);
+    transform: translate(-1px, -1px) rotate(0.5deg);
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.12);
+  }
+  .btn-pencil-green:active:not(:disabled) {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+  }
+  .btn-pencil-green:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--ink);
+    border: 2px dashed var(--paper-border-strong);
+    border-radius: 8px 12px 6px 14px;
+    font-weight: 700;
+    transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  }
+  .btn-outline:hover:not(:disabled) {
+    border-color: var(--pencil-red);
+    background-color: var(--paper-card);
+    transform: rotate(0.5deg);
+  }
+  .btn-outline:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* ── Çizgili Kağıt Input ── */
+  .paper-input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px dashed var(--paper-border-strong);
+    padding: 0.75rem 0.5rem;
+    color: var(--ink);
+    font-weight: 600;
+    transition: border-color 0.2s ease;
+    outline: none;
+  }
+  .paper-input::placeholder {
+    color: var(--ink-extra-faded);
+    font-style: italic;
+  }
+  .paper-input:focus {
+    border-bottom-color: var(--pencil-blue);
+    border-bottom-style: solid;
+  }
+  .paper-input:disabled {
+    opacity: 0.5;
+  }
+
+  /* Kutulu input (oda kodu gibi) */
+  .paper-input-boxed {
+    width: 100%;
+    background-color: var(--paper-card);
+    border: 2.5px dashed var(--paper-border-strong);
+    border-radius: 8px 4px 10px 6px;
+    padding: 0.875rem 1rem;
+    color: var(--ink);
+    font-weight: 700;
+    transition: border-color 0.2s ease, border-style 0.2s ease;
+    outline: none;
+  }
+  .paper-input-boxed:focus {
+    border-color: var(--pencil-blue);
+    border-style: solid;
+  }
+  .paper-input-boxed:disabled {
+    opacity: 0.5;
+  }
+  .paper-input-boxed::placeholder {
+    color: var(--ink-extra-faded);
+    font-weight: 500;
+  }
+
+  /* ── Etiket (Tag / Badge) ── */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    border: 1.5px solid var(--paper-border);
+    border-radius: 6px 3px 8px 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-faded);
+    background-color: var(--paper-card);
+  }
+
+  .tag-you {
+    border-color: var(--pencil-blue);
+    color: var(--pencil-blue);
+    background-color: transparent;
+  }
+
+  .tag-ready {
+    border-color: var(--pencil-green);
+    color: var(--pencil-green);
+    background-color: transparent;
+  }
+
+  .tag-waiting {
+    border-style: dashed;
+  }
+
+  .tag-turn {
+    border-color: var(--pencil-yellow);
+    color: var(--pencil-yellow);
+    background-color: transparent;
+    border-width: 2px;
+  }
+
+  /* ── Hata Alert ── */
+  .alert-error {
+    background-color: #FFF0EE;
+    border: 2px solid var(--pencil-red);
+    border-radius: 4px 10px 6px 12px;
+    padding: 0.875rem 1rem;
+    color: var(--pencil-red);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .dark .alert-error {
+    background-color: #2D1A18;
+  }
+
+  /* ── Başarı Alert ── */
+  .alert-success {
+    background-color: #EEFCF3;
+    border: 2px solid var(--pencil-green);
+    border-radius: 10px 4px 12px 6px;
+    padding: 0.875rem 1rem;
+    color: var(--pencil-green);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .dark .alert-success {
+    background-color: #182D20;
+  }
+}
+
+@layer utilities {
+  /* Elle çizilmiş altı çizili efekt */
+  .underline-sketch {
+    text-decoration: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='8' viewBox='0 0 200 8'%3E%3Cpath d='M0 6 Q25 2 50 5 T100 4 T150 6 T200 3' fill='none' stroke='%23D94F3D' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: bottom;
+    background-size: 200px 8px;
+    padding-bottom: 6px;
+  }
+
+  /* Hafif eğik kartlar — rotation varyasyonları */
+  .tilt-1 { transform: rotate(-1.2deg); }
+  .tilt-2 { transform: rotate(0.8deg); }
+  .tilt-3 { transform: rotate(-0.6deg); }
+  .tilt-4 { transform: rotate(1.5deg); }
+  .tilt-5 { transform: rotate(-0.4deg); }
+
+  .hover-tilt:hover { transform: rotate(-1deg) translateY(-2px); }
+  .hover-tilt-r:hover { transform: rotate(1deg) translateY(-2px); }
+
+  /* Dekoratif çizgi ayırıcı */
+  .divider-sketch {
+    border: none;
+    height: 3px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='3' viewBox='0 0 300 3'%3E%3Cpath d='M0 1.5 Q50 0 100 2 T200 1 T300 1.5' fill='none' stroke='%23C9BFA8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-size: 300px 3px;
+  }
+  .dark .divider-sketch {
+    opacity: 0.5;
+  }
+
+  /* Marker highlight efekti */
+  .highlight-yellow {
+    background: linear-gradient(180deg, transparent 55%, rgba(232, 168, 56, 0.3) 55%, rgba(232, 168, 56, 0.3) 90%, transparent 90%);
+  }
+  .dark .highlight-yellow {
+    background: linear-gradient(180deg, transparent 55%, rgba(240, 184, 74, 0.2) 55%, rgba(240, 184, 74, 0.2) 90%, transparent 90%);
+  }
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--paper-border-strong);
+  border-radius: 20px;
+  transition: background 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-faded);
+}
+
+/* ═══════════════════════════════════════════════
+   Premium Animasyonlar & Detaylar
+   ═══════════════════════════════════════════════ */
+
+/* ── Yapışkan Not Hover Efekti ── */
+.sticky-note {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s ease;
+}
+.sticky-note:hover {
+  transform: translateY(-4px) rotate(0deg) !important;
+  box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Buton Basım Efekti (Kağıt Buruşma) ── */
+.btn-pencil-red:active:not(:disabled),
+.btn-pencil-green:active:not(:disabled) {
+  transform: translate(1px, 1px) skewX(-1deg);
+}
+
+/* ── Input Focus Kalem Çizim Efekti ── */
+.paper-input {
+  background-image: linear-gradient(var(--pencil-blue), var(--pencil-blue));
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  transition: border-color 0.2s ease, background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.paper-input:focus {
+  background-size: 100% 2px;
+  border-bottom-color: transparent;
+}
+
+/* ── Kart Dağıtma Gecikmeleri ── */
+.deal-delay-1 { animation-delay: 0.05s; }
+.deal-delay-2 { animation-delay: 0.1s; }
+.deal-delay-3 { animation-delay: 0.15s; }
+.deal-delay-4 { animation-delay: 0.2s; }
+.deal-delay-5 { animation-delay: 0.25s; }
+.deal-delay-6 { animation-delay: 0.3s; }
+.deal-delay-7 { animation-delay: 0.35s; }
+.deal-delay-8 { animation-delay: 0.4s; }
+
+/* ── Pulsing Border (Aktif Tur) ── */
+.turn-active {
+  animation: pulseGlow 2s ease-in-out infinite;
+  border-color: var(--pencil-yellow);
+}
+
+/* ── SVG Çizim Animasyonları ── */
+.svg-draw {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+}
+.svg-draw-animated {
+  animation: drawCheck 0.4s ease-out 0.2s both;
+}
+.svg-draw-x {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: drawX 0.3s ease-out both;
+}
+
+/* ── Confetti Parçacıkları ── */
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10px) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px) rotate(720deg) scale(0.3);
+    opacity: 0;
+  }
+}
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  opacity: 0;
+  pointer-events: none;
+}
+.confetti-piece.active {
+  animation: confettiFall 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* ── Kağıt Kutu Gölge Hover ── */
+.paper-card,
+.paper-card-alt,
+.paper-card-lg {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* ── Tag Stamp Animasyonu ── */
+.tag-animate {
+  animation: stampPress 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ── Elipsis Bekleme Animasyonu ── */
+@keyframes ellipsis {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}
+.waiting-dots::after {
+  content: '';
+  animation: ellipsis 1.5s infinite;
+}
+
+/* ── Floating Doodle SVG'leri ── */
+.floating-doodle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+.floating-doodle svg {
+  stroke: var(--paper-border);
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Kalem ile İmleç Efekti ── */
+.paper-input:focus {
+  caret-color: var(--pencil-blue);
+}
+.paper-input-boxed:focus {
+  caret-color: var(--pencil-blue);
+}
+
+/* ── Focus Ring Sketchy ── */
+*:focus-visible {
+  outline: 2.5px dashed var(--pencil-red);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Disabled Kağıt Buruşma ── */
+button:disabled,
+input:disabled {
+  filter: grayscale(0.3);
+}
+
+/* ── Sayfa Geçiş Wrapper ── */
+.page-enter {
+  animation: paperDrop 0.5s ease-out both;
+}
+
+/* ── Prefers-Reduced-Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .sticky-note:hover {
+    transform: none !important;
+  }
+}
+

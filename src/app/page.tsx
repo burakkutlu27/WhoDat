@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRight, KeyRound, Play, Plus, Users } from 'lucide-react'
+import { ArrowRight, KeyRound, Pencil, Pin, Play, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -19,20 +19,22 @@ export default function Home() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-5xl flex-col justify-center px-4 py-8">
+    <main className="page-enter mx-auto flex min-h-[calc(100vh-4rem)] max-w-5xl flex-col justify-center px-4 py-8">
       {/* Hero Header */}
       <div className="text-center sm:text-left">
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
           className="max-w-2xl"
         >
-          <h1 className="font-display text-4xl font-black tracking-tight text-slate-900 sm:text-6xl dark:text-white">
+          <h1 className="font-display text-5xl font-bold text-ink sm:text-7xl">
             Ben Kimim? <br />
-            <span className="text-indigo-600 dark:text-indigo-400">Kimliğini bul, puanları kap.</span>
+            <span className="underline-sketch text-pencil-red inline-block transform transition-transform hover:scale-[1.02]">
+              Kimliğini bul, puanları kap.
+            </span>
           </h1>
-          <p className="mt-4 text-base text-slate-600 sm:text-lg dark:text-slate-300">
+          <p className="mt-4 text-base text-ink-faded sm:text-lg">
             Arkadaşlarınla aynı odada toplan, gizli isimler belirle ve sorular sorarak kim olduğunu tahmin et!
           </p>
         </motion.div>
@@ -42,51 +44,62 @@ export default function Home() {
       <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-12">
         {/* Create Room Box (Primary) */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 25, rotate: -2 }}
+          animate={{ opacity: 1, y: 0, rotate: -1.2 }}
+          whileHover={{ y: -4, rotate: -0.5, transition: { duration: 0.2 } }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="flex flex-col justify-between rounded-3xl border border-indigo-200 bg-indigo-600 p-6 text-white shadow-xl shadow-indigo-600/20 md:col-span-7 sm:p-8 dark:border-indigo-500/30 dark:bg-indigo-600"
+          className="paper-card-lg tilt-3 flex flex-col justify-between p-6 md:col-span-7 sm:p-8 hover:shadow-2xl"
         >
           <div>
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white backdrop-blur-md">
-              <Plus className="h-6 w-6" />
-            </div>
-            <h2 className="mt-6 font-display text-2xl font-black text-white sm:text-3xl">
+            {/* Dekoratif Kalem İkonu */}
+            <motion.div
+              animate={{ rotate: [0, -10, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+              className="mb-3 inline-block rounded-xl border border-paper-border bg-paper-card p-2 text-pencil-yellow shadow-sm"
+            >
+              <Pencil className="h-7 w-7" />
+            </motion.div>
+            <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
               Yeni Oyun Odası Aç
             </h2>
-            <p className="mt-2 text-sm text-indigo-100 sm:text-base">
+            <p className="mt-2 text-sm text-ink-faded sm:text-base">
               Hemen bir oda kur, 6 haneli kodu arkadaşlarınla paylaş ve oynamaya başla.
             </p>
           </div>
 
           <div className="mt-8">
             <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.03, rotate: -0.5 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => router.push('/room/create')}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-white py-4 font-display text-base font-extrabold text-indigo-700 shadow-md transition-all hover:bg-indigo-50 active:scale-[0.99]"
+              className="btn-pencil-red flex w-full items-center justify-center gap-2 py-4 font-display text-xl tracking-wide shadow-md"
             >
-              <Play className="h-5 w-5 fill-current text-indigo-700" />
+              <Play className="h-5 w-5 fill-current" />
               <span>Oda Oluştur</span>
             </motion.button>
           </div>
         </motion.div>
 
-        {/* Join Room Box (Secondary / Direct Code Input) */}
+        {/* Join Room Box */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 25, rotate: 2 }}
+          animate={{ opacity: 1, y: 0, rotate: 0.8 }}
+          whileHover={{ y: -4, rotate: 1.5, transition: { duration: 0.2 } }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/50 md:col-span-5 sm:p-8 dark:border-slate-800 dark:bg-[#151D2A] dark:shadow-none"
+          className="paper-card tilt-2 flex flex-col justify-between p-6 md:col-span-5 sm:p-8 hover:shadow-xl"
         >
           <div>
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-              <KeyRound className="h-6 w-6" />
-            </div>
-            <h2 className="mt-6 font-display text-2xl font-bold text-slate-900 dark:text-white">
+            <motion.div
+              animate={{ y: [0, -4, 0] }}
+              transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+              className="mb-3 inline-block rounded-xl border border-paper-border bg-paper-card p-2 text-pencil-blue shadow-sm"
+            >
+              <KeyRound className="h-7 w-7" />
+            </motion.div>
+            <h2 className="font-display text-3xl font-bold text-ink">
               Odaya Katıl
             </h2>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p className="mt-1 text-sm text-ink-faded">
               Arkadaşının verdiği 6 haneli oda kodunu gir.
             </p>
           </div>
@@ -97,17 +110,17 @@ export default function Home() {
                 type="text"
                 value={quickCode}
                 onChange={(e) => setQuickCode(e.target.value.toUpperCase())}
-                placeholder="ODA KODU (ABCDEF)"
+                placeholder="ODA KODU"
                 maxLength={6}
-                className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3.5 text-center font-mono text-base font-bold tracking-widest text-slate-900 uppercase transition-all placeholder:font-sans placeholder:text-xs placeholder:tracking-normal placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:focus:border-indigo-400"
+                className="paper-input-boxed text-center font-mono text-xl tracking-[0.3em] uppercase transition-all duration-200 focus:scale-[1.01]"
               />
             </div>
 
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.02, rotate: 0.5 }}
               whileTap={{ scale: 0.98 }}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-slate-900 py-3.5 font-display text-sm font-bold text-white shadow-md transition-all hover:bg-slate-800 dark:border-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
+              className="btn-outline flex w-full items-center justify-center gap-2 py-3.5 font-display text-lg"
             >
               <span>Koda Katıl</span>
               <ArrowRight className="h-4 w-4" />
@@ -116,32 +129,53 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* Real Game Cards Showcase */}
+      {/* Örnek Gizli Oyuncu İsimleri — Post-it'ler */}
       <div className="mt-12">
-        <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-          Örnek Gizli Oyuncu İsimleri
+        <h3 className="mb-4 font-display text-2xl font-bold text-ink-faded flex items-center gap-2">
+          <Pin className="h-5 w-5 text-pencil-red" />
+          <span>Örnek Gizli Oyuncu İsimleri</span>
         </h3>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-4 text-center shadow-sm dark:border-slate-800 dark:bg-[#151D2A]">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Sinema / Dizi</span>
-            <p className="mt-1 font-display text-base font-extrabold text-slate-900 dark:text-white">Kemal Sunal</p>
-          </div>
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-4 text-center shadow-sm dark:border-slate-800 dark:bg-[#151D2A]">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Kurgusal Karakter</span>
-            <p className="mt-1 font-display text-base font-extrabold text-slate-900 dark:text-white">Sherlock Holmes</p>
-          </div>
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-4 text-center shadow-sm dark:border-slate-800 dark:bg-[#151D2A]">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Bilim İnsanı</span>
-            <p className="mt-1 font-display text-base font-extrabold text-slate-900 dark:text-white">Albert Einstein</p>
-          </div>
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-4 text-center shadow-sm dark:border-slate-800 dark:bg-[#151D2A]">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Müzik / Pop</span>
-            <p className="mt-1 font-display text-base font-extrabold text-slate-900 dark:text-white">Barış Manço</p>
-          </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+
+          <motion.div
+            initial={{ opacity: 0, y: 15, rotate: -3 }}
+            animate={{ opacity: 1, y: 0, rotate: -2.5 }}
+            transition={{ delay: 0.35, duration: 0.4 }}
+            className="sticky-note sticky-note-yellow animate-sticky-peel tilt-1 p-4 text-center cursor-pointer"
+          >
+            <span className="font-display text-sm font-bold text-pencil-red">Sinema / Dizi</span>
+            <p className="mt-1 font-display text-xl font-bold text-ink">Kemal Sunal</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 15, rotate: 2 }}
+            animate={{ opacity: 1, y: 0, rotate: 1.5 }}
+            transition={{ delay: 0.45, duration: 0.4 }}
+            className="sticky-note sticky-note-pink animate-sticky-peel tilt-4 p-4 text-center cursor-pointer"
+          >
+            <span className="font-display text-sm font-bold text-pencil-purple">Kurgusal Karakter</span>
+            <p className="mt-1 font-display text-xl font-bold text-ink">Sherlock Holmes</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 15, rotate: -2 }}
+            animate={{ opacity: 1, y: 0, rotate: -1 }}
+            transition={{ delay: 0.55, duration: 0.4 }}
+            className="sticky-note sticky-note-blue animate-sticky-peel tilt-5 p-4 text-center cursor-pointer"
+          >
+            <span className="font-display text-sm font-bold text-pencil-blue">Bilim İnsanı</span>
+            <p className="mt-1 font-display text-xl font-bold text-ink">Albert Einstein</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 15, rotate: 3 }}
+            animate={{ opacity: 1, y: 0, rotate: 2 }}
+            transition={{ delay: 0.65, duration: 0.4 }}
+            className="sticky-note sticky-note-green animate-sticky-peel tilt-2 p-4 text-center cursor-pointer"
+          >
+            <span className="font-display text-sm font-bold text-pencil-green">Müzik / Pop</span>
+            <p className="mt-1 font-display text-xl font-bold text-ink">Barış Manço</p>
+          </motion.div>
         </div>
       </div>
     </main>
   )
+
 }
-
-
