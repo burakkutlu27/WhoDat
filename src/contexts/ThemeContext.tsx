@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 type Theme = 'light' | 'dark'
 
@@ -12,44 +12,34 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light')
-  const [mounted, setMounted] = useState(false)
+/**
+ * Başlangıç değeri, layout'taki hidrasyon öncesi script'in <html> üzerine koyduğu
+ * sınıftan okunur. Böylece durumu bir effect içinde düzeltmek gerekmiyor; effect
+ * yalnızca değişikliği dışarıya (DOM ve localStorage) yazıyor.
+ */
+function readThemeFromDocument(): Theme {
+  if (typeof document === 'undefined') return 'light'
+  return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+}
 
-  // Load theme from localStorage on mount
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setThemeState] = useState<Theme>(readThemeFromDocument)
+
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme
-    if (savedTheme) {
-      setThemeState(savedTheme)
-    } else {
-      // Check system preference
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      setThemeState(systemTheme)
+    document.documentElement.classList.remove('light', 'dark')
+    document.documentElement.classList.add(theme)
+    try {
+      localStorage.setItem('theme', theme)
+    } catch {
+      // Gizli sekmede localStorage yazılamayabilir; tema yine de bu oturumda çalışır.
     }
-    setMounted(true)
+  }, [theme])
+
+  const toggleTheme = useCallback(() => {
+    setThemeState((previous) => (previous === 'light' ? 'dark' : 'light'))
   }, [])
 
-  // Apply theme to document
-  useEffect(() => {
-    if (mounted) {
-      document.documentElement.classList.remove('light', 'dark')
-      document.documentElement.classList.add(theme)
-      localStorage.setItem('theme', theme)
-    }
-  }, [theme, mounted])
-
-  const toggleTheme = () => {
-    setThemeState(prev => prev === 'light' ? 'dark' : 'light')
-  }
-
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme)
-  }
-
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return <>{children}</>
-  }
+  const setTheme = useCallback((next: Theme) => setThemeState(next), [])
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
@@ -58,15 +48,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function useTheme() {
+export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext)
-  if (context === undefined) {
-    // Return default values instead of throwing error during SSR
-    return {
-      theme: 'light' as Theme,
-      toggleTheme: () => {},
-      setTheme: () => {}
-    }
+  if (!context) {
+    // Sunucuda render edilirken sağlayıcı yoktur; işlevsiz bir varsayılan döndürülür.
+    return { theme: 'light', toggleTheme: () => {}, setTheme: () => {} }
   }
   return context
 }

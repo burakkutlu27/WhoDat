@@ -1,115 +1,136 @@
 'use client'
 
-import { useState } from 'react'
+import { ArrowLeft, Loader2, Plus, User } from 'lucide-react'
+import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
-import { roomFlowHelpers } from '@/utils/supabaseClient'
+import { useState } from 'react'
 
-export default function CreateRoom() {
+import { ApiClientError, apiRequest } from '@/lib/apiClient'
+
+export default function CreateRoomPage() {
   const router = useRouter()
   const [nickname, setNickname] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleCreateRoom = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!nickname.trim()) {
-      setError('Lütfen bir takma ad girin')
-      return
-    }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    if (!nickname.trim() || isSubmitting) return
 
-    setIsLoading(true)
-    setError('')
+    setIsSubmitting(true)
+    setError(null)
 
     try {
-      const { roomId, roomCode, playerId } = await roomFlowHelpers.createRoom(nickname.trim())
-      
-      // Store player info in localStorage for the session
-      localStorage.setItem('playerId', playerId)
-      localStorage.setItem('playerNickname', nickname.trim())
-      localStorage.setItem('isHost', 'true')
-      
-      // Redirect to room waiting screen
+      const { roomId } = await apiRequest<{ roomId: string; roomCode: string }>('/api/rooms', {
+        method: 'POST',
+        body: { nickname: nickname.trim() },
+      })
       router.push(`/room/${roomId}`)
-    } catch (err) {
-      setError('Oda oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.')
-      console.error('Error creating room:', err)
-    } finally {
-      setIsLoading(false)
+    } catch (caught) {
+      setError(
+        caught instanceof ApiClientError
+          ? caught.message
+          : 'Oda oluşturulamadı. Lütfen tekrar deneyin.',
+      )
+      setIsSubmitting(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">🏠</span>
+    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-8">
+      <div className="w-full max-w-md">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-[#151D2A] dark:shadow-none"
+        >
+          <div className="mb-6 text-center">
+            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
+              <Plus className="h-6 w-6" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-              Oda Oluştur
+            <h1 className="font-display text-2xl font-black text-slate-900 dark:text-white">
+              Yeni Oda Oluştur
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              Yeni bir oyun odası oluşturun ve arkadaşlarınızı davet edin
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+              Odanı aç, takma adını belirle ve arkadaşlarını davet et.
             </p>
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleCreateRoom} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5" noValidate>
             <div>
-              <label htmlFor="nickname" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="nickname"
+                className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+              >
                 Takma Adınız
               </label>
-              <input
-                type="text"
-                id="nickname"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                placeholder="Örn: Ahmet, Oyuncu123"
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
-                maxLength={20}
-                disabled={isLoading}
-              />
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <User className="h-4 w-4" />
+                </div>
+                <input
+                  id="nickname"
+                  type="text"
+                  value={nickname}
+                  onChange={(event) => setNickname(event.target.value)}
+                  placeholder="Örn: Ahmet"
+                  maxLength={20}
+                  autoComplete="nickname"
+                  disabled={isSubmitting}
+                  aria-describedby={error ? 'create-room-error' : undefined}
+                  className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-4 py-3.5 text-base font-semibold text-slate-900 transition-all placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white dark:focus:border-indigo-400"
+                />
+              </div>
             </div>
 
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
-                <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: [0, -6, 6, -3, 3, 0] }}
+                transition={{ duration: 0.4 }}
+                id="create-room-error"
+                role="alert"
+                className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-xs font-semibold text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/30 dark:text-rose-300"
+              >
+                {error}
+              </motion.div>
             )}
 
-            <div className="space-y-3">
-              <button
+            <div className="space-y-3 pt-2">
+              <motion.button
                 type="submit"
-                disabled={isLoading || !nickname.trim()}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                disabled={isSubmitting || !nickname.trim()}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3.5 font-display text-sm font-bold text-white shadow-lg shadow-indigo-500/25 transition-all hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none dark:disabled:bg-slate-800"
               >
-                {isLoading ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Oda Oluşturuluyor...
-                  </span>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Oda Oluşturuluyor...</span>
+                  </>
                 ) : (
-                  'Oda Oluştur'
+                  <span>Oda Oluştur</span>
                 )}
-              </button>
+              </motion.button>
 
-              <button
+              <motion.button
                 type="button"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => router.push('/')}
-                className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium py-3 px-6 rounded-xl transition-colors"
-                disabled={isLoading}
+                disabled={isSubmitting}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-100/80 py-3.5 font-display text-sm font-semibold text-slate-700 transition-all hover:bg-slate-200/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-800"
               >
-                Geri Dön
-              </button>
+                <ArrowLeft className="h-4 w-4" />
+                <span>Geri Dön</span>
+              </motion.button>
             </div>
           </form>
-        </div>
+        </motion.div>
       </div>
     </div>
   )
 }
+

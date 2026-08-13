@@ -1,462 +1,380 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { Crown, Gamepad2, HelpCircle, Loader2, LogOut, Send, SkipForward, Target, Trophy } from 'lucide-react'
+import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
-import { supabase, whoDatHelpers, roomFlowHelpers } from '@/utils/supabaseClient'
+import { use, useEffect, useState } from 'react'
 
-interface Player {
-  id: string
-  nickname: string
-  is_host: boolean
-  score: number
-  assigned_name?: string
-}
+import { ApiClientError, apiRequest } from '@/lib/apiClient'
+import type { GuessResult } from '@/lib/game/types'
+import { useGameState } from '@/lib/useGameState'
 
-interface GameState {
-  room: any
-  players: Player[]
-  currentIdentity: any
-  isActive: boolean
-  currentPlayerId: string | null
-  round: number
-}
+type Feedback = { tone: 'success' | 'error'; text: string }
 
-export default function GamePage({ params }: { params: { id: string } }) {
+export default function GamePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: roomId } = use(params)
   const router = useRouter()
-  const [gameState, setGameState] = useState<GameState | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [playerId, setPlayerId] = useState<string | null>(null)
-  const [isHost, setIsHost] = useState(false)
-  const [guess, setGuess] = useState('')
-  const [isSubmittingGuess, setIsSubmittingGuess] = useState(false)
-  const [message, setMessage] = useState('')
-  const [messageType, setMessageType] = useState<'success' | 'error' | 'info'>('info')
-  const [hasRedirected, setHasRedirected] = useState(false)
+  const { state, phase, error, degraded, refresh } = useGameState(roomId)
 
-  const loadGameState = useCallback(async () => {
-    try {
-      const state = await roomFlowHelpers.getGameState(params.id)
-      setGameState(state)
-      
-      // If game is not playing, redirect back to room
-      if (state.room.status !== 'playing') {
-        if (state.room.status === 'finished' && !hasRedirected) {
-          // Game is finished - show results or redirect to scores
-          setHasRedirected(true)
-          router.push(`/scores/${params.id}`)
-        } else if (state.room.status !== 'finished') {
-          router.push(`/room/${params.id}`)
-        }
-        return
-      }
-    } catch (err) {
-      console.error('Error loading game state:', err)
-      router.push('/')
-    } finally {
-      setIsLoading(false)
-    }
-  }, [params.id, router, hasRedirected])
+  const [guess, setGuess] = useState('')
+  const [isBusy, setIsBusy] = useState(false)
+  const [feedback, setFeedback] = useState<Feedback | null>(null)
+
+  const status = state?.room.status
 
   useEffect(() => {
-    // Get player info from localStorage
-    const storedPlayerId = localStorage.getItem('playerId')
-    const storedIsHost = localStorage.getItem('isHost')
-    
-    if (!storedPlayerId) {
-      router.push('/')
-      return
+    if (!status) return
+    if (status === 'waiting') router.replace(`/room/${roomId}`)
+    else if (status === 'finished') router.replace(`/scores/${roomId}`)
+    else if (status === 'closed') router.replace('/')
+  }, [status, roomId, router])
+
+  useEffect(() => {
+    if (error?.status === 401 || error?.code === 'wrong_room' || error?.code === 'player_not_in_room') {
+      router.replace('/')
     }
-    
-    setPlayerId(storedPlayerId)
-    setIsHost(storedIsHost === 'true')
-    
-    // Load initial game state
-    loadGameState()
-    
-    // Setup realtime subscription for game updates
-    const channel = supabase
-      .channel(`game-${params.id}`)
-      .on('postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'rooms',
-          filter: `id=eq.${params.id}`
-        },
-        (payload) => {
-          console.log('Game state change detected:', payload.new)
-          // Only reload if game is still active
-          if (payload.new.status === 'playing') {
-            loadGameState()
-          }
-        }
-      )
-      .on('postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'players',
-          filter: `room_id=eq.${params.id}`
-        },
-        (payload) => {
-          console.log('Player score change detected:', payload.new)
-          loadGameState()
-        }
-      )
-      .on('postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'names',
-          filter: `room_id=eq.${params.id}`
-        },
-        (payload) => {
-          console.log('Names change detected:', payload.new)
-          loadGameState()
-        }
-      )
-      .subscribe((status) => {
-        console.log('Game realtime subscription status:', status)
+  }, [error, router])
+
+  const currentPlayerId = state?.room.currentPlayerId ?? null
+  const [turnShown, setTurnShown] = useState(currentPlayerId)
+  if (turnShown !== currentPlayerId) {
+    setTurnShown(currentPlayerId)
+    setFeedback(null)
+    setGuess('')
+  }
+
+  const handleGuess = async (event: React.FormEvent) => {
+    event.preventDefault()
+    if (!guess.trim() || isBusy) return
+
+    setIsBusy(true)
+    try {
+      const result = await apiRequest<GuessResult>(`/api/rooms/${roomId}/guess`, {
+        method: 'POST',
+        body: { guess: guess.trim() },
       })
 
-    // Add polling fallback for game state updates (only if game is active)
-    const pollingInterval = setInterval(() => {
-      console.log('Polling for game state updates...')
-      loadGameState()
-    }, 2000)
-
-    return () => {
-      supabase.removeChannel(channel)
-      clearInterval(pollingInterval)
-    }
-  }, [params.id, router, loadGameState])
-
-  const handleGuess = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!playerId || !guess.trim()) return
-
-    setIsSubmittingGuess(true)
-    setMessage('')
-
-    try {
-      const result = await roomFlowHelpers.makeGuess(params.id, playerId, guess.trim())
-      
-      if (result.isCorrect) {
-        setMessageType('success')
-        setMessage(result.message)
+      if (result.correct) {
+        setFeedback({ tone: 'success', text: result.message })
         setGuess('')
-        // Force reload game state to get updated scores and turn
-        setTimeout(async () => {
-          await loadGameState()
-        }, 500) // Small delay to ensure database updates are complete
+        await refresh()
       } else {
-        setMessageType('error')
-        setMessage(result.message)
+        setFeedback({ tone: 'error', text: result.message })
       }
-    } catch (err: any) {
-      setMessageType('error')
-      setMessage(err.message || 'Tahmin gönderilirken bir hata oluştu')
-      console.error('Error making guess:', err)
+    } catch (caught) {
+      setFeedback({
+        tone: 'error',
+        text: caught instanceof ApiClientError ? caught.message : 'Tahmin gönderilemedi.',
+      })
+      await refresh()
     } finally {
-      setIsSubmittingGuess(false)
+      setIsBusy(false)
     }
   }
 
-  const handleLeaveGame = async () => {
+  const handlePass = async () => {
+    if (isBusy) return
+    setIsBusy(true)
     try {
-      if (playerId) {
-        await whoDatHelpers.removePlayerFromRoom(playerId)
-        await whoDatHelpers.checkAndCloseEmptyRoom(params.id)
-      }
-    } catch (err) {
-      console.error('Error leaving game:', err)
+      await apiRequest(`/api/rooms/${roomId}/pass`, { method: 'POST' })
+      setGuess('')
+      await refresh()
+    } catch (caught) {
+      setFeedback({
+        tone: 'error',
+        text: caught instanceof ApiClientError ? caught.message : 'Sıra geçilemedi.',
+      })
+      await refresh()
     } finally {
-      localStorage.removeItem('playerId')
-      localStorage.removeItem('playerNickname')
-      localStorage.removeItem('isHost')
+      setIsBusy(false)
+    }
+  }
+
+  const handleLeave = async () => {
+    try {
+      await apiRequest(`/api/rooms/${roomId}/leave`, { method: 'POST' })
+    } finally {
       router.push('/')
     }
   }
 
-  const startActiveGame = async () => {
-    if (!isHost) return
-    
-    try {
-      await roomFlowHelpers.startActiveGame(params.id)
-      await loadGameState()
-    } catch (err) {
-      console.error('Error starting active game:', err)
-    }
-  }
-
-  if (isLoading) {
+  if (phase === 'loading') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300">Oyun yükleniyor...</p>
+      <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
+        <div className="mx-auto max-w-5xl space-y-6" aria-busy="true" aria-label="Oyun yükleniyor">
+          <div className="h-24 animate-pulse rounded-3xl bg-white/70 dark:bg-[#151D2A]/70" />
+          <div className="h-80 animate-pulse rounded-3xl bg-white/70 dark:bg-[#151D2A]/70" />
         </div>
       </div>
     )
   }
 
-  if (!gameState) {
+  if (phase === 'error' || !state) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">❌</span>
-          </div>
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">Oyun Bulunamadı</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">Oyun bilgileri yüklenemedi</p>
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+        <div className="max-w-md text-center">
+          <h1 className="mb-2 font-display text-xl font-bold text-slate-900 dark:text-white">Oyun Açılamadı</h1>
+          <p className="mb-6 text-sm text-slate-600 dark:text-slate-400">
+            {error?.message ?? 'Oyun bilgileri yüklenemedi.'}
+          </p>
           <button
-            onClick={() => router.push('/')}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-xl transition-colors"
+            onClick={() => void refresh()}
+            className="rounded-xl bg-indigo-600 px-6 py-3 font-display font-semibold text-white hover:bg-indigo-500"
           >
-            Ana Sayfaya Dön
+            Tekrar Dene
           </button>
         </div>
       </div>
     )
   }
 
-  const isMyTurn = gameState.currentPlayerId === playerId
-  const currentPlayer = gameState.players.find(p => p.id === gameState.currentPlayerId)
+  const currentPlayer = state.players.find((player) => player.id === state.room.currentPlayerId)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 p-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
-          <div className="flex items-center justify-between">
+    <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
+      <div className="mx-auto max-w-5xl space-y-6">
+        {/* Game Header Bar */}
+        <motion.header
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-3xl border border-slate-200/80 bg-white/90 p-6 shadow-xl shadow-slate-200/40 backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#151D2A]/90 dark:shadow-indigo-950/20"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                KimBu Oyunu
-              </h1>
-              <div className="flex items-center space-x-4">
-                <div className="bg-green-100 dark:bg-green-900/20 px-3 py-1 rounded-full">
-                  <span className="text-green-600 dark:text-green-400 font-mono text-lg">
-                    {gameState.room.room_code}
-                  </span>
-                </div>
-                <span className="text-gray-600 dark:text-gray-300">
-                  {gameState.players.length} oyuncu
-                </span>
-                <span className="bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full text-sm">
-                  Tur {gameState.round}
+              <div className="flex items-center gap-2">
+                <span className="font-display text-xl font-black text-slate-900 dark:text-white">KimBu</span>
+                <span className="rounded-lg border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 font-mono text-xs font-bold text-indigo-700 dark:border-indigo-900/60 dark:bg-indigo-950/40 dark:text-indigo-300">
+                  {state.room.roomCode}
                 </span>
               </div>
+              <div className="mt-2 flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-600 dark:text-slate-400">
+                <span className="rounded-full bg-slate-100 px-2.5 py-1 dark:bg-slate-800 dark:text-slate-300">
+                  Tur {state.room.gameRound}
+                </span>
+                <span className="rounded-full bg-slate-100 px-2.5 py-1 dark:bg-slate-800 dark:text-slate-300">
+                  {state.namesRemaining} İsim Kaldı
+                </span>
+                {degraded && <span className="text-amber-500">Canlı bağlantı yok</span>}
+              </div>
             </div>
-            <button
-              onClick={handleLeaveGame}
-              className="bg-red-100 dark:bg-red-900/20 hover:bg-red-200 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 px-4 py-2 rounded-xl transition-colors"
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => void handleLeave()}
+              className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-100/80 px-4 py-2.5 font-display text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-200/80 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-800"
             >
-              Oyundan Çık
-            </button>
+              <LogOut className="h-4 w-4" />
+              <span>Oyundan Çık</span>
+            </motion.button>
           </div>
-        </div>
+        </motion.header>
 
-        {/* Game Status */}
-        {!gameState.isActive && isHost && (
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-6 mb-6">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-yellow-800 dark:text-yellow-400 mb-2">
-                Oyun Aktif Değil
-              </h3>
-              <p className="text-yellow-600 dark:text-yellow-300 mb-4">
-                Oyunu başlatmak için butona basın
-              </p>
-              <button
-                onClick={startActiveGame}
-                className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-6 rounded-xl transition-colors"
-              >
-                Oyunu Başlat
-              </button>
-            </div>
-          </div>
-        )}
-
-        {!gameState.isActive && !isHost && (
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 mb-6">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-400 mb-2">
-                Oyun Başlamayı Bekliyor
-              </h3>
-              <p className="text-blue-600 dark:text-blue-300">
-                Host oyunu başlatmayı bekliyor
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Game Content */}
-        {gameState.isActive && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Main Game Area */}
-            <div className="lg:col-span-2">
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                {/* Current Player Info */}
-                <div className="text-center mb-8">
-                  <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-3xl">🎯</span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                    {isMyTurn ? 'Senin Sıran!' : `${currentPlayer?.nickname} Tahmin Ediyor`}
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {isMyTurn ? 'Kim olduğunu tahmin et!' : 'Tahminci düşünüyor...'}
-                  </p>
-                </div>
-
-                {/* Guess Input (Only for current player) */}
-                {isMyTurn && (
-                  <div className="max-w-md mx-auto">
-                    <form onSubmit={handleGuess} className="space-y-4">
-                      <div>
-                        <label htmlFor="guess" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Tahminin
-                        </label>
-                        <input
-                          type="text"
-                          id="guess"
-                          value={guess}
-                          onChange={(e) => setGuess(e.target.value)}
-                          placeholder="Kim olduğunu tahmin et..."
-                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors text-center text-lg"
-                          disabled={isSubmittingGuess}
-                          autoFocus
-                        />
-                      </div>
-
-                      <button
-                        type="submit"
-                        disabled={isSubmittingGuess || !guess.trim()}
-                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg"
-                      >
-                        {isSubmittingGuess ? 'Tahmin Ediliyor...' : 'Tahmin Et'}
-                      </button>
-                    </form>
-
-                    {/* Message Display */}
-                    {message && (
-                      <div className={`mt-4 p-4 rounded-xl ${
-                        messageType === 'success' 
-                          ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' 
-                          : messageType === 'error'
-                          ? 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
-                          : 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800'
-                      }`}>
-                        <p className={`text-sm ${
-                          messageType === 'success' 
-                            ? 'text-green-600 dark:text-green-400' 
-                            : messageType === 'error'
-                            ? 'text-red-600 dark:text-red-400'
-                            : 'text-blue-600 dark:text-blue-400'
-                        }`}>
-                          {message}
-                        </p>
-                      </div>
-                    )}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {/* Main Play Arena */}
+          <main className="lg:col-span-2">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className={`rounded-3xl border p-6 shadow-xl backdrop-blur-xl sm:p-8 transition-all ${
+                state.you.isYourTurn
+                  ? 'border-amber-400/80 bg-white/95 ring-2 ring-amber-400/30 dark:border-amber-500/60 dark:bg-[#151D2A]/95 dark:ring-amber-500/20'
+                  : 'border-slate-200/80 bg-white/90 dark:border-slate-800/80 dark:bg-[#151D2A]/90'
+              }`}
+            >
+              {/* Turn Banner */}
+              <div className="mb-8 text-center">
+                {state.you.isYourTurn ? (
+                  <motion.div
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-amber-700 shadow-sm dark:border-amber-800/60 dark:bg-amber-950/40 dark:text-amber-300"
+                  >
+                    <Gamepad2 className="h-3.5 w-3.5 text-amber-500" />
+                    <span>SENİN SIRAN!</span>
+                  </motion.div>
+                ) : (
+                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-4 py-1.5 text-xs font-semibold tracking-wider text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-300">
+                    <Target className="h-3.5 w-3.5 text-indigo-500" />
+                    <span>{currentPlayer?.nickname ?? 'Oyuncu'} Tahmin Ediyor</span>
                   </div>
                 )}
 
-                {/* Waiting Message (For other players) */}
-                {!isMyTurn && (
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">⏳</span>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
-                      Bekleme Ekranı
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      {currentPlayer?.nickname} tahmin ediyor...
-                    </p>
-                  </div>
-                )}
+                <h2 className="mt-4 font-display text-2xl font-black text-slate-900 sm:text-3xl dark:text-white">
+                  {state.you.isYourTurn
+                    ? 'Ben Kimim? Soru Sor & Tahmin Et!'
+                    : `${currentPlayer?.nickname ?? 'Oyuncu'} İpucu Arıyor`}
+                </h2>
+                <p className="mx-auto mt-2 max-w-md text-sm text-slate-600 dark:text-slate-400">
+                  {state.you.isYourTurn
+                    ? 'Arkadaşlarına evet/hayır soruları sor. Emin olduğunda tahminini yaz!'
+                    : 'Sana sorulan sorulara dürüstçe yalnızca evet veya hayır deyin.'}
+                </p>
+              </div>
 
-                {/* Current Identity Display (For all players except the guesser) */}
-                {!isMyTurn && gameState.currentIdentity && (
-                  <div className="mt-8 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4">
-                    <h4 className="text-sm font-semibold text-green-600 dark:text-green-400 mb-2">
-                      Doğru Cevap
-                    </h4>
-                    <p className="text-lg font-bold text-green-700 dark:text-green-300">
-                      {gameState.currentIdentity.name_text}
-                    </p>
-                    <p className="text-xs text-green-600 dark:text-green-400 mt-1">
-                      {currentPlayer?.nickname} bu kişiyi tahmin etmeye çalışıyor
-                    </p>
+              {/* Action Form or Secret Card */}
+              {state.you.isYourTurn ? (
+                <form onSubmit={handleGuess} className="mx-auto max-w-md space-y-4">
+                  <div>
+                    <label
+                      htmlFor="guess"
+                      className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+                    >
+                      Tahmininiz
+                    </label>
+                    <input
+                      id="guess"
+                      type="text"
+                      value={guess}
+                      onChange={(event) => setGuess(event.target.value)}
+                      placeholder="Örn: Kemal Sunal"
+                      maxLength={60}
+                      autoComplete="off"
+                      disabled={isBusy}
+                      className="w-full rounded-2xl border border-slate-300 bg-white px-5 py-4 text-center font-display text-lg font-bold text-slate-900 transition-all placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900/80 dark:text-white dark:focus:border-amber-400"
+                    />
                   </div>
+
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <motion.button
+                      type="submit"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      disabled={isBusy || !guess.trim()}
+                      className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3.5 font-display text-sm font-bold text-white shadow-lg shadow-indigo-500/25 transition-all hover:bg-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none dark:disabled:bg-slate-800"
+                    >
+                      {isBusy ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <>
+                          <Send className="h-4 w-4" />
+                          <span>Tahmin Et</span>
+                        </>
+                      )}
+                    </motion.button>
+                    <motion.button
+                      type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => void handlePass()}
+                      disabled={isBusy}
+                      className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-100/80 px-6 py-3.5 font-display text-sm font-semibold text-slate-700 transition-all hover:bg-slate-200/80 disabled:opacity-60 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      <SkipForward className="h-4 w-4" />
+                      <span>Pas Geç</span>
+                    </motion.button>
+                  </div>
+                </form>
+              ) : (
+                state.currentName && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mx-auto max-w-md rounded-2xl border border-emerald-200/80 bg-emerald-50/70 p-6 text-center shadow-inner dark:border-emerald-900/50 dark:bg-emerald-950/30"
+                  >
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                      GİZLİ KART (SADECE SİZ GÖRÜYORSUNUZ)
+                    </span>
+                    <p className="mt-2 font-display text-2xl font-black text-emerald-900 dark:text-emerald-200">
+                      {state.currentName}
+                    </p>
+                    <p className="mt-2 text-xs text-emerald-700 dark:text-emerald-400">
+                      {currentPlayer?.nickname ?? 'Sıradaki oyuncu'} bu ismi tahmin etmeye çalışıyor.
+                    </p>
+                  </motion.div>
+                )
+              )}
+
+              {/* Guess Feedback Toast Notification */}
+              <div aria-live="polite" className="mt-6 min-h-[3rem]">
+                {feedback && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={
+                      feedback.tone === 'error'
+                        ? { opacity: 1, scale: 1, x: [0, -8, 8, -4, 4, 0] }
+                        : { opacity: 1, scale: 1 }
+                    }
+                    transition={{ duration: 0.4 }}
+                    className={`mx-auto max-w-md rounded-xl border p-4 text-center text-xs font-semibold ${
+                      feedback.tone === 'success'
+                        ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300'
+                        : 'border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300'
+                    }`}
+                  >
+                    {feedback.text}
+                  </motion.div>
                 )}
               </div>
-            </div>
+            </motion.div>
+          </main>
 
-            {/* Players Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
-                <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">
-                  Oyuncular ({gameState.players.length})
+          {/* Live Scoreboard Sidebar */}
+          <aside className="lg:col-span-1">
+            <div className="rounded-3xl border border-slate-200/80 bg-white/90 p-6 shadow-xl shadow-slate-200/40 backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#151D2A]/90 dark:shadow-indigo-950/20">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">
+                  Skor Tablosu
                 </h3>
-                
-                <div className="space-y-3">
-                  {gameState.players.map((player) => (
-                    <div
+                <Trophy className="h-4 w-4 text-amber-500" />
+              </div>
+
+              <div className="space-y-2.5">
+                {state.players.map((player) => {
+                  const isCurrent = player.id === state.room.currentPlayerId
+                  const isYou = player.id === state.you.playerId
+                  const initial = player.nickname.charAt(0).toUpperCase()
+                  return (
+                    <motion.div
                       key={player.id}
-                      className={`p-3 rounded-xl border-2 transition-colors ${
-                        player.id === playerId
-                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                          : player.id === gameState.currentPlayerId
-                          ? 'border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20'
-                          : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700'
+                      layout
+                      className={`flex items-center justify-between rounded-2xl border p-3 transition-all ${
+                        isCurrent
+                          ? 'border-amber-400 bg-amber-50/70 dark:border-amber-500/60 dark:bg-amber-950/30'
+                          : 'border-slate-200/80 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/40'
                       }`}
                     >
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          player.is_host 
-                            ? 'bg-yellow-100 dark:bg-yellow-900/20' 
-                            : player.id === gameState.currentPlayerId
-                            ? 'bg-orange-100 dark:bg-orange-900/20'
-                            : 'bg-purple-100 dark:bg-purple-900/20'
-                        }`}>
-                          <span className="text-sm">
-                            {player.is_host ? '👑' : player.id === gameState.currentPlayerId ? '🎯' : '👤'}
-                          </span>
+                      <div className="flex min-w-0 items-center gap-2.5">
+                        <div
+                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-display text-xs font-bold text-white ${
+                            isCurrent
+                              ? 'bg-amber-500 shadow-sm'
+                              : 'bg-slate-700 dark:bg-slate-800'
+                          }`}
+                        >
+                          {initial}
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2">
-                            <span className="font-medium text-gray-800 dark:text-white text-sm">
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            {isCurrent && (
+                              <Target className="h-3.5 w-3.5 shrink-0 text-amber-600 dark:text-amber-400" aria-label="Sırası" />
+                            )}
+                            {player.isHost && !isCurrent && (
+                              <Crown className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-label="Oda Sahibi" />
+                            )}
+                            <span className="truncate font-display text-sm font-semibold text-slate-900 dark:text-white">
                               {player.nickname}
                             </span>
-                            {player.is_host && (
-                              <span className="bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 text-xs px-1.5 py-0.5 rounded-full">
-                                Host
-                              </span>
-                            )}
-                            {player.id === gameState.currentPlayerId && (
-                              <span className="bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-xs px-1.5 py-0.5 rounded-full">
-                                Sıra
-                              </span>
-                            )}
-                            {player.id === playerId && (
-                              <span className="bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs px-1.5 py-0.5 rounded-full">
-                                Sen
+                            {isYou && (
+                              <span className="shrink-0 rounded-full bg-indigo-100 px-1.5 py-0.5 text-[9px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                                SEN
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-gray-600 dark:text-gray-300">
-                            Skor: {player.score}
-                          </p>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+
+                      <span className="shrink-0 font-display text-base font-black text-slate-900 dark:text-white">
+                        {player.score} <span className="text-[10px] font-normal text-slate-400">P</span>
+                      </span>
+                    </motion.div>
+                  )
+                })}
               </div>
             </div>
-          </div>
-        )}
+          </aside>
+        </div>
       </div>
     </div>
   )
 }
+
