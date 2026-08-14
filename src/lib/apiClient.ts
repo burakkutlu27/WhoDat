@@ -23,7 +23,7 @@ const GENERIC_MESSAGE = 'Sunucuya ulaşılamadı. İnternet bağlantınızı kon
 
 export async function apiRequest<T>(
   path: string,
-  options: { method?: 'GET' | 'POST'; body?: unknown; signal?: AbortSignal } = {},
+  options: { method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'; body?: unknown; signal?: AbortSignal } = {},
 ): Promise<T> {
   const { method = 'GET', body, signal } = options
 

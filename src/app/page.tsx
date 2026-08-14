@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRight, KeyRound, Pencil, Pin, Play, Sparkles } from 'lucide-react'
+import { ArrowRight, KeyRound, Pencil, Pin, Play } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'

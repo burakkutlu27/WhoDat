@@ -10,6 +10,7 @@ import { ApiClientError, apiRequest } from '@/lib/apiClient'
 export default function CreateRoomPage() {
   const router = useRouter()
   const [nickname, setNickname] = useState('')
+  const [gameMode, setGameMode] = useState<'classic' | 'speed'>('classic')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -23,7 +24,7 @@ export default function CreateRoomPage() {
     try {
       const { roomId } = await apiRequest<{ roomId: string; roomCode: string }>('/api/rooms', {
         method: 'POST',
-        body: { nickname: nickname.trim() },
+        body: { nickname: nickname.trim(), gameMode },
       })
       router.push(`/room/${roomId}`)
     } catch (caught) {
@@ -38,7 +39,7 @@ export default function CreateRoomPage() {
 
   return (
     <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-lg">
         <motion.div
           initial={{ opacity: 0, y: 15, rotate: -1 }}
           animate={{ opacity: 1, y: 0, rotate: 0 }}
@@ -53,13 +54,13 @@ export default function CreateRoomPage() {
               Yeni Oda Oluştur
             </h1>
             <p className="mt-1 text-sm text-ink-faded">
-              Odanı aç, takma adını belirle ve arkadaşlarını davet et.
+              Odanı aç, oyun modunu seç ve arkadaşlarını davet et.
             </p>
           </div>
 
           <div className="divider-sketch mb-6" />
 
-          <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+          <form onSubmit={handleSubmit} className="space-y-6" noValidate>
             <div>
               <label
                 htmlFor="nickname"
@@ -85,6 +86,52 @@ export default function CreateRoomPage() {
                   aria-describedby={error ? 'create-room-error' : undefined}
                   className="paper-input pl-10 font-display text-2xl"
                 />
+              </div>
+            </div>
+
+            {/* Oyun Modu Seçimi */}
+            <div>
+              <label className="mb-2 block font-display text-xl font-bold text-ink">
+                Oyun Modu
+              </label>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={() => setGameMode('classic')}
+                  className={`flex flex-col text-left p-4 transition-all duration-200 ${
+                    gameMode === 'classic'
+                      ? 'sticky-note sticky-note-yellow scale-[1.02] shadow-md border-pencil-yellow ring-2 ring-pencil-yellow'
+                      : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
+                  }`}
+                  style={{ borderRadius: '8px 4px 10px 6px' }}
+                >
+                  <span className="font-display text-lg font-bold text-ink flex items-center justify-between">
+                    <span>🎯 Klasik Mod</span>
+                    {gameMode === 'classic' && <span className="text-xs bg-pencil-yellow text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                  </span>
+                  <span className="mt-1 text-xs text-ink-faded leading-relaxed">
+                    3 Can Hakkı. Yanlış tahmin can götürür, hayatta kalan kazanır!
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setGameMode('speed')}
+                  className={`flex flex-col text-left p-4 transition-all duration-200 ${
+                    gameMode === 'speed'
+                      ? 'sticky-note sticky-note-green scale-[1.02] shadow-md border-pencil-green ring-2 ring-pencil-green'
+                      : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
+                  }`}
+                  style={{ borderRadius: '6px 10px 4px 8px' }}
+                >
+                  <span className="font-display text-lg font-bold text-ink flex items-center justify-between">
+                    <span>⚡ Hız Modu</span>
+                    {gameMode === 'speed' && <span className="text-xs bg-pencil-green text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                  </span>
+                  <span className="mt-1 text-xs text-ink-faded leading-relaxed">
+                    Az Soru, Çok Puan! 3 tur boyunca en az soruyla bil, puanları topla!
+                  </span>
+                </button>
               </div>
             </div>
 

@@ -1,9 +1,24 @@
 'use client'
 
-import { Crown, Gamepad2, Heart, HelpCircle, Loader2, LogOut, Pencil, Send, SkipForward, Target, Trophy } from 'lucide-react'
+import {
+  CheckCircle2,
+  Clock,
+  Crown,
+  Gamepad2,
+  Heart,
+  HelpCircle,
+  Loader2,
+  LogOut,
+  Pencil,
+  Send,
+  SkipForward,
+  Target,
+  Trophy,
+  Zap,
+} from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
-import { use, useEffect, useState } from 'react'
+import { use, useEffect, useRef, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
@@ -21,8 +36,15 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const [isBusy, setIsBusy] = useState(false)
   const [feedback, setFeedback] = useState<Feedback | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [roundTransition, setRoundTransition] = useState<{
+    completedRound: number
+    nextRound: number
+    scores: { nickname: string; isHost: boolean; isYou: boolean; roundScore: number; totalScore: number }[]
+  } | null>(null)
 
   const status = state?.room.status
+  const currentRound = state?.room.gameRound ?? 1
+  const prevRoundRef = useRef<number>(currentRound)
 
   useEffect(() => {
     if (!status) return
@@ -36,6 +58,37 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
       router.replace('/')
     }
   }, [error, router])
+
+  // Hız Modu Tur Geçişleri Tespiti
+  useEffect(() => {
+    if (!state || state.room.gameMode !== 'speed') return
+    const prev = prevRoundRef.current
+    if (currentRound > prev && prev >= 1) {
+      const roundIndex = prev - 1
+      const scoresSummary = state.players.map((p) => ({
+        nickname: p.nickname,
+        isHost: p.isHost,
+        isYou: p.id === state.you.playerId,
+        roundScore: p.roundScores?.[roundIndex] ?? 0,
+        totalScore: p.score,
+      }))
+
+      setRoundTransition({
+        completedRound: prev,
+        nextRound: currentRound,
+        scores: scoresSummary,
+      })
+
+      const timer = setTimeout(() => {
+        setRoundTransition(null)
+      }, 5000)
+
+      prevRoundRef.current = currentRound
+      return () => clearTimeout(timer)
+    } else {
+      prevRoundRef.current = currentRound
+    }
+  }, [currentRound, state])
 
   const currentPlayerId = state?.room.currentPlayerId ?? null
   const [turnShown, setTurnShown] = useState(currentPlayerId)
@@ -82,8 +135,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     if (isBusy) return
     setIsBusy(true)
     try {
-      await apiRequest(`/api/rooms/${roomId}/pass`, { method: 'POST' })
+      const result = await apiRequest<{ message: string }>(`/api/rooms/${roomId}/pass`, { method: 'POST' })
       setGuess('')
+      if (result.message.includes('limit') || !isSpeed) {
+        setFeedback({ tone: 'success', text: result.message })
+      } else {
+        setFeedback(null)
+      }
       await refresh()
     } catch (caught) {
       setFeedback({
@@ -134,6 +192,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     )
   }
 
+  const isSpeed = state.room.gameMode === 'speed'
   const currentPlayer = state.players.find((player) => player.id === state.room.currentPlayerId)
   const myLives = state.you.livesLeft ?? 3
   const activePlayerLives = currentPlayer ? (currentPlayer.livesLeft ?? 3) : 3
@@ -142,6 +201,61 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   return (
     <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
       <Confetti trigger={showConfetti} />
+
+      {/* Tur Geçiş Ekranı Overlay */}
+      {roundTransition && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
+          <motion.div
+            initial={{ scale: 0.85, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.85, opacity: 0 }}
+            className="paper-card-lg max-w-lg w-full p-6 sm:p-8 text-center border-4 border-pencil-yellow shadow-2xl space-y-5"
+          >
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-pencil-yellow/20 text-pencil-yellow animate-bounce">
+              <Trophy className="h-9 w-9 text-pencil-yellow" />
+            </div>
+
+            <div>
+              <span className="tag border-pencil-yellow text-pencil-yellow font-bold text-xs uppercase tracking-wider">
+                Tur Sonu Özeti
+              </span>
+              <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-ink">
+                {roundTransition.completedRound}. Tur Tamamlandı!
+              </h2>
+              <p className="mt-1 text-sm text-ink-faded font-display">
+                {roundTransition.nextRound}. Tur Başlıyor — <strong className="text-pencil-green">Yeni Gizli İsimler Dağıtıldı!</strong>
+              </p>
+            </div>
+
+            <div className="space-y-2 rounded-xl bg-paper-card-alt p-4 border-2 border-dashed border-paper-border text-left">
+              <div className="text-xs font-display font-bold text-ink-faded uppercase tracking-wider mb-2">
+                Bu Turdaki Skorlar:
+              </div>
+              {roundTransition.scores.map((p, idx) => (
+                <div key={idx} className="flex items-center justify-between font-display text-sm py-1 border-b border-paper-border/50 last:border-0">
+                  <div className="flex items-center gap-1.5">
+                    {p.isHost && <Crown className="h-3.5 w-3.5 text-pencil-yellow" />}
+                    <span className="font-bold text-ink">{p.nickname}</span>
+                    {p.isYou && <span className="tag tag-you text-[9px]">SEN</span>}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-pencil-green font-bold">+{p.roundScore} P</span>
+                    <span className="text-ink-faded text-xs font-semibold">({p.totalScore} P Toplam)</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setRoundTransition(null)}
+              className="btn-pencil-yellow w-full py-3 font-display text-base font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-transform"
+            >
+              {roundTransition.nextRound}. Tura Başla →
+            </button>
+          </motion.div>
+        </div>
+      )}
+
       <div className="mx-auto max-w-5xl space-y-6">
         {/* Game Header Bar */}
         <motion.header
@@ -160,8 +274,8 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                 </span>
               </div>
               <div className="mt-2 flex flex-wrap items-center gap-3">
-                <span className="tag">
-                  Tur {state.room.gameRound}
+                <span className={`tag ${isSpeed ? 'border-pencil-green text-pencil-green font-bold' : 'border-pencil-yellow text-pencil-yellow font-bold'}`}>
+                  {isSpeed ? `⚡ Hız Modu (Tur ${state.room.gameRound} / ${state.room.totalRounds})` : `🎯 Klasik Tur ${state.room.gameRound}`}
                 </span>
                 <span className="tag">
                   {state.namesRemaining} İsim Kaldı
@@ -222,43 +336,77 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                 </h2>
                 <p className="mx-auto mt-2 max-w-md text-sm text-ink-faded">
                   {state.you.isYourTurn
-                    ? 'Arkadaşlarına evet/hayır soruları sor. Emin olduğunda tahminini yaz!'
+                    ? isSpeed
+                      ? 'Sorunu sesli sor ve "Soru Sordum" butonuna bas, ya da emin olduğunda tahminini yap!'
+                      : 'Arkadaşlarına evet/hayır soruları sor. Emin olduğunda tahminini yaz!'
                     : 'Sana sorulan sorulara dürüstçe yalnızca evet veya hayır deyin.'}
                 </p>
 
-                {/* Arena Ortasındaki Can Göstergesi */}
-                <div className="mt-4 flex items-center justify-center gap-2">
-                  <span className="font-display text-sm font-bold text-ink-faded">
-                    {state.you.isYourTurn ? 'Kalan Canınız:' : `${currentPlayer?.nickname ?? 'Oyuncu'} Kalan Canı:`}
-                  </span>
-                  <div className="flex items-center gap-1.5">
-                    {Array.from({ length: maxLives }).map((_, index) => {
-                      const displayLives = state.you.isYourTurn ? myLives : activePlayerLives
-                      const isFilled = index < displayLives
-                      return (
-                        <motion.div
-                          key={index}
-                          initial={false}
-                          animate={{ scale: isFilled ? 1 : 0.85, opacity: isFilled ? 1 : 0.3 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <Heart
-                            className={`h-6 w-6 ${
-                              isFilled
-                                ? 'fill-pencil-red text-pencil-red'
-                                : 'fill-transparent text-ink-extra-faded opacity-30'
-                            }`}
-                          />
-                        </motion.div>
-                      )
-                    })}
+                {/* Hız Modu Soru & Tahmini Puan Sayacı VEYA Klasik Can Göstergesi */}
+                {isSpeed ? (
+                  <div className="mt-5 space-y-3">
+                    <div className="flex flex-wrap items-center justify-center gap-4">
+                      <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
+                        <Clock className="h-5 w-5 text-pencil-blue" />
+                        <span className="font-display text-base font-bold text-ink">
+                          {state.you.isYourTurn ? 'Senin Soru Sayın: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Soru Sayısı: `}
+                          <span className="text-pencil-blue text-lg">
+                            {state.you.isYourTurn ? state.you.questionsThisRound : (currentPlayer?.questionsThisRound ?? 0)}
+                          </span> / 20
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 rounded-xl border-2 border-solid border-pencil-green bg-paper-card px-4 py-2 shadow-sm">
+                        <Zap className="h-5 w-5 text-pencil-green animate-pulse" />
+                        <span className="font-display text-base font-bold text-ink">
+                          {state.you.isYourTurn ? 'Şimdi Bilirsen: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Bilirse: `}
+                          <span className="text-pencil-green text-lg font-bold">
+                            +{state.you.isYourTurn ? state.you.estimatedPoints : (currentPlayer?.estimatedPoints ?? 100)} P
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {!state.you.isYourTurn && (
+                      <div className="text-center font-display text-xs text-ink-faded">
+                        Senin durumun: <strong className="text-ink">{state.you.questionsThisRound} Soru</strong> • Sıran geldiğinde bilirsen: <strong className="text-pencil-green">+{state.you.estimatedPoints} P</strong>
+                      </div>
+                    )}
                   </div>
-                </div>
+                ) : (
+                  <div className="mt-4 flex items-center justify-center gap-2">
+                    <span className="font-display text-sm font-bold text-ink-faded">
+                      {state.you.isYourTurn ? 'Kalan Canınız:' : `${currentPlayer?.nickname ?? 'Oyuncu'} Kalan Canı:`}
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      {Array.from({ length: maxLives }).map((_, index) => {
+                        const displayLives = state.you.isYourTurn ? myLives : activePlayerLives
+                        const isFilled = index < displayLives
+                        return (
+                          <motion.div
+                            key={index}
+                            initial={false}
+                            animate={{ scale: isFilled ? 1 : 0.85, opacity: isFilled ? 1 : 0.3 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <Heart
+                              className={`h-6 w-6 ${
+                                isFilled
+                                  ? 'fill-pencil-red text-pencil-red'
+                                  : 'fill-transparent text-ink-extra-faded opacity-30'
+                              }`}
+                            />
+                          </motion.div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Action Form or Secret Card */}
               {state.you.isYourTurn ? (
-                myLives > 0 ? (
+                isSpeed || myLives > 0 ? (
                   <form onSubmit={handleGuess} className="mx-auto max-w-md space-y-4">
                     <div>
                       <label
@@ -304,10 +452,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         whileTap={{ scale: 0.98 }}
                         onClick={() => void handlePass()}
                         disabled={isBusy}
-                        className="btn-outline flex items-center justify-center gap-2 px-6 py-3.5 font-display text-sm"
+                        className="btn-outline flex items-center justify-center gap-2 px-6 py-3.5 font-display text-base"
                       >
                         <SkipForward className="h-4 w-4" />
-                        <span>Pas Geç</span>
+                        <span>{isSpeed ? 'Soru Sordum' : 'Pas Geç'}</span>
                       </motion.button>
                     </div>
                   </form>
@@ -416,19 +564,49 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               <span className="tag tag-you text-[9px]">SEN</span>
                             )}
                           </div>
-                          {/* Her Oyuncu İçin Canlı Kalan Kalpler */}
-                          <div className="mt-1 flex items-center gap-1">
-                            {Array.from({ length: maxLives }).map((_, idx) => (
-                              <Heart
-                                key={idx}
-                                className={`h-3.5 w-3.5 transition-all ${
-                                  idx < pLives
-                                    ? 'fill-pencil-red text-pencil-red'
-                                    : 'fill-transparent text-ink-extra-faded opacity-30'
-                                }`}
-                              />
-                            ))}
-                          </div>
+
+                          {/* Hız Modunda Tur Durumu veya Klasik Modda Kalan Kalpler */}
+                          {isSpeed ? (
+                            <div className="mt-1 space-y-1">
+                              <div className="flex items-center gap-1.5 text-xs font-display">
+                                {player.hasFinishedRound ? (
+                                  <span className="flex items-center gap-1 text-pencil-green font-bold">
+                                    <CheckCircle2 className="h-3.5 w-3.5" />
+                                    <span>Turu Bitirdi</span>
+                                  </span>
+                                ) : (
+                                  <span className="text-ink-faded">
+                                    Soru: <strong className="text-ink">{player.questionsThisRound ?? 0}</strong> • Potansiyel: <strong className="text-pencil-green">+{player.estimatedPoints ?? 100}P</strong>
+                                  </span>
+                                )}
+                              </div>
+                              {player.roundScores && player.roundScores.length > 0 && (
+                                <div className="flex flex-wrap items-center gap-1">
+                                  {player.roundScores.map((rScore, roundIdx) => (
+                                    <span
+                                      key={roundIdx}
+                                      className="rounded bg-paper-card-alt px-1.5 py-0.5 border border-paper-border text-[10px] text-ink-faded font-mono"
+                                    >
+                                      T{roundIdx + 1}: <strong className="text-ink">{rScore}P</strong>
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="mt-1 flex items-center gap-1">
+                              {Array.from({ length: maxLives }).map((_, idx) => (
+                                <Heart
+                                  key={idx}
+                                  className={`h-3.5 w-3.5 transition-all ${
+                                    idx < pLives
+                                      ? 'fill-pencil-red text-pencil-red'
+                                      : 'fill-transparent text-ink-extra-faded opacity-30'
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                          )}
                         </div>
                       </div>
 

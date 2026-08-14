@@ -14,9 +14,8 @@ vi.mock('@/lib/supabaseAdmin', () => ({
   supabaseAdmin: () => fake.client,
 }))
 
-const { getGameState, leaveRoom, makeGuess, passTurn, startGame, submitNames } = await import(
-  './engine'
-)
+const { assignNamesForRound, createRoom, getGameState, getRoomMode, leaveRoom, makeGuess, passTurn, setPlayerSpeedData, setRoomMode, startGame, submitNames } =
+  await import('./engine')
 
 /** İki oyunculu, oyun başlamış bir oda kurar. */
 function playingRoom() {
@@ -319,3 +318,277 @@ describe('leaveRoom', () => {
     expect(tables.rooms[0]!.status).toBe('closed')
   })
 })
+
+describe('Speed Mode (Hız Modu — Az Soru, Çok Puan)', () => {
+  function speedPlayingRoom() {
+    const room = buildRoom({
+      status: 'playing',
+      is_game_active: true,
+      game_mode: 'speed',
+      game_round: 1,
+      total_rounds: 3,
+    })
+    const host = buildPlayer(room.id, { nickname: 'Host', is_host: true, score: 0, questions_this_round: 0 })
+    const guest = buildPlayer(room.id, { nickname: 'Misafir', score: 0, questions_this_round: 0 })
+
+    const hostName = buildName(room.id, host.id, { name_text: 'Kemal Sunal' })
+    const guestName = buildName(room.id, guest.id, { name_text: 'Türkan Şoray' })
+
+    room.current_player_id = host.id
+    room.current_identity_id = guestName.id
+    guestName.used_in_round = 1
+
+    const tables: FakeTables = { rooms: [room], players: [host, guest], names: [hostName, guestName] }
+    return { room, host, guest, hostName, guestName, tables }
+  }
+
+  it('hız modunda oda oluşturabilir ve mod güncelleyebilir', async () => {
+    const tables: FakeTables = { rooms: [], players: [], names: [] }
+    fake = createSupabaseFake(tables)
+
+    const created = await createRoom('HostUser', 'speed')
+    expect(tables.rooms[0]!.game_mode).toBe('speed')
+    expect(tables.rooms[0]!.total_rounds).toBe(3)
+
+    // Modu klasiğe çevirme
+    await setRoomMode(created.roomId, created.playerId, 'classic')
+    expect(tables.rooms[0]!.game_mode).toBe('classic')
+  })
+
+  it('yanlış tahminde can düşürmez, soru sayısını artırır ve sırayı devreder', async () => {
+    const { room, host, guest, tables } = speedPlayingRoom()
+    fake = createSupabaseFake(tables)
+
+    const result = await makeGuess(room.id, host.id, 'Cem Yılmaz')
+
+    expect(result.correct).toBe(false)
+    expect(tables.players.find((p) => p.id === host.id)!.questions_this_round).toBe(1)
+    expect(tables.players.find((p) => p.id === host.id)!.score).toBe(0)
+    expect(tables.rooms[0]!.current_player_id).toBe(guest.id)
+  })
+
+  it('soru sorulduğunda (passTurn) soru sayısını artırır ve sırayı devreder', async () => {
+    const { room, host, guest, tables } = speedPlayingRoom()
+    fake = createSupabaseFake(tables)
+
+    const result = await passTurn(room.id, host.id)
+
+    expect(result.message).toContain('Sorunuz kaydedildi')
+    expect(tables.players.find((p) => p.id === host.id)!.questions_this_round).toBe(1)
+    expect(tables.rooms[0]!.current_player_id).toBe(guest.id)
+  })
+
+  it('0 soruda doğru bilindiğinde 100 puan verir ve turu tamamlar', async () => {
+    const { room, host, tables } = speedPlayingRoom()
+    fake = createSupabaseFake(tables)
+
+    const result = await makeGuess(room.id, host.id, 'Türkan Şoray')
+
+    expect(result.correct).toBe(true)
+    expect(result.pointsEarned).toBe(100)
+    const updatedHost = tables.players.find((p) => p.id === host.id)!
+    expect(updatedHost.score).toBe(100)
+    expect(updatedHost.round_scores).toEqual([100])
+    expect(updatedHost.has_finished_round).toBe(true)
+  })
+
+  it('3 soru sorulduktan sonra doğru bilindiğinde 85 puan verir', async () => {
+    const { room, host, tables } = speedPlayingRoom()
+    setPlayerSpeedData(room.id, host.id, { questionsThisRound: 3, roundScores: [], finishedCurrentRound: false })
+    fake = createSupabaseFake(tables)
+
+    const result = await makeGuess(room.id, host.id, 'Türkan Şoray')
+
+    expect(result.correct).toBe(true)
+    expect(result.pointsEarned).toBe(85)
+    const hostPlayer = tables.players.find((p) => p.id === host.id)!
+    expect(hostPlayer.score).toBe(85)
+    expect(hostPlayer.round_scores).toEqual([85])
+  })
+
+  it('tüm oyuncular turu bitirdiğinde otomatik Tur 2 başlar', async () => {
+    const { room, host, guest, tables } = speedPlayingRoom()
+    // Guest zaten bilmiş olsun
+    tables.players.find((p) => p.id === guest.id)!.has_finished_round = true
+    setPlayerSpeedData(room.id, guest.id, { questionsThisRound: 0, roundScores: [100], finishedCurrentRound: true })
+    fake = createSupabaseFake(tables)
+
+    const result = await makeGuess(room.id, host.id, 'Türkan Şoray')
+
+    expect(result.correct).toBe(true)
+    expect(result.nextRoundStarted).toBe(true)
+    expect(tables.rooms[0]!.game_round).toBe(2)
+    // Tur 2 başında sorular ve durumlar sıfırlanmış olmalı
+    expect(tables.players.find((p) => p.id === host.id)!.has_finished_round).toBe(false)
+    expect(tables.players.find((p) => p.id === host.id)!.questions_this_round).toBe(0)
+  })
+
+  it('3. turun sonunda tüm oyuncular bitirince oyun tamamlanır', async () => {
+    const { room, host, guest, tables } = speedPlayingRoom()
+    room.game_round = 3
+    tables.players.find((p) => p.id === guest.id)!.has_finished_round = true
+    setPlayerSpeedData(room.id, guest.id, { questionsThisRound: 0, roundScores: [100], finishedCurrentRound: true })
+    fake = createSupabaseFake(tables)
+
+    const result = await makeGuess(room.id, host.id, 'Türkan Şoray')
+
+    expect(result.correct).toBe(true)
+    expect(result.finished).toBe(true)
+    expect(tables.rooms[0]!.status).toBe('finished')
+    expect(tables.rooms[0]!.is_game_active).toBe(false)
+  })
+
+  it('INV-2 & INV-3: Host ve misafir için soru sayacı (passTurn ve yanlış tahmin) birebir aynı artar', async () => {
+    const { room, host, guest, tables } = speedPlayingRoom()
+    fake = createSupabaseFake(tables)
+
+    // 1. Host bir soru sorsun (passTurn)
+    await passTurn(room.id, host.id)
+    expect(tables.players.find((p) => p.id === host.id)!.questions_this_round).toBe(1)
+    expect(tables.rooms[0]!.current_player_id).toBe(guest.id)
+
+    // 2. Misafir yanlış tahmin yapsın
+    await makeGuess(room.id, guest.id, 'Yanlış İsim')
+    expect(tables.players.find((p) => p.id === guest.id)!.questions_this_round).toBe(1)
+    expect(tables.rooms[0]!.current_player_id).toBe(host.id)
+
+    // 3. Host bu kez yanlış tahmin yapsın
+    await makeGuess(room.id, host.id, 'Başka Yanlış İsim')
+    expect(tables.players.find((p) => p.id === host.id)!.questions_this_round).toBe(2)
+  })
+
+  it('INV-1: 3 oyunculu Hız Modu odasında 3 tur boyunca game_mode daima speed kalır', async () => {
+    const room = buildRoom({
+      status: 'playing',
+      is_game_active: true,
+      game_mode: 'speed',
+      game_round: 1,
+      total_rounds: 3,
+    })
+    const p1 = buildPlayer(room.id, { nickname: 'P1_Host', is_host: true, score: 0, questions_this_round: 0 })
+    const p2 = buildPlayer(room.id, { nickname: 'P2_Guest', is_host: false, score: 0, questions_this_round: 0 })
+    const p3 = buildPlayer(room.id, { nickname: 'P3_Guest', is_host: false, score: 0, questions_this_round: 0 })
+
+    const n1 = buildName(room.id, p1.id, { name_text: 'İsim 1' })
+    const n2 = buildName(room.id, p2.id, { name_text: 'İsim 2' })
+    const n3 = buildName(room.id, p3.id, { name_text: 'İsim 3' })
+
+    room.current_player_id = p1.id
+    room.current_identity_id = n2.id
+
+    const tables: FakeTables = {
+      rooms: [room],
+      players: [p1, p2, p3],
+      names: [n1, n2, n3],
+    }
+    fake = createSupabaseFake(tables)
+
+    // Başlangıçta mod kontrolü
+    expect(getRoomMode(room.id, room.game_mode)).toBe('speed')
+
+    // Tur 1: Her oyuncu doğru bilsin
+    p1.questions_this_round = 2
+    room.current_player_id = p1.id
+    room.current_identity_id = n2.id
+    await makeGuess(room.id, p1.id, 'İsim 2')
+
+    p2.questions_this_round = 1
+    room.current_player_id = p2.id
+    room.current_identity_id = n3.id
+    await makeGuess(room.id, p2.id, 'İsim 3')
+
+    p3.questions_this_round = 0
+    room.current_player_id = p3.id
+    room.current_identity_id = n1.id
+    const round1End = await makeGuess(room.id, p3.id, 'İsim 1')
+
+    expect(round1End.nextRoundStarted).toBe(true)
+    expect(tables.rooms[0]!.game_round).toBe(2)
+    // INV-1 Kontrolü: Tur 2'de game_mode hâlâ speed olmalı!
+    expect(getRoomMode(room.id, tables.rooms[0]!.game_mode)).toBe('speed')
+
+    // Tur 2: Herkes bilsin
+    tables.players.find((p) => p.id === p1.id)!.has_finished_round = true
+    tables.players.find((p) => p.id === p2.id)!.has_finished_round = true
+    setPlayerSpeedData(room.id, p1.id, { questionsThisRound: 0, roundScores: [100], finishedCurrentRound: true })
+    setPlayerSpeedData(room.id, p2.id, { questionsThisRound: 0, roundScores: [100], finishedCurrentRound: true })
+    room.current_player_id = p3.id
+    room.current_identity_id = n1.id
+
+    const round2End = await makeGuess(room.id, p3.id, 'İsim 1')
+    expect(round2End.nextRoundStarted).toBe(true)
+    expect(tables.rooms[0]!.game_round).toBe(3)
+    // INV-1 Kontrolü: Tur 3'te game_mode hâlâ speed olmalı!
+    expect(getRoomMode(room.id, tables.rooms[0]!.game_mode)).toBe('speed')
+
+    // Tur 3: Herkes bilsin -> Oyun bitsin
+    tables.players.find((p) => p.id === p1.id)!.has_finished_round = true
+    tables.players.find((p) => p.id === p2.id)!.has_finished_round = true
+    setPlayerSpeedData(room.id, p1.id, { questionsThisRound: 0, roundScores: [100, 100], finishedCurrentRound: true })
+    setPlayerSpeedData(room.id, p2.id, { questionsThisRound: 0, roundScores: [100, 100], finishedCurrentRound: true })
+    room.current_player_id = p3.id
+    room.current_identity_id = n1.id
+
+    const round3End = await makeGuess(room.id, p3.id, 'İsim 1')
+    expect(round3End.finished).toBe(true)
+    expect(tables.rooms[0]!.status).toBe('finished')
+    // Finalde de game_mode speed olmalı!
+    expect(getRoomMode(room.id, tables.rooms[0]!.game_mode)).toBe('speed')
+  })
+
+  it('3 tur boyunca her turda oyunculara farklı ve benzersiz isimler dağıtılır', () => {
+    const roomId = 'unique-names-room'
+    const p1 = buildPlayer(roomId, { id: 'p1', nickname: 'Oyuncu 1' })
+    const p2 = buildPlayer(roomId, { id: 'p2', nickname: 'Oyuncu 2' })
+    const players = [p1, p2]
+
+    // 6 isim: 3 tanesi p1'den, 3 tanesi p2'den
+    const names = [
+      buildName(roomId, 'p1', { name_text: 'İsim A' }),
+      buildName(roomId, 'p1', { name_text: 'İsim B' }),
+      buildName(roomId, 'p1', { name_text: 'İsim C' }),
+      buildName(roomId, 'p2', { name_text: 'İsim D' }),
+      buildName(roomId, 'p2', { name_text: 'İsim E' }),
+      buildName(roomId, 'p2', { name_text: 'İsim F' }),
+    ]
+
+    const r1 = assignNamesForRound(roomId, players, names)
+    const r2 = assignNamesForRound(roomId, players, names)
+    const r3 = assignNamesForRound(roomId, players, names)
+
+    const allAssigned = [
+      r1.get('p1')!,
+      r1.get('p2')!,
+      r2.get('p1')!,
+      r2.get('p2')!,
+      r3.get('p1')!,
+      r3.get('p2')!,
+    ]
+
+    // 6 atamanın hepsi birbirinden farklı olmalıdır!
+    const uniqueSet = new Set(allAssigned)
+    expect(uniqueSet.size).toBe(6)
+
+    // Hiçbir oyuncu kendi yazdığı ismi almamalıdır
+    expect(['İsim A', 'İsim B', 'İsim C']).not.toContain(names.find((n) => n.id === r1.get('p1'))?.name_text)
+    expect(['İsim D', 'İsim E', 'İsim F']).not.toContain(names.find((n) => n.id === r1.get('p2'))?.name_text)
+  })
+
+  it('Hız Modunda her tur kazanılan puanlar toplanarak getRoomState içinde doğru skor döner', async () => {
+    const { room, host, guest, tables } = speedPlayingRoom()
+    setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [100, 95], finishedCurrentRound: false })
+    setPlayerSpeedData(room.id, guest.id, { questionsThisRound: 0, roundScores: [90, 85], finishedCurrentRound: false })
+    fake = createSupabaseFake(tables)
+
+    const state = await getGameState(room.id, host.id)
+    const hostPlayer = state.players.find((p) => p.id === host.id)!
+    const guestPlayer = state.players.find((p) => p.id === guest.id)!
+
+    expect(hostPlayer.score).toBe(195)
+    expect(hostPlayer.roundScores).toEqual([100, 95])
+    expect(guestPlayer.score).toBe(175)
+    expect(guestPlayer.roundScores).toEqual([90, 85])
+  })
+})
+
+

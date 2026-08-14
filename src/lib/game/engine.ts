@@ -4,15 +4,18 @@ import type { NameRow, PlayerRow, RoomRow, RoomStatus } from '../database.types'
 import { badRequest, conflict, forbidden, notFound } from '../http'
 import { supabaseAdmin } from '../supabaseAdmin'
 import { fuzzyMatch } from './matching'
-import type { GameState, PublicPlayer } from './types'
+import type { GameMode, GameState, GuessResult, PublicPlayer } from './types'
 import {
-  MAX_GUESSES_PER_TURN,
+  DEFAULT_SPEED_ROUNDS,
   MAX_NAMES_PER_PLAYER,
   MAX_PLAYERS,
   MIN_PLAYERS,
   POINTS_PER_CORRECT_GUESS,
+  SPEED_MODE_MAX_QUESTIONS,
   TOTAL_LIVES_PER_GAME,
+  calculateSpeedScore,
   distributeNames,
+  estimateSpeedScore,
   generateRoomCode,
   selectNameForPlayer,
   selectNextPlayer,
@@ -21,12 +24,186 @@ import {
 /**
  * Oyunun yetkili (authoritative) mantığı.
  *
- * Bu modülün tamamı sunucuda çalışır ve service_role ile veritabanına yazar.
- * İstemciden gelen hiçbir değer kimlik ya da yetki kaynağı olarak kullanılmaz;
- * oyuncu kimliği her zaman imzalı oturum çerezinden gelir.
+ * INVARIANT'LAR (Değişmez Kurallar):
+ * INV-1: game_mode sabittir. Lobi kilitlenip oyun başladığında asla değişmez, resetlenmez.
+ * INV-2: Host idari roldür; oyun mantığında (soru sorma, tahmin, puanlama) diğer oyuncularla birebirdir.
+ * INV-3: Soru sayacı kim aksiyon alırsa (soru veya tahmin, doğru/yanlış) 1 artar.
+ * INV-4: Klasik mod ve Hız Modu birbirinden tamamen izole edilmiş dallara sahiptir.
  */
 
 const UNIQUE_VIOLATION = '23505'
+
+interface RoomModeData {
+  gameMode: GameMode
+  totalRounds: number
+}
+
+interface PlayerSpeedData {
+  questionsThisRound: number
+  roundScores: number[]
+  finishedCurrentRound: boolean
+}
+
+// Global persistent state across Next.js dev server worker/HMR reloads
+const globalRef = globalThis as unknown as {
+  __whoDat_roomModeStore?: Map<string, RoomModeData>
+  __whoDat_playerSpeedStore?: Map<string, Map<string, PlayerSpeedData>>
+  __whoDat_playerRoundNameStore?: Map<string, Map<string, string>>
+  __whoDat_roomLivesStore?: Map<string, Map<string, number>>
+  __whoDat_roomUsedNamesStore?: Map<string, Set<string>>
+}
+
+globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
+globalRef.__whoDat_playerSpeedStore = globalRef.__whoDat_playerSpeedStore ?? new Map()
+globalRef.__whoDat_playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore ?? new Map()
+globalRef.__whoDat_roomLivesStore = globalRef.__whoDat_roomLivesStore ?? new Map()
+globalRef.__whoDat_roomUsedNamesStore = globalRef.__whoDat_roomUsedNamesStore ?? new Map()
+
+const roomModeStore = globalRef.__whoDat_roomModeStore
+const playerSpeedStore = globalRef.__whoDat_playerSpeedStore
+const playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore
+const roomLivesStore = globalRef.__whoDat_roomLivesStore
+const roomUsedNamesStore = globalRef.__whoDat_roomUsedNamesStore
+
+/**
+ * INV-1: game_mode okuma.
+ * Eğer oda bellekte kayıtlıysa kesinlikle stored mod döner (round geçişlerinde asla resetlenmez).
+ */
+export function getRoomMode(roomId: string, dbRoomMode?: string | null): GameMode {
+  const stored = roomModeStore.get(roomId)
+  if (stored) {
+    return stored.gameMode
+  }
+  if (dbRoomMode === 'speed' || dbRoomMode === 'classic') {
+    const totalRounds = dbRoomMode === 'speed' ? DEFAULT_SPEED_ROUNDS : 1
+    roomModeStore.set(roomId, { gameMode: dbRoomMode, totalRounds })
+    return dbRoomMode
+  }
+  const defaultMode: GameMode = 'classic'
+  roomModeStore.set(roomId, { gameMode: defaultMode, totalRounds: 1 })
+  return defaultMode
+}
+
+export function setRoomModeData(roomId: string, gameMode: GameMode) {
+  const totalRounds = gameMode === 'speed' ? DEFAULT_SPEED_ROUNDS : 1
+  const data: RoomModeData = { gameMode, totalRounds }
+  roomModeStore.set(roomId, data)
+  return data
+}
+
+export function getPlayerSpeedData(roomId: string, playerId: string): PlayerSpeedData {
+  let map = playerSpeedStore.get(roomId)
+  if (!map) {
+    map = new Map()
+    playerSpeedStore.set(roomId, map)
+  }
+  let data = map.get(playerId)
+  if (!data) {
+    data = { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false }
+    map.set(playerId, data)
+  }
+  return data
+}
+
+export function setPlayerSpeedData(roomId: string, playerId: string, data: PlayerSpeedData) {
+  let map = playerSpeedStore.get(roomId)
+  if (!map) {
+    map = new Map()
+    playerSpeedStore.set(roomId, map)
+  }
+  map.set(playerId, data)
+}
+
+function resetRoomSpeedRound(roomId: string) {
+  const map = playerSpeedStore.get(roomId)
+  if (map) {
+    for (const [playerId, val] of map.entries()) {
+      map.set(playerId, { ...val, questionsThisRound: 0, finishedCurrentRound: false })
+    }
+  }
+}
+
+function clearRoomSpeedData(roomId: string) {
+  const map = playerSpeedStore.get(roomId)
+  if (map) {
+    for (const [playerId] of map.entries()) {
+      map.set(playerId, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+    }
+  }
+  playerRoundNameStore.delete(roomId)
+  roomUsedNamesStore.delete(roomId)
+}
+
+export function getPlayerRoundNameId(roomId: string, playerId: string): string | null {
+  return playerRoundNameStore.get(roomId)?.get(playerId) ?? null
+}
+
+export function setPlayerRoundNameId(roomId: string, playerId: string, nameId: string) {
+  let map = playerRoundNameStore.get(roomId)
+  if (!map) {
+    map = new Map()
+    playerRoundNameStore.set(roomId, map)
+  }
+  map.set(playerId, nameId)
+}
+
+/**
+ * Yeni tur için isim havuzundan çakışmasız gizli isim ataması yapar.
+ * Önceki turlarda kullanılan isimleri tekrar seçmez!
+ * Round içinde bu atama ASLA değişmez.
+ */
+export function assignNamesForRound(
+  roomId: string,
+  players: PlayerRow[],
+  names: NameRow[],
+) {
+  let usedAcrossRounds = roomUsedNamesStore.get(roomId)
+  if (!usedAcrossRounds) {
+    usedAcrossRounds = new Set<string>()
+    roomUsedNamesStore.set(roomId, usedAcrossRounds)
+  }
+
+  const usedInThisRound = new Set<string>()
+  const assignments = new Map<string, string>()
+  const shuffled = [...names].sort(() => Math.random() - 0.5)
+
+  for (const player of players) {
+    const candidate =
+      shuffled.find((n) => n.submitted_by !== player.id && !usedAcrossRounds!.has(n.id) && !usedInThisRound.has(n.id)) ||
+      shuffled.find((n) => !usedAcrossRounds!.has(n.id) && !usedInThisRound.has(n.id)) ||
+      shuffled.find((n) => n.submitted_by !== player.id && !usedInThisRound.has(n.id)) ||
+      shuffled.find((n) => !usedInThisRound.has(n.id)) ||
+      shuffled[0]!
+
+    if (candidate) {
+      usedAcrossRounds.add(candidate.id)
+      usedInThisRound.add(candidate.id)
+      assignments.set(player.id, candidate.id)
+      setPlayerRoundNameId(roomId, player.id, candidate.id)
+    }
+  }
+
+  return assignments
+}
+
+function getRoomLivesMap(roomId: string): Map<string, number> {
+  let map = roomLivesStore.get(roomId)
+  if (!map) {
+    map = new Map<string, number>()
+    roomLivesStore.set(roomId, map)
+  }
+  return map
+}
+
+export function getPlayerLives(roomId: string, playerId: string): number {
+  const map = getRoomLivesMap(roomId)
+  return map.get(playerId) ?? TOTAL_LIVES_PER_GAME
+}
+
+export function setPlayerLives(roomId: string, playerId: string, lives: number): void {
+  const map = getRoomLivesMap(roomId)
+  map.set(playerId, Math.max(0, lives))
+}
 
 async function loadRoom(roomId: string): Promise<RoomRow> {
   const { data, error } = await supabaseAdmin().from('rooms').select('*').eq('id', roomId).maybeSingle()
@@ -35,11 +212,6 @@ async function loadRoom(roomId: string): Promise<RoomRow> {
   return data
 }
 
-/**
- * Oyuncular her zaman katılım sırasına göre döner.
- * Önceden ORDER BY yoktu; sıra dizisinin düzeni sorgudan sorguya değişebildiği için
- * tur rotasyonu oyuncu atlayabiliyor ya da tekrar edebiliyordu.
- */
 async function loadPlayers(roomId: string): Promise<PlayerRow[]> {
   const { data, error } = await supabaseAdmin()
     .from('players')
@@ -67,11 +239,31 @@ function requireMembership(players: PlayerRow[], playerId: string): PlayerRow {
   return player
 }
 
-export async function createRoom(nickname: string) {
+/**
+ * INV-3: Soru sayacını artıran tekil fonksiyon.
+ * is_host veya host_id kontrolü KESİNLİKLE YOKTUR. Host ve misafir aynı kod yolundan geçer.
+ * Doğrudan oyuncunun kendi bağımsız depolanan sayacını 1 artırır.
+ */
+function incrementQuestionCount(roomId: string, playerId: string): number {
+  const speed = getPlayerSpeedData(roomId, playerId)
+  const updated = speed.questionsThisRound + 1
+  setPlayerSpeedData(roomId, playerId, {
+    ...speed,
+    questionsThisRound: updated,
+  })
+  return updated
+}
+
+/**
+ * Lobi Kurulumu: game_mode sadece burada yazılır (INV-1).
+ */
+export async function createRoom(nickname: string, gameMode: GameMode = 'classic') {
   const admin = supabaseAdmin()
+  const totalRounds = gameMode === 'speed' ? DEFAULT_SPEED_ROUNDS : 1
 
   for (let attempt = 0; attempt < 5; attempt++) {
     const roomCode = generateRoomCode()
+    
     const { data: room, error } = await admin
       .from('rooms')
       .insert({ room_code: roomCode, status: 'waiting' })
@@ -90,15 +282,55 @@ export async function createRoom(nickname: string) {
       .single()
 
     if (hostError) {
-      // Sahipsiz oda bırakma.
       await admin.from('rooms').delete().eq('id', room.id)
       throw hostError
+    }
+
+    // INV-1: game_mode sadece lobi kurulurken kaydedilir
+    setRoomModeData(room.id, gameMode)
+    setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+
+    try {
+      await admin.from('rooms').update({ game_mode: gameMode, total_rounds: totalRounds }).eq('id', room.id)
+      await admin.from('players').update({ questions_this_round: 0, round_scores: [], has_finished_round: false }).eq('id', host.id)
+    } catch {
+      // Sütun yoksa yut
     }
 
     return { roomId: room.id, roomCode: room.room_code, playerId: host.id }
   }
 
   throw conflict('room_code_exhausted', 'Oda oluşturulamadı, lütfen tekrar deneyin.')
+}
+
+/**
+ * Lobi Ayarı: Yalnızca oyun başlamadan önce host modu değiştirebilir.
+ */
+export async function setRoomMode(roomId: string, playerId: string, gameMode: GameMode) {
+  const admin = supabaseAdmin()
+  const players = await loadPlayers(roomId)
+  const player = requireMembership(players, playerId)
+
+  if (!player.is_host) {
+    throw forbidden('not_host', 'Oyun modunu yalnızca oda sahibi değiştirebilir.')
+  }
+
+  const room = await loadRoom(roomId)
+  if (room.status !== 'waiting') {
+    throw conflict('game_already_started', 'Oyun başladıktan sonra mod değiştirilemez.')
+  }
+
+  const modeData = setRoomModeData(roomId, gameMode)
+
+  try {
+    await admin.from('rooms').update({ game_mode: gameMode, total_rounds: modeData.totalRounds }).eq('id', roomId)
+  } catch {
+    // Sütun yoksa yut
+  }
+
+  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+
+  return { gameMode: modeData.gameMode, totalRounds: modeData.totalRounds }
 }
 
 export async function joinRoom(roomCode: string, nickname: string) {
@@ -130,29 +362,15 @@ export async function joinRoom(roomCode: string, nickname: string) {
 
   if (playerError) throw playerError
 
-  return { roomId: room.id, roomCode: room.room_code, playerId: player.id }
-}
+  setPlayerSpeedData(room.id, player.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
 
-// Room-wide player lives store: roomId -> Map<playerId, lives>
-const roomLivesStore = new Map<string, Map<string, number>>()
-
-function getRoomLivesMap(roomId: string): Map<string, number> {
-  let map = roomLivesStore.get(roomId)
-  if (!map) {
-    map = new Map<string, number>()
-    roomLivesStore.set(roomId, map)
+  try {
+    await admin.from('players').update({ questions_this_round: 0, round_scores: [], has_finished_round: false }).eq('id', player.id)
+  } catch {
+    // Sütun yoksa yut
   }
-  return map
-}
 
-function getPlayerLives(roomId: string, playerId: string): number {
-  const map = getRoomLivesMap(roomId)
-  return map.get(playerId) ?? TOTAL_LIVES_PER_GAME
-}
-
-function setPlayerLives(roomId: string, playerId: string, lives: number): void {
-  const map = getRoomLivesMap(roomId)
-  map.set(playerId, Math.max(0, lives))
+  return { roomId: room.id, roomCode: room.room_code, playerId: player.id }
 }
 
 export async function getGameState(roomId: string, viewerId: string): Promise<GameState> {
@@ -167,21 +385,35 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
 
   const isViewerTurn = room.current_player_id === viewerId
   const currentName = names.find((name) => name.id === room.current_identity_id) ?? null
+  
+  // INV-1: gameMode daima kaydedilen sabit moddur
+  const gameMode = getRoomMode(roomId, room.game_mode)
+  const totalRounds = gameMode === 'speed' ? (room.total_rounds || DEFAULT_SPEED_ROUNDS) : 1
 
-  const publicPlayers: PublicPlayer[] = players.map((player) => ({
-    id: player.id,
-    nickname: player.nickname,
-    isHost: player.is_host ?? false,
-    score: player.score ?? 0,
-    hasSubmittedNames: submitters.has(player.id),
-    livesLeft: getPlayerLives(roomId, player.id),
-  }))
+  const publicPlayers: PublicPlayer[] = players.map((player) => {
+    const speed = getPlayerSpeedData(roomId, player.id)
+    const speedScore = speed.roundScores.reduce((sum, s) => sum + s, 0)
+    const score = gameMode === 'speed' ? (speed.roundScores.length > 0 ? speedScore : (player.score ?? 0)) : (player.score ?? 0)
 
+    return {
+      id: player.id,
+      nickname: player.nickname,
+      isHost: player.is_host ?? false,
+      score,
+      hasSubmittedNames: submitters.has(player.id),
+      livesLeft: getPlayerLives(roomId, player.id),
+      questionsThisRound: speed.questionsThisRound,
+      roundScores: speed.roundScores,
+      hasFinishedRound: speed.finishedCurrentRound,
+      estimatedPoints: estimateSpeedScore(speed.questionsThisRound),
+    }
+  })
 
   const allPlayersSubmittedNames =
     players.length > 0 && players.every((player) => submitters.has(player.id))
 
   const currentRound = room.game_round ?? 1
+  const viewerSpeed = getPlayerSpeedData(roomId, viewer.id)
 
   return {
     room: {
@@ -189,6 +421,8 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       roomCode: room.room_code,
       status: (room.status ?? 'waiting') as RoomStatus,
       gameRound: currentRound,
+      totalRounds,
+      gameMode,
       isGameActive: room.is_game_active ?? false,
       currentPlayerId: room.current_player_id,
     },
@@ -201,8 +435,11 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
         .filter((name) => name.submitted_by === viewerId)
         .map((name) => name.name_text),
       livesLeft: getPlayerLives(roomId, viewer.id),
+      questionsThisRound: viewerSpeed.questionsThisRound,
+      roundScores: viewerSpeed.roundScores,
+      hasFinishedRound: viewerSpeed.finishedCurrentRound,
+      estimatedPoints: estimateSpeedScore(viewerSpeed.questionsThisRound),
     },
-    // Tahmin eden oyuncuya cevap gönderilmez.
     currentName: isViewerTurn ? null : (currentName?.name_text ?? null),
     namesTotal: names.length,
     namesRemaining: names.filter((name) => name.used_in_round === null).length,
@@ -213,14 +450,6 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
   }
 }
 
-/**
- * İsimleri tek bir ifadede kaydeder.
- *
- * Önceden isimler döngü içinde tek tek gönderiliyordu ve `UNIQUE (room_id, name_text)`
- * ihlalinde döngü kırılıyordu: bir kısmı kaydedilmiş, oyuncu ise formu bir daha
- * gönderemez hale gelmiş oluyordu. Artık çakışanlar atlanır ve oyuncuya hangi isimlerin
- * zaten alındığı bildirilir.
- */
 export async function submitNames(roomId: string, playerId: string, names: string[]) {
   const admin = supabaseAdmin()
   const players = await loadPlayers(roomId)
@@ -236,7 +465,6 @@ export async function submitNames(roomId: string, playerId: string, names: strin
     throw conflict('names_already_submitted', 'İsimlerinizi zaten gönderdiniz.')
   }
 
-  // Aynı istek içindeki tekrarları ayıkla (büyük/küçük harf duyarsız).
   const unique: string[] = []
   const seen = new Set<string>()
   for (const name of names) {
@@ -271,8 +499,6 @@ export async function submitNames(roomId: string, playerId: string, names: strin
     )
   }
 
-  // Realtime bildirimi: `names` tablosu gizli olduğu ve Realtime yayınında bulunmadığı için
-  // `rooms` kaydını güncelleyerek bağlı tüm tarayıcılara oyuncunun hazır olduğunu duyuruyoruz.
   await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
 
   return { accepted, duplicates }
@@ -305,19 +531,56 @@ export async function startGame(roomId: string, playerId: string) {
     throw badRequest('names_missing', 'Tüm oyuncuların isimlerini göndermesi bekleniyor.')
   }
 
-  // Oyun başında herkesin canını 3 yap
+  // Canları ve hız modu sayaçlarını sıfırla
   for (const p of players) {
     setPlayerLives(roomId, p.id, TOTAL_LIVES_PER_GAME)
   }
+  clearRoomSpeedData(roomId)
 
+  await admin
+    .from('players')
+    .update({ score: 0 })
+    .eq('room_id', roomId)
+
+  try {
+    await admin
+      .from('players')
+      .update({ questions_this_round: 0, round_scores: [], has_finished_round: false })
+      .eq('room_id', roomId)
+  } catch {
+    // Sütun yoksa yut
+  }
+
+  const gameMode = getRoomMode(roomId, room.game_mode)
+  const isSpeed = gameMode === 'speed'
   const firstPlayer = players[0]!
+
+  if (isSpeed) {
+    // Hız Modu: 1. Tur için her oyuncuya sabit bir gizli isim ata (round içinde sabit kalır)
+    assignNamesForRound(roomId, players, names)
+    const firstNameId = getPlayerRoundNameId(roomId, firstPlayer.id)
+
+    const { error } = await admin
+      .from('rooms')
+      .update({
+        status: 'playing',
+        current_player_id: firstPlayer.id,
+        current_identity_id: firstNameId,
+        game_round: 1,
+        is_game_active: true,
+      })
+      .eq('id', roomId)
+
+    if (error) throw error
+    return
+  }
+
+  // Klasik Mod (INV-4: Dokunulmamış orijinal akış)
   const firstName = selectNameForPlayer(names, firstPlayer.id)
   if (!firstName) {
     throw badRequest('names_missing', 'Oyuna başlamak için yeterli isim yok.')
   }
 
-  // İsimleri oyunculara dağıt. Önceden bu, isim başına bir UPDATE ile yapılıyordu
-  // (6 oyuncu x 3 isim = 18 ardışık sorgu); artık tek bir toplu upsert.
   const assignedTo = new Map(
     distributeNames(names, players).map(({ nameId, playerId: target }) => [nameId, target]),
   )
@@ -345,19 +608,113 @@ export async function startGame(roomId: string, playerId: string) {
   if (error) throw error
 }
 
+interface AdvanceTurnOutcome {
+  claimed: boolean
+  finished: boolean
+  nextRoundStarted?: boolean
+}
+
 /**
  * Sırayı bir sonraki oyuncuya devreder.
- *
- * `game_round` üzerinden optimistic locking kullanılır: güncelleme yalnızca sıra hâlâ
- * beklenen oyuncudaysa ve tur numarası değişmemişse uygulanır. Aynı anda gelen ikinci
- * bir istek hiçbir satır güncelleyemez ve reddedilir, böylece çift puan ya da atlanan
- * sıra oluşmaz.
+ * INV-1: game_mode alanına asla yazmaz.
+ * INV-2: is_host kontrolü yapmaz.
  */
-async function advanceTurn(room: RoomRow, players: PlayerRow[], names: NameRow[]) {
+async function advanceTurn(
+  room: RoomRow,
+  players: PlayerRow[],
+  names: NameRow[],
+): Promise<AdvanceTurnOutcome> {
   const admin = supabaseAdmin()
-  const currentRound = room.game_round ?? 1
+  const gameMode = getRoomMode(room.id, room.game_mode)
 
-  // Canı > 0 olan aktif oyuncular
+  if (gameMode === 'speed') {
+    const currentRound = room.game_round ?? 1
+    const totalRounds = room.total_rounds || DEFAULT_SPEED_ROUNDS
+
+    // Bu turu henüz tamamlamamış oyuncular — YALNIZCA speedStore'dan oku (DB stale olabilir)
+    const unfinishedPlayers = players.filter((p) => {
+      const speed = getPlayerSpeedData(room.id, p.id)
+      return !speed.finishedCurrentRound
+    })
+
+    if (unfinishedPlayers.length === 0) {
+      if (currentRound >= totalRounds) {
+        // Tüm turlar bitti -> Oyun tamamlandı
+        const { data } = await admin
+          .from('rooms')
+          .update({ status: 'finished', is_game_active: false, current_identity_id: null })
+          .eq('id', room.id)
+          .select('id')
+        return { claimed: (data?.length ?? 0) > 0, finished: true, nextRoundStarted: false }
+      }
+
+      // Sıradaki tura geçiş (startNextRound)
+      const nextRound = currentRound + 1
+      resetRoomSpeedRound(room.id)
+
+      try {
+        await admin
+          .from('players')
+          .update({ questions_this_round: 0, has_finished_round: false })
+          .eq('room_id', room.id)
+      } catch {
+        // Sütun yoksa yut
+      }
+
+      // Yeni round için isim havuzundan çakışmasız YENİ isimler ata (isimler yeniden YAZILMAZ, sadece atama yenilenir)
+      assignNamesForRound(room.id, players, names)
+
+      const firstPlayer = players[0]!
+      const nextNameId = getPlayerRoundNameId(room.id, firstPlayer.id)
+
+      const { data, error } = await admin
+        .from('rooms')
+        .update({
+          game_round: nextRound,
+          current_player_id: firstPlayer.id,
+          current_identity_id: nextNameId,
+        })
+        .eq('id', room.id)
+        .select('id')
+
+      if (error) throw error
+      return { claimed: (data?.length ?? 0) > 0, finished: false, nextRoundStarted: true }
+    }
+
+    // Tur devam ediyor: round-robin ile sıradaki bitirmemiş oyuncuya geç
+    const nextPlayer = selectNextPlayer(
+      players,
+      room.current_player_id,
+      new Set(unfinishedPlayers.map((p) => p.id)),
+    )
+
+    if (!nextPlayer) {
+      return { claimed: true, finished: false, nextRoundStarted: false }
+    }
+
+    // nextPlayer'ın bu turdaki ATANMIŞ SABİT İSMİNİ al (tur içinde ASLA değişmez!)
+    let nextNameId = getPlayerRoundNameId(room.id, nextPlayer.id)
+    if (!nextNameId) {
+      const candidate = names.find((n) => n.submitted_by !== nextPlayer.id) || names[0]!
+      nextNameId = candidate.id
+      setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+    }
+
+    const { data, error } = await admin
+      .from('rooms')
+      .update({
+        current_player_id: nextPlayer.id,
+        current_identity_id: nextNameId,
+      })
+      .eq('id', room.id)
+      .select('id')
+
+    if (error) throw error
+    return { claimed: (data?.length ?? 0) > 0, finished: false, nextRoundStarted: false }
+  }
+
+  // Klasik Mod (INV-4: Dokunulmamış orijinal akış)
+  const currentRound = room.game_round ?? 1
   const activePlayerIds = new Set(
     players.filter((p) => getPlayerLives(room.id, p.id) > 0).map((p) => p.id),
   )
@@ -406,7 +763,11 @@ function assertPlayersTurn(room: RoomRow, playerId: string) {
   }
 }
 
-export async function makeGuess(roomId: string, playerId: string, guess: string) {
+// ==========================================
+// MERKEZİ AKSİYON İŞLEYİCİLERİ (Bölüm 2 & 3)
+// ==========================================
+
+export async function makeGuess(roomId: string, playerId: string, guess: string): Promise<GuessResult> {
   const [room, players, names] = await Promise.all([
     loadRoom(roomId),
     loadPlayers(roomId),
@@ -421,7 +782,262 @@ export async function makeGuess(roomId: string, playerId: string, guess: string)
     throw conflict('no_active_name', 'Bu tur için bir isim seçilmemiş.')
   }
 
-  const currentLives = getPlayerLives(roomId, playerId)
+  const gameMode = getRoomMode(roomId, room.game_mode)
+
+  if (gameMode === 'speed') {
+    return handleSpeedModeGuess(room, players, names, playerId, guess, currentName.name_text)
+  } else if (gameMode === 'classic') {
+    return handleClassicModeGuess(room, players, names, playerId, guess, currentName.name_text)
+  } else {
+    throw new Error(`game_mode tanımsız — bu asla olmamalı (INV-1 ihlali): ${gameMode}`)
+  }
+}
+
+export async function passTurn(roomId: string, playerId: string) {
+  const [room, players, names] = await Promise.all([
+    loadRoom(roomId),
+    loadPlayers(roomId),
+    loadNames(roomId),
+  ])
+
+  requireMembership(players, playerId)
+  assertPlayersTurn(room, playerId)
+
+  const gameMode = getRoomMode(roomId, room.game_mode)
+
+  if (gameMode === 'speed') {
+    return handleSpeedModeAskQuestion(room, players, names, playerId)
+  } else if (gameMode === 'classic') {
+    return handleClassicModePassTurn(room, players, names)
+  } else {
+    throw new Error(`game_mode tanımsız — bu asla olmamalı (INV-1 ihlali): ${gameMode}`)
+  }
+}
+
+// -------------------------------------------------------------
+// HIZ MODU AKSİYON İŞLEYİCİLERİ (handleSpeedModeAction)
+// -------------------------------------------------------------
+
+async function handleSpeedModeAskQuestion(
+  room: RoomRow,
+  players: PlayerRow[],
+  names: NameRow[],
+  playerId: string,
+) {
+  const admin = supabaseAdmin()
+  const speedData = getPlayerSpeedData(room.id, playerId)
+
+  // INV-3: Host dahil HERKES için aynı satır — is_host kontrolü KESİNLİKLE YOK
+  const newQuestions = incrementQuestionCount(room.id, playerId)
+  const reachedLimit = newQuestions >= SPEED_MODE_MAX_QUESTIONS
+
+  if (reachedLimit) {
+    const updatedRoundScores = [...speedData.roundScores, 0]
+    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0)
+    setPlayerSpeedData(room.id, playerId, {
+      questionsThisRound: newQuestions,
+      roundScores: updatedRoundScores,
+      finishedCurrentRound: true,
+    })
+
+    try {
+      await admin.from('players').update({ score: newTotalScore }).eq('id', playerId)
+    } catch {
+      // Sütun hatası yut
+    }
+  }
+
+  try {
+    await admin.from('players').update({
+      questions_this_round: newQuestions,
+      has_finished_round: reachedLimit,
+      round_scores: reachedLimit ? [...speedData.roundScores, 0] : speedData.roundScores,
+    }).eq('id', playerId)
+  } catch {
+    // Sütun yoksa yut
+  }
+
+  const updatedPlayers = players.map((p) => {
+    if (p.id !== playerId) return p
+    const speed = getPlayerSpeedData(room.id, playerId)
+    const totalScore = speed.roundScores.reduce((sum, s) => sum + s, 0)
+    return {
+      ...p,
+      score: totalScore,
+      questions_this_round: newQuestions,
+      has_finished_round: reachedLimit,
+      round_scores: speed.roundScores,
+    }
+  })
+
+  const outcome = await advanceTurn(room, updatedPlayers, names)
+
+  const remainingUnfinished = updatedPlayers.filter((p) => {
+    const speed = getPlayerSpeedData(room.id, p.id)
+    return !speed.finishedCurrentRound
+  }).length
+
+  const msg = reachedLimit
+    ? '20 soru limitine ulaşıldı! Bu turdan 0 puan aldınız.'
+    : remainingUnfinished <= 1
+      ? `Sorunuz kaydedildi (Soru: ${newQuestions}). Sıra sizde devam ediyor.`
+      : `Sorunuz kaydedildi (Soru: ${newQuestions}). Sıra bir sonraki oyuncuya geçti.`
+
+  return {
+    message: msg,
+    finished: outcome.finished,
+    nextRoundStarted: outcome.nextRoundStarted,
+  }
+}
+
+async function handleSpeedModeGuess(
+  room: RoomRow,
+  players: PlayerRow[],
+  names: NameRow[],
+  playerId: string,
+  guess: string,
+  targetNameText: string,
+): Promise<GuessResult> {
+  const admin = supabaseAdmin()
+  const speedData = getPlayerSpeedData(room.id, playerId)
+
+  const isCorrect = fuzzyMatch(guess, targetNameText)
+
+  if (isCorrect) {
+    // Doğru tahmin! Sorulan soru sayısına göre puan hesapla
+    const qCount = speedData.questionsThisRound
+    const roundScore = calculateSpeedScore(qCount)
+    const updatedRoundScores = [...speedData.roundScores, roundScore]
+    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0)
+
+    setPlayerSpeedData(room.id, playerId, {
+      questionsThisRound: qCount,
+      roundScores: updatedRoundScores,
+      finishedCurrentRound: true,
+    })
+
+    try {
+      await admin.from('players').update({
+        score: newTotalScore,
+      }).eq('id', playerId)
+    } catch {
+      await admin.rpc('increment_player_score', {
+        p_player_id: playerId,
+        p_delta: roundScore,
+      })
+    }
+
+    try {
+      await admin.from('players').update({
+        round_scores: updatedRoundScores,
+        has_finished_round: true,
+      }).eq('id', playerId)
+    } catch {
+      // Sütun yoksa yut
+    }
+
+    const updatedPlayers = players.map((p) =>
+      p.id === playerId
+        ? {
+            ...p,
+            score: newTotalScore,
+            round_scores: updatedRoundScores,
+            has_finished_round: true,
+          }
+        : p,
+    )
+
+    const outcome = await advanceTurn(room, updatedPlayers, names)
+
+    return {
+      correct: true,
+      message: `Doğru tahmin! Bu turdan ${roundScore} puan kazandınız.`,
+      pointsEarned: roundScore,
+      turnPassed: true,
+      finished: outcome.finished,
+      nextRoundStarted: outcome.nextRoundStarted,
+    }
+  }
+
+  // Yanlış tahmin: INV-3 uyarınca soru sayısını 1 artır (host dahil HERKES için)
+  const newQuestions = incrementQuestionCount(room.id, playerId)
+  const reachedLimit = newQuestions >= SPEED_MODE_MAX_QUESTIONS
+  const updatedRoundScores = reachedLimit ? [...speedData.roundScores, 0] : speedData.roundScores
+  const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0)
+
+  setPlayerSpeedData(room.id, playerId, {
+    questionsThisRound: newQuestions,
+    roundScores: updatedRoundScores,
+    finishedCurrentRound: reachedLimit,
+  })
+
+  if (reachedLimit) {
+    try {
+      await admin.from('players').update({
+        score: newTotalScore,
+      }).eq('id', playerId)
+    } catch {
+      // ignore
+    }
+  }
+
+  try {
+    await admin.from('players').update({
+      questions_this_round: newQuestions,
+      has_finished_round: reachedLimit,
+      round_scores: updatedRoundScores,
+    }).eq('id', playerId)
+  } catch {
+    // Sütun yoksa yut
+  }
+
+  const updatedPlayers = players.map((p) =>
+    p.id === playerId
+      ? {
+          ...p,
+          score: newTotalScore,
+          questions_this_round: newQuestions,
+          has_finished_round: reachedLimit,
+          round_scores: updatedRoundScores,
+        }
+      : p,
+  )
+
+  const outcome = await advanceTurn(room, updatedPlayers, names)
+
+  const remainingUnfinished = updatedPlayers.filter((p) => {
+    const speed = getPlayerSpeedData(room.id, p.id)
+    return !speed.finishedCurrentRound
+  }).length
+
+  const msg = reachedLimit
+    ? 'Yanlış tahmin ve 20 soru limitine ulaşıldı! Bu turdan 0 puan aldınız.'
+    : remainingUnfinished <= 1
+      ? 'Yanlış tahmin! Sıra sizde devam ediyor.'
+      : 'Yanlış tahmin! Sıra diğer oyuncuya geçti.'
+
+  return {
+    correct: false,
+    message: msg,
+    turnPassed: true,
+    finished: outcome.finished,
+    nextRoundStarted: outcome.nextRoundStarted,
+  }
+}
+
+// -------------------------------------------------------------
+// KLASİK MOD AKSİYON İŞLEYİCİLERİ (handleClassicModeAction)
+// -------------------------------------------------------------
+
+async function handleClassicModeGuess(
+  room: RoomRow,
+  players: PlayerRow[],
+  names: NameRow[],
+  playerId: string,
+  guess: string,
+  targetNameText: string,
+): Promise<GuessResult> {
+  const currentLives = getPlayerLives(room.id, playerId)
   if (currentLives <= 0) {
     const outcome = await advanceTurn(room, players, names)
     return {
@@ -433,14 +1049,12 @@ export async function makeGuess(roomId: string, playerId: string, guess: string)
     }
   }
 
-  if (!fuzzyMatch(guess, currentName.name_text)) {
+  if (!fuzzyMatch(guess, targetNameText)) {
     const newLives = currentLives - 1
-    setPlayerLives(roomId, playerId, newLives)
+    setPlayerLives(room.id, playerId, newLives)
 
     const outcome = await advanceTurn(room, players, names)
-
-    // Realtime yayını: Tüm bağlı oyunculara (Host ve Guests) can durumunun değiştiğini duyur
-    await supabaseAdmin().from('rooms').update({ status: room.status }).eq('id', roomId)
+    await supabaseAdmin().from('rooms').update({ status: room.status }).eq('id', room.id)
 
     if (newLives <= 0) {
       return {
@@ -460,7 +1074,6 @@ export async function makeGuess(roomId: string, playerId: string, guess: string)
       finished: outcome.finished,
     }
   }
-
 
   const outcome = await advanceTurn(room, players, names)
   if (!outcome.claimed) {
@@ -482,18 +1095,11 @@ export async function makeGuess(roomId: string, playerId: string, guess: string)
   }
 }
 
-
-
-export async function passTurn(roomId: string, playerId: string) {
-  const [room, players, names] = await Promise.all([
-    loadRoom(roomId),
-    loadPlayers(roomId),
-    loadNames(roomId),
-  ])
-
-  requireMembership(players, playerId)
-  assertPlayersTurn(room, playerId)
-
+async function handleClassicModePassTurn(
+  room: RoomRow,
+  players: PlayerRow[],
+  names: NameRow[],
+) {
   const outcome = await advanceTurn(room, players, names)
   if (!outcome.claimed) {
     throw conflict('turn_already_advanced', 'Bu tur çoktan tamamlandı.')
@@ -502,19 +1108,23 @@ export async function passTurn(roomId: string, playerId: string) {
   return { message: 'Sıra bir sonraki oyuncuya geçti.', finished: outcome.finished }
 }
 
+// -------------------------------------------------------------
+// DİĞER FONKSİYONLAR (Reset / Leave)
+// -------------------------------------------------------------
+
 export async function resetGame(roomId: string, playerId: string) {
   const admin = supabaseAdmin()
   const players = await loadPlayers(roomId)
   const player = requireMembership(players, playerId)
 
   if (!player.is_host) {
-    throw forbidden('not_host', 'Yeni turu yalnızca oda sahibi başlatabilir.')
+    throw forbidden('not_host', 'Yeni oyunu yalnızca oda sahibi başlatabilir.')
   }
 
-  // Oyun sıfırlandığında canlılar tekrar yenilensin
   for (const p of players) {
     setPlayerLives(roomId, p.id, TOTAL_LIVES_PER_GAME)
   }
+  clearRoomSpeedData(roomId)
 
   const { error: roomError } = await admin
     .from('rooms')
@@ -528,7 +1138,6 @@ export async function resetGame(roomId: string, playerId: string) {
     .eq('id', roomId)
   if (roomError) throw roomError
 
-  // Yeni turda herkes yeniden isim girsin.
   const { error: namesError } = await admin.from('names').delete().eq('room_id', roomId)
   if (namesError) throw namesError
 
@@ -538,7 +1147,6 @@ export async function resetGame(roomId: string, playerId: string) {
     .eq('room_id', roomId)
   if (scoresError) throw scoresError
 }
-
 
 export async function leaveRoom(roomId: string, playerId: string) {
   const admin = supabaseAdmin()
@@ -552,8 +1160,6 @@ export async function leaveRoom(roomId: string, playerId: string) {
   const wasCurrentPlayer = room.current_player_id === playerId
   const remaining = players.filter((player) => player.id !== playerId)
 
-  // Ayrılan oyuncunun sırası varsa, satır silinmeden önce sırayı devret.
-  // (FK'ler ON DELETE SET NULL olduğu için silme başarısız olmaz ama oyun sırasız kalır.)
   if (wasCurrentPlayer && remaining.length > 0 && room.status === 'playing') {
     const names = await loadNames(roomId)
     await advanceTurn(room, players, names)
@@ -567,7 +1173,6 @@ export async function leaveRoom(roomId: string, playerId: string) {
     return { roomClosed: true }
   }
 
-  // Oda sahibi ayrıldıysa sıradaki oyuncu host olur, yoksa oda yönetilemez hale gelir.
   const leavingPlayer = players.find((player) => player.id === playerId)
   if (leavingPlayer?.is_host) {
     await admin.from('players').update({ is_host: true }).eq('id', remaining[0]!.id)

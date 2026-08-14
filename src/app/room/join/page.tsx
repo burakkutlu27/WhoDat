@@ -19,6 +19,7 @@ function JoinRoomForm() {
   useEffect(() => {
     const codeParam = searchParams.get('code')
     if (codeParam) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setRoomCode(codeParam.toUpperCase())
     }
   }, [searchParams])

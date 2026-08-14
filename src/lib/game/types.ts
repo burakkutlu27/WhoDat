@@ -7,6 +7,8 @@ import type { RoomStatus } from '../database.types'
  * bu tipleri motoru bundle'a çekmeden kullanabilmeli.
  */
 
+export type GameMode = 'classic' | 'speed'
+
 export interface PublicPlayer {
   id: string
   nickname: string
@@ -14,6 +16,10 @@ export interface PublicPlayer {
   score: number
   hasSubmittedNames: boolean
   livesLeft: number
+  questionsThisRound: number
+  roundScores: number[]
+  hasFinishedRound: boolean
+  estimatedPoints?: number
 }
 
 export interface GameState {
@@ -22,6 +28,8 @@ export interface GameState {
     roomCode: string
     status: RoomStatus
     gameRound: number
+    totalRounds: number
+    gameMode: GameMode
     isGameActive: boolean
     currentPlayerId: string | null
   }
@@ -32,6 +40,10 @@ export interface GameState {
     isYourTurn: boolean
     submittedNames: string[]
     livesLeft: number
+    questionsThisRound: number
+    roundScores: number[]
+    hasFinishedRound: boolean
+    estimatedPoints?: number
   }
   /** Tahmin sırası sizdeyse null: doğru cevap tahmin edene gönderilmez. */
   currentName: string | null
@@ -53,6 +65,8 @@ export interface GuessResult {
   finished?: boolean
   livesLeft?: number
   turnPassed?: boolean
+  pointsEarned?: number
+  nextRoundStarted?: boolean
 }
 
 

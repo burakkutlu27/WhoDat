@@ -35,6 +35,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
 
   useEffect(() => {
     if (phase === 'ready' && state) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowConfetti(true)
     }
   }, [phase, state])
@@ -234,15 +235,31 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                       )}
                     </div>
 
-                    <div className="flex min-w-0 items-center gap-2">
-                      {player.isHost && (
-                        <Crown className="h-4 w-4 shrink-0 text-pencil-yellow" aria-label="Oda Sahibi" />
-                      )}
-                      <span className="truncate font-display text-xl font-bold text-ink">
-                        {player.nickname}
-                      </span>
-                      {isYou && (
-                        <span className="tag tag-you">SEN</span>
+                    <div className="flex min-w-0 flex-col">
+                      <div className="flex items-center gap-2">
+                        {player.isHost && (
+                          <Crown className="h-4 w-4 shrink-0 text-pencil-yellow" aria-label="Oda Sahibi" />
+                        )}
+                        <span className="truncate font-display text-xl font-bold text-ink">
+                          {player.nickname}
+                        </span>
+                        {isYou && (
+                          <span className="tag tag-you">SEN</span>
+                        )}
+                      </div>
+
+                      {/* Hız Modu Tur Kırılımı */}
+                      {state.room.gameMode === 'speed' && player.roundScores && player.roundScores.length > 0 && (
+                        <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs font-display">
+                          {player.roundScores.map((rScore, roundIdx) => (
+                            <span
+                              key={roundIdx}
+                              className="rounded bg-paper-card-alt px-1.5 py-0.5 border border-paper-border text-ink-faded font-mono"
+                            >
+                              T{roundIdx + 1}: <strong className="text-ink">{rScore}P</strong>
+                            </span>
+                          ))}
+                        </div>
                       )}
                     </div>
                   </div>

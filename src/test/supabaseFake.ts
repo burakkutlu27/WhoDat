@@ -216,8 +216,10 @@ export function buildRoom(overrides: Partial<RoomRow> = {}): RoomRow {
     status: 'waiting',
     current_player_id: null,
     current_identity_id: null,
+    game_mode: 'classic',
     game_round: 1,
     is_game_active: false,
+    total_rounds: 3,
     ...overrides,
   }
 }
@@ -229,6 +231,9 @@ export function buildPlayer(roomId: string, overrides: Partial<PlayerRow> = {}):
     nickname: 'oyuncu',
     is_host: false,
     score: 0,
+    round_scores: [],
+    questions_this_round: 0,
+    has_finished_round: false,
     created_at: nextTimestamp(),
     ...overrides,
   }

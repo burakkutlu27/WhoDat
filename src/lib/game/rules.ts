@@ -11,6 +11,32 @@ export const MAX_GUESSES_PER_TURN = 3
 export const POINTS_PER_CORRECT_GUESS = 10
 export const ROOM_CODE_LENGTH = 6
 
+export const SPEED_MODE_MAX_SCORE = 100
+export const SPEED_MODE_SCORE_DECREMENT = 5
+export const SPEED_MODE_MIN_SCORE = 10
+export const SPEED_MODE_MAX_QUESTIONS = 20
+export const DEFAULT_SPEED_ROUNDS = 3
+
+/**
+ * Hız modu puan hesaplama:
+ * Soru sayısı limit (20) veya üstündeyse 0 puan.
+ * Aksi halde: max(MIN_PUAN, MAX_PUAN - (soruSayisi * SORU_BASI_DUSUS))
+ */
+export function calculateSpeedScore(questionCount: number): number {
+  if (questionCount >= SPEED_MODE_MAX_QUESTIONS) {
+    return 0
+  }
+  const score = SPEED_MODE_MAX_SCORE - questionCount * SPEED_MODE_SCORE_DECREMENT
+  return Math.max(SPEED_MODE_MIN_SCORE, score)
+}
+
+/**
+ * Canlı arayüzde oyuncunun şu an bilirse alacağı tahmini puanı döndürür.
+ */
+export function estimateSpeedScore(questionCount: number): number {
+  return calculateSpeedScore(questionCount)
+}
+
 
 /**
  * 0/O ve 1/I gibi karıştırılabilecek karakterler alfabede yok: oda kodu genelde

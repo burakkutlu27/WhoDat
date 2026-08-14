@@ -174,6 +174,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   <Users className="h-3.5 w-3.5 text-pencil-blue" />
                   {state.players.length} Oyuncu
                 </span>
+                <span className={`tag ${state.room.gameMode === 'speed' ? 'border-pencil-green text-pencil-green font-bold' : 'border-pencil-yellow text-pencil-yellow font-bold'}`}>
+                  {state.room.gameMode === 'speed' ? '⚡ Hız Modu (3 Tur)' : '🎯 Klasik Mod (3 Can)'}
+                </span>
                 {degraded && (
                   <span className="tag border-pencil-orange text-pencil-orange">
                     Canlı bağlantı zayıf
@@ -191,6 +194,47 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               <span>Odadan Çık</span>
             </motion.button>
           </div>
+
+          {/* Host Game Mode Switcher in Lobby */}
+          {state.you.isHost && (
+            <div className="mt-4 pt-4 border-t border-paper-border flex flex-wrap items-center justify-between gap-3">
+              <span className="font-display text-sm font-bold text-ink-faded">
+                Oyun Modunu Değiştir:
+              </span>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (state.room.gameMode === 'classic') return
+                    await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'classic' } })
+                    await refresh()
+                  }}
+                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all ${
+                    state.room.gameMode === 'classic'
+                      ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
+                      : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  🎯 Klasik (Can)
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (state.room.gameMode === 'speed') return
+                    await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'speed' } })
+                    await refresh()
+                  }}
+                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all ${
+                    state.room.gameMode === 'speed'
+                      ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
+                      : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  ⚡ Hız Modu (Puan)
+                </button>
+              </div>
+            </div>
+          )}
         </motion.header>
 
         {/* Name Entry Section */}

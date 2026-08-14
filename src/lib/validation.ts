@@ -28,8 +28,15 @@ export const nameTextSchema = z
   .min(1, 'İsim boş olamaz.')
   .max(60, 'İsim en fazla 60 karakter olabilir.')
 
+export const gameModeSchema = z.enum(['classic', 'speed'])
+
 export const createRoomSchema = z.object({
   nickname: nicknameSchema,
+  gameMode: gameModeSchema.optional(),
+})
+
+export const setRoomModeSchema = z.object({
+  gameMode: gameModeSchema,
 })
 
 export const joinRoomSchema = z.object({

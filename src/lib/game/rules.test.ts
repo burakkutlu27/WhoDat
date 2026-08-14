@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest'
 
 import {
   ROOM_CODE_LENGTH,
+  calculateSpeedScore,
   distributeNames,
+  estimateSpeedScore,
   generateRoomCode,
   selectNameForPlayer,
   selectNextPlayer,
@@ -93,5 +95,28 @@ describe('generateRoomCode', () => {
   it('birbirine karışan I/1 ve O/0 karakterlerini kullanmaz', () => {
     const codes = Array.from({ length: 200 }, () => generateRoomCode()).join('')
     expect(codes).not.toMatch(/[IO01]/)
+  })
+})
+
+describe('calculateSpeedScore', () => {
+  it('0 soruda (ilk tahminde) tam 100 puan verir', () => {
+    expect(calculateSpeedScore(0)).toBe(100)
+    expect(estimateSpeedScore(0)).toBe(100)
+  })
+
+  it('her soruda 5 puan düşürür', () => {
+    expect(calculateSpeedScore(1)).toBe(95)
+    expect(calculateSpeedScore(3)).toBe(85)
+    expect(calculateSpeedScore(12)).toBe(40)
+  })
+
+  it('taban puanın altına düşmez (en az 10 puan)', () => {
+    expect(calculateSpeedScore(18)).toBe(10)
+    expect(calculateSpeedScore(19)).toBe(10)
+  })
+
+  it('20 veya daha fazla soruda limit aşıldığı için 0 puan verir', () => {
+    expect(calculateSpeedScore(20)).toBe(0)
+    expect(calculateSpeedScore(25)).toBe(0)
   })
 })

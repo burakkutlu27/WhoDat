@@ -72,26 +72,35 @@ export type Database = {
       players: {
         Row: {
           created_at: string
+          has_finished_round: boolean
           id: string
           is_host: boolean | null
           nickname: string
+          questions_this_round: number
           room_id: string
+          round_scores: Json
           score: number | null
         }
         Insert: {
           created_at?: string
+          has_finished_round?: boolean
           id?: string
           is_host?: boolean | null
           nickname: string
+          questions_this_round?: number
           room_id: string
+          round_scores?: Json
           score?: number | null
         }
         Update: {
           created_at?: string
+          has_finished_round?: boolean
           id?: string
           is_host?: boolean | null
           nickname?: string
+          questions_this_round?: number
           room_id?: string
+          round_scores?: Json
           score?: number | null
         }
         Relationships: [
@@ -109,31 +118,37 @@ export type Database = {
           created_at: string | null
           current_identity_id: string | null
           current_player_id: string | null
+          game_mode: string | null
           game_round: number | null
           id: string
           is_game_active: boolean | null
           room_code: string
           status: string | null
+          total_rounds: number | null
         }
         Insert: {
           created_at?: string | null
           current_identity_id?: string | null
           current_player_id?: string | null
+          game_mode?: string | null
           game_round?: number | null
           id?: string
           is_game_active?: boolean | null
           room_code: string
           status?: string | null
+          total_rounds?: number | null
         }
         Update: {
           created_at?: string | null
           current_identity_id?: string | null
           current_player_id?: string | null
+          game_mode?: string | null
           game_round?: number | null
           id?: string
           is_game_active?: boolean | null
           room_code?: string
           status?: string | null
+          total_rounds?: number | null
         }
         Relationships: [
           {
