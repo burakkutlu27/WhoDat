@@ -11,7 +11,7 @@ export default function VersionDisplay() {
   const [isVisible, setIsVisible] = useState(false)
 
   const versionInfo: VersionInfo = {
-    version: '2.0.0',
+    version: '3.0.0',
     environment: process.env.NODE_ENV || 'development'
   }
 

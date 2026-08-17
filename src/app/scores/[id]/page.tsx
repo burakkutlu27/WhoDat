@@ -264,8 +264,9 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
 
                       {/* Ortak Hedef Modu Rolü */}
                       {state.room.gameMode === 'shared_target' && player.isHost && (
-                        <div className="mt-1 text-xs font-display font-bold text-pencil-orange">
-                          👑 Hakem (Hedefleri Belirleyen & Yanıtlayan)
+                        <div className="mt-1 text-xs font-display font-bold text-pencil-orange flex items-center gap-1.5">
+                          <Crown className="h-3.5 w-3.5" />
+                          <span>Hakem (Hedefleri Belirleyen & Yanıtlayan)</span>
                         </div>
                       )}
 
@@ -274,7 +275,8 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                         <div className="mt-1 flex items-center gap-2 text-xs font-display">
                           {player.nameSolved ? (
                             <span className="text-pencil-green font-bold flex items-center gap-1">
-                              ✓ İsim Çözüldü
+                              <Check className="h-3.5 w-3.5" />
+                              <span>İsim Çözüldü</span>
                               {typeof player.questionBudgetRemaining === 'number' && (
                                 <span className="text-ink-faded font-normal">
                                   ({10 - player.questionBudgetRemaining} soru ile)
@@ -282,12 +284,14 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                               )}
                             </span>
                           ) : (
-                            <span className="text-pencil-red font-bold">
-                              ❌ Elendi (0 Puan)
+                            <span className="text-pencil-red font-bold flex items-center gap-1">
+                              <LogOut className="h-3.5 w-3.5" />
+                              <span>Elendi (0 Puan)</span>
                             </span>
                           )}
                         </div>
                       )}
+
 
                     </div>
                   </div>

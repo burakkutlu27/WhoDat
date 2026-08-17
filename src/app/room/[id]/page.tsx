@@ -1,6 +1,6 @@
 'use client'
 
-import { Check, CheckCircle2, Clock, Copy, Crown, Loader2, LogOut, Pencil, Play, Send, Users } from 'lucide-react'
+import { Brain, Check, CheckCircle2, Clock, Copy, Crown, Loader2, LogOut, Pencil, Play, Send, Target, Users, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
@@ -208,13 +208,17 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         ? 'border-pencil-orange text-pencil-orange font-bold'
                         : 'border-pencil-yellow text-pencil-yellow font-bold'
                 }`}>
+                  {state.room.gameMode === 'speed' && <Zap className="h-3.5 w-3.5 mr-1 inline" />}
+                  {state.room.gameMode === 'persistent' && <Brain className="h-3.5 w-3.5 mr-1 inline" />}
+                  {state.room.gameMode === 'shared_target' && <Users className="h-3.5 w-3.5 mr-1 inline" />}
+                  {state.room.gameMode === 'classic' && <Target className="h-3.5 w-3.5 mr-1 inline" />}
                   {state.room.gameMode === 'speed'
-                    ? '⚡ Hız Modu (3 Tur)'
+                    ? 'Hız Modu (3 Tur)'
                     : state.room.gameMode === 'persistent'
-                      ? '🧠 Israrcı Mod (10 Soru + 3 Can)'
+                      ? 'Israrcı Mod (10 Soru + 3 Can)'
                       : state.room.gameMode === 'shared_target'
-                        ? '👥 Ortak Hedef (3 Tur)'
-                        : '🎯 Klasik Mod (3 Can)'}
+                        ? 'Ortak Hedef (3 Tur)'
+                        : 'Klasik Mod (3 Can)'}
                 </span>
                 {degraded && (
                   <span className="tag border-pencil-orange text-pencil-orange">
@@ -248,13 +252,14 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'classic' } })
                     await refresh()
                   }}
-                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all ${
+                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
                     state.room.gameMode === 'classic'
                       ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
                       : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
-                  🎯 Klasik (Can)
+                  <Target className="h-3.5 w-3.5" />
+                  <span>Klasik (Can)</span>
                 </button>
                 <button
                   type="button"
@@ -263,13 +268,14 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'speed' } })
                     await refresh()
                   }}
-                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all ${
+                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
                     state.room.gameMode === 'speed'
                       ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
                       : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
-                  ⚡ Hız Modu (Puan)
+                  <Zap className="h-3.5 w-3.5" />
+                  <span>Hız Modu (Puan)</span>
                 </button>
                 <button
                   type="button"
@@ -278,13 +284,14 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'persistent' } })
                     await refresh()
                   }}
-                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all ${
+                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
                     state.room.gameMode === 'persistent'
                       ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
                       : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
-                  🧠 Israrcı (Bütçe)
+                  <Brain className="h-3.5 w-3.5" />
+                  <span>Israrcı (Bütçe)</span>
                 </button>
                 <button
                   type="button"
@@ -293,13 +300,14 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'shared_target' } })
                     await refresh()
                   }}
-                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all ${
+                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
                     state.room.gameMode === 'shared_target'
                       ? 'bg-pencil-orange text-white shadow-sm ring-1 ring-pencil-orange'
                       : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
-                  👥 Ortak Hedef (Hakem)
+                  <Users className="h-3.5 w-3.5" />
+                  <span>Ortak Hedef (Hakem)</span>
                 </button>
               </div>
             </div>
@@ -399,10 +407,11 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               </div>
               <p className="text-base text-ink leading-relaxed">
                 Bu modda <strong>Oda Sahibi Hakem</strong> rolündedir ve tek bir gizli hedef belirler.
-                İsim yazmanıza gerek yoktur — oyun başladığında sırayla sorular soracak ve <strong>🚨 Buzzer</strong> butonuna basarak gizli kişiyi ilk tahmin eden olmaya çalışacaksınız!
+                İsim yazmanıza gerek yoktur — oyun başladığında sırayla sorular soracak ve <strong>Tahmin</strong> butonuna basarak gizli kişiyi ilk bilen olmaya çalışacaksınız!
               </p>
-              <div className="mt-4 p-3 bg-paper-card-alt rounded-lg border border-dashed border-paper-border text-xs text-ink-faded font-display">
-                ⏳ Oda sahibinin hedefi belirleyip oyunu başlatması bekleniyor...
+              <div className="mt-4 p-3 bg-paper-card-alt rounded-lg border border-dashed border-paper-border text-xs text-ink-faded font-display flex items-center gap-2">
+                <Clock className="h-4 w-4 animate-spin text-pencil-yellow shrink-0" />
+                <span>Oda sahibinin hedefi belirleyip oyunu başlatması bekleniyor...</span>
               </div>
             </motion.section>
           )

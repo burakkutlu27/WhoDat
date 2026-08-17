@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowLeft, FileText, Loader2, Pencil, User } from 'lucide-react'
+import { ArrowLeft, Brain, FileText, Loader2, Pencil, Target, User, Users, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -109,7 +109,10 @@ export default function CreateRoomPage() {
                 >
                   <div>
                     <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
-                      <span>🎯 Klasik</span>
+                      <span className="flex items-center gap-1.5">
+                        <Target className="h-4 w-4 text-pencil-yellow" />
+                        <span>Klasik</span>
+                      </span>
                       {gameMode === 'classic' && <span className="text-[10px] bg-pencil-yellow text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
                     <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
@@ -130,7 +133,10 @@ export default function CreateRoomPage() {
                 >
                   <div>
                     <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
-                      <span>⚡ Hız Modu</span>
+                      <span className="flex items-center gap-1.5">
+                        <Zap className="h-4 w-4 text-pencil-green" />
+                        <span>Hız Modu</span>
+                      </span>
                       {gameMode === 'speed' && <span className="text-[10px] bg-pencil-green text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
                     <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
@@ -151,7 +157,10 @@ export default function CreateRoomPage() {
                 >
                   <div>
                     <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
-                      <span>🧠 Israrcı</span>
+                      <span className="flex items-center gap-1.5">
+                        <Brain className="h-4 w-4 text-pencil-blue" />
+                        <span>Israrcı</span>
+                      </span>
                       {gameMode === 'persistent' && <span className="text-[10px] bg-pencil-blue text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
                     <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
@@ -172,16 +181,20 @@ export default function CreateRoomPage() {
                 >
                   <div>
                     <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
-                      <span>👥 Ortak Hedef</span>
+                      <span className="flex items-center gap-1.5">
+                        <Users className="h-4 w-4 text-pencil-orange" />
+                        <span>Ortak Hedef</span>
+                      </span>
                       {gameMode === 'shared_target' && <span className="text-[10px] bg-pencil-orange text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
                     <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
-                      Tek Gizli Kişi & Hakem! Sırayla soru sor, buzzer ile ilk sen bil!
+                      Tek Gizli Kişi & Hakem! Sırayla soru sor, ilk sen bil!
                     </span>
                   </div>
                 </button>
               </div>
             </div>
+
 
 
             {error && (

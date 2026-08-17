@@ -3,6 +3,7 @@
 import {
   AlertCircle,
   BellRing,
+  Brain,
   Check,
   CheckCircle2,
   Clock,
@@ -10,6 +11,7 @@ import {
   Gamepad2,
   Heart,
   HelpCircle,
+  Lightbulb,
   Loader2,
   LogOut,
   MessageSquare,
@@ -19,9 +21,11 @@ import {
   Sparkles,
   Target,
   Trophy,
+  Users,
   X,
   Zap,
 } from 'lucide-react'
+
 import { motion, AnimatePresence } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useRef, useState } from 'react'
@@ -385,20 +389,20 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         </div>
       )}
 
-      {/* Ortak Hedef Modu — Buzzer Tahmin Modalı */}
+      {/* Ortak Hedef Modu — Tahmin Modalı */}
       <AnimatePresence>
         {isBuzzerOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
             <motion.div
-              initial={{ scale: 0.85, opacity: 0, y: 20 }}
+              initial={{ scale: 0.9, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-              className="paper-card-lg max-w-md w-full p-6 sm:p-8 text-center border-4 border-pencil-orange shadow-2xl space-y-4"
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="paper-card-lg max-w-md w-full p-6 sm:p-8 text-center border-2 border-pencil-green shadow-2xl space-y-4"
             >
               <div className="flex items-center justify-between">
-                <span className="tag border-pencil-orange text-pencil-orange font-bold text-xs uppercase flex items-center gap-1">
-                  <BellRing className="h-4 w-4 animate-bounce text-pencil-orange" />
-                  <span>Buzzer Tahmini</span>
+                <span className="tag border-pencil-green text-pencil-green font-bold text-xs uppercase flex items-center gap-1.5">
+                  <Target className="h-3.5 w-3.5 text-pencil-green" />
+                  <span>Gizli Hedef Tahmini</span>
                 </span>
                 <button
                   type="button"
@@ -412,8 +416,8 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               <h3 className="font-display text-2xl sm:text-3xl font-bold text-ink">
                 Gizli Hedef Kim?
               </h3>
-              <p className="text-xs text-ink-faded">
-                Doğru bilirseniz <strong>+100 Puan</strong> kazanırsınız. Yanlış bilirseniz bir sonraki soru sıranız atlanır!
+              <p className="text-sm text-ink-faded font-sans">
+                Doğru bilirseniz <strong className="text-pencil-green">+100 Puan</strong> kazanırsınız. Yanlış bilirseniz sonraki soru sıranız atlanır.
               </p>
 
               <form onSubmit={handleBuzzerSubmit} className="space-y-4 pt-2">
@@ -432,7 +436,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   <button
                     type="submit"
                     disabled={isBusy || !buzzerGuess.trim()}
-                    className="btn-pencil-red flex-1 py-3 font-display text-lg font-bold flex items-center justify-center gap-2"
+                    className="btn-pencil-green flex-1 py-3.5 font-display text-lg font-bold flex items-center justify-center gap-2 shadow-sm"
                   >
                     {isBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : <><span>Tahmini Gönder</span><Send className="h-4 w-4" /></>}
                   </button>
@@ -440,13 +444,14 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     type="button"
                     onClick={() => setIsBuzzerOpen(false)}
                     disabled={isBusy}
-                    className="btn-outline px-4 py-3 font-display text-sm font-bold"
+                    className="btn-outline px-4 py-3.5 font-display text-sm font-bold"
                   >
                     İptal
                   </button>
                 </div>
               </form>
             </motion.div>
+
           </div>
         )}
       </AnimatePresence>
@@ -478,13 +483,17 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         ? 'border-pencil-orange text-pencil-orange font-bold'
                         : 'border-pencil-yellow text-pencil-yellow font-bold'
                 }`}>
+                  {isSpeed && <Zap className="h-3.5 w-3.5 mr-1 inline" />}
+                  {isPersistent && <Brain className="h-3.5 w-3.5 mr-1 inline" />}
+                  {isSharedTarget && <Users className="h-3.5 w-3.5 mr-1 inline" />}
+                  {!isSpeed && !isPersistent && !isSharedTarget && <Target className="h-3.5 w-3.5 mr-1 inline" />}
                   {isSpeed
-                    ? `⚡ Hız Modu (Tur ${state.room.gameRound} / ${state.room.totalRounds})`
+                    ? `Hız Modu (Tur ${state.room.gameRound} / ${state.room.totalRounds})`
                     : isPersistent
-                      ? `🧠 Israrcı Mod (10 Soru Bütçesi)`
+                      ? `Israrcı Mod (10 Soru Bütçesi)`
                       : isSharedTarget
-                        ? `👥 Ortak Hedef (Tur ${state.room.gameRound} / ${state.room.totalRounds})`
-                        : `🎯 Klasik Tur ${state.room.gameRound}`}
+                        ? `Ortak Hedef (Tur ${state.room.gameRound} / ${state.room.totalRounds})`
+                        : `Klasik Tur ${state.room.gameRound}`}
                 </span>
                 {!isSharedTarget && (
                   <span className="tag">
@@ -492,8 +501,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   </span>
                 )}
                 {isSharedTarget && isReferee && (
-                  <span className="tag border-pencil-yellow text-pencil-yellow font-bold">
-                    👑 Hakem Rolündesiniz
+                  <span className="tag border-pencil-yellow text-pencil-yellow font-bold flex items-center gap-1">
+                    <Crown className="h-3.5 w-3.5 text-pencil-yellow" />
+                    <span>Hakem Rolündesiniz</span>
                   </span>
                 )}
                 {degraded && <span className="tag border-pencil-orange text-pencil-orange">Canlı bağlantı yok</span>}
@@ -510,6 +520,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
             </motion.button>
           </div>
         </motion.header>
+
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Main Play Arena */}
@@ -676,32 +687,36 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   ) : (
                     /* YARIŞMACI GÖRÜNÜMÜ */
                     <div className="space-y-6">
-                      {/* Buzzer Banner */}
-                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-pencil-orange/10 border-2 border-pencil-orange">
-                        <div>
-                          <span className="font-display text-xs font-bold text-pencil-orange uppercase tracking-wider block">
-                            Ortak Hedef Yarışı
-                          </span>
-                          <h3 className="font-display text-xl font-bold text-ink">
-                            Kim Olduğunu Biliyor Musun?
-                          </h3>
-                          <p className="text-xs text-ink-faded">
-                            Sıranı beklemeden her an Buzzer ile tahmin yapabilirsin!
-                          </p>
+                      {/* Tahmin Butonu & Bilgilendirme */}
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-paper-card-alt border-2 border-dashed border-pencil-green/40 shadow-xs">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pencil-green/15 text-pencil-green shadow-xs">
+                            <Lightbulb className="h-6 w-6" />
+                          </div>
+                          <div>
+                            <span className="block font-display text-2xl font-bold text-ink leading-tight">
+                              Gizli Hedefi Biliyor Musun?
+                            </span>
+                            <p className="mt-0.5 text-sm text-ink-faded font-sans">
+                              Sıranızı beklemeden her an tahmin hakkınızı kullanabilirsiniz.
+                            </p>
+                          </div>
                         </div>
 
                         <motion.button
                           type="button"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
                           onClick={() => setIsBuzzerOpen(true)}
                           disabled={isBusy || isTargetRevealed}
-                          className="btn-pencil-orange px-6 py-3.5 font-display text-lg font-bold flex items-center justify-center gap-2 shadow-lg animate-wiggle shrink-0"
+                          className="btn-pencil-green px-6 py-3 font-display text-lg font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all shrink-0"
                         >
-                          <BellRing className="h-5 w-5" />
-                          <span>🚨 TAHMİN EDECEĞİM!</span>
+                          <Target className="h-5 w-5" />
+                          <span>Tahminde Bulun</span>
                         </motion.button>
                       </div>
+
+
 
                       {/* Soru Sorma Durumu */}
                       {isTargetRevealed ? (
@@ -1151,16 +1166,19 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         </div>
                         <div>
                           {item.answer === 'yes' ? (
-                            <span className="tag bg-pencil-green text-white font-bold text-xs">
-                              ✅ EVET
+                            <span className="tag bg-pencil-green text-white font-bold text-xs flex items-center gap-1">
+                              <Check className="h-3.5 w-3.5" />
+                              <span>EVET</span>
                             </span>
                           ) : item.answer === 'no' ? (
-                            <span className="tag bg-pencil-red text-white font-bold text-xs">
-                              ❌ HAYIR
+                            <span className="tag bg-pencil-red text-white font-bold text-xs flex items-center gap-1">
+                              <X className="h-3.5 w-3.5" />
+                              <span>HAYIR</span>
                             </span>
                           ) : (
-                            <span className="tag bg-ink-faded text-white font-bold text-xs">
-                              ❓ BELİRSİZ
+                            <span className="tag bg-ink-faded text-white font-bold text-xs flex items-center gap-1">
+                              <HelpCircle className="h-3.5 w-3.5" />
+                              <span>BELİRSİZ</span>
                             </span>
                           )}
                         </div>
@@ -1238,12 +1256,14 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           {isSharedTarget ? (
                             <div className="mt-1">
                               {isPlayerReferee ? (
-                                <span className="text-[11px] font-display font-bold text-pencil-orange">
-                                  👑 Hakem
+                                <span className="text-[11px] font-display font-bold text-pencil-orange flex items-center gap-1">
+                                  <Crown className="h-3 w-3" />
+                                  <span>Hakem</span>
                                 </span>
                               ) : player.skippedQuestionTurn ? (
-                                <span className="text-[11px] font-display font-semibold text-pencil-red">
-                                  ⚠️ Soru Sırası Cezalı
+                                <span className="text-[11px] font-display font-semibold text-pencil-red flex items-center gap-1">
+                                  <AlertCircle className="h-3 w-3" />
+                                  <span>Sıra Cezalı</span>
                                 </span>
                               ) : (
                                 <span className="text-[11px] font-display text-ink-faded">
@@ -1262,11 +1282,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                 </div>
                               ) : pLives <= 0 ? (
                                 <div className="flex items-center gap-1.5 text-xs font-display">
-                                  <span className="text-pencil-red font-bold">
-                                    ❌ Elendi (0P)
+                                  <span className="text-pencil-red font-bold flex items-center gap-1">
+                                    <X className="h-3.5 w-3.5" />
+                                    <span>Elendi (0P)</span>
                                   </span>
                                 </div>
                               ) : (
+
                                 <div className="space-y-1">
                                   <div className="flex items-center justify-between gap-2 text-xs font-display">
                                     <span className="text-ink-faded">
