@@ -261,6 +261,26 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                           ))}
                         </div>
                       )}
+
+                      {/* Israrcı Mod Durum Özeti */}
+                      {state.room.gameMode === 'persistent' && (
+                        <div className="mt-1 flex items-center gap-2 text-xs font-display">
+                          {player.nameSolved ? (
+                            <span className="text-pencil-green font-bold flex items-center gap-1">
+                              ✓ İsim Çözüldü
+                              {typeof player.questionBudgetRemaining === 'number' && (
+                                <span className="text-ink-faded font-normal">
+                                  ({10 - player.questionBudgetRemaining} soru ile)
+                                </span>
+                              )}
+                            </span>
+                          ) : (
+                            <span className="text-pencil-red font-bold">
+                              ❌ Elendi (0 Puan)
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
 

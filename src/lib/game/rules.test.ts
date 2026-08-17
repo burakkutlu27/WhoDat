@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest'
 
 import {
   ROOM_CODE_LENGTH,
+  calculatePersistentScore,
   calculateSpeedScore,
   distributeNames,
+  estimatePersistentScore,
   estimateSpeedScore,
   generateRoomCode,
   selectNameForPlayer,
@@ -118,5 +120,23 @@ describe('calculateSpeedScore', () => {
   it('20 veya daha fazla soruda limit aşıldığı için 0 puan verir', () => {
     expect(calculateSpeedScore(20)).toBe(0)
     expect(calculateSpeedScore(25)).toBe(0)
+  })
+})
+
+describe('calculatePersistentScore', () => {
+  it('0 soruda (ilk tahminde) tam 100 puan verir', () => {
+    expect(calculatePersistentScore(0)).toBe(100)
+    expect(estimatePersistentScore(0)).toBe(100)
+  })
+
+  it('her soruda 8 puan düşürür', () => {
+    expect(calculatePersistentScore(1)).toBe(92)
+    expect(calculatePersistentScore(2)).toBe(84)
+    expect(calculatePersistentScore(5)).toBe(60)
+  })
+
+  it('taban puanın altına düşmez (10. soruda bile en az 20 puan)', () => {
+    expect(calculatePersistentScore(10)).toBe(20)
+    expect(calculatePersistentScore(11)).toBe(20)
   })
 })

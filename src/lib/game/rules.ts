@@ -17,6 +17,12 @@ export const SPEED_MODE_MIN_SCORE = 10
 export const SPEED_MODE_MAX_QUESTIONS = 20
 export const DEFAULT_SPEED_ROUNDS = 3
 
+// Israrcı Mod sabitleri
+export const PERSISTENT_MODE_QUESTION_BUDGET = 10
+export const PERSISTENT_MODE_MAX_SCORE = 100
+export const PERSISTENT_MODE_SCORE_DECREMENT = 8
+export const PERSISTENT_MODE_MIN_SCORE = 20
+
 /**
  * Hız modu puan hesaplama:
  * Soru sayısı limit (20) veya üstündeyse 0 puan.
@@ -35,6 +41,23 @@ export function calculateSpeedScore(questionCount: number): number {
  */
 export function estimateSpeedScore(questionCount: number): number {
   return calculateSpeedScore(questionCount)
+}
+
+/**
+ * Israrcı Mod puan hesaplama:
+ * max(MIN_PUAN, MAX_PUAN - (kullanilanSoruSayisi * SORU_BASI_DUSUS))
+ * Bütçe 10, düşüş 8 — 10. soruda bile 20 puan kalır.
+ */
+export function calculatePersistentScore(questionsUsed: number): number {
+  const score = PERSISTENT_MODE_MAX_SCORE - questionsUsed * PERSISTENT_MODE_SCORE_DECREMENT
+  return Math.max(PERSISTENT_MODE_MIN_SCORE, score)
+}
+
+/**
+ * Canlı arayüzde oyuncunun şu an bilirse alacağı tahmini puanı döndürür (Israrcı Mod).
+ */
+export function estimatePersistentScore(questionsUsed: number): number {
+  return calculatePersistentScore(questionsUsed)
 }
 
 

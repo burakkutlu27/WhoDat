@@ -193,6 +193,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   }
 
   const isSpeed = state.room.gameMode === 'speed'
+  const isPersistent = state.room.gameMode === 'persistent'
   const currentPlayer = state.players.find((player) => player.id === state.room.currentPlayerId)
   const myLives = state.you.livesLeft ?? 3
   const activePlayerLives = currentPlayer ? (currentPlayer.livesLeft ?? 3) : 3
@@ -274,8 +275,8 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                 </span>
               </div>
               <div className="mt-2 flex flex-wrap items-center gap-3">
-                <span className={`tag ${isSpeed ? 'border-pencil-green text-pencil-green font-bold' : 'border-pencil-yellow text-pencil-yellow font-bold'}`}>
-                  {isSpeed ? `⚡ Hız Modu (Tur ${state.room.gameRound} / ${state.room.totalRounds})` : `🎯 Klasik Tur ${state.room.gameRound}`}
+                <span className={`tag ${isSpeed ? 'border-pencil-green text-pencil-green font-bold' : isPersistent ? 'border-pencil-blue text-pencil-blue font-bold' : 'border-pencil-yellow text-pencil-yellow font-bold'}`}>
+                  {isSpeed ? `⚡ Hız Modu (Tur ${state.room.gameRound} / ${state.room.totalRounds})` : isPersistent ? `🧠 Israrcı Mod (10 Soru Bütçesi)` : `🎯 Klasik Tur ${state.room.gameRound}`}
                 </span>
                 <span className="tag">
                   {state.namesRemaining} İsim Kaldı
@@ -331,19 +332,120 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
                 <h2 className="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">
                   {state.you.isYourTurn
-                    ? 'Ben Kimim? Soru Sor & Tahmin Et!'
+                    ? isPersistent && (state.you.questionBudgetRemaining ?? 10) === 0
+                      ? 'Soru Bütçen Bitti — Karar Anı!'
+                      : 'Ben Kimim? Soru Sor & Tahmin Et!'
                     : `${currentPlayer?.nickname ?? 'Oyuncu'} İpucu Arıyor`}
                 </h2>
                 <p className="mx-auto mt-2 max-w-md text-sm text-ink-faded">
                   {state.you.isYourTurn
                     ? isSpeed
                       ? 'Sorunu sesli sor ve "Soru Sordum" butonuna bas, ya da emin olduğunda tahminini yap!'
-                      : 'Arkadaşlarına evet/hayır soruları sor. Emin olduğunda tahminini yaz!'
+                      : isPersistent
+                        ? (state.you.questionBudgetRemaining ?? 10) > 0
+                          ? 'Sorunu sesli sorup "Soru Sordum" butonuna basabilir veya doğrudan tahmin yapabilirsin!'
+                          : 'Soru bütçen bitti! Elindeki bilgilerle tahmin yapmak zorundasın.'
+                        : 'Arkadaşlarına evet/hayır soruları sor. Emin olduğunda tahminini yaz!'
                     : 'Sana sorulan sorulara dürüstçe yalnızca evet veya hayır deyin.'}
                 </p>
 
-                {/* Hız Modu Soru & Tahmini Puan Sayacı VEYA Klasik Can Göstergesi */}
-                {isSpeed ? (
+                {/* Modlara Göre Göstergeler */}
+                {isPersistent ? (
+                  <div className="mt-5 space-y-3">
+                    <div className="flex flex-wrap items-center justify-center gap-4">
+                      {/* Soru Bütçesi Göstergesi */}
+                      {(() => {
+                        const budget = state.you.isYourTurn
+                          ? (state.you.questionBudgetRemaining ?? 10)
+                          : (currentPlayer?.questionBudgetRemaining ?? 10)
+                        const isLow = budget <= 3 && budget > 0
+                        const isZero = budget === 0
+                        return (
+                          <div
+                            className={`flex items-center gap-2 rounded-xl border-2 px-4 py-2 shadow-sm transition-colors ${
+                              isZero
+                                ? 'border-solid border-pencil-red bg-pencil-red/10'
+                                : isLow
+                                  ? 'border-solid border-pencil-orange bg-pencil-orange/10'
+                                  : 'border-dashed border-paper-border bg-paper-card'
+                            }`}
+                          >
+                            <Pencil
+                              className={`h-5 w-5 ${
+                                isZero
+                                  ? 'text-pencil-red'
+                                  : isLow
+                                    ? 'text-pencil-orange'
+                                    : 'text-pencil-blue'
+                              }`}
+                            />
+                            <span className="font-display text-base font-bold text-ink">
+                              {state.you.isYourTurn ? 'Soru Bütçen: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Bütçesi: `}
+                              <span
+                                className={`text-lg font-bold ${
+                                  isZero
+                                    ? 'text-pencil-red'
+                                    : isLow
+                                      ? 'text-pencil-orange'
+                                      : 'text-pencil-blue'
+                                }`}
+                              >
+                                {budget}
+                              </span>{' '}
+                              / 10
+                            </span>
+                          </div>
+                        )
+                      })()}
+
+                      {/* Can / Tahmin Hakkı Göstergesi */}
+                      <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
+                        <span className="font-display text-sm font-bold text-ink-faded">
+                          Tahmin Hakkı:
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          {Array.from({ length: maxLives }).map((_, index) => {
+                            const displayLives = state.you.isYourTurn ? myLives : activePlayerLives
+                            const isFilled = index < displayLives
+                            return (
+                              <motion.div
+                                key={index}
+                                initial={false}
+                                animate={{ scale: isFilled ? 1 : 0.85, opacity: isFilled ? 1 : 0.3 }}
+                                transition={{ duration: 0.3 }}
+                              >
+                                <Heart
+                                  className={`h-5 w-5 ${
+                                    isFilled
+                                      ? 'fill-pencil-red text-pencil-red'
+                                      : 'fill-transparent text-ink-extra-faded opacity-30'
+                                  }`}
+                                />
+                              </motion.div>
+                            )
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Potansiyel Puan */}
+                      <div className="flex items-center gap-2 rounded-xl border-2 border-solid border-pencil-green bg-paper-card px-4 py-2 shadow-sm">
+                        <Zap className="h-5 w-5 text-pencil-green animate-pulse" />
+                        <span className="font-display text-base font-bold text-ink">
+                          {state.you.isYourTurn ? 'Şimdi Bilirsen: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Bilirse: `}
+                          <span className="text-pencil-green text-lg font-bold">
+                            +{state.you.isYourTurn ? (state.you.estimatedPoints ?? 100) : (currentPlayer?.estimatedPoints ?? 100)} P
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {!state.you.isYourTurn && (
+                      <div className="text-center font-display text-xs text-ink-faded">
+                        Senin durumun: <strong className="text-ink">{state.you.questionBudgetRemaining ?? 10}/10 Soru Bütçesi</strong> • <strong className="text-pencil-red">{myLives} Can</strong> • Sıran geldiğinde bilirsen: <strong className="text-pencil-green">+{state.you.estimatedPoints ?? 100} P</strong>
+                      </div>
+                    )}
+                  </div>
+                ) : isSpeed ? (
                   <div className="mt-5 space-y-3">
                     <div className="flex flex-wrap items-center justify-center gap-4">
                       <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
@@ -446,17 +548,21 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           </>
                         )}
                       </motion.button>
-                      <motion.button
-                        type="button"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => void handlePass()}
-                        disabled={isBusy}
-                        className="btn-outline flex items-center justify-center gap-2 px-6 py-3.5 font-display text-base"
-                      >
-                        <SkipForward className="h-4 w-4" />
-                        <span>{isSpeed ? 'Soru Sordum' : 'Pas Geç'}</span>
-                      </motion.button>
+                      
+                      {/* Israrcı Modda Bütçe 0 ise "Soru Sordum" butonu kalkar (Kural A: Zorunlu Tahmin) */}
+                      {(!isPersistent || (state.you.questionBudgetRemaining ?? 10) > 0) && (
+                        <motion.button
+                          type="button"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => void handlePass()}
+                          disabled={isBusy}
+                          className="btn-outline flex items-center justify-center gap-2 px-6 py-3.5 font-display text-base"
+                        >
+                          <SkipForward className="h-4 w-4" />
+                          <span>{isSpeed || isPersistent ? 'Soru Sordum' : 'Pas Geç'}</span>
+                        </motion.button>
+                      )}
                     </div>
                   </form>
                 ) : (
@@ -565,8 +671,48 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             )}
                           </div>
 
-                          {/* Hız Modunda Tur Durumu veya Klasik Modda Kalan Kalpler */}
-                          {isSpeed ? (
+                          {/* Israrcı Mod / Hız Modu / Klasik Mod Sidebar Durumu */}
+                          {isPersistent ? (
+                            <div className="mt-1 space-y-1">
+                              {player.nameSolved ? (
+                                <div className="flex items-center gap-1.5 text-xs font-display">
+                                  <span className="flex items-center gap-1 text-pencil-green font-bold">
+                                    <CheckCircle2 className="h-3.5 w-3.5" />
+                                    <span>Bildi (+{player.score}P)</span>
+                                  </span>
+                                </div>
+                              ) : pLives <= 0 ? (
+                                <div className="flex items-center gap-1.5 text-xs font-display">
+                                  <span className="text-pencil-red font-bold">
+                                    ❌ Elendi (0P)
+                                  </span>
+                                </div>
+                              ) : (
+                                <div className="space-y-1">
+                                  <div className="flex items-center justify-between gap-2 text-xs font-display">
+                                    <span className="text-ink-faded">
+                                      Bütçe: <strong className="text-pencil-blue">{player.questionBudgetRemaining ?? 10}/10</strong>
+                                    </span>
+                                    <span className="text-pencil-green font-semibold">
+                                      +{player.estimatedPoints ?? 100}P
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    {Array.from({ length: maxLives }).map((_, idx) => (
+                                      <Heart
+                                        key={idx}
+                                        className={`h-3 w-3 ${
+                                          idx < pLives
+                                            ? 'fill-pencil-red text-pencil-red'
+                                            : 'fill-transparent text-ink-extra-faded opacity-30'
+                                        }`}
+                                      />
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          ) : isSpeed ? (
                             <div className="mt-1 space-y-1">
                               <div className="flex items-center gap-1.5 text-xs font-display">
                                 {player.hasFinishedRound ? (

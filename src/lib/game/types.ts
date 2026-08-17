@@ -7,7 +7,7 @@ import type { RoomStatus } from '../database.types'
  * bu tipleri motoru bundle'a çekmeden kullanabilmeli.
  */
 
-export type GameMode = 'classic' | 'speed'
+export type GameMode = 'classic' | 'speed' | 'persistent'
 
 export interface PublicPlayer {
   id: string
@@ -20,6 +20,12 @@ export interface PublicPlayer {
   roundScores: number[]
   hasFinishedRound: boolean
   estimatedPoints?: number
+  /** Israrcı Mod: kalan soru bütçesi (10'dan geri sayım) */
+  questionBudgetRemaining?: number
+  /** Israrcı Mod: oyuncu bu ismi çözdü mü */
+  nameSolved?: boolean
+  /** Israrcı Mod: bu moddaki kazanılan puan */
+  persistentScore?: number
 }
 
 export interface GameState {
@@ -32,6 +38,8 @@ export interface GameState {
     gameMode: GameMode
     isGameActive: boolean
     currentPlayerId: string | null
+    /** Israrcı Mod: oyuncu başına toplam soru bütçesi */
+    questionBudgetPerPlayer?: number
   }
   players: PublicPlayer[]
   you: {
@@ -44,6 +52,12 @@ export interface GameState {
     roundScores: number[]
     hasFinishedRound: boolean
     estimatedPoints?: number
+    /** Israrcı Mod: kalan soru bütçesi */
+    questionBudgetRemaining?: number
+    /** Israrcı Mod: isim çözüldü mü */
+    nameSolved?: boolean
+    /** Israrcı Mod: bu moddaki kazanılan puan */
+    persistentScore?: number
   }
   /** Tahmin sırası sizdeyse null: doğru cevap tahmin edene gönderilmez. */
   currentName: string | null

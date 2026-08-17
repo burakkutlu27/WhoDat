@@ -174,8 +174,8 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   <Users className="h-3.5 w-3.5 text-pencil-blue" />
                   {state.players.length} Oyuncu
                 </span>
-                <span className={`tag ${state.room.gameMode === 'speed' ? 'border-pencil-green text-pencil-green font-bold' : 'border-pencil-yellow text-pencil-yellow font-bold'}`}>
-                  {state.room.gameMode === 'speed' ? '⚡ Hız Modu (3 Tur)' : '🎯 Klasik Mod (3 Can)'}
+                <span className={`tag ${state.room.gameMode === 'speed' ? 'border-pencil-green text-pencil-green font-bold' : state.room.gameMode === 'persistent' ? 'border-pencil-blue text-pencil-blue font-bold' : 'border-pencil-yellow text-pencil-yellow font-bold'}`}>
+                  {state.room.gameMode === 'speed' ? '⚡ Hız Modu (3 Tur)' : state.room.gameMode === 'persistent' ? '🧠 Israrcı Mod (10 Soru + 3 Can)' : '🎯 Klasik Mod (3 Can)'}
                 </span>
                 {degraded && (
                   <span className="tag border-pencil-orange text-pencil-orange">
@@ -201,7 +201,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               <span className="font-display text-sm font-bold text-ink-faded">
                 Oyun Modunu Değiştir:
               </span>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 <button
                   type="button"
                   onClick={async () => {
@@ -231,6 +231,21 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   }`}
                 >
                   ⚡ Hız Modu (Puan)
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (state.room.gameMode === 'persistent') return
+                    await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'persistent' } })
+                    await refresh()
+                  }}
+                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all ${
+                    state.room.gameMode === 'persistent'
+                      ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
+                      : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  🧠 Israrcı (Bütçe)
                 </button>
               </div>
             </div>

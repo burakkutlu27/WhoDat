@@ -12,9 +12,9 @@ Oyuncular 6 haneli oda koduyla aynı lobiye katılır, gizli isim havuzuna 3 kar
 
 ## Oyun Modları
 
-Oda kurulurken veya lobide host tarafından iki farklı mod seçilebilir:
+Oda kurulurken veya lobide host tarafından 3 farklı oyun modu seçilebilir:
 
-### ⚡ 1. Hız Modu — "Az Soru, Çok Puan" (Yeni!)
+### ⚡ 1. Hız Modu — "Az Soru, Çok Puan"
 - **Puanlama Sistemi:** Bir oyuncu gizli kimliğini ne kadar az soru ile bilirse o kadar çok puan alır!
   - Formül: `Puan = max(100 - (Soru Sayısı × 5), 0)`
   - 0 soru (ilk tahminde bilme): **100 Puan**
@@ -24,9 +24,15 @@ Oda kurulurken veya lobide host tarafından iki farklı mod seçilebilir:
 - **Tur Geçiş & Özet Modalı:** Her tur bittiğinde ekranda o turun skor özeti çıkar ve yeni turun başladığı duyurulur.
 - **Tur Kırılımlı Skor Tablosu:** Oyun sonunda ve oyun içi skor tablosunda her turun puanı (`T1`, `T2`, `T3`) ve genel toplam listelenir.
 
-### 🎯 2. Klasik Mod — "Hayatta Kalma"
+### 🧠 2. Israrcı Mod — "Bilene Kadar Sor" (Sürekli Soru)
+- **Kesintisiz Sıra:** Oyuncunun sırası soru sorduğunda veya yanlış tahmin yaptığında diğer oyuncuya geçmez; oyuncu ismini çözene kadar sıra kendisinde kalır!
+- **Soru Bütçesi & Can:** Her oyuncunun **10 Soru Bütçesi** ve **3 Can Hakkı** bulunur.
+- **Puanlama Sistemi:** Kalan soru bütçesine göre puan kazanılır: `Puan = Kalan Soru Bütçesi × 10` (En fazla 100 Puan).
+- **Sıra Devir Koşulları:** Sıra ancak oyuncu ismini doğru bildiğinde, 10 soru bütçesini tükettiğinde veya 3 canı bittiğinde sonraki oyuncuya geçer.
+
+### 🎯 3. Klasik Mod — "Hayatta Kalma"
 - Her oyuncunun tüm maç boyunca toplam **3 Can Hakkı** bulunur.
-- Yanlış tahmin yapıldığında 1 can eksilir ve sıra sonraki oyuncuya geçer.
+- Yanlış tahmin yapıldığında 1 can eksilir ve sıra otomatik olarak sonraki oyuncuya geçer.
 - Canları tükenen oyuncu elenir; doğru bilenler puan kazanır ve son isim bulunana kadar oyun devam eder.
 
 ---

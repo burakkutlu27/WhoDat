@@ -7,10 +7,12 @@ import { useState } from 'react'
 
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 
+import type { GameMode } from '@/lib/game/types'
+
 export default function CreateRoomPage() {
   const router = useRouter()
   const [nickname, setNickname] = useState('')
-  const [gameMode, setGameMode] = useState<'classic' | 'speed'>('classic')
+  const [gameMode, setGameMode] = useState<GameMode>('classic')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -39,12 +41,12 @@ export default function CreateRoomPage() {
 
   return (
     <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-8">
-      <div className="w-full max-w-lg">
+      <div className="w-full max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 15, rotate: -1 }}
           animate={{ opacity: 1, y: 0, rotate: 0 }}
           transition={{ duration: 0.4 }}
-          className="paper-card-lg p-8"
+          className="paper-card-lg p-6 sm:p-8"
         >
           <div className="mb-6 text-center">
             <div className="mb-3 inline-block rounded-xl border border-paper-border bg-paper-card p-2.5 text-pencil-red shadow-sm">
@@ -94,43 +96,68 @@ export default function CreateRoomPage() {
               <label className="mb-2 block font-display text-xl font-bold text-ink">
                 Oyun Modu
               </label>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <button
                   type="button"
                   onClick={() => setGameMode('classic')}
-                  className={`flex flex-col text-left p-4 transition-all duration-200 ${
+                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 ${
                     gameMode === 'classic'
                       ? 'sticky-note sticky-note-yellow scale-[1.02] shadow-md border-pencil-yellow ring-2 ring-pencil-yellow'
                       : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
                   }`}
                   style={{ borderRadius: '8px 4px 10px 6px' }}
                 >
-                  <span className="font-display text-lg font-bold text-ink flex items-center justify-between">
-                    <span>🎯 Klasik Mod</span>
-                    {gameMode === 'classic' && <span className="text-xs bg-pencil-yellow text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
-                  </span>
-                  <span className="mt-1 text-xs text-ink-faded leading-relaxed">
-                    3 Can Hakkı. Yanlış tahmin can götürür, hayatta kalan kazanır!
-                  </span>
+                  <div>
+                    <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
+                      <span>🎯 Klasik Mod</span>
+                      {gameMode === 'classic' && <span className="text-[10px] bg-pencil-yellow text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                    </span>
+                    <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
+                      3 Can Hakkı. Yanlış tahmin can götürür, hayatta kalan kazanır!
+                    </span>
+                  </div>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setGameMode('speed')}
-                  className={`flex flex-col text-left p-4 transition-all duration-200 ${
+                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 ${
                     gameMode === 'speed'
                       ? 'sticky-note sticky-note-green scale-[1.02] shadow-md border-pencil-green ring-2 ring-pencil-green'
                       : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
                   }`}
                   style={{ borderRadius: '6px 10px 4px 8px' }}
                 >
-                  <span className="font-display text-lg font-bold text-ink flex items-center justify-between">
-                    <span>⚡ Hız Modu</span>
-                    {gameMode === 'speed' && <span className="text-xs bg-pencil-green text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
-                  </span>
-                  <span className="mt-1 text-xs text-ink-faded leading-relaxed">
-                    Az Soru, Çok Puan! 3 tur boyunca en az soruyla bil, puanları topla!
-                  </span>
+                  <div>
+                    <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
+                      <span>⚡ Hız Modu</span>
+                      {gameMode === 'speed' && <span className="text-[10px] bg-pencil-green text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                    </span>
+                    <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
+                      Az Soru, Çok Puan! 3 tur boyunca en az soruyla bil, puanları topla!
+                    </span>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setGameMode('persistent')}
+                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 ${
+                    gameMode === 'persistent'
+                      ? 'sticky-note sticky-note-blue scale-[1.02] shadow-md border-pencil-blue ring-2 ring-pencil-blue'
+                      : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
+                  }`}
+                  style={{ borderRadius: '10px 6px 8px 4px' }}
+                >
+                  <div>
+                    <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
+                      <span>🧠 Israrcı Mod</span>
+                      {gameMode === 'persistent' && <span className="text-[10px] bg-pencil-blue text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                    </span>
+                    <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
+                      10 Soru Bütçesi & 3 Can. Bütçen bitince zorunlu tahmin, az soru çok puan!
+                    </span>
+                  </div>
                 </button>
               </div>
             </div>

@@ -10,11 +10,14 @@ import {
   MAX_NAMES_PER_PLAYER,
   MAX_PLAYERS,
   MIN_PLAYERS,
+  PERSISTENT_MODE_QUESTION_BUDGET,
   POINTS_PER_CORRECT_GUESS,
   SPEED_MODE_MAX_QUESTIONS,
   TOTAL_LIVES_PER_GAME,
+  calculatePersistentScore,
   calculateSpeedScore,
   distributeNames,
+  estimatePersistentScore,
   estimateSpeedScore,
   generateRoomCode,
   selectNameForPlayer,
@@ -45,12 +48,20 @@ interface PlayerSpeedData {
 }
 
 // Global persistent state across Next.js dev server worker/HMR reloads
+interface PlayerPersistentData {
+  questionBudgetRemaining: number
+  totalQuestionsUsed: number
+  nameSolved: boolean
+  roundScore: number
+}
+
 const globalRef = globalThis as unknown as {
   __whoDat_roomModeStore?: Map<string, RoomModeData>
   __whoDat_playerSpeedStore?: Map<string, Map<string, PlayerSpeedData>>
   __whoDat_playerRoundNameStore?: Map<string, Map<string, string>>
   __whoDat_roomLivesStore?: Map<string, Map<string, number>>
   __whoDat_roomUsedNamesStore?: Map<string, Set<string>>
+  __whoDat_playerPersistentStore?: Map<string, Map<string, PlayerPersistentData>>
 }
 
 globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
@@ -58,12 +69,14 @@ globalRef.__whoDat_playerSpeedStore = globalRef.__whoDat_playerSpeedStore ?? new
 globalRef.__whoDat_playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore ?? new Map()
 globalRef.__whoDat_roomLivesStore = globalRef.__whoDat_roomLivesStore ?? new Map()
 globalRef.__whoDat_roomUsedNamesStore = globalRef.__whoDat_roomUsedNamesStore ?? new Map()
+globalRef.__whoDat_playerPersistentStore = globalRef.__whoDat_playerPersistentStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
 const playerSpeedStore = globalRef.__whoDat_playerSpeedStore
 const playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore
 const roomLivesStore = globalRef.__whoDat_roomLivesStore
 const roomUsedNamesStore = globalRef.__whoDat_roomUsedNamesStore
+const playerPersistentStore = globalRef.__whoDat_playerPersistentStore
 
 /**
  * INV-1: game_mode okuma.
@@ -74,7 +87,7 @@ export function getRoomMode(roomId: string, dbRoomMode?: string | null): GameMod
   if (stored) {
     return stored.gameMode
   }
-  if (dbRoomMode === 'speed' || dbRoomMode === 'classic') {
+  if (dbRoomMode === 'speed' || dbRoomMode === 'classic' || dbRoomMode === 'persistent') {
     const totalRounds = dbRoomMode === 'speed' ? DEFAULT_SPEED_ROUNDS : 1
     roomModeStore.set(roomId, { gameMode: dbRoomMode, totalRounds })
     return dbRoomMode
@@ -89,6 +102,47 @@ export function setRoomModeData(roomId: string, gameMode: GameMode) {
   const data: RoomModeData = { gameMode, totalRounds }
   roomModeStore.set(roomId, data)
   return data
+}
+
+// --- Israrcı Mod Store Helpers ---
+
+export function getPlayerPersistentData(roomId: string, playerId: string): PlayerPersistentData {
+  let map = playerPersistentStore.get(roomId)
+  if (!map) {
+    map = new Map()
+    playerPersistentStore.set(roomId, map)
+  }
+  let data = map.get(playerId)
+  if (!data) {
+    data = {
+      questionBudgetRemaining: PERSISTENT_MODE_QUESTION_BUDGET,
+      totalQuestionsUsed: 0,
+      nameSolved: false,
+      roundScore: 0,
+    }
+    map.set(playerId, data)
+  }
+  return data
+}
+
+export function setPlayerPersistentData(roomId: string, playerId: string, data: PlayerPersistentData) {
+  let map = playerPersistentStore.get(roomId)
+  if (!map) {
+    map = new Map()
+    playerPersistentStore.set(roomId, map)
+  }
+  map.set(playerId, data)
+}
+
+function clearRoomPersistentData(roomId: string) {
+  playerPersistentStore.delete(roomId)
+}
+
+/** Israrcı modda oyuncu bitirmiş (solved/eliminated) mi? */
+function isPersistentPlayerFinished(roomId: string, playerId: string): boolean {
+  const pData = getPlayerPersistentData(roomId, playerId)
+  const lives = getPlayerLives(roomId, playerId)
+  return pData.nameSolved || lives <= 0
 }
 
 export function getPlayerSpeedData(roomId: string, playerId: string): PlayerSpeedData {
@@ -389,11 +443,21 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
   // INV-1: gameMode daima kaydedilen sabit moddur
   const gameMode = getRoomMode(roomId, room.game_mode)
   const totalRounds = gameMode === 'speed' ? (room.total_rounds || DEFAULT_SPEED_ROUNDS) : 1
+  const isPersistent = gameMode === 'persistent'
 
   const publicPlayers: PublicPlayer[] = players.map((player) => {
     const speed = getPlayerSpeedData(roomId, player.id)
+    const pData = getPlayerPersistentData(roomId, player.id)
     const speedScore = speed.roundScores.reduce((sum, s) => sum + s, 0)
-    const score = gameMode === 'speed' ? (speed.roundScores.length > 0 ? speedScore : (player.score ?? 0)) : (player.score ?? 0)
+
+    let score: number
+    if (gameMode === 'speed') {
+      score = speed.roundScores.length > 0 ? speedScore : (player.score ?? 0)
+    } else if (isPersistent) {
+      score = pData.roundScore
+    } else {
+      score = player.score ?? 0
+    }
 
     return {
       id: player.id,
@@ -405,7 +469,13 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       questionsThisRound: speed.questionsThisRound,
       roundScores: speed.roundScores,
       hasFinishedRound: speed.finishedCurrentRound,
-      estimatedPoints: estimateSpeedScore(speed.questionsThisRound),
+      estimatedPoints: isPersistent
+        ? estimatePersistentScore(pData.totalQuestionsUsed)
+        : estimateSpeedScore(speed.questionsThisRound),
+      // Israrcı Mod alanları
+      questionBudgetRemaining: isPersistent ? pData.questionBudgetRemaining : undefined,
+      nameSolved: isPersistent ? pData.nameSolved : undefined,
+      persistentScore: isPersistent ? pData.roundScore : undefined,
     }
   })
 
@@ -414,6 +484,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
 
   const currentRound = room.game_round ?? 1
   const viewerSpeed = getPlayerSpeedData(roomId, viewer.id)
+  const viewerPersistent = getPlayerPersistentData(roomId, viewer.id)
 
   return {
     room: {
@@ -425,6 +496,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       gameMode,
       isGameActive: room.is_game_active ?? false,
       currentPlayerId: room.current_player_id,
+      questionBudgetPerPlayer: isPersistent ? PERSISTENT_MODE_QUESTION_BUDGET : undefined,
     },
     players: publicPlayers,
     you: {
@@ -438,7 +510,13 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       questionsThisRound: viewerSpeed.questionsThisRound,
       roundScores: viewerSpeed.roundScores,
       hasFinishedRound: viewerSpeed.finishedCurrentRound,
-      estimatedPoints: estimateSpeedScore(viewerSpeed.questionsThisRound),
+      estimatedPoints: isPersistent
+        ? estimatePersistentScore(viewerPersistent.totalQuestionsUsed)
+        : estimateSpeedScore(viewerSpeed.questionsThisRound),
+      // Israrcı Mod alanları
+      questionBudgetRemaining: isPersistent ? viewerPersistent.questionBudgetRemaining : undefined,
+      nameSolved: isPersistent ? viewerPersistent.nameSolved : undefined,
+      persistentScore: isPersistent ? viewerPersistent.roundScore : undefined,
     },
     currentName: isViewerTurn ? null : (currentName?.name_text ?? null),
     namesTotal: names.length,
@@ -536,6 +614,7 @@ export async function startGame(roomId: string, playerId: string) {
     setPlayerLives(roomId, p.id, TOTAL_LIVES_PER_GAME)
   }
   clearRoomSpeedData(roomId)
+  clearRoomPersistentData(roomId)
 
   await admin
     .from('players')
@@ -553,7 +632,36 @@ export async function startGame(roomId: string, playerId: string) {
 
   const gameMode = getRoomMode(roomId, room.game_mode)
   const isSpeed = gameMode === 'speed'
+  const isPersistent = gameMode === 'persistent'
   const firstPlayer = players[0]!
+
+  if (isPersistent) {
+    // Israrcı Mod: Her oyuncuya sabit gizli isim ata + persistent data başlat
+    assignNamesForRound(roomId, players, names)
+    for (const p of players) {
+      setPlayerPersistentData(roomId, p.id, {
+        questionBudgetRemaining: PERSISTENT_MODE_QUESTION_BUDGET,
+        totalQuestionsUsed: 0,
+        nameSolved: false,
+        roundScore: 0,
+      })
+    }
+    const firstNameId = getPlayerRoundNameId(roomId, firstPlayer.id)
+
+    const { error } = await admin
+      .from('rooms')
+      .update({
+        status: 'playing',
+        current_player_id: firstPlayer.id,
+        current_identity_id: firstNameId,
+        game_round: 1,
+        is_game_active: true,
+      })
+      .eq('id', roomId)
+
+    if (error) throw error
+    return
+  }
 
   if (isSpeed) {
     // Hız Modu: 1. Tur için her oyuncuya sabit bir gizli isim ata (round içinde sabit kalır)
@@ -713,6 +821,51 @@ async function advanceTurn(
     return { claimed: (data?.length ?? 0) > 0, finished: false, nextRoundStarted: false }
   }
 
+  if (gameMode === 'persistent') {
+    // Israrcı Mod: bitirmemiş (solved/eliminated olmayan) oyuncularla round-robin
+    const unfinishedPlayers = players.filter((p) => !isPersistentPlayerFinished(room.id, p.id))
+
+    if (unfinishedPlayers.length === 0) {
+      // Tüm oyuncular solved veya eliminated → oyun biter
+      const { data } = await admin
+        .from('rooms')
+        .update({ status: 'finished', is_game_active: false, current_identity_id: null })
+        .eq('id', room.id)
+        .select('id')
+      return { claimed: (data?.length ?? 0) > 0, finished: true }
+    }
+
+    const nextPlayer = selectNextPlayer(
+      players,
+      room.current_player_id,
+      new Set(unfinishedPlayers.map((p) => p.id)),
+    )
+
+    if (!nextPlayer) {
+      return { claimed: true, finished: false }
+    }
+
+    // nextPlayer'ın atanmış sabit ismini al
+    let nextNameId = getPlayerRoundNameId(room.id, nextPlayer.id)
+    if (!nextNameId) {
+      const candidate = names.find((n) => n.submitted_by !== nextPlayer.id) || names[0]!
+      nextNameId = candidate.id
+      setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+    }
+
+    const { data, error } = await admin
+      .from('rooms')
+      .update({
+        current_player_id: nextPlayer.id,
+        current_identity_id: nextNameId,
+      })
+      .eq('id', room.id)
+      .select('id')
+
+    if (error) throw error
+    return { claimed: (data?.length ?? 0) > 0, finished: false }
+  }
+
   // Klasik Mod (INV-4: Dokunulmamış orijinal akış)
   const currentRound = room.game_round ?? 1
   const activePlayerIds = new Set(
@@ -786,6 +939,8 @@ export async function makeGuess(roomId: string, playerId: string, guess: string)
 
   if (gameMode === 'speed') {
     return handleSpeedModeGuess(room, players, names, playerId, guess, currentName.name_text)
+  } else if (gameMode === 'persistent') {
+    return handlePersistentModeGuess(room, players, names, playerId, guess, currentName.name_text)
   } else if (gameMode === 'classic') {
     return handleClassicModeGuess(room, players, names, playerId, guess, currentName.name_text)
   } else {
@@ -807,6 +962,8 @@ export async function passTurn(roomId: string, playerId: string) {
 
   if (gameMode === 'speed') {
     return handleSpeedModeAskQuestion(room, players, names, playerId)
+  } else if (gameMode === 'persistent') {
+    return handlePersistentModeAskQuestion(room, players, names, playerId)
   } else if (gameMode === 'classic') {
     return handleClassicModePassTurn(room, players, names)
   } else {
@@ -1026,6 +1183,141 @@ async function handleSpeedModeGuess(
 }
 
 // -------------------------------------------------------------
+// ISRARCI MOD AKSİYON İŞLEYİCİLERİ (handlePersistentModeAction)
+// -------------------------------------------------------------
+
+async function handlePersistentModeAskQuestion(
+  room: RoomRow,
+  players: PlayerRow[],
+  names: NameRow[],
+  playerId: string,
+) {
+  const pData = getPlayerPersistentData(room.id, playerId)
+
+  if (pData.questionBudgetRemaining <= 0) {
+    throw badRequest('budget_exhausted', 'Soru bütçeniz bitti, sadece tahmin edebilirsiniz.')
+  }
+
+  // Bütçeden 1 düş
+  const newBudget = pData.questionBudgetRemaining - 1
+  const newUsed = pData.totalQuestionsUsed + 1
+  setPlayerPersistentData(room.id, playerId, {
+    ...pData,
+    questionBudgetRemaining: newBudget,
+    totalQuestionsUsed: newUsed,
+  })
+
+  const outcome = await advanceTurn(room, players, names)
+
+  const budgetWarning = newBudget === 0
+    ? ' Soru bütçeniz bitti! Bundan sonra sadece tahmin edebilirsiniz.'
+    : ''
+
+  return {
+    message: `Sorunuz kaydedildi (Kalan Bütçe: ${newBudget}/${PERSISTENT_MODE_QUESTION_BUDGET}).${budgetWarning}`,
+    finished: outcome.finished,
+  }
+}
+
+async function handlePersistentModeGuess(
+  room: RoomRow,
+  players: PlayerRow[],
+  names: NameRow[],
+  playerId: string,
+  guess: string,
+  targetNameText: string,
+): Promise<GuessResult> {
+  const admin = supabaseAdmin()
+  const pData = getPlayerPersistentData(room.id, playerId)
+  const currentLives = getPlayerLives(room.id, playerId)
+
+  // Elenmişse (can 0) — bu kontrole normalde ulaşılmamalı ama güvenlik amaçlı
+  if (currentLives <= 0) {
+    const outcome = await advanceTurn(room, players, names)
+    return {
+      correct: false,
+      message: 'Can hakkınız kalmadı, oyundan elendiniz!',
+      livesLeft: 0,
+      turnPassed: true,
+      finished: outcome.finished,
+    }
+  }
+
+  const isCorrect = fuzzyMatch(guess, targetNameText)
+
+  if (isCorrect) {
+    // Doğru tahmin — puan hesapla (az soru = yüksek puan)
+    const roundScore = calculatePersistentScore(pData.totalQuestionsUsed)
+    setPlayerPersistentData(room.id, playerId, {
+      ...pData,
+      nameSolved: true,
+      roundScore,
+    })
+
+    // DB'ye puanı yaz
+    try {
+      await admin.from('players').update({ score: roundScore }).eq('id', playerId)
+    } catch {
+      await admin.rpc('increment_player_score', {
+        p_player_id: playerId,
+        p_delta: roundScore,
+      })
+    }
+
+    const outcome = await advanceTurn(room, players, names)
+
+    return {
+      correct: true,
+      message: `Doğru tahmin! ${pData.totalQuestionsUsed} soruyla bildiniz, ${roundScore} puan kazandınız!`,
+      pointsEarned: roundScore,
+      livesLeft: currentLives,
+      turnPassed: true,
+      finished: outcome.finished,
+    }
+  }
+
+  // Yanlış tahmin — can düş
+  const newLives = currentLives - 1
+  setPlayerLives(room.id, playerId, newLives)
+
+  if (newLives <= 0) {
+    // Elendi — puan 0
+    setPlayerPersistentData(room.id, playerId, {
+      ...pData,
+      roundScore: 0,
+    })
+
+    try {
+      await admin.from('players').update({ score: 0 }).eq('id', playerId)
+    } catch {
+      // ignore
+    }
+
+    const outcome = await advanceTurn(room, players, names)
+
+    return {
+      correct: false,
+      message: 'Yanlış tahmin! Can hakkınız bitti ve oyundan elendiniz.',
+      livesLeft: 0,
+      turnPassed: true,
+      finished: outcome.finished,
+    }
+  }
+
+  // Can hâlâ var — sıra geçer
+  const outcome = await advanceTurn(room, players, names)
+  await admin.from('rooms').update({ status: room.status }).eq('id', room.id)
+
+  return {
+    correct: false,
+    message: `Yanlış tahmin! 1 can kaybettiniz (Kalan Can: ${newLives}). Sıra diğer oyuncuya geçti.`,
+    livesLeft: newLives,
+    turnPassed: true,
+    finished: outcome.finished,
+  }
+}
+
+// -------------------------------------------------------------
 // KLASİK MOD AKSİYON İŞLEYİCİLERİ (handleClassicModeAction)
 // -------------------------------------------------------------
 
@@ -1125,6 +1417,7 @@ export async function resetGame(roomId: string, playerId: string) {
     setPlayerLives(roomId, p.id, TOTAL_LIVES_PER_GAME)
   }
   clearRoomSpeedData(roomId)
+  clearRoomPersistentData(roomId)
 
   const { error: roomError } = await admin
     .from('rooms')
