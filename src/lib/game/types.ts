@@ -116,5 +116,23 @@ export interface GuessResult {
   revealedTargetName?: string
 }
 
+export type FamousPersonCategory =
+  | 'all'
+  | 'unluler'
+  | 'tarihi_kisiler'
+  | 'cizgi_karakterler'
+  | 'sporcular'
+  | 'dizi_film_karakterleri'
 
+export interface FamousPerson {
+  id: string
+  name: string
+  category: string
+}
 
+export interface AutoAssignResult {
+  assignedCount: number
+  names: string[]
+  isSharedTarget?: boolean
+  sharedTargetName?: string
+}

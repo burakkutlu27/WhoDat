@@ -2,7 +2,6 @@
 
 import {
   AlertCircle,
-  BellRing,
   Brain,
   Check,
   CheckCircle2,

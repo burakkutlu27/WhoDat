@@ -716,7 +716,7 @@ describe('Ortak Hedef Modu (shared_target)', () => {
   })
 
   it('hakem sonraki tura yeni bir hedefle geçebilir', async () => {
-    const { room, host, p1, tables } = sharedTargetRoom()
+    const { room, host, tables } = sharedTargetRoom()
     fake = createSupabaseFake(tables)
     await setRoomTarget(room.id, host.id, 'Albert Einstein')
 

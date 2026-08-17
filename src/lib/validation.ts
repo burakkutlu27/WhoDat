@@ -74,6 +74,29 @@ export const setTargetSchema = z.object({
   targetName: nameTextSchema,
 })
 
+export const famousPersonCategorySchema = z.enum([
+  'all',
+  'unluler',
+  'tarihi_kisiler',
+  'cizgi_karakterler',
+  'sporcular',
+  'dizi_film_karakterleri',
+])
+
+export const famousPeopleQuerySchema = z.object({
+  q: z.string().trim().max(60).optional(),
+  category: famousPersonCategorySchema.optional(),
+  random: z
+    .union([z.boolean(), z.enum(['true', 'false', '1', '0'])])
+    .optional()
+    .transform((val) => val === true || val === 'true' || val === '1'),
+  limit: z.coerce.number().int().min(1).max(50).optional(),
+})
+
+export const autoAssignSchema = z.object({
+  category: famousPersonCategorySchema.optional(),
+})
+
 
 export function parseBody<Schema extends z.ZodType>(schema: Schema, data: unknown): z.infer<Schema> {
   const result = schema.safeParse(data)

@@ -17,6 +17,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      famous_people: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          category: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          category: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          category?: string
+        }
+        Relationships: []
+      }
       names: {
         Row: {
           assigned_to: string | null
@@ -189,5 +210,6 @@ export type Database = {
 export type RoomRow = Database['public']['Tables']['rooms']['Row']
 export type PlayerRow = Database['public']['Tables']['players']['Row']
 export type NameRow = Database['public']['Tables']['names']['Row']
+export type FamousPersonRow = Database['public']['Tables']['famous_people']['Row']
 
 export type RoomStatus = 'waiting' | 'playing' | 'finished' | 'closed'

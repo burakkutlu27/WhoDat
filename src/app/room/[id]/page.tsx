@@ -1,13 +1,16 @@
 'use client'
 
-import { Brain, Check, CheckCircle2, Clock, Copy, Crown, Loader2, LogOut, Pencil, Play, Send, Target, Users, Zap } from 'lucide-react'
+import { Brain, Check, CheckCircle2, Clock, Copy, Crown, Dices, Loader2, LogOut, Pencil, Play, Send, Target, Users, Wand2, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
+import FamousPersonAutocompleteInput from '@/components/FamousPersonAutocompleteInput'
+import NameSuggestions from '@/components/NameSuggestions'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
-import type { SubmitNamesResult } from '@/lib/game/types'
+import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import type { AutoAssignResult, FamousPersonCategory, SubmitNamesResult } from '@/lib/game/types'
 import { useGameState } from '@/lib/useGameState'
 
 const NAME_SLOTS = 3
@@ -22,6 +25,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const [isSavingTarget, setIsSavingTarget] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isStarting, setIsStarting] = useState(false)
+  const [isAutoAssigning, setIsAutoAssigning] = useState(false)
+  const [autoCategory, setAutoCategory] = useState<FamousPersonCategory>('all')
+  const [autoAssignSuccess, setAutoAssignSuccess] = useState<string | null>(null)
   const [actionError, setActionError] = useState<string | null>(null)
   const [duplicates, setDuplicates] = useState<string[]>([])
   const [copied, setCopied] = useState(false)
@@ -73,6 +79,61 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     } finally {
       setIsSavingTarget(false)
     }
+  }
+
+  const handleAutoAssign = async (cat: FamousPersonCategory = autoCategory) => {
+    setIsAutoAssigning(true)
+    setActionError(null)
+    setAutoAssignSuccess(null)
+    try {
+      const result = await apiRequest<AutoAssignResult>(`/api/rooms/${roomId}/auto-assign`, {
+        method: 'POST',
+        body: { category: cat },
+      })
+      setShowConfetti(true)
+      setTimeout(() => setShowConfetti(false), 2000)
+      if (result.isSharedTarget && result.sharedTargetName) {
+        setTargetNameInput(result.sharedTargetName)
+        setAutoAssignSuccess(`Gizli hedef belirlendi: "${result.sharedTargetName}"`)
+      } else {
+        setAutoAssignSuccess(`Tüm oyuncular için ${result.assignedCount} isim veritabanından başarıyla atandı!`)
+      }
+      setTimeout(() => setAutoAssignSuccess(null), 5000)
+      await refresh()
+    } catch (caught) {
+      setActionError(caught instanceof ApiClientError ? caught.message : 'Otomatik isim ataması yapılamadı.')
+    } finally {
+      setIsAutoAssigning(false)
+    }
+  }
+
+  const handleSelectSuggestion = (suggestedName: string) => {
+    setNames((prev) => {
+      const next = [...prev]
+      const emptyIndex = next.findIndex((n) => !n.trim())
+      if (emptyIndex !== -1) {
+        next[emptyIndex] = suggestedName
+      } else {
+        next[next.length - 1] = suggestedName
+      }
+      return next
+    })
+  }
+
+  const handleFillAllEmpty = (freshNames: string[]) => {
+    setNames((prev) => {
+      const next = [...prev]
+      let freshIdx = 0
+      for (let i = 0; i < next.length; i++) {
+        if (!next[i]!.trim() && freshIdx < freshNames.length) {
+          next[i] = freshNames[freshIdx++]!
+        }
+      }
+      if (freshIdx === 0 && freshNames.length > 0) {
+        return freshNames.slice(0, NAME_SLOTS)
+      }
+      return next
+    })
   }
 
   const handleSubmitNames = async () => {
@@ -155,7 +216,6 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   }
 
   const hasSubmitted = isSharedTarget ? Boolean(state.room.sharedTargetName) : state.you.submittedNames.length > 0
-  const TARGET_SUGGESTIONS = ['Kemal Sunal', 'Barış Manço', 'Mustafa Kemal Atatürk', 'Albert Einstein', 'Sherlock Holmes', 'Tarkan', 'Mona Lisa']
 
   return (
     <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
@@ -238,81 +298,131 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             </motion.button>
           </div>
 
-          {/* Host Game Mode Switcher in Lobby */}
+          {/* Host Game Mode & Auto-Assign Controls in Lobby */}
           {state.you.isHost && (
-            <div className="mt-4 pt-4 border-t border-paper-border flex flex-wrap items-center justify-between gap-3">
-              <span className="font-display text-sm font-bold text-ink-faded">
-                Oyun Modunu Değiştir:
-              </span>
-              <div className="flex gap-2 flex-wrap">
+            <div className="mt-4 pt-4 border-t border-paper-border space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="font-display text-sm font-bold text-ink-faded">
+                  Oyun Modunu Değiştir:
+                </span>
+                <div className="flex gap-2 flex-wrap">
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (state.room.gameMode === 'classic') return
+                      await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'classic' } })
+                      await refresh()
+                    }}
+                    className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                      state.room.gameMode === 'classic'
+                        ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
+                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                    }`}
+                  >
+                    <Target className="h-3.5 w-3.5" />
+                    <span>Klasik (Can)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (state.room.gameMode === 'speed') return
+                      await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'speed' } })
+                      await refresh()
+                    }}
+                    className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                      state.room.gameMode === 'speed'
+                        ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
+                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                    }`}
+                  >
+                    <Zap className="h-3.5 w-3.5" />
+                    <span>Hız Modu (Puan)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (state.room.gameMode === 'persistent') return
+                      await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'persistent' } })
+                      await refresh()
+                    }}
+                    className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                      state.room.gameMode === 'persistent'
+                        ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
+                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                    }`}
+                  >
+                    <Brain className="h-3.5 w-3.5" />
+                    <span>Israrcı (Bütçe)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (state.room.gameMode === 'shared_target') return
+                      await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'shared_target' } })
+                      await refresh()
+                    }}
+                    className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                      state.room.gameMode === 'shared_target'
+                        ? 'bg-pencil-orange text-white shadow-sm ring-1 ring-pencil-orange'
+                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                    }`}
+                  >
+                    <Users className="h-3.5 w-3.5" />
+                    <span>Ortak Hedef (Hakem)</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Host Hızlı Başlat / Sistem Otomatik Atasın */}
+              <div className="rounded-xl border border-dashed border-paper-border bg-paper-card-alt p-3 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <Wand2 className="h-4 w-4 text-pencil-yellow" />
+                  <span className="font-display text-sm font-bold text-ink">
+                    Hızlı Başlat (Sistem Atasın):
+                  </span>
+                  <select
+                    value={autoCategory}
+                    onChange={(e) => setAutoCategory(e.target.value as FamousPersonCategory)}
+                    className="rounded-lg border border-paper-border bg-paper-card px-2 py-1 text-xs font-display text-ink"
+                  >
+                    {CATEGORIES.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.icon} {c.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <button
                   type="button"
-                  onClick={async () => {
-                    if (state.room.gameMode === 'classic') return
-                    await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'classic' } })
-                    await refresh()
-                  }}
-                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                    state.room.gameMode === 'classic'
-                      ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
-                      : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                  }`}
+                  disabled={isAutoAssigning}
+                  onClick={() => void handleAutoAssign(autoCategory)}
+                  className="btn-pencil-yellow flex items-center gap-1.5 px-3 py-1.5 text-xs font-display font-bold transition-all shadow-xs"
                 >
-                  <Target className="h-3.5 w-3.5" />
-                  <span>Klasik (Can)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={async () => {
-                    if (state.room.gameMode === 'speed') return
-                    await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'speed' } })
-                    await refresh()
-                  }}
-                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                    state.room.gameMode === 'speed'
-                      ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
-                      : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                  }`}
-                >
-                  <Zap className="h-3.5 w-3.5" />
-                  <span>Hız Modu (Puan)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={async () => {
-                    if (state.room.gameMode === 'persistent') return
-                    await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'persistent' } })
-                    await refresh()
-                  }}
-                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                    state.room.gameMode === 'persistent'
-                      ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
-                      : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                  }`}
-                >
-                  <Brain className="h-3.5 w-3.5" />
-                  <span>Israrcı (Bütçe)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={async () => {
-                    if (state.room.gameMode === 'shared_target') return
-                    await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'shared_target' } })
-                    await refresh()
-                  }}
-                  className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                    state.room.gameMode === 'shared_target'
-                      ? 'bg-pencil-orange text-white shadow-sm ring-1 ring-pencil-orange'
-                      : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                  }`}
-                >
-                  <Users className="h-3.5 w-3.5" />
-                  <span>Ortak Hedef (Hakem)</span>
+                  {isAutoAssigning ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Dices className="h-3.5 w-3.5" />
+                  )}
+                  <span>
+                    {isSharedTarget ? 'Rastgele Hedef Seç 🎲' : 'Tüm Oyunculara İsim Ata ⚡'}
+                  </span>
                 </button>
               </div>
             </div>
           )}
         </motion.header>
+
+        {autoAssignSuccess && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="alert-success flex items-center gap-2 font-display text-base"
+          >
+            <CheckCircle2 className="h-5 w-5 text-pencil-green shrink-0" />
+            <span>{autoAssignSuccess}</span>
+          </motion.div>
+        )}
 
         {/* Ortak Hedef Modu — Host Hedef Belirleme veya Oyuncu Bilgilendirmesi */}
         {isSharedTarget ? (
@@ -338,15 +448,17 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     Gizli Kişi / Hedef İsim:
                   </label>
                   <div className="flex gap-2">
-                    <input
+                    <FamousPersonAutocompleteInput
                       id="target-input"
-                      type="text"
                       value={targetNameInput}
-                      onChange={(e) => setTargetNameInput(e.target.value)}
+                      onChange={(val) => setTargetNameInput(val)}
+                      onSelect={(person) => {
+                        setTargetNameInput(person.name)
+                        void handleSaveTarget(person.name)
+                      }}
                       placeholder="Örn: Albert Einstein, Kemal Sunal, Tarkan..."
-                      maxLength={60}
                       disabled={isSavingTarget}
-                      className="paper-input font-display text-xl flex-1"
+                      maxLength={60}
                     />
                     <button
                       type="button"
@@ -359,27 +471,15 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   </div>
                 </div>
 
-                {/* Hızlı Öneri Çipleri */}
-                <div>
-                  <span className="block text-xs font-display font-bold text-ink-faded mb-2">
-                    Hızlı Seçim Önerileri:
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {TARGET_SUGGESTIONS.map((sug) => (
-                      <button
-                        key={sug}
-                        type="button"
-                        onClick={() => {
-                          setTargetNameInput(sug)
-                          void handleSaveTarget(sug)
-                        }}
-                        className="rounded-lg border border-dashed border-paper-border bg-paper-card-alt px-3 py-1 text-xs font-display font-semibold text-ink hover:border-pencil-orange hover:text-pencil-orange transition-colors"
-                      >
-                        + {sug}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                {/* Öneri Çipleri & Fikir Ver */}
+                <NameSuggestions
+                  onSelectName={(name) => {
+                    setTargetNameInput(name)
+                    void handleSaveTarget(name)
+                  }}
+                  disabled={isSavingTarget}
+                  selectedNames={targetNameInput ? [targetNameInput] : []}
+                />
 
                 {state.room.sharedTargetName && (
                   <div className="alert-success mt-4">
@@ -440,23 +540,35 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     >
                       İsim {index + 1}
                     </label>
-                    <input
+                    <FamousPersonAutocompleteInput
                       id={`name-${index}`}
-                      type="text"
                       value={name}
                       maxLength={60}
                       disabled={isSubmitting}
                       placeholder={`Örn: ${index === 0 ? 'Albert Einstein' : index === 1 ? 'Sherlock Holmes' : 'Tarkan'}`}
-                      onChange={(event) => {
+                      onChange={(val) => {
                         const next = [...names]
-                        next[index] = event.target.value
+                        next[index] = val
                         setNames(next)
                       }}
-                      className="paper-input font-display text-xl"
+                      onSelect={(person) => {
+                        const next = [...names]
+                        next[index] = person.name
+                        setNames(next)
+                      }}
                     />
                   </div>
                 ))}
               </div>
+
+              {/* Fikir mi lazım? Öneri Kartları */}
+              <NameSuggestions
+                onSelectName={handleSelectSuggestion}
+                onFillAllEmpty={handleFillAllEmpty}
+                emptySlotsCount={names.filter((n) => !n.trim()).length}
+                disabled={isSubmitting}
+                selectedNames={names.filter(Boolean)}
+              />
 
               {actionError && (
                 <div role="alert" className="alert-error mt-4">
@@ -486,6 +598,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             </motion.section>
           )
         )}
+
 
 
         {/* Submitted Names Confirmation */}

@@ -5,8 +5,9 @@ import { randomUUID } from 'node:crypto'
 import type { NameRow, PlayerRow, RoomRow, RoomStatus } from '../database.types'
 import { badRequest, conflict, forbidden, notFound } from '../http'
 import { supabaseAdmin } from '../supabaseAdmin'
+import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
-import type { GameMode, GameState, GuessResult, PublicPlayer, SharedQuestionItem } from './types'
+import type { AutoAssignResult, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, PublicPlayer, SharedQuestionItem } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -670,6 +671,149 @@ export async function submitNames(roomId: string, playerId: string, names: strin
   await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
 
   return { accepted, duplicates }
+}
+
+export async function getFamousPeople(options: {
+  query?: string
+  category?: FamousPersonCategory
+  random?: boolean
+  limit?: number
+}): Promise<FamousPerson[]> {
+  const { query, category, random, limit = 10 } = options
+  const admin = supabaseAdmin()
+
+  let results: FamousPerson[] = []
+
+  try {
+    let q = admin.from('famous_people').select('id, name, category')
+    if (category && category !== 'all') {
+      q = q.eq('category', category)
+    }
+    if (query && query.trim()) {
+      q = q.ilike('name', `%${query.trim()}%`)
+    }
+    const { data, error } = await q
+    if (!error && data && data.length > 0) {
+      results = data as FamousPerson[]
+    }
+  } catch {
+    // If DB query fails, fallback to static seed
+  }
+
+  // Fallback to static seed if no results from DB
+  if (results.length === 0) {
+    let filtered = FAMOUS_PEOPLE_SEED.map((item, idx) => ({
+      id: `seed-${idx}`,
+      name: item.name,
+      category: item.category,
+    }))
+
+    if (category && category !== 'all') {
+      filtered = filtered.filter((item) => item.category === category)
+    }
+    if (query && query.trim()) {
+      const lowerQ = query.trim().toLocaleLowerCase('tr')
+      filtered = filtered.filter((item) =>
+        item.name.toLocaleLowerCase('tr').includes(lowerQ),
+      )
+    }
+    results = filtered
+  }
+
+  if (random) {
+    const shuffled = [...results].sort(() => Math.random() - 0.5)
+    return shuffled.slice(0, limit)
+  }
+
+  return results.slice(0, limit)
+}
+
+export async function autoAssignNames(
+  roomId: string,
+  playerId: string,
+  category: FamousPersonCategory = 'all',
+): Promise<AutoAssignResult> {
+  const admin = supabaseAdmin()
+  const players = await loadPlayers(roomId)
+  const host = requireMembership(players, playerId)
+
+  if (!host.is_host) {
+    throw forbidden('not_host', 'Otomatik isim atamayı yalnızca oda sahibi yapabilir.')
+  }
+
+  const room = await loadRoom(roomId)
+  if (room.status !== 'waiting') {
+    throw conflict('game_already_started', 'Oyun başladıktan sonra isim ataması yapılamaz.')
+  }
+
+  const gameMode = getRoomMode(roomId, room.game_mode)
+
+  if (gameMode === 'shared_target') {
+    const candidates = await getFamousPeople({ category, random: true, limit: 10 })
+    if (candidates.length === 0) {
+      throw badRequest('no_famous_people', 'Seçilen kategoride ünlü bulunamadı.')
+    }
+    const picked = candidates[0]!
+    const sharedData = getSharedTargetRoomData(roomId)
+    sharedData.targetName = picked.name
+    setSharedTargetRoomData(roomId, sharedData)
+    return {
+      assignedCount: 1,
+      names: [picked.name],
+      isSharedTarget: true,
+      sharedTargetName: picked.name,
+    }
+  }
+
+  const totalNamesNeeded = players.length * MAX_NAMES_PER_PLAYER
+  const pool = await getFamousPeople({
+    category,
+    random: true,
+    limit: Math.max(totalNamesNeeded + 10, 50),
+  })
+
+  if (pool.length < totalNamesNeeded) {
+    const extra = await getFamousPeople({
+      category: 'all',
+      random: true,
+      limit: totalNamesNeeded + 10,
+    })
+    for (const item of extra) {
+      if (!pool.some((p) => p.name.toLocaleLowerCase('tr') === item.name.toLocaleLowerCase('tr'))) {
+        pool.push(item)
+      }
+    }
+  }
+
+  await admin.from('names').delete().eq('room_id', roomId)
+
+  const shuffledPool = [...pool].sort(() => Math.random() - 0.5)
+  const assignedNames: { room_id: string; submitted_by: string; name_text: string }[] = []
+  let poolIdx = 0
+
+  for (const p of players) {
+    for (let slot = 0; slot < MAX_NAMES_PER_PLAYER; slot++) {
+      if (poolIdx >= shuffledPool.length) {
+        poolIdx = 0
+      }
+      const person = shuffledPool[poolIdx++]!
+      assignedNames.push({
+        room_id: roomId,
+        submitted_by: p.id,
+        name_text: person.name,
+      })
+    }
+  }
+
+  const { error } = await admin.from('names').insert(assignedNames)
+  if (error) throw error
+
+  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+
+  return {
+    assignedCount: assignedNames.length,
+    names: assignedNames.map((n) => n.name_text),
+  }
 }
 
 export async function startGame(roomId: string, playerId: string) {
@@ -1550,7 +1694,7 @@ export async function answerSharedQuestion(
   const host = players.find((p) => p.is_host)!
   const penalizedSet = new Set(
     Array.from(sharedData.playerPenalties.entries())
-      .filter(([_, hasPenalty]) => hasPenalty)
+      .filter(([, hasPenalty]) => hasPenalty)
       .map(([pid]) => pid),
   )
 
@@ -1586,7 +1730,7 @@ async function handleSharedTargetPassTurn(room: RoomRow, players: PlayerRow[]) {
   const sharedData = getSharedTargetRoomData(room.id)
   const penalizedSet = new Set(
     Array.from(sharedData.playerPenalties.entries())
-      .filter(([_, hasPenalty]) => hasPenalty)
+      .filter(([, hasPenalty]) => hasPenalty)
       .map(([pid]) => pid),
   )
 

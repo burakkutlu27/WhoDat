@@ -1,4 +1,4 @@
-# KimBu (v3.0)
+# KimBu (v3.1)
 
 **Ben Kimim? (Who Am I?)** parti ve masa oyununun Next.js ve Supabase ile geliştirilmiş online çok oyunculu sürümü.
 
@@ -6,7 +6,31 @@
 
 ## Oyuna Hızlı Bakış
 
-Oyuncular 6 haneli oda koduyla aynı lobiye katılır, seçilen oyun moduna göre gizli isimleri belirler ve arkadaşlarına evet/hayır soruları sorarak gizli kimlikleri tahmin etmeye çalışır.
+Oyuncular 6 haneli oda koduyla aynı lobiye katılır, seçilen oyun moduna göre gizli isimleri belirler (veya **4.955+ isimlik zengin veritabanından** otomatik/öneriyle seçer) ve arkadaşlarına evet/hayır soruları sorarak gizli kimlikleri tahmin etmeye çalışır.
+
+---
+
+## 🌟 Öne Çıkan Yeni Özellikler (v3.1)
+
+### 🎭 4.955+ Doğrulanmış Yerel Ünlü/Karakter Veritabanı
+Oyun sırasında hiçbir dış API bağımlılığı olmadan, sıfır gecikmeyle çalışan 5 ana kategoride devasa yerel isim havuzu:
+- 🎭 **Ünlüler (2.056 İsim):** Türk ve dünya sinema/dizi oyuncuları, müzisyenler, komedyenler, popüler sanatçılar.
+- ⚽ **Sporcular (1.481 İsim):** Süper Lig & milli takım futbolcuları, NBA yıldızları, Filenin Sultanları, Olimpiyat şampiyonları, F1 pilotları.
+- 🏛️ **Tarihi Kişiler & Bilim (980 İsim):** Padişahlar, devlet büyükleri, filozoflar, mucitler, Nobel ödüllü bilim insanları.
+- 🎨 **Çizgi Karakterler & Oyun (282 İsim):** Disney, Marvel, DC, anime kahramanları ve efsane video oyun ikonları.
+- 🎬 **Dizi & Film Karakterleri (156 İsim):** Kurtlar Vadisi, Ezel, Aşk-ı Memnu, Harry Potter, Yüzüklerin Efendisi, Star Wars, Breaking Bad, Peaky Blinders karakterleri.
+
+### 🔍 Canlı Otomatik Tamamlama (Autocomplete)
+- Lobi ekranında isim yazmaya başladığınızda (2+ harf) açılan kağıt tasarımlı açılır menü.
+- Kategori rozetleri ve klavye/fare ile hızlı seçim.
+
+### 🎲 "Fikir mi lazım?" Öneri Kartları
+- Post-it notu şeklinde kategori filtreli tıklanabilir öneri butonları.
+- **Yenile 🔄:** Anında yeni rastgele kartlar getirir.
+- **Rastgele Doldur ⚡:** Kalan boş isim kutularını tek tıkla seçili kategoriden benzersiz isimlerle doldurur.
+
+### ⚡ Hızlı Başlat (Oda Sahibi Tek Tıkla Dağıtsın)
+- Oyuncuların tek tek isim yazmasını beklemeden, oda sahibinin kategori seçerek tüm oyunculara sistemden 3'er benzersiz isim atamasını veya Ortak Hedef modunda tek bir gizli hedef belirlemesini sağlayan Gartic.io tarzı hızlı başlatma modu.
 
 ---
 
@@ -15,7 +39,7 @@ Oyuncular 6 haneli oda koduyla aynı lobiye katılır, seçilen oyun moduna gör
 Oda kurulurken veya lobide oda sahibi tarafından 4 farklı oyun modu seçilebilir:
 
 ### 1. Ortak Hedef Modu — "Herkes Aynı Kişiyi Bilmeye Çalışır"
-- **Hakem Rolü:** Oda sahibi hakemdir. Tur başında gizli hedefi belirler ve diğer oyuncuların sorularını **Evet / Hayır / Belirsiz** olarak yanıtlar.
+- **Hakem Rolü:** Oda sahibi hakemdir. Tur başında gizli hedefi belirler (veya sistemden rastgele seçtirir) ve diğer oyuncuların sorularını **Evet / Hayır / Belirsiz** olarak yanıtlar.
 - **Gizlilik Güvencesi:** Gizli hedef tur sırasında yarışmacılara asla sızdırılmaz; sadece hakeme görünür ve doğru tahmin edildiğinde herkese açılır.
 - **Soru Rotasyonu:** Yarışmacılar sırayla hakeme tek bir evet/hayır sorusu sorar; hakem yanıtladığında soru canlı not defterine eklenir ve sıra sonraki yarışmacıya geçer.
 - **Tahmin / Buzzer Mekaniği:** Yarışmacılar soru sıralarını beklemeden istedikleri an tahminde bulunabilir.
@@ -71,7 +95,7 @@ Oda kurulurken veya lobide oda sahibi tarafından 4 farklı oyun modu seçilebil
 - **Frontend:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, `motion` (Framer Motion), `lucide-react`
 - **Tipografi:** Google Fonts (`Caveat`, `Nunito`, `JetBrains Mono`)
 - **Backend & Veritabanı:** Supabase (PostgreSQL), Service Role Client, HMAC imzalı oturum çerezleri, Supabase Realtime
-- **Test:** Vitest (94 kapsamlı birim, motor ve API testi)
+- **Test:** Vitest (103 kapsamlı birim, motor, arama ve API testi)
 
 ---
 
@@ -103,4 +127,5 @@ Oda kurulurken veya lobide oda sahibi tarafından 4 farklı oyun modu seçilebil
 - `npm run build`: Production derlemesini alır.
 - `npm run typecheck`: TypeScript tip denetimini çalıştırır.
 - `npm run lint`: ESLint kod kalitesi kontrolünü çalıştırır.
-- `npm run test`: Vitest test takımını çalıştırır (94 test).
+- `npm run test`: Vitest test takımını çalıştırır (103 test).
+- `node scripts/fetch-wikidata-seed.mjs`: Wikipedia açık veri setinden yerel veritabanını günceller.
