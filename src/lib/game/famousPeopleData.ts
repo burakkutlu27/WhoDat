@@ -17,7 +17,7 @@ export const CATEGORIES: CategoryInfo[] = [
   { id: 'all', label: 'Tümü / Karışık', icon: '🎲', color: 'pencil-yellow' },
   { id: 'unluler', label: 'Ünlüler', icon: '🎭', color: 'pencil-red' },
   { id: 'tarihi_kisiler', label: 'Tarihi Kişiler', icon: '🏛️', color: 'pencil-blue' },
-  { id: 'cizgi_karakterler', label: 'Çizgi Karakterler', icon: '🎨', color: 'pencil-purple' },
+  { id: 'cizgi_karakterler', label: 'Kurgusal & Çizgi', icon: '🎨', color: 'pencil-purple' },
   { id: 'sporcular', label: 'Sporcular', icon: '⚽', color: 'pencil-green' },
   { id: 'dizi_film_karakterleri', label: 'Dizi & Film', icon: '🎬', color: 'pencil-orange' },
 ]
@@ -34,6 +34,1422 @@ export interface FamousPersonSeed {
 }
 
 export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
+  {
+    "name": "Vito Corleone (Baba / The Godfather)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Michael Corleone",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Sonny Corleone",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Tony Montana (Yaralı Yüz / Scarface)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Walter White (Heisenberg)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Jesse Pinkman",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Saul Goodman (Jimmy McGill)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Gus Fring",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Mike Ehrmantraut",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Hank Schrader",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Thomas Shelby (Peaky Blinders)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Arthur Shelby",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Polly Gray (Peaky Blinders)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Alfie Solomons",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Jon Snow (Game of Thrones)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Daenerys Targaryen",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Tyrion Lannister",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Cersei Lannister",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Jaime Lannister",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Arya Stark",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Sansa Stark",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Ned Stark",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Gece Kralı (Night King)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Harry Potter",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Hermione Granger",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Ron Weasley",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Lord Voldemort",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Albus Dumbledore",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Severus Snape",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Sirius Black",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Rubeus Hagrid",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Draco Malfoy",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Bellatrix Lestrange",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Dobby (Ev Cini)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Frodo Baggins",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Samwise Gamgee",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Gandalf (Gri/Ak Gandalf)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Aragorn (Yolgezer)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Legolas",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Gimli",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Boromir",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Gollum (Smeagol)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Sauron",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Saruman",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Bilbo Baggins",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Luke Skywalker",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Darth Vader (Anakin Skywalker)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Prenses Leia",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Han Solo",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Chewbacca",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Yoda (Usta Yoda)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Obi-Wan Kenobi",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "İmparator Palpatine",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Darth Maul",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Kylo Ren",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Mandalorian (Din Djarin)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Bebek Yoda (Grogu)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Kaptan Jack Sparrow",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Will Turner",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Elizabeth Swann",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Kaptan Hector Barbossa",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Davy Jones",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Sherlock Holmes",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Dr. John Watson",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Profesör James Moriarty",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "James Bond (007)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Neo (Matrix / Thomas Anderson)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Morpheus (Matrix)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Trinity (Matrix)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Ajan Smith",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "John Wick",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Terminatör (T-800)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Sarah Connor",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Forrest Gump",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Indiana Jones",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Rocky Balboa",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "John Rambo",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Hannibal Lecter",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Tyler Durden (Dövüş Kulübü)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Patrick Bateman (Amerikan Sapığı)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Jordan Belfort (Para Avcısı)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Profesör (La Casa de Papel)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Berlin (La Casa de Papel)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Tokyo (La Casa de Papel)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Michael Scofield (Prison Break)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Theodore Bagwell (T-Bag)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Dexter Morgan",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Wednesday Addams",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Eleven (Stranger Things)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Homelander (The Boys)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Billy Butcher (The Boys)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Polat Alemdar",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Süleyman Çakır",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Memati Baş",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Abdülhey Çoban",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Seyfo Dayı",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Aslan Akbey",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Testere Necmi",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Laz Ziya",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "İskender Büyük",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Pala (Kurtlar Vadisi)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Ramiz Dayı (Ramiz Karaeski)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Ezel Bayraktar",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Eyşan Tezcan",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Cengiz Atay",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Kerpeten Ali (Ali Kırgız)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Kenan Birkan",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Tefo (Tevfik Zaim)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Behzat Ç.",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Harun (Behzat Ç.)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Hayalet (Behzat Ç.)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Akbaba (Behzat Ç.)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Ercüment Çözer",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Behlül Haznedar",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Bihter Ziyagil",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Adnan Ziyagil",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Firdevs Yöreoğlu",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Matmazel (Aşk-ı Memnu)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Yamaç Koçovalı",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "İdris Koçovalı",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Vartolu Sadettin",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Cumali Koçovalı",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Aliço (Çukur)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Mecnun Çınar",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "İsmail Abi",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Erdal Bakkal",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Yılmaz (Gibi)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "İlkkan (Gibi)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Ersoy (Gibi)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Burhan Altıntop",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Gaffur Aksoy",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Şahika Koçarslanlı",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Kuzey Tekinoğlu",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Güney Tekinoğlu",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Rıza Baba (Arka Sokaklar)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Mesut Komiser",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Hüsnü Çoban",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Hızır Çakırbeyli (EDHO)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "İlyas Çakırbeyli",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Recep İvedik",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "İnek Şaban",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Damat Ferit",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Güdük Necmi",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Mahmut Hoca (Kel Mahmut)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Badi Ekrem",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Tosun Paşa",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Hakiki Tosun Paşa",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Kibar Feyzo",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Maho Ağa",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Züğürt Ağa",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Turist Ömer",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Arif Işık (G.O.R.A.)",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Komutan Logar",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Robot 216",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Bob Marley Faruk",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Erşan Kuneri",
+    "category": "dizi_film_karakterleri"
+  },
+  {
+    "name": "Don Kişot (Don Quijote)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sanço Panço (Sancho Panza)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kont Drakula (Dracula)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Frankenstein (Canavar)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Dorian Gray",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Raskolnikov (Suç ve Ceza)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Jean Valjean (Sefiller)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Müfettiş Javert",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Küçük Prens (Le Petit Prince)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Robinson Crusoe",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Cuma (Robinson Crusoe)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gulliver (Gulliver’in Gezileri)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Huckleberry Finn",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tom Sawyer",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Oliver Twist",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Romeo (Romeo ve Juliet)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Juliet (Romeo ve Juliet)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hamlet",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kral Lear",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Macbeth",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Othello",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Faust (Goethe)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Mefistofeles (Faust)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Alice (Harikalar Diyarında)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Şapkacı (Mad Hatter)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kupa Kraliçesi (Queen of Hearts)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Cheshire Kedisi",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Zeze (Şeker Portakalı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kaptan Ahab (Moby Dick)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Moby Dick (Beyaz Balina)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tarzan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Robin Hood",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Peter Pan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kaptan Kanca (Captain Hook)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tinker Bell",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Pinokyo (Pinocchio)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gepetto Usta",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kırmızı Başlıklı Kız",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kötü Kalpli Kurt (Masal)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Pamuk Prenses",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Külkedisi (Sindirella)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Rapunzel",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Uyuyan Güzel",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Aladdin (Alaaddin)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sihirli Lambanın Cini",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ali Baba (Kırk Haramiler)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sinbad (Denizci Sinbad)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Zeus (Yunan Baş Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Poseidon (Denizler Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hades (Yeraltı Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Herkül (Herakles)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Medusa (Yılan Saçlı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Afrodit (Aşk Tanrıçası)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ares (Savaş Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hermes (Haberci Tanrı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Apollo (Güneş Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Artemis (Avcılık Tanrıçası)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Athena (Bilgelik Tanrıçası)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Odin (İskandinav Baş Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Thor (Şimşek Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Loki (Fesatlık Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Freya",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Anubis (Mısır Ölüm Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ra (Güneş Tanrısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Osiris",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "İsis",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Şahmeran (Yılanların Şahı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Keloğlan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Nasreddin Hoca",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Dede Korkut",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Köroğlu",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Batman (Bruce Wayne)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Joker",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Superman (Clark Kent)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Örümcek Adam (Spider-Man / Peter Parker)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Demir Adam (Iron Man / Tony Stark)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kaptan Amerika (Steve Rogers)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Thor (Marvel)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hulk (Bruce Banner)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kara Dul (Black Widow / Natasha Romanoff)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Doktor Strange (Stephen Strange)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Deadpool (Wade Wilson)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Wolverine (Logan)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Flash (Barry Allen)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Aquaman (Arthur Curry)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Wonder Woman (Diana Prince)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Harley Quinn",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Thanos",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Venom",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "SüngerBob KareŞort",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Patrick Yıldız",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Squidward",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Bay Yengeç",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Plankton",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Mickey Mouse",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Donald Duck",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Goofy",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Bugs Bunny",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Daffy Duck",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tweety",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sylvester",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tom ve Jerry",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Scooby-Doo",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Shaggy",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Temel Reis",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Safinaz",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kabasakal",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Garfield",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Red Kit (Lucky Luke)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Joe Dalton",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Asteriks (Asterix)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Oburiks (Obelix)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tenten (Tintin)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Şirin Baba",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Şirine",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gargamel",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Fred Çakmaktaş",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Barni Moloztaş",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Cedric",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Heidi",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Winnie the Pooh",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Simba (Aslan Kral)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Mufasa",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Scar (Aslan Kral)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Shrek",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Fiona (Shrek)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Eşek (Shrek)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Çizmeli Kedi",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kung Fu Panda (Po)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Manny (Buz Devri)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sid (Buz Devri)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Diego (Buz Devri)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Scrat (Buz Devri)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Woody (Oyuncak Hikayesi)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Buzz Lightyear",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Şimşek McQueen (Arabalar)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Nemo (Kayıp Balık Nemo)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gru (Çılgın Hırsız)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Minyonlar (Minions)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ben 10",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Samurai Jack",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Johnny Bravo",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gumball",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Darwin (Gumball)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Mordecai (Sürekli Dizi)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Rigby (Sürekli Dizi)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Finn (Adventure Time)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Jake (Adventure Time)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Rafadan Tayfa",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hayri (Rafadan Tayfa)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kamil (Rafadan Tayfa)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kral Şakir",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Fil Necati",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Pepee",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Pikachu (Pokemon)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ash Ketchum (Pokemon)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Goku (Dragon Ball)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Vegeta (Dragon Ball)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Naruto Uzumaki",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sasuke Uchiha",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kakashi Hatake",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Monkey D. Luffy (One Piece)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Roronoa Zoro (One Piece)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sailor Moon (Ay Savaşçısı)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kaptan Tsubasa (Tsubasa Ozora)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kojiro Hyuga",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Super Mario",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Luigi",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Prenses Peach",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Bowser",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sonic (Kirpi Sonic)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Link (Zelda)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Prenses Zelda",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Pac-Man",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Crash Bandicoot",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Lara Croft (Tomb Raider)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kratos (God of War)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Atreus (God of War)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Rivialı Geralt (The Witcher)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ciri (The Witcher)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Yennefer of Vengerberg",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Arthur Morgan (Red Dead Redemption 2)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "John Marston (Red Dead Redemption)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "CJ (Carl Johnson - GTA San Andreas)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tommy Vercetti (GTA Vice City)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Trevor Philips (GTA V)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Niko Bellic (GTA IV)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Master Chief (Halo)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Doom Slayer (Doom)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gordon Freeman (Half-Life)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Nathan Drake (Uncharted)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Joel Miller (The Last of Us)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ellie Williams (The Last of Us)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Scorpion (Mortal Kombat)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sub-Zero (Mortal Kombat)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ryu (Street Fighter)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Steve (Minecraft)",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Creeper (Minecraft)",
+    "category": "cizgi_karakterler"
+  },
   {
     "name": "Abdulkadir Tuncer",
     "category": "unluler"
@@ -3064,10 +4480,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   },
   {
     "name": "Hey! Douglas",
-    "category": "unluler"
-  },
-  {
-    "name": "Joker",
     "category": "unluler"
   },
   {
@@ -6724,10 +8136,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   },
   {
     "name": "Peter Davison",
-    "category": "unluler"
-  },
-  {
-    "name": "Davy Jones",
     "category": "unluler"
   },
   {
@@ -12207,10 +13615,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Donald Duck",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "John D. Rockerduck",
     "category": "cizgi_karakterler"
   },
@@ -12255,10 +13659,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Bugs Bunny",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Elmer Fudd",
     "category": "cizgi_karakterler"
   },
@@ -12280,10 +13680,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   },
   {
     "name": "Tazmanya Canavarı",
-    "category": "cizgi_karakterler"
-  },
-  {
-    "name": "Tweety",
     "category": "cizgi_karakterler"
   },
   {
@@ -12459,10 +13855,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Thanos",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Thor",
     "category": "cizgi_karakterler"
   },
@@ -12548,10 +13940,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   },
   {
     "name": "Green Lantern",
-    "category": "cizgi_karakterler"
-  },
-  {
-    "name": "Harley Quinn",
     "category": "cizgi_karakterler"
   },
   {
@@ -12775,10 +14163,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Sherlock Holmes",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Irene Adler",
     "category": "cizgi_karakterler"
   },
@@ -12855,10 +14239,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Tom Sawyer",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Tommy ve Tuppence",
     "category": "cizgi_karakterler"
   },
@@ -12876,10 +14256,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   },
   {
     "name": "Aladdin",
-    "category": "cizgi_karakterler"
-  },
-  {
-    "name": "Albus Dumbledore",
     "category": "cizgi_karakterler"
   },
   {
@@ -12924,10 +14300,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   },
   {
     "name": "Balder",
-    "category": "cizgi_karakterler"
-  },
-  {
-    "name": "Sirius Black",
     "category": "cizgi_karakterler"
   },
   {
@@ -12983,10 +14355,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Draco Malfoy",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Kont Drakula",
     "category": "cizgi_karakterler"
   },
@@ -13016,10 +14384,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   },
   {
     "name": "Glaistig",
-    "category": "cizgi_karakterler"
-  },
-  {
-    "name": "Hermione Granger",
     "category": "cizgi_karakterler"
   },
   {
@@ -13079,10 +14443,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Keloğlan",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Kharis",
     "category": "cizgi_karakterler"
   },
@@ -13135,10 +14495,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Lord Voldemort",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Lugh",
     "category": "cizgi_karakterler"
   },
@@ -13179,10 +14535,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Obi-Wan Kenobi",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Odin",
     "category": "cizgi_karakterler"
   },
@@ -13199,10 +14551,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Harry Potter",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Prenses Yasemin",
     "category": "cizgi_karakterler"
   },
@@ -13215,19 +14563,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "cizgi_karakterler"
   },
   {
-    "name": "Ron Weasley",
-    "category": "cizgi_karakterler"
-  },
-  {
-    "name": "Saruman",
-    "category": "cizgi_karakterler"
-  },
-  {
     "name": "Segomo",
-    "category": "cizgi_karakterler"
-  },
-  {
-    "name": "Severus Snape",
     "category": "cizgi_karakterler"
   },
   {
@@ -13304,6 +14640,758 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   },
   {
     "name": "Zuko",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kurgusal karakter",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Arif Işık",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Büyük Amiral Thrawn",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Candyman",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Creeper",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Desdemona",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Harry Morgan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Jack Twist",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "James Doakes",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Jin Kazama",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Karınca Adam",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Leo Valdez",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Malcolm",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Matt Cordell",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Maurice",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Michael De Santa",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Noddy",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Palyaço Art",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Pinhead",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Proximus Sezar",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Pugsley Addams",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ramona Flowers",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Roxane",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sezar",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tall Man",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Thénardierler",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tommy Shelby",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Twilight Sparkle",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tywin Lannister",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Victor Crowley",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Victor Trevor",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Abdul Alhazred",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Alığ Han",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Alp Er Tunga",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Alpamış",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Altınay",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Aragorn",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Astinus",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ay Kağan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Azmanlar",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Banu Çiçek",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Basat",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Battal Gazi",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Bayındır Han",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Begin Oğlu Emren",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Beowulf",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Bernie Rhodenbarr",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Beyaz Tavşan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Blinky Bill",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Bozkurt",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Bremen Mızıkacıları",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Carter Kane",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Chemosh",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Chibiabos",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Chingachook",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Conseil",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Cormoran",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Cuchulainn",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Culhwch",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Cyrus Smith",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "D'Artagnan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Dağ Han",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Dalamar",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Daleli Allan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Deli Dumrul",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Dodo",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Don Kişot",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Dr. Jekyll ve Mr. Hyde",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Eldarion",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Erik",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Fatih Robur",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Fistandantilus",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Flint Fireforge",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Frankenstein'ın canavarı",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Fritz",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Galahad",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gargantua",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gargantua ile Pantagruel",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gawain",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gılgamış",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gilean",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gilles de Rais",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Grandgousier",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Gregor Samsa",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Grendel",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Griffin",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Lemuel Gulliver",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Habbakuk",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Haldir",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hansel ve Gretel",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hanuman",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hiawatha",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hiddukel",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Huban Arığ",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Hueil mab Caw",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Humpty Dumpty",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ichabod Crane",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ivanhoe",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "İason",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "İlmarinen",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kaptan Blood",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kaptan Flint",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kaptan Hook",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kaptan Nemo",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kaptan Smollet",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kel Mahmut",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kertenkele Bill",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Keşiş Tuck",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kıvırcık Çalıdibi",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kızıl Kral",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kintarō",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kiri-Jolith",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kitiara Uth Matar",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kör Pew",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Krabat",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kral Arthur",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Küçük John",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Külkedisi",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kür Şad",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Lady Crysania",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Laurana Kanan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Dr. Livesey",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Lord Glenarvan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Lord Soth",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Maedhros",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Magnus Chase",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Magwa",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Majere",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Raistlin Majere",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Meg McCaffrey",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Mishakal",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Mordred",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Mudjekeevis",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Baron Münchausen",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Natty Bumppo",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Ned Land",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Nehiryeli",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Nottingham Şerifi",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Oğuz Kağan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Orodreth",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Paddington Ayısı",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Paladine",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Pamuk Prenses ve Yedi Cüceler",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Pantagruel",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Panurge",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Percy Jackson",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Picrochole",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Porthos",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Profesör Aronnax",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Profesör Challenger",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Profesör Moriarty",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Reorx",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Scarlet Pimpernel",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sigurd",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Smaug",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Lemony Snicket",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Squire Trelawney",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Geronimo Stilton",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Sturm Brightblade",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Şapkacı",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Takhisis",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tanin Majere",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tanis Yarımelf",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tasslehoff Burrfoot",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tepegöz",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "The Yellow Kid",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Theseus",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Thingol",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tika Waylan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tom Ayrton",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tristan",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Tweedledum ve Tweedledee",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Uncas",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Uzun İhsan Efendi",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Vána",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Walt Stone",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Will Scarlet",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Yürek Oğlanı",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Şatarupa",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Thersites",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Can Manay",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Laurent LeClaire",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Piyer Bezuhov",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Rodion Romanoviç Raskolnikov",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Rufus Scrimgeour",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Kilgore Trout",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Vasily Kuragin",
+    "category": "cizgi_karakterler"
+  },
+  {
+    "name": "Çirkin Ördek Yavrusu",
     "category": "cizgi_karakterler"
   },
   {
@@ -19235,10 +21323,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Bellatrix Lestrange",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Longbottom ailesi",
     "category": "dizi_film_karakterleri"
   },
@@ -19263,23 +21347,11 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Aragorn",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Arwen",
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Bilbo Baggins",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Tom Bombadil",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Boromir",
     "category": "dizi_film_karakterleri"
   },
   {
@@ -19315,23 +21387,11 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Frodo Baggins",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Galadriel",
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Samwise Gamgee",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Gandalf",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Gimli",
     "category": "dizi_film_karakterleri"
   },
   {
@@ -19351,10 +21411,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Legolas",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Meriadoc Brandybuck",
     "category": "dizi_film_karakterleri"
   },
@@ -19367,10 +21423,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Sauron",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Shelob",
     "category": "dizi_film_karakterleri"
   },
@@ -19379,27 +21431,11 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Gus Fring",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Hank Schrader",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Jesse Pinkman",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Lydia Rodarte Quayle",
     "category": "dizi_film_karakterleri"
   },
   {
     "name": "Marie Schrader",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Mike Ehrmantraut",
     "category": "dizi_film_karakterleri"
   },
   {
@@ -19567,10 +21603,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "İdris Koçovalı",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Jax Teller",
     "category": "dizi_film_karakterleri"
   },
@@ -19640,10 +21672,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   },
   {
     "name": "Profesör",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Profesör Moriarty",
     "category": "dizi_film_karakterleri"
   },
   {
@@ -19739,19 +21767,11 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Elizabeth Swann",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Escape from Monkey Island",
     "category": "dizi_film_karakterleri"
   },
   {
     "name": "Ben Gunn",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Han Solo",
     "category": "dizi_film_karakterleri"
   },
   {
@@ -19779,22 +21799,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Kaptan Blood",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Kaptan Flint",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Kaptan Hook",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Kaptan Nemo",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Karayip Korsanları",
     "category": "dizi_film_karakterleri"
   },
@@ -19819,10 +21823,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Kör Pew",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Long John Silver",
     "category": "dizi_film_karakterleri"
   },
@@ -19831,23 +21831,11 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "dizi_film_karakterleri"
   },
   {
-    "name": "Prenses Zelda",
-    "category": "dizi_film_karakterleri"
-  },
-  {
     "name": "Sandokan",
     "category": "dizi_film_karakterleri"
   },
   {
     "name": "Smee",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Tom Ayrton",
-    "category": "dizi_film_karakterleri"
-  },
-  {
-    "name": "Will Turner",
     "category": "dizi_film_karakterleri"
   },
   {

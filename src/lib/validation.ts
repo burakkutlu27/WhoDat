@@ -30,13 +30,33 @@ export const nameTextSchema = z
 
 export const gameModeSchema = z.enum(['classic', 'speed', 'persistent', 'shared_target'])
 
+export const lobbyCategoryModeSchema = z.enum(['single', 'multi_phase'])
+
+export const famousPersonCategorySchema = z.enum([
+  'all',
+  'unluler',
+  'tarihi_kisiler',
+  'cizgi_karakterler',
+  'sporcular',
+  'dizi_film_karakterleri',
+])
+
 export const createRoomSchema = z.object({
   nickname: nicknameSchema,
   gameMode: gameModeSchema.optional(),
+  categoryMode: lobbyCategoryModeSchema.optional(),
+  category: famousPersonCategorySchema.optional(),
+  phaseCategories: z.array(famousPersonCategorySchema).min(1).max(3).optional(),
 })
 
 export const setRoomModeSchema = z.object({
   gameMode: gameModeSchema,
+})
+
+export const setRoomCategorySchema = z.object({
+  categoryMode: lobbyCategoryModeSchema.optional(),
+  category: famousPersonCategorySchema.optional(),
+  phaseCategories: z.array(famousPersonCategorySchema).min(1).max(3).optional(),
 })
 
 export const joinRoomSchema = z.object({
@@ -74,14 +94,6 @@ export const setTargetSchema = z.object({
   targetName: nameTextSchema,
 })
 
-export const famousPersonCategorySchema = z.enum([
-  'all',
-  'unluler',
-  'tarihi_kisiler',
-  'cizgi_karakterler',
-  'sporcular',
-  'dizi_film_karakterleri',
-])
 
 export const famousPeopleQuerySchema = z.object({
   q: z.string().trim().max(60).optional(),

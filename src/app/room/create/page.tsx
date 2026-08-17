@@ -1,18 +1,25 @@
 'use client'
 
-import { ArrowLeft, Brain, FileText, Loader2, Pencil, Target, User, Users, Zap } from 'lucide-react'
+import { ArrowLeft, Brain, Check, FileText, Layers, Loader2, Pencil, Target, User, Users, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
-
-import type { GameMode } from '@/lib/game/types'
+import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import type { FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
 
 export default function CreateRoomPage() {
   const router = useRouter()
   const [nickname, setNickname] = useState('')
   const [gameMode, setGameMode] = useState<GameMode>('classic')
+  const [categoryMode, setCategoryMode] = useState<LobbyCategoryMode>('single')
+  const [selectedCategory, setSelectedCategory] = useState<FamousPersonCategory>('all')
+  const [phaseCategories, setPhaseCategories] = useState<FamousPersonCategory[]>([
+    'sporcular',
+    'cizgi_karakterler',
+    'tarihi_kisiler',
+  ])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -26,7 +33,13 @@ export default function CreateRoomPage() {
     try {
       const { roomId } = await apiRequest<{ roomId: string; roomCode: string }>('/api/rooms', {
         method: 'POST',
-        body: { nickname: nickname.trim(), gameMode },
+        body: {
+          nickname: nickname.trim(),
+          gameMode,
+          categoryMode,
+          category: selectedCategory,
+          phaseCategories: categoryMode === 'multi_phase' ? phaseCategories : undefined,
+        },
       })
       router.push(`/room/${roomId}`)
     } catch (caught) {
@@ -193,6 +206,148 @@ export default function CreateRoomPage() {
                   </div>
                 </button>
               </div>
+            </div>
+
+            {/* Kategori Seçimi */}
+            <div>
+              <label className="mb-2 block font-display text-xl font-bold text-ink flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Layers className="h-4 w-4 text-pencil-purple" />
+                  <span>Kategori Havuzu</span>
+                </span>
+                <span className="text-xs font-sans font-normal text-ink-faded">
+                  {categoryMode === 'single' ? 'Tek Kategori' : '3 Fazlı Çoklu Kategori'}
+                </span>
+              </label>
+
+              {/* Kategori Modu Seçimi: Tek vs 3 Fazlı */}
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <button
+                  type="button"
+                  onClick={() => setCategoryMode('single')}
+                  className={`p-3 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                    categoryMode === 'single'
+                      ? 'border-pencil-blue bg-pencil-blue/5 shadow-xs font-bold text-ink'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  <div>
+                    <span className="font-display text-base flex items-center gap-1.5">
+                      <Target className="h-4 w-4 text-pencil-blue" />
+                      <span>Tek Kategori</span>
+                    </span>
+                    <span className="mt-0.5 block text-xs text-ink-faded font-normal">
+                      Tüm oyun tek kategoriden
+                    </span>
+                  </div>
+                  {categoryMode === 'single' && (
+                    <span className="h-5 w-5 rounded-full bg-pencil-blue text-white flex items-center justify-center text-xs shrink-0">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setCategoryMode('multi_phase')}
+                  className={`p-3 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                    categoryMode === 'multi_phase'
+                      ? 'border-pencil-purple bg-pencil-purple/5 shadow-xs font-bold text-ink'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  <div>
+                    <span className="font-display text-base flex items-center gap-1.5">
+                      <Layers className="h-4 w-4 text-pencil-purple" />
+                      <span>3 Fazlı Karışık</span>
+                    </span>
+                    <span className="mt-0.5 block text-xs text-ink-faded font-normal">
+                      3 turda 3 farklı kategori
+                    </span>
+                  </div>
+                  {categoryMode === 'multi_phase' && (
+                    <span className="h-5 w-5 rounded-full bg-pencil-purple text-white flex items-center justify-center text-xs shrink-0">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
+                  )}
+                </button>
+              </div>
+
+              {/* Tek Kategori İçin Kategori Çipleri */}
+              {categoryMode === 'single' ? (
+                <div className="p-3.5 rounded-xl border border-paper-border bg-paper-card-alt space-y-2">
+                  <span className="text-xs font-display font-bold text-ink-faded block">
+                    Oynanacak Kategoriyi Seçin:
+                  </span>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {CATEGORIES.map((cat) => {
+                      const isSelected = selectedCategory === cat.id
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() => setSelectedCategory(cat.id)}
+                          className={`px-3 py-2 text-xs font-display font-bold rounded-lg border transition-all flex items-center gap-2 ${
+                            isSelected
+                              ? 'bg-paper-card text-ink shadow-xs border-pencil-blue ring-2 ring-pencil-blue/40'
+                              : 'border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
+                          }`}
+                        >
+                          <span className="text-base">{cat.icon}</span>
+                          <span className="truncate">{cat.label}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              ) : (
+                /* 3 Fazlı Mod İçin 3 Aşama Seçimi */
+                <div className="p-3.5 rounded-xl border border-paper-border bg-paper-card-alt space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-display font-bold text-ink-faded block">
+                      3 Faz İçin Sıralı Kategoriler:
+                    </span>
+                    <span className="text-[11px] text-pencil-purple font-display font-bold">
+                      Fazlar arası can & puan korunur
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    {[0, 1, 2].map((idx) => {
+                      const currentVal = phaseCategories[idx] || 'all'
+                      return (
+                        <div
+                          key={idx}
+                          className="p-2.5 bg-paper-card rounded-lg border border-dashed border-paper-border space-y-1"
+                        >
+                          <div className="flex items-center justify-between text-xs font-display font-bold text-ink">
+                            <span className="flex items-center gap-1">
+                              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-pencil-purple/20 text-pencil-purple text-[10px] font-bold">
+                                {idx + 1}
+                              </span>
+                              <span>Faz {idx + 1}</span>
+                            </span>
+                          </div>
+                          <select
+                            value={currentVal}
+                            onChange={(e) => {
+                              const next = [...phaseCategories]
+                              next[idx] = e.target.value as FamousPersonCategory
+                              setPhaseCategories(next)
+                            }}
+                            className="w-full rounded-md border border-paper-border bg-paper-card-alt px-2 py-1.5 text-xs font-display text-ink"
+                          >
+                            {CATEGORIES.filter((c) => c.id !== 'all').map((c) => (
+                              <option key={c.id} value={c.id}>
+                                {c.icon} {c.label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
 

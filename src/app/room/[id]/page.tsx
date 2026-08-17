@@ -1,6 +1,6 @@
 'use client'
 
-import { Brain, Check, CheckCircle2, Clock, Copy, Crown, Dices, Loader2, LogOut, Pencil, Play, Send, Target, Users, Wand2, Zap } from 'lucide-react'
+import { Brain, Check, CheckCircle2, Clock, Copy, Crown, Dices, Layers, Loader2, LogOut, Pencil, Play, Send, Shuffle, Target, Users, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
@@ -21,6 +21,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const { state, phase, error, degraded, refresh } = useGameState(roomId)
 
   const [names, setNames] = useState<string[]>(Array(NAME_SLOTS).fill(''))
+  const [isEditingNames, setIsEditingNames] = useState(false)
   const [targetNameInput, setTargetNameInput] = useState('')
   const [isSavingTarget, setIsSavingTarget] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -154,6 +155,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
       })
       setDuplicates(result.duplicates)
       setNames(Array(NAME_SLOTS).fill(''))
+      setIsEditingNames(false)
       setShowConfetti(true)
       setTimeout(() => setShowConfetti(false), 1600)
       await refresh()
@@ -280,6 +282,12 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         ? 'Ortak Hedef (3 Tur)'
                         : 'Klasik Mod (3 Can)'}
                 </span>
+                <span className="tag border-pencil-purple text-pencil-purple font-bold">
+                  <Layers className="h-3.5 w-3.5 mr-1 inline" />
+                  {state.room.categoryMode === 'multi_phase'
+                    ? `3 Faz (${(state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler']).map(c => CATEGORIES.find(cat => cat.id === c)?.icon || '').join(' → ')})`
+                    : `${CATEGORIES.find(c => c.id === (state.room.selectedCategory || 'all'))?.icon || ''} ${CATEGORIES.find(c => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}`}
+                </span>
                 {degraded && (
                   <span className="tag border-pencil-orange text-pencil-orange">
                     Canlı bağlantı zayıf
@@ -298,12 +306,12 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             </motion.button>
           </div>
 
-          {/* Host Game Mode & Auto-Assign Controls in Lobby */}
+          {/* Host Game Mode & Category & Auto-Assign Controls in Lobby */}
           {state.you.isHost && (
             <div className="mt-4 pt-4 border-t border-paper-border space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className="font-display text-sm font-bold text-ink-faded">
-                  Oyun Modunu Değiştir:
+                  Oyun Modu:
                 </span>
                 <div className="flex gap-2 flex-wrap">
                   <button
@@ -373,10 +381,113 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 </div>
               </div>
 
+              {/* Kategori Havuzu Değiştirme */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-dashed border-paper-border">
+                <div className="flex items-center gap-2">
+                  <Layers className="h-4 w-4 text-pencil-purple" />
+                  <span className="font-display text-sm font-bold text-ink-faded">
+                    Kategori Havuzu:
+                  </span>
+                </div>
+                <div className="flex gap-2 flex-wrap items-center">
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (state.room.categoryMode === 'single') return
+                      await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'single' } })
+                      await refresh()
+                    }}
+                    className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1 ${
+                      state.room.categoryMode !== 'multi_phase'
+                        ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
+                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                    }`}
+                  >
+                    <Target className="h-3.5 w-3.5" />
+                    <span>Tek Kategori</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (state.room.categoryMode === 'multi_phase') return
+                      await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'multi_phase' } })
+                      await refresh()
+                    }}
+                    className={`px-3 py-1 text-xs font-display font-bold rounded-lg transition-all flex items-center gap-1 ${
+                      state.room.categoryMode === 'multi_phase'
+                        ? 'bg-pencil-purple text-white shadow-sm ring-1 ring-pencil-purple'
+                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                    }`}
+                  >
+                    <Layers className="h-3.5 w-3.5" />
+                    <span>3 Fazlı Karışık</span>
+                  </button>
+                </div>
+              </div>
+
+              {state.room.categoryMode !== 'multi_phase' ? (
+                <div className="flex items-center justify-between gap-2 p-2 rounded-lg bg-paper-card-alt border border-paper-border">
+                  <span className="text-xs font-display font-bold text-ink-faded">Kategori:</span>
+                  <select
+                    value={state.room.selectedCategory || 'all'}
+                    onChange={async (e) => {
+                      await apiRequest(`/api/rooms/${roomId}/category`, {
+                        method: 'PATCH',
+                        body: { category: e.target.value as FamousPersonCategory },
+                      })
+                      await refresh()
+                    }}
+                    className="rounded-md border border-paper-border bg-paper-card px-2 py-1 text-xs font-display text-ink"
+                  >
+                    {CATEGORIES.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.icon} {c.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 rounded-lg bg-paper-card-alt border border-paper-border">
+                  {[0, 1, 2].map((idx) => {
+                    const phases = state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler']
+                    const currentVal = phases[idx] || 'all'
+                    return (
+                      <div key={idx} className="flex items-center justify-between gap-1 bg-paper-card p-1.5 rounded border border-dashed border-paper-border">
+                        <span className="text-[11px] font-display font-bold text-ink flex items-center gap-1">
+                          <span className="h-3.5 w-3.5 rounded-full bg-pencil-purple/20 text-pencil-purple flex items-center justify-center text-[9px] font-bold">
+                            {idx + 1}
+                          </span>
+                          <span>Faz {idx + 1}:</span>
+                        </span>
+                        <select
+                          value={currentVal}
+                          onChange={async (e) => {
+                            const next = [...phases]
+                            next[idx] = e.target.value as FamousPersonCategory
+                            await apiRequest(`/api/rooms/${roomId}/category`, {
+                              method: 'PATCH',
+                              body: { phaseCategories: next },
+                            })
+                            await refresh()
+                          }}
+                          className="rounded border border-paper-border bg-paper-card-alt px-1.5 py-0.5 text-xs font-display text-ink"
+                        >
+                          {CATEGORIES.filter((c) => c.id !== 'all').map((c) => (
+                            <option key={c.id} value={c.id}>
+                              {c.icon} {c.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+
               {/* Host Hızlı Başlat / Sistem Otomatik Atasın */}
               <div className="rounded-xl border border-dashed border-paper-border bg-paper-card-alt p-3 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <Wand2 className="h-4 w-4 text-pencil-yellow" />
+                  <Shuffle className="h-4 w-4 text-pencil-yellow" />
                   <span className="font-display text-sm font-bold text-ink">
                     Hızlı Başlat (Sistem Atasın):
                   </span>
@@ -405,7 +516,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     <Dices className="h-3.5 w-3.5" />
                   )}
                   <span>
-                    {isSharedTarget ? 'Rastgele Hedef Seç 🎲' : 'Tüm Oyunculara İsim Ata ⚡'}
+                    {isSharedTarget ? 'Rastgele Hedef Seç' : 'Tüm Oyunculara İsim Ata'}
                   </span>
                 </button>
               </div>
@@ -516,20 +627,50 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             </motion.section>
           )
         ) : (
-          /* Klasik / Hız / Israrcı Mod İsim Girişi */
-          !hasSubmitted && (
+          /* Klasik / Hız / Israrcı Mod İsim Girişi & Düzenleme */
+          (!hasSubmitted || isEditingNames) && (
             <motion.section
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               className="paper-card p-6 sm:p-8"
             >
-              <h2 className="flex items-center gap-2 font-display text-3xl font-bold text-ink">
-                <Pencil className="h-6 w-6 text-pencil-yellow" />
-                <span>Gizli İsimlerinizi Yazın</span>
-              </h2>
-              <p className="mt-1 mb-6 text-sm text-ink-faded">
+              <div className="flex items-center justify-between gap-2">
+                <h2 className="flex items-center gap-2 font-display text-3xl font-bold text-ink">
+                  <Pencil className="h-6 w-6 text-pencil-yellow" />
+                  <span>{isEditingNames ? 'İsimlerinizi Düzenleyin' : 'Gizli İsimlerinizi Yazın'}</span>
+                </h2>
+                {isEditingNames && (
+                  <button
+                    type="button"
+                    onClick={() => setIsEditingNames(false)}
+                    className="btn-outline px-3 py-1 text-xs font-display font-bold text-ink-faded hover:text-ink"
+                  >
+                    Vazgeç
+                  </button>
+                )}
+              </div>
+              <p className="mt-1 mb-4 text-sm text-ink-faded">
                 Diğer oyuncuların tahmin etmesi için havuza {NAME_SLOTS} isim ekleyin (Ünlü, karakter, tanıdık).
               </p>
+
+              {state.room.categoryMode === 'multi_phase' ? (
+                <div className="mb-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-pencil-purple/10 border border-pencil-purple/30 text-pencil-purple text-xs font-display font-bold">
+                  <Layers className="h-3.5 w-3.5" />
+                  <span>
+                    1. Faz İsim Havuzu (Kategori:{' '}
+                    {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.icon}{' '}
+                    {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.label || state.room.activeCategory})
+                  </span>
+                </div>
+              ) : state.room.selectedCategory && state.room.selectedCategory !== 'all' ? (
+                <div className="mb-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-pencil-blue/10 border border-pencil-blue/30 text-pencil-blue text-xs font-display font-bold">
+                  <span>
+                    Seçili Kategori:{' '}
+                    {CATEGORIES.find((c) => c.id === state.room.selectedCategory)?.icon}{' '}
+                    {CATEGORIES.find((c) => c.id === state.room.selectedCategory)?.label}
+                  </span>
+                </div>
+              ) : null}
 
               <div className="space-y-4">
                 {names.map((name, index) => (
@@ -546,6 +687,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       maxLength={60}
                       disabled={isSubmitting}
                       placeholder={`Örn: ${index === 0 ? 'Albert Einstein' : index === 1 ? 'Sherlock Holmes' : 'Tarkan'}`}
+                      categoryFilter={state.room.activeCategory || 'all'}
                       onChange={(val) => {
                         const next = [...names]
                         next[index] = val
@@ -563,6 +705,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
               {/* Fikir mi lazım? Öneri Kartları */}
               <NameSuggestions
+                categoryFilter={state.room.activeCategory || 'all'}
                 onSelectName={handleSelectSuggestion}
                 onFillAllEmpty={handleFillAllEmpty}
                 emptySlotsCount={names.filter((n) => !n.trim()).length}
@@ -576,43 +719,71 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 </div>
               )}
 
-              <motion.button
-                whileHover={{ scale: 1.01, rotate: -0.5 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => void handleSubmitNames()}
-                disabled={isSubmitting || names.every((name) => !name.trim())}
-                className="btn-pencil-red mt-6 flex w-full items-center justify-center gap-2 py-3.5 font-display text-xl"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span>Kaydediliyor...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>İsimleri Gönder</span>
-                    <Send className="h-4 w-4" />
-                  </>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <motion.button
+                  whileHover={{ scale: 1.01, rotate: -0.5 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => void handleSubmitNames()}
+                  disabled={isSubmitting || names.every((name) => !name.trim())}
+                  className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-xl"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span>Kaydediliyor...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>{isEditingNames ? 'İsimleri Güncelle' : 'İsimleri Gönder'}</span>
+                      <Send className="h-4 w-4" />
+                    </>
+                  )}
+                </motion.button>
+
+                {isEditingNames && (
+                  <button
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => setIsEditingNames(false)}
+                    className="btn-outline px-6 py-3.5 font-display text-base font-bold"
+                  >
+                    İptal
+                  </button>
                 )}
-              </motion.button>
+              </div>
             </motion.section>
           )
         )}
 
 
 
-        {/* Submitted Names Confirmation */}
-        {hasSubmitted && (
+        {/* Submitted Names Confirmation & Edit Action */}
+        {hasSubmitted && !isEditingNames && (
           <motion.section
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             className="alert-success"
           >
-            <div className="flex items-center gap-2 mb-3">
-              <CheckCircle2 className="h-5 w-5 text-pencil-green" />
-              <h2 className="font-display text-2xl font-bold text-pencil-green">
-                İsimleriniz Havuza Eklendi
-              </h2>
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-pencil-green" />
+                <h2 className="font-display text-2xl font-bold text-pencil-green">
+                  İsimleriniz Havuza Eklendi
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  const existing = state.you.submittedNames || []
+                  const padded = Array(NAME_SLOTS).fill('').map((_, i) => existing[i] || '')
+                  setNames(padded)
+                  setIsEditingNames(true)
+                }}
+                className="btn-outline flex items-center gap-1.5 px-3 py-1.5 text-xs font-display font-bold text-ink hover:text-pencil-blue hover:border-pencil-blue transition-all"
+              >
+                <Pencil className="h-3.5 w-3.5" />
+                <span>İsimleri Düzenle</span>
+              </button>
             </div>
             <ul className="flex flex-wrap gap-2">
               {state.you.submittedNames.map((name) => (

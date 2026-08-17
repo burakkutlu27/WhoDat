@@ -16,8 +16,15 @@ export const POST = route(async (request: NextRequest) => {
     message: 'Çok fazla oda oluşturdunuz. Lütfen birkaç dakika sonra tekrar deneyin.',
   })
 
-  const { nickname, gameMode } = parseBody(createRoomSchema, await readJsonBody(request))
-  const { roomId, roomCode, playerId } = await createRoom(nickname, gameMode)
+  const { nickname, gameMode, categoryMode, category, phaseCategories } = parseBody(
+    createRoomSchema,
+    await readJsonBody(request),
+  )
+  const { roomId, roomCode, playerId } = await createRoom(nickname, gameMode, {
+    categoryMode,
+    category,
+    phaseCategories,
+  })
 
   const response = jsonOk({ roomId, roomCode }, { status: 201 })
   const cookie = sessionCookie({ playerId, roomId, isHost: true })

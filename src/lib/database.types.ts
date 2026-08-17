@@ -136,39 +136,54 @@ export type Database = {
       }
       rooms: {
         Row: {
+          category_mode: string | null
           created_at: string | null
           current_identity_id: string | null
+          current_phase: number | null
           current_player_id: string | null
           game_mode: string | null
           game_round: number | null
           id: string
           is_game_active: boolean | null
+          phase_categories: Json | null
           room_code: string
+          selected_category: string | null
           status: string | null
+          total_phases: number | null
           total_rounds: number | null
         }
         Insert: {
+          category_mode?: string | null
           created_at?: string | null
           current_identity_id?: string | null
+          current_phase?: number | null
           current_player_id?: string | null
           game_mode?: string | null
           game_round?: number | null
           id?: string
           is_game_active?: boolean | null
+          phase_categories?: Json | null
           room_code: string
+          selected_category?: string | null
           status?: string | null
+          total_phases?: number | null
           total_rounds?: number | null
         }
         Update: {
+          category_mode?: string | null
           created_at?: string | null
           current_identity_id?: string | null
+          current_phase?: number | null
           current_player_id?: string | null
           game_mode?: string | null
           game_round?: number | null
           id?: string
           is_game_active?: boolean | null
+          phase_categories?: Json | null
           room_code?: string
+          selected_category?: string | null
           status?: string | null
+          total_phases?: number | null
           total_rounds?: number | null
         }
         Relationships: [

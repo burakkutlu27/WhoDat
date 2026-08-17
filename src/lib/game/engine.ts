@@ -7,7 +7,7 @@ import { badRequest, conflict, forbidden, notFound } from '../http'
 import { supabaseAdmin } from '../supabaseAdmin'
 import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
-import type { AutoAssignResult, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, PublicPlayer, SharedQuestionItem } from './types'
+import type { AutoAssignResult, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, PublicPlayer, SharedQuestionItem } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -47,6 +47,14 @@ interface RoomModeData {
   totalRounds: number
 }
 
+export interface RoomCategoryData {
+  categoryMode: LobbyCategoryMode
+  category: FamousPersonCategory
+  phaseCategories: FamousPersonCategory[]
+  currentPhase: number
+  totalPhases: number
+}
+
 interface PlayerSpeedData {
   questionsThisRound: number
   roundScores: number[]
@@ -74,6 +82,7 @@ interface SharedTargetRoomData {
 
 const globalRef = globalThis as unknown as {
   __whoDat_roomModeStore?: Map<string, RoomModeData>
+  __whoDat_roomCategoryStore?: Map<string, RoomCategoryData>
   __whoDat_playerSpeedStore?: Map<string, Map<string, PlayerSpeedData>>
   __whoDat_playerRoundNameStore?: Map<string, Map<string, string>>
   __whoDat_roomLivesStore?: Map<string, Map<string, number>>
@@ -83,6 +92,7 @@ const globalRef = globalThis as unknown as {
 }
 
 globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
+globalRef.__whoDat_roomCategoryStore = globalRef.__whoDat_roomCategoryStore ?? new Map()
 globalRef.__whoDat_playerSpeedStore = globalRef.__whoDat_playerSpeedStore ?? new Map()
 globalRef.__whoDat_playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore ?? new Map()
 globalRef.__whoDat_roomLivesStore = globalRef.__whoDat_roomLivesStore ?? new Map()
@@ -91,12 +101,77 @@ globalRef.__whoDat_playerPersistentStore = globalRef.__whoDat_playerPersistentSt
 globalRef.__whoDat_sharedTargetStore = globalRef.__whoDat_sharedTargetStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
+const roomCategoryStore = globalRef.__whoDat_roomCategoryStore
 const playerSpeedStore = globalRef.__whoDat_playerSpeedStore
 const playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore
 const roomLivesStore = globalRef.__whoDat_roomLivesStore
 const roomUsedNamesStore = globalRef.__whoDat_roomUsedNamesStore
 const playerPersistentStore = globalRef.__whoDat_playerPersistentStore
 const sharedTargetStore = globalRef.__whoDat_sharedTargetStore
+
+/**
+ * Kategori Lobisi & Faz Store Yardımcıları
+ */
+export function getRoomCategoryData(
+  roomId: string,
+  dbRoom?: {
+    category_mode?: string | null
+    selected_category?: string | null
+    phase_categories?: unknown
+    current_phase?: number | null
+    total_phases?: number | null
+  },
+): RoomCategoryData {
+  const stored = roomCategoryStore.get(roomId)
+  if (stored) {
+    return stored
+  }
+
+  const categoryMode: LobbyCategoryMode = dbRoom?.category_mode === 'multi_phase' ? 'multi_phase' : 'single'
+  const category: FamousPersonCategory = (dbRoom?.selected_category as FamousPersonCategory) || 'all'
+  let phaseCategories: FamousPersonCategory[] = ['unluler', 'sporcular', 'cizgi_karakterler']
+  if (Array.isArray(dbRoom?.phase_categories) && dbRoom.phase_categories.length > 0) {
+    phaseCategories = dbRoom.phase_categories as FamousPersonCategory[]
+  }
+  const currentPhase = dbRoom?.current_phase || 1
+  const totalPhases = categoryMode === 'multi_phase' ? 3 : 1
+
+  const data: RoomCategoryData = {
+    categoryMode,
+    category,
+    phaseCategories,
+    currentPhase,
+    totalPhases,
+  }
+  roomCategoryStore.set(roomId, data)
+  return data
+}
+
+export function setRoomCategoryData(
+  roomId: string,
+  data: Partial<RoomCategoryData>,
+): RoomCategoryData {
+  const existing = getRoomCategoryData(roomId)
+  const categoryMode = data.categoryMode ?? existing.categoryMode
+  const totalPhases = categoryMode === 'multi_phase' ? 3 : 1
+  const updated: RoomCategoryData = {
+    categoryMode,
+    category: data.category ?? existing.category,
+    phaseCategories: data.phaseCategories ?? existing.phaseCategories,
+    currentPhase: data.currentPhase ?? existing.currentPhase,
+    totalPhases,
+  }
+  roomCategoryStore.set(roomId, updated)
+  return updated
+}
+
+export function getActivePhaseCategory(categoryData: RoomCategoryData): FamousPersonCategory {
+  if (categoryData.categoryMode === 'single') {
+    return categoryData.category
+  }
+  const phaseIdx = Math.max(0, Math.min(categoryData.currentPhase - 1, categoryData.phaseCategories.length - 1))
+  return categoryData.phaseCategories[phaseIdx] || 'all'
+}
 
 /**
  * INV-1: game_mode okuma.
@@ -369,9 +444,17 @@ function incrementQuestionCount(roomId: string, playerId: string): number {
 }
 
 /**
- * Lobi Kurulumu: game_mode sadece burada yazılır (INV-1).
+ * Lobi Kurulumu: game_mode ve category ayarları burada yazılır (INV-1).
  */
-export async function createRoom(nickname: string, gameMode: GameMode = 'classic') {
+export async function createRoom(
+  nickname: string,
+  gameMode: GameMode = 'classic',
+  categorySettings?: {
+    categoryMode?: LobbyCategoryMode
+    category?: FamousPersonCategory
+    phaseCategories?: FamousPersonCategory[]
+  },
+) {
   const admin = supabaseAdmin()
   const totalRounds = gameMode === 'speed' ? DEFAULT_SPEED_ROUNDS : 1
 
@@ -404,8 +487,32 @@ export async function createRoom(nickname: string, gameMode: GameMode = 'classic
     setRoomModeData(room.id, gameMode)
     setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
 
+    const categoryMode: LobbyCategoryMode = categorySettings?.categoryMode || 'single'
+    const category: FamousPersonCategory = categorySettings?.category || 'all'
+    const phaseCategories: FamousPersonCategory[] =
+      categorySettings?.phaseCategories && categorySettings.phaseCategories.length > 0
+        ? categorySettings.phaseCategories
+        : ['unluler', 'sporcular', 'cizgi_karakterler']
+    const totalPhases = categoryMode === 'multi_phase' ? 3 : 1
+
+    setRoomCategoryData(room.id, {
+      categoryMode,
+      category,
+      phaseCategories,
+      currentPhase: 1,
+      totalPhases,
+    })
+
     try {
-      await admin.from('rooms').update({ game_mode: gameMode, total_rounds: totalRounds }).eq('id', room.id)
+      await admin.from('rooms').update({
+        game_mode: gameMode,
+        total_rounds: totalRounds,
+        category_mode: categoryMode,
+        selected_category: category,
+        phase_categories: phaseCategories,
+        current_phase: 1,
+        total_phases: totalPhases,
+      }).eq('id', room.id)
       await admin.from('players').update({ questions_this_round: 0, round_scores: [], has_finished_round: false }).eq('id', host.id)
     } catch {
       // Sütun yoksa yut
@@ -415,6 +522,50 @@ export async function createRoom(nickname: string, gameMode: GameMode = 'classic
   }
 
   throw conflict('room_code_exhausted', 'Oda oluşturulamadı, lütfen tekrar deneyin.')
+}
+
+/**
+ * Lobi Ayarı: Yalnızca oyun başlamadan önce host kategori ayarlarını değiştirebilir.
+ */
+export async function setRoomCategory(
+  roomId: string,
+  playerId: string,
+  settings: {
+    categoryMode?: LobbyCategoryMode
+    category?: FamousPersonCategory
+    phaseCategories?: FamousPersonCategory[]
+  },
+) {
+  const admin = supabaseAdmin()
+  const players = await loadPlayers(roomId)
+  const player = requireMembership(players, playerId)
+
+  if (!player.is_host) {
+    throw forbidden('not_host', 'Kategori ayarlarını yalnızca oda sahibi değiştirebilir.')
+  }
+
+  const room = await loadRoom(roomId)
+  if (room.status !== 'waiting') {
+    throw conflict('game_already_started', 'Oyun başladıktan sonra kategori ayarları değiştirilemez.')
+  }
+
+  const updated = setRoomCategoryData(roomId, settings)
+
+  try {
+    await admin.from('rooms').update({
+      category_mode: updated.categoryMode,
+      selected_category: updated.category,
+      phase_categories: updated.phaseCategories,
+      current_phase: updated.currentPhase,
+      total_phases: updated.totalPhases,
+    }).eq('id', roomId)
+  } catch {
+    // Sütun yoksa yut
+  }
+
+  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+
+  return updated
 }
 
 /**
@@ -512,6 +663,9 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     ? (players.find((p) => p.id === sharedData.roundWinnerId)?.nickname ?? null)
     : null
 
+  const categoryData = getRoomCategoryData(roomId, room)
+  const activeCategory = getActivePhaseCategory(categoryData)
+
   const publicPlayers: PublicPlayer[] = players.map((player) => {
     const speed = getPlayerSpeedData(roomId, player.id)
     const pData = getPlayerPersistentData(roomId, player.id)
@@ -575,6 +729,12 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       gameMode,
       isGameActive: room.is_game_active ?? false,
       currentPlayerId: room.current_player_id,
+      categoryMode: categoryData.categoryMode,
+      selectedCategory: categoryData.category,
+      phaseCategories: categoryData.phaseCategories,
+      currentPhase: categoryData.currentPhase,
+      totalPhases: categoryData.totalPhases,
+      activeCategory,
       questionBudgetPerPlayer: isPersistent ? PERSISTENT_MODE_QUESTION_BUDGET : undefined,
       // INV-2: current_target_name sadece Host'a veya hedef açıklandığında gönderilir
       sharedTargetName: isSharedTarget
@@ -626,27 +786,31 @@ export async function submitNames(roomId: string, playerId: string, names: strin
 
   const room = await loadRoom(roomId)
   if (room.status !== 'waiting') {
-    throw conflict('game_already_started', 'Oyun başladıktan sonra isim eklenemez.')
-  }
-
-  const existing = await loadNames(roomId)
-  if (existing.some((name) => name.submitted_by === playerId)) {
-    throw conflict('names_already_submitted', 'İsimlerinizi zaten gönderdiniz.')
+    throw conflict('game_already_started', 'Oyun başladıktan sonra isim eklenemez veya düzenlenemez.')
   }
 
   const unique: string[] = []
   const seen = new Set<string>()
   for (const name of names) {
-    const key = name.toLocaleLowerCase('tr')
+    const trimmed = name.trim()
+    if (!trimmed) continue
+    const key = trimmed.toLocaleLowerCase('tr')
     if (!seen.has(key)) {
       seen.add(key)
-      unique.push(name)
+      unique.push(trimmed)
     }
+  }
+
+  if (unique.length === 0) {
+    throw badRequest('no_names', 'Lütfen en az bir isim girin.')
   }
 
   if (unique.length > MAX_NAMES_PER_PLAYER) {
     throw badRequest('too_many_names', `En fazla ${MAX_NAMES_PER_PLAYER} isim gönderebilirsiniz.`)
   }
+
+  // Oyuncu daha önce isim göndermişse (düzenleme akışı), eski isimlerini silip yenilerini kaydedelim
+  await admin.from('names').delete().eq('room_id', roomId).eq('submitted_by', playerId)
 
   const { data: inserted, error } = await admin
     .from('names')
@@ -664,7 +828,7 @@ export async function submitNames(roomId: string, playerId: string, names: strin
   if (accepted.length === 0) {
     throw conflict(
       'all_names_taken',
-      'Girdiğiniz isimlerin hepsi bu odada zaten kullanılmış. Farklı isimler deneyin.',
+      'Girdiğiniz isimlerin hepsi bu odada başka oyuncular tarafından kullanılmış. Farklı isimler deneyin.',
     )
   }
 
@@ -682,8 +846,9 @@ export async function getFamousPeople(options: {
   const { query, category, random, limit = 10 } = options
   const admin = supabaseAdmin()
 
-  let results: FamousPerson[] = []
+  const combinedMap = new Map<string, FamousPerson>()
 
+  // 1. Supabase veritabanından ara (varsa)
   try {
     let q = admin.from('famous_people').select('id, name, category')
     if (category && category !== 'all') {
@@ -694,35 +859,67 @@ export async function getFamousPeople(options: {
     }
     const { data, error } = await q
     if (!error && data && data.length > 0) {
-      results = data as FamousPerson[]
+      for (const item of data as FamousPerson[]) {
+        const key = item.name.toLocaleLowerCase('tr').trim()
+        combinedMap.set(key, item)
+      }
     }
   } catch {
-    // If DB query fails, fallback to static seed
+    // DB bağlantı/sorgu hatası durumunda yerel seed verisi devreye girer
   }
 
-  // Fallback to static seed if no results from DB
-  if (results.length === 0) {
-    let filtered = FAMOUS_PEOPLE_SEED.map((item, idx) => ({
-      id: `seed-${idx}`,
-      name: item.name,
-      category: item.category,
-    }))
+  // 2. Yerel statik veri setinden sorgula ve birleştir (kesin sonuç güvencesi)
+  const rawQ = query ? query.trim() : ''
+  const lowerQ = rawQ.toLocaleLowerCase('tr')
+  const asciiQ = rawQ.toLowerCase()
 
-    if (category && category !== 'all') {
-      filtered = filtered.filter((item) => item.category === category)
+  for (let idx = 0; idx < FAMOUS_PEOPLE_SEED.length; idx++) {
+    const seedItem = FAMOUS_PEOPLE_SEED[idx]
+    if (!seedItem) continue
+
+    if (category && category !== 'all' && seedItem.category !== category) {
+      continue
     }
-    if (query && query.trim()) {
-      const lowerQ = query.trim().toLocaleLowerCase('tr')
-      filtered = filtered.filter((item) =>
-        item.name.toLocaleLowerCase('tr').includes(lowerQ),
-      )
+
+    if (rawQ) {
+      const lowerName = seedItem.name.toLocaleLowerCase('tr')
+      const asciiName = seedItem.name.toLowerCase()
+      if (!lowerName.includes(lowerQ) && !asciiName.includes(asciiQ)) {
+        continue
+      }
     }
-    results = filtered
+
+    const key = seedItem.name.toLocaleLowerCase('tr').trim()
+    if (!combinedMap.has(key)) {
+      combinedMap.set(key, {
+        id: `seed-${idx}`,
+        name: seedItem.name,
+        category: seedItem.category as Exclude<FamousPersonCategory, 'all'>,
+      })
+    }
+
+    if (!random && rawQ && combinedMap.size >= limit * 3) {
+      break
+    }
   }
+
+  const results = Array.from(combinedMap.values())
 
   if (random) {
     const shuffled = [...results].sort(() => Math.random() - 0.5)
     return shuffled.slice(0, limit)
+  }
+
+  // Arama sonuçlarında eşleşme kalitesine göre sırala (kelime başı eşleşenler önce gelir)
+  if (lowerQ) {
+    results.sort((a, b) => {
+      const aLower = a.name.toLocaleLowerCase('tr')
+      const bLower = b.name.toLocaleLowerCase('tr')
+      const aStarts = aLower.startsWith(lowerQ) ? 0 : 1
+      const bStarts = bLower.startsWith(lowerQ) ? 0 : 1
+      if (aStarts !== bStarts) return aStarts - bStarts
+      return a.name.length - b.name.length
+    })
   }
 
   return results.slice(0, limit)
@@ -746,10 +943,14 @@ export async function autoAssignNames(
     throw conflict('game_already_started', 'Oyun başladıktan sonra isim ataması yapılamaz.')
   }
 
+  const categoryData = getRoomCategoryData(roomId, room)
+  const effectiveCategory: FamousPersonCategory =
+    category && category !== 'all' ? category : getActivePhaseCategory(categoryData)
+
   const gameMode = getRoomMode(roomId, room.game_mode)
 
   if (gameMode === 'shared_target') {
-    const candidates = await getFamousPeople({ category, random: true, limit: 10 })
+    const candidates = await getFamousPeople({ category: effectiveCategory, random: true, limit: 10 })
     if (candidates.length === 0) {
       throw badRequest('no_famous_people', 'Seçilen kategoride ünlü bulunamadı.')
     }
@@ -767,7 +968,7 @@ export async function autoAssignNames(
 
   const totalNamesNeeded = players.length * MAX_NAMES_PER_PLAYER
   const pool = await getFamousPeople({
-    category,
+    category: effectiveCategory,
     random: true,
     limit: Math.max(totalNamesNeeded + 10, 50),
   })
@@ -994,6 +1195,125 @@ interface AdvanceTurnOutcome {
   claimed: boolean
   finished: boolean
   nextRoundStarted?: boolean
+  phaseChanged?: boolean
+  newPhase?: number
+  newCategory?: FamousPersonCategory
+}
+
+/**
+ * 3 Fazlı modda bir sonraki faza geçiş:
+ * İsim havuzunu sıfırlar, yeni fazın kategorisinden yeni isimler dağıtır, can/puan kümülatif devam eder.
+ */
+async function transitionToNextPhase(
+  room: RoomRow,
+  players: PlayerRow[],
+  categoryData: RoomCategoryData,
+): Promise<AdvanceTurnOutcome> {
+  const admin = supabaseAdmin()
+  const currentPhase = categoryData.currentPhase
+  const totalPhases = categoryData.totalPhases
+
+  if (currentPhase >= totalPhases) {
+    // Tüm 3 faz tamamlandı -> Oyun biter
+    const { data } = await admin
+      .from('rooms')
+      .update({ status: 'finished', is_game_active: false, current_identity_id: null })
+      .eq('id', room.id)
+      .select('id')
+    return { claimed: (data?.length ?? 0) > 0, finished: true }
+  }
+
+  const nextPhase = currentPhase + 1
+  const nextCategory = categoryData.phaseCategories[nextPhase - 1] || 'all'
+  categoryData.currentPhase = nextPhase
+  setRoomCategoryData(room.id, categoryData)
+
+  // 1. Önceki fazın isimlerini temizle
+  await admin.from('names').delete().eq('room_id', room.id)
+
+  // 2. Yeni fazın kategorisinden yeni isimler çek ve dağıt
+  const totalNamesNeeded = players.length * MAX_NAMES_PER_PLAYER
+  const pool = await getFamousPeople({
+    category: nextCategory,
+    random: true,
+    limit: Math.max(totalNamesNeeded + 10, 50),
+  })
+
+  if (pool.length < totalNamesNeeded) {
+    const extra = await getFamousPeople({
+      category: 'all',
+      random: true,
+      limit: totalNamesNeeded + 10,
+    })
+    for (const item of extra) {
+      if (!pool.some((p) => p.name.toLocaleLowerCase('tr') === item.name.toLocaleLowerCase('tr'))) {
+        pool.push(item)
+      }
+    }
+  }
+
+  const shuffledPool = [...pool].sort(() => Math.random() - 0.5)
+  const newAssignedNames: { id: string; room_id: string; submitted_by: string; name_text: string }[] = []
+  let poolIdx = 0
+
+  for (const p of players) {
+    for (let slot = 0; slot < MAX_NAMES_PER_PLAYER; slot++) {
+      if (poolIdx >= shuffledPool.length) {
+        poolIdx = 0
+      }
+      const person = shuffledPool[poolIdx++]!
+      newAssignedNames.push({
+        id: randomUUID(),
+        room_id: room.id,
+        submitted_by: p.id,
+        name_text: person.name,
+      })
+    }
+  }
+
+  const { error: insertErr } = await admin.from('names').insert(newAssignedNames)
+  if (insertErr) throw insertErr
+
+  // 3. Bellek içi tur atama store'larını bu faz için sıfırla
+  playerRoundNameStore.delete(room.id)
+  roomUsedNamesStore.delete(room.id)
+  resetRoomSpeedRound(room.id)
+
+  const firstPlayer = players[0]!
+  const availableFirstName = newAssignedNames.find((n) => n.submitted_by !== firstPlayer.id) || newAssignedNames[0]!
+  setPlayerRoundNameId(room.id, firstPlayer.id, availableFirstName.id)
+
+  const currentRound = (room.game_round ?? 1) + 1
+
+  const { data, error } = await admin
+    .from('rooms')
+    .update({
+      current_phase: nextPhase,
+      game_round: currentRound,
+      current_player_id: firstPlayer.id,
+      current_identity_id: availableFirstName.id,
+      status: 'playing',
+      is_game_active: true,
+    })
+    .eq('id', room.id)
+    .select('id')
+
+  if (error) throw error
+
+  try {
+    await admin.from('names').update({ used_in_round: currentRound }).eq('id', availableFirstName.id)
+  } catch {
+    // Sütun yoksa yut
+  }
+
+  return {
+    claimed: (data?.length ?? 0) > 0,
+    finished: false,
+    nextRoundStarted: true,
+    phaseChanged: true,
+    newPhase: nextPhase,
+    newCategory: nextCategory,
+  }
 }
 
 /**
@@ -1008,6 +1328,7 @@ async function advanceTurn(
 ): Promise<AdvanceTurnOutcome> {
   const admin = supabaseAdmin()
   const gameMode = getRoomMode(room.id, room.game_mode)
+  const categoryData = getRoomCategoryData(room.id, room)
 
   if (gameMode === 'speed') {
     const currentRound = room.game_round ?? 1
@@ -1020,6 +1341,10 @@ async function advanceTurn(
     })
 
     if (unfinishedPlayers.length === 0) {
+      if (categoryData.categoryMode === 'multi_phase' && categoryData.currentPhase < categoryData.totalPhases) {
+        return transitionToNextPhase(room, players, categoryData)
+      }
+
       if (currentRound >= totalRounds) {
         // Tüm turlar bitti -> Oyun tamamlandı
         const { data } = await admin
@@ -1100,6 +1425,10 @@ async function advanceTurn(
     const unfinishedPlayers = players.filter((p) => !isPersistentPlayerFinished(room.id, p.id))
 
     if (unfinishedPlayers.length === 0) {
+      if (categoryData.categoryMode === 'multi_phase' && categoryData.currentPhase < categoryData.totalPhases) {
+        return transitionToNextPhase(room, players, categoryData)
+      }
+
       // Tüm oyuncular solved veya eliminated → oyun biter
       const { data } = await admin
         .from('rooms')
@@ -1150,6 +1479,10 @@ async function advanceTurn(
   const availableNames = names.filter((name) => name.used_in_round === null)
 
   if (!nextPlayer || availableNames.length === 0 || activePlayerIds.size === 0) {
+    if (categoryData.categoryMode === 'multi_phase' && categoryData.currentPhase < categoryData.totalPhases) {
+      return transitionToNextPhase(room, players, categoryData)
+    }
+
     const { data } = await admin
       .from('rooms')
       .update({ status: 'finished', is_game_active: false, current_identity_id: null })
@@ -1462,6 +1795,9 @@ async function handleSpeedModeGuess(
     turnPassed: true,
     finished: outcome.finished,
     nextRoundStarted: outcome.nextRoundStarted,
+    phaseChanged: outcome.phaseChanged,
+    newPhase: outcome.newPhase,
+    newCategory: outcome.newCategory,
   }
 }
 
@@ -1499,6 +1835,9 @@ async function handlePersistentModeAskQuestion(
   return {
     message: `Sorunuz kaydedildi (Kalan Bütçe: ${newBudget}/${PERSISTENT_MODE_QUESTION_BUDGET}).${budgetWarning}`,
     finished: outcome.finished,
+    phaseChanged: outcome.phaseChanged,
+    newPhase: outcome.newPhase,
+    newCategory: outcome.newCategory,
   }
 }
 
@@ -1523,6 +1862,9 @@ async function handlePersistentModeGuess(
       livesLeft: 0,
       turnPassed: true,
       finished: outcome.finished,
+      phaseChanged: outcome.phaseChanged,
+      newPhase: outcome.newPhase,
+      newCategory: outcome.newCategory,
     }
   }
 
@@ -1556,6 +1898,9 @@ async function handlePersistentModeGuess(
       livesLeft: currentLives,
       turnPassed: true,
       finished: outcome.finished,
+      phaseChanged: outcome.phaseChanged,
+      newPhase: outcome.newPhase,
+      newCategory: outcome.newCategory,
     }
   }
 
@@ -1584,6 +1929,9 @@ async function handlePersistentModeGuess(
       livesLeft: 0,
       turnPassed: true,
       finished: outcome.finished,
+      phaseChanged: outcome.phaseChanged,
+      newPhase: outcome.newPhase,
+      newCategory: outcome.newCategory,
     }
   }
 
@@ -1597,6 +1945,9 @@ async function handlePersistentModeGuess(
     livesLeft: newLives,
     turnPassed: true,
     finished: outcome.finished,
+    phaseChanged: outcome.phaseChanged,
+    newPhase: outcome.newPhase,
+    newCategory: outcome.newCategory,
   }
 }
 
@@ -1902,6 +2253,9 @@ async function handleClassicModeGuess(
       livesLeft: 0,
       turnPassed: true,
       finished: outcome.finished,
+      phaseChanged: outcome.phaseChanged,
+      newPhase: outcome.newPhase,
+      newCategory: outcome.newCategory,
     }
   }
 
@@ -1919,6 +2273,9 @@ async function handleClassicModeGuess(
         livesLeft: 0,
         turnPassed: true,
         finished: outcome.finished,
+        phaseChanged: outcome.phaseChanged,
+        newPhase: outcome.newPhase,
+        newCategory: outcome.newCategory,
       }
     }
 
@@ -1928,6 +2285,9 @@ async function handleClassicModeGuess(
       livesLeft: newLives,
       turnPassed: true,
       finished: outcome.finished,
+      phaseChanged: outcome.phaseChanged,
+      newPhase: outcome.newPhase,
+      newCategory: outcome.newCategory,
     }
   }
 
@@ -1948,6 +2308,9 @@ async function handleClassicModeGuess(
     finished: outcome.finished,
     livesLeft: currentLives,
     turnPassed: true,
+    phaseChanged: outcome.phaseChanged,
+    newPhase: outcome.newPhase,
+    newCategory: outcome.newCategory,
   }
 }
 
@@ -1961,7 +2324,13 @@ async function handleClassicModePassTurn(
     throw conflict('turn_already_advanced', 'Bu tur çoktan tamamlandı.')
   }
 
-  return { message: 'Sıra bir sonraki oyuncuya geçti.', finished: outcome.finished }
+  return {
+    message: 'Sıra bir sonraki oyuncuya geçti.',
+    finished: outcome.finished,
+    phaseChanged: outcome.phaseChanged,
+    newPhase: outcome.newPhase,
+    newCategory: outcome.newCategory,
+  }
 }
 
 // -------------------------------------------------------------
@@ -1983,6 +2352,10 @@ export async function resetGame(roomId: string, playerId: string) {
   clearRoomSpeedData(roomId)
   clearRoomPersistentData(roomId)
   clearRoomSharedTargetData(roomId)
+
+  const categoryData = getRoomCategoryData(roomId)
+  categoryData.currentPhase = 1
+  setRoomCategoryData(roomId, categoryData)
 
   const { error: roomError } = await admin
     .from('rooms')

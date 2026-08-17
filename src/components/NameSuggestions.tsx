@@ -1,6 +1,6 @@
 'use client'
 
-import { Dices, Loader2, RefreshCw, Sparkles, Wand2 } from 'lucide-react'
+import { Lightbulb, Loader2, Plus, RefreshCw, Shuffle } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useEffect, useState } from 'react'
 
@@ -14,6 +14,7 @@ interface NameSuggestionsProps {
   emptySlotsCount?: number
   disabled?: boolean
   selectedNames?: string[]
+  categoryFilter?: FamousPersonCategory
 }
 
 const ROTATION_CLASSES = [
@@ -39,8 +40,11 @@ export default function NameSuggestions({
   emptySlotsCount = 3,
   disabled = false,
   selectedNames = [],
+  categoryFilter,
 }: NameSuggestionsProps) {
-  const [activeCategory, setActiveCategory] = useState<FamousPersonCategory>('all')
+  const isLockedCategory = Boolean(categoryFilter && categoryFilter !== 'all')
+  const [selectedCategory, setSelectedCategory] = useState<FamousPersonCategory | null>(null)
+  const activeCategory = isLockedCategory ? categoryFilter! : (selectedCategory ?? 'all')
   const [suggestions, setSuggestions] = useState<FamousPerson[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isFillingAll, setIsFillingAll] = useState(false)
@@ -120,9 +124,9 @@ export default function NameSuggestions({
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2">
-          <Dices className="h-5 w-5 text-pencil-yellow" />
+          <Lightbulb className="h-5 w-5 text-pencil-yellow" />
           <h3 className="font-display text-xl font-bold text-ink">
-            Fikir mi lazım? 🎲
+            Fikir mi lazım?
           </h3>
           <span className="text-xs text-ink-faded font-sans hidden sm:inline">
             (Tıkla, kutuna eklensin)
@@ -152,36 +156,50 @@ export default function NameSuggestions({
               {isFillingAll ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
               ) : (
-                <Wand2 className="h-3.5 w-3.5" />
+                <Shuffle className="h-3.5 w-3.5" />
               )}
-              <span>Rastgele Doldur ⚡</span>
+              <span>Rastgele Doldur</span>
             </button>
           )}
         </div>
       </div>
 
-      {/* Category Filter Chips */}
-      <div className="flex flex-wrap gap-1.5 mb-3.5">
-        {CATEGORIES.map((cat) => {
-          const isActive = activeCategory === cat.id
-          return (
-            <button
-              key={cat.id}
-              type="button"
-              disabled={disabled}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`flex items-center gap-1 px-2.5 py-1 text-xs font-display font-bold rounded-lg transition-all ${
-                isActive
-                  ? 'bg-ink text-paper-card shadow-xs ring-1 ring-ink'
-                  : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
-              }`}
-            >
-              <span>{cat.icon}</span>
-              <span>{cat.label}</span>
-            </button>
-          )
-        })}
-      </div>
+      {/* Category Filter Chips / Locked Badge */}
+      {isLockedCategory ? (
+        <div className="flex items-center gap-2 mb-3">
+          <span className="tag border-pencil-purple text-pencil-purple font-bold text-xs flex items-center gap-1">
+            <span>{CATEGORIES.find((c) => c.id === categoryFilter)?.icon}</span>
+            <span>{CATEGORIES.find((c) => c.id === categoryFilter)?.label || categoryFilter} Kategorisi</span>
+          </span>
+          <span className="text-[11px] text-ink-faded font-sans">
+            (Lobi kategorisinden öneriler listeleniyor)
+          </span>
+        </div>
+      ) : (
+        <div className="flex flex-wrap gap-1.5 mb-3.5">
+          {CATEGORIES.map((cat) => {
+            const isActive = activeCategory === cat.id
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                disabled={disabled}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`flex items-center gap-1 px-2.5 py-1 text-xs font-display font-bold rounded-lg transition-all ${
+                  isActive
+                    ? 'bg-ink text-paper-card shadow-xs ring-1 ring-ink'
+                    : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
+                }`}
+              >
+                <span>{cat.icon}</span>
+                <span>{cat.label}</span>
+              </button>
+            )
+          })}
+        </div>
+      )}
+
+      {/* Suggestions Grid */}
 
       {/* Suggestions Grid */}
       <div className="min-h-[64px]">
@@ -224,7 +242,7 @@ export default function NameSuggestions({
                     style={{ borderRadius: '8px 10px 6px 12px' }}
                   >
                     <span>+ {person.name}</span>
-                    <Sparkles className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                    <Plus className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                   </motion.button>
                 )
               })}

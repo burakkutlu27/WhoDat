@@ -10,6 +10,7 @@ import {
   Gamepad2,
   Heart,
   HelpCircle,
+  Layers,
   Lightbulb,
   Loader2,
   LogOut,
@@ -31,7 +32,8 @@ import { use, useEffect, useRef, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
-import type { GuessResult } from '@/lib/game/types'
+import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import type { FamousPersonCategory, GuessResult } from '@/lib/game/types'
 import { useGameState } from '@/lib/useGameState'
 
 type Feedback = { tone: 'success' | 'error'; text: string }
@@ -67,10 +69,17 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     nextRound: number
     scores: { nickname: string; isHost: boolean; isYou: boolean; roundScore: number; totalScore: number }[]
   } | null>(null)
+  const [phaseTransition, setPhaseTransition] = useState<{
+    completedPhase: number
+    nextPhase: number
+    newCategory: FamousPersonCategory
+  } | null>(null)
 
   const status = state?.room.status
   const currentRound = state?.room.gameRound ?? 1
   const prevRoundRef = useRef<number>(currentRound)
+  const currentPhase = state?.room.currentPhase ?? 1
+  const prevPhaseRef = useRef<number>(currentPhase)
 
   useEffect(() => {
     if (!status) return
@@ -116,6 +125,31 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     }
   }, [currentRound, state])
 
+  // 3 Fazlı Mod Faz Geçişi Tespiti
+  useEffect(() => {
+    if (!state || state.room.categoryMode !== 'multi_phase') return
+    const prev = prevPhaseRef.current
+    if (currentPhase > prev && prev >= 1) {
+      const activeCat = state.room.activeCategory || 'all'
+      setPhaseTransition({
+        completedPhase: prev,
+        nextPhase: currentPhase,
+        newCategory: activeCat,
+      })
+      setShowConfetti(true)
+
+      const timer = setTimeout(() => {
+        setPhaseTransition(null)
+        setShowConfetti(false)
+      }, 4500)
+
+      prevPhaseRef.current = currentPhase
+      return () => clearTimeout(timer)
+    } else {
+      prevPhaseRef.current = currentPhase
+    }
+  }, [currentPhase, state])
+
   const currentPlayerId = state?.room.currentPlayerId ?? null
   const [turnShown, setTurnShown] = useState(currentPlayerId)
   if (turnShown !== currentPlayerId) {
@@ -134,6 +168,19 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         method: 'POST',
         body: { guess: guess.trim() },
       })
+
+      if (result.phaseChanged && result.newPhase) {
+        setPhaseTransition({
+          completedPhase: result.newPhase - 1,
+          nextPhase: result.newPhase,
+          newCategory: result.newCategory || 'all',
+        })
+        setShowConfetti(true)
+        setTimeout(() => {
+          setPhaseTransition(null)
+          setShowConfetti(false)
+        }, 4500)
+      }
 
       if (result.correct) {
         setFeedback({ tone: 'success', text: result.message })
@@ -455,6 +502,48 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         )}
       </AnimatePresence>
 
+      {/* 3 Fazlı Mod Faz Geçişi Overlay */}
+      {phaseTransition && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            className="paper-card-lg max-w-lg w-full p-6 sm:p-8 text-center border-4 border-pencil-purple shadow-2xl space-y-5"
+          >
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-pencil-purple/20 text-pencil-purple animate-bounce">
+              <Sparkles className="h-10 w-10 text-pencil-purple" />
+            </div>
+
+            <div>
+              <span className="tag border-pencil-purple text-pencil-purple font-bold text-xs uppercase tracking-wider">
+                🎉 Faz Tamamlandı!
+              </span>
+              <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-ink">
+                {phaseTransition.completedPhase}. Faz Sona Erdi!
+              </h2>
+              <div className="mt-3 p-3.5 rounded-xl bg-pencil-purple/10 border border-pencil-purple/30 text-pencil-purple">
+                <span className="text-sm font-display block font-normal">Sıradaki Aşama:</span>
+                <span className="font-display text-2xl font-bold flex items-center justify-center gap-2 mt-1">
+                  <span>{CATEGORIES.find((c) => c.id === phaseTransition.newCategory)?.icon}</span>
+                  <span>{phaseTransition.nextPhase}. Faz: {CATEGORIES.find((c) => c.id === phaseTransition.newCategory)?.label || phaseTransition.newCategory}</span>
+                </span>
+              </div>
+              <p className="mt-3 text-xs text-ink-faded font-sans">
+                ✨ Yeni kategoriden yeni isimler dağıtıldı! Puanlarınız ve canlarınız aynen korunuyor.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setPhaseTransition(null)}
+              className="btn-pencil-red w-full py-3.5 font-display text-lg font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-transform"
+            >
+              {phaseTransition.nextPhase}. Faza Başla 🚀
+            </button>
+          </motion.div>
+        </div>
+      )}
+
       <div className="mx-auto max-w-5xl space-y-6">
         {/* Game Header Bar */}
         <motion.header
@@ -494,6 +583,41 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         ? `Ortak Hedef (Tur ${state.room.gameRound} / ${state.room.totalRounds})`
                         : `Klasik Tur ${state.room.gameRound}`}
                 </span>
+
+                {/* Kategori ve Faz Bilgisi */}
+                {state.room.categoryMode === 'multi_phase' ? (
+                  <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1.5">
+                    <Layers className="h-3.5 w-3.5" />
+                    <span>
+                      Faz {state.room.currentPhase || 1}/{state.room.totalPhases || 3}:{' '}
+                      {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.icon}{' '}
+                      {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.label || state.room.activeCategory}
+                    </span>
+                    <span className="ml-1 flex items-center gap-1 text-[10px]">
+                      {[1, 2, 3].map((step) => (
+                        <span
+                          key={step}
+                          className={`h-2 w-2 rounded-full ${
+                            step === (state.room.currentPhase || 1)
+                              ? 'bg-pencil-purple ring-2 ring-pencil-purple/40'
+                              : step < (state.room.currentPhase || 1)
+                                ? 'bg-pencil-purple/40'
+                                : 'bg-paper-border'
+                          }`}
+                        />
+                      ))}
+                    </span>
+                  </span>
+                ) : (
+                  <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1">
+                    <Layers className="h-3.5 w-3.5" />
+                    <span>
+                      {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.icon || '🎲'}{' '}
+                      {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}
+                    </span>
+                  </span>
+                )}
+
                 {!isSharedTarget && (
                   <span className="tag">
                     {state.namesRemaining} İsim Kaldı

@@ -7,6 +7,7 @@ import {
   createSupabaseFake,
   type FakeTables,
 } from '@/test/supabaseFake'
+import type { GuessResult } from './types'
 
 let fake: ReturnType<typeof createSupabaseFake>
 
@@ -18,6 +19,7 @@ const {
   answerSharedQuestion,
   askSharedQuestion,
   assignNamesForRound,
+  autoAssignNames,
   createRoom,
   getGameState,
   getRoomMode,
@@ -25,6 +27,7 @@ const {
   makeGuess,
   passTurn,
   setPlayerSpeedData,
+  setRoomCategory,
   setRoomMode,
   setRoomTarget,
   startGame,
@@ -297,6 +300,20 @@ describe('submitNames', () => {
     const result = await submitNames(room.id, host.id, ['Kemal Sunal', 'kemal sunal'])
 
     expect(result.accepted).toHaveLength(1)
+  })
+
+  it('gönderilmiş isimleri tekrar göndererek düzenlemeye izin verir', async () => {
+    const { room, host, tables } = lobby()
+    fake = createSupabaseFake(tables)
+
+    // İlk gönderim
+    await submitNames(room.id, host.id, ['Kemal Sunal', 'Türkan Şoray'])
+    expect(tables.names.map((n) => n.name_text)).toEqual(['Kemal Sunal', 'Türkan Şoray'])
+
+    // Düzenleme / güncelleme gönderimi
+    const editResult = await submitNames(room.id, host.id, ['Barış Manço', 'Cem Karaca'])
+    expect(editResult.accepted).toEqual(['Barış Manço', 'Cem Karaca'])
+    expect(tables.names.map((n) => n.name_text)).toEqual(['Barış Manço', 'Cem Karaca'])
   })
 
   it('oyun başladıktan sonra isim eklenemez', async () => {
@@ -726,6 +743,181 @@ describe('Ortak Hedef Modu (shared_target)', () => {
     const hostState = await getGameState(room.id, host.id)
     expect(hostState.room.sharedTargetName).toBe('Barış Manço')
     expect(hostState.room.targetRevealed).toBe(false)
+  })
+})
+
+describe('Kategoriye Özel Lobi & 3 Fazlı Karışık Lobi', () => {
+  it('tek kategori seçildiğinde oda ve oyun durumu doğru kategori bilgisine sahip olur', async () => {
+    fake = createSupabaseFake()
+    const { roomId, playerId } = await createRoom('HostUser', 'classic', {
+      categoryMode: 'single',
+      category: 'sporcular',
+    })
+
+    const state = await getGameState(roomId, playerId)
+    expect(state.room.categoryMode).toBe('single')
+    expect(state.room.selectedCategory).toBe('sporcular')
+    expect(state.room.activeCategory).toBe('sporcular')
+    expect(state.room.totalPhases).toBe(1)
+    expect(state.room.currentPhase).toBe(1)
+  })
+
+  it('3 fazlı mod seçildiğinde 3 kategori sırayla kaydedilir ve faz 1 aktif olur', async () => {
+    fake = createSupabaseFake()
+    const phaseCategories = ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'] as const
+    const { roomId, playerId } = await createRoom('HostUser', 'classic', {
+      categoryMode: 'multi_phase',
+      phaseCategories: [...phaseCategories],
+    })
+
+    const state = await getGameState(roomId, playerId)
+    expect(state.room.categoryMode).toBe('multi_phase')
+    expect(state.room.phaseCategories).toEqual(phaseCategories)
+    expect(state.room.activeCategory).toBe('sporcular')
+    expect(state.room.totalPhases).toBe(3)
+    expect(state.room.currentPhase).toBe(1)
+  })
+
+  it('host lobi bekleme ekranında kategori ayarlarını güncelleyebilir', async () => {
+    fake = createSupabaseFake()
+    const { roomId, playerId } = await createRoom('HostUser', 'classic')
+
+    const updated = await setRoomCategory(roomId, playerId, {
+      categoryMode: 'multi_phase',
+      phaseCategories: ['tarihi_kisiler', 'unluler', 'dizi_film_karakterleri'],
+    })
+
+    expect(updated.categoryMode).toBe('multi_phase')
+    expect(updated.phaseCategories).toEqual(['tarihi_kisiler', 'unluler', 'dizi_film_karakterleri'])
+    expect(updated.totalPhases).toBe(3)
+
+    const state = await getGameState(roomId, playerId)
+    expect(state.room.categoryMode).toBe('multi_phase')
+    expect(state.room.activeCategory).toBe('tarihi_kisiler')
+  })
+
+  it('host olmayan oyuncu kategori ayarlarını değiştiremez', async () => {
+    fake = createSupabaseFake()
+    const { roomId } = await createRoom('HostUser', 'classic')
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    fake.tables.players.push(guest)
+
+    await expect(
+      setRoomCategory(roomId, guest.id, {
+        categoryMode: 'single',
+        category: 'sporcular',
+      }),
+    ).rejects.toMatchObject({
+      code: 'not_host',
+      status: 403,
+    })
+  })
+
+  it('otomatik isim atama seçilen kategoriye göre isim atar', async () => {
+    fake = createSupabaseFake()
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic', {
+      categoryMode: 'single',
+      category: 'sporcular',
+    })
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    fake.tables.players.push(guest)
+
+    const result = await autoAssignNames(roomId, hostId)
+    expect(result.assignedCount).toBe(6) // 2 oyuncu * 3 isim
+    expect(result.names).toHaveLength(6)
+    expect(fake.tables.names.filter((n) => n.room_id === roomId)).toHaveLength(6)
+  })
+
+  it('3 fazlı modda Faz 1 bitince Faz 2 başlar, yeni isimler atanır, can ve puanlar korunur', async () => {
+    fake = createSupabaseFake()
+    const phaseCategories = ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'] as const
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic', {
+      categoryMode: 'multi_phase',
+      phaseCategories: [...phaseCategories],
+    })
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    fake.tables.players.push(guest)
+
+    // Faz 1 için isim ata
+    await autoAssignNames(roomId, hostId)
+    await startGame(roomId, hostId)
+
+    const state = await getGameState(roomId, hostId)
+    expect(state.room.status).toBe('playing')
+    expect(state.room.currentPhase).toBe(1)
+    expect(state.room.activeCategory).toBe('sporcular')
+
+    // Tüm isimleri sırayla doğru bilerek Faz 1'i tamamlayalım
+    let lastGuessResult: GuessResult | null = null
+    while (!lastGuessResult?.phaseChanged && !lastGuessResult?.finished) {
+      const activePlayerId = fake.tables.rooms[0]!.current_player_id!
+      const activeIdentityId = fake.tables.rooms[0]!.current_identity_id!
+      const activeNameRow = fake.tables.names.find((n) => n.id === activeIdentityId)!
+      lastGuessResult = await makeGuess(roomId, activePlayerId, activeNameRow.name_text)
+    }
+
+    // Faz 1 bitti, Faz 2'ye geçiş tetiklendi!
+    expect(lastGuessResult!.phaseChanged).toBe(true)
+    expect(lastGuessResult!.newPhase).toBe(2)
+    expect(lastGuessResult!.newCategory).toBe('cizgi_karakterler')
+    expect(lastGuessResult!.finished).toBe(false)
+
+    // Yeni oyun durumu kontrolü: Faz 2 aktif, can ve puanlar korundu!
+    const phase2State = await getGameState(roomId, hostId)
+    expect(phase2State.room.currentPhase).toBe(2)
+    expect(phase2State.room.activeCategory).toBe('cizgi_karakterler')
+    expect(phase2State.room.status).toBe('playing')
+    expect(phase2State.players.find((p) => p.id === hostId)?.score).toBeGreaterThan(0)
+  })
+
+  it('3 faz tamamlandığında oyun biter (finished)', async () => {
+    fake = createSupabaseFake()
+    const phaseCategories = ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'] as const
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic', {
+      categoryMode: 'multi_phase',
+      phaseCategories: [...phaseCategories],
+    })
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    fake.tables.players.push(guest)
+
+    await autoAssignNames(roomId, hostId)
+    await startGame(roomId, hostId)
+
+    // Faz 1 -> Faz 2
+    let res: GuessResult | null = null
+    while (!res?.phaseChanged && !res?.finished) {
+      const pId = fake.tables.rooms[0]!.current_player_id!
+      const idId = fake.tables.rooms[0]!.current_identity_id!
+      const name = fake.tables.names.find((n) => n.id === idId)!
+      res = await makeGuess(roomId, pId, name.name_text)
+    }
+    expect(res!.phaseChanged).toBe(true)
+    expect(res!.newPhase).toBe(2)
+
+    // Faz 2 -> Faz 3
+    res = null
+    while (!res?.phaseChanged && !res?.finished) {
+      const pId = fake.tables.rooms[0]!.current_player_id!
+      const idId = fake.tables.rooms[0]!.current_identity_id!
+      const name = fake.tables.names.find((n) => n.id === idId)!
+      res = await makeGuess(roomId, pId, name.name_text)
+    }
+    expect(res!.phaseChanged).toBe(true)
+    expect(res!.newPhase).toBe(3)
+
+    // Faz 3 -> Oyun Bitişi
+    res = null
+    while (!res?.finished) {
+      const pId = fake.tables.rooms[0]!.current_player_id!
+      const idId = fake.tables.rooms[0]!.current_identity_id!
+      const name = fake.tables.names.find((n) => n.id === idId)!
+      res = await makeGuess(roomId, pId, name.name_text)
+    }
+    expect(res!.finished).toBe(true)
+
+    const finalState = await getGameState(roomId, hostId)
+    expect(finalState.room.status).toBe('finished')
+    expect(finalState.room.isGameActive).toBe(false)
   })
 })
 

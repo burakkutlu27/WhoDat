@@ -1,12 +1,13 @@
 'use client'
 
-import { Award, BarChart2, Check, Copy, Crown, Loader2, LogOut, Medal, RefreshCw, Trophy } from 'lucide-react'
+import { Award, BarChart2, Check, Copy, Crown, Layers, Loader2, LogOut, Medal, RefreshCw, Trophy } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
+import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import { useGameState } from '@/lib/useGameState'
 
 export default function RoomScoresPage({ params }: { params: Promise<{ id: string }> }) {
@@ -161,6 +162,30 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
               — {topScore} Puan
             </p>
           )}
+
+          {/* Kategori ve Faz Özeti */}
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+            {state.room.categoryMode === 'multi_phase' ? (
+              <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1.5">
+                <Layers className="h-3.5 w-3.5" />
+                <span>
+                  3 Fazlı Oyun Tamamlandı:{' '}
+                  {(state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'])
+                    .map((c) => `${CATEGORIES.find((cat) => cat.id === c)?.icon || ''} ${CATEGORIES.find((cat) => cat.id === c)?.label || c}`)
+                    .join(' → ')}
+                </span>
+              </span>
+            ) : (
+              <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1.5">
+                <Layers className="h-3.5 w-3.5" />
+                <span>
+                  Kategori:{' '}
+                  {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.icon || '🎲'}{' '}
+                  {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}
+                </span>
+              </span>
+            )}
+          </div>
 
           <div className="mt-5 flex justify-center">
             <button

@@ -210,7 +210,13 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
   }
 }
 
-export function createSupabaseFake(tables: FakeTables) {
+export function createSupabaseFake(
+  tables: FakeTables = { rooms: [], players: [], names: [], famous_people: [] },
+) {
+  if (!tables.famous_people) tables.famous_people = []
+  if (!tables.rooms) tables.rooms = []
+  if (!tables.players) tables.players = []
+  if (!tables.names) tables.names = []
   return {
     tables,
     client: {
@@ -244,6 +250,11 @@ export function buildRoom(overrides: Partial<RoomRow> = {}): RoomRow {
     game_round: 1,
     is_game_active: false,
     total_rounds: 3,
+    category_mode: 'single',
+    selected_category: 'all',
+    phase_categories: null,
+    current_phase: 1,
+    total_phases: 1,
     ...overrides,
   }
 }

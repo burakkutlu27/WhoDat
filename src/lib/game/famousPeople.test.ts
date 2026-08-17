@@ -62,6 +62,22 @@ describe('Famous People & Auto-Assign Engine', () => {
       expect(results.length).toBeGreaterThan(0)
       expect(results.some((r) => r.name.toLowerCase().includes('tarkan'))).toBe(true)
     })
+
+    it('vito araması yapıldığında Vito Corleone sonucunu getirir', async () => {
+      fake.tables.famous_people = []
+      const results = await getFamousPeople({ query: 'vito' })
+      expect(results.length).toBeGreaterThan(0)
+      expect(results[0]?.name).toContain('Vito Corleone')
+    })
+
+    it('edebiyat ve mitoloji karakterlerini bulur', async () => {
+      fake.tables.famous_people = []
+      const donResults = await getFamousPeople({ query: 'don kişot' })
+      expect(donResults.length).toBeGreaterThan(0)
+
+      const zeusResults = await getFamousPeople({ query: 'zeus' })
+      expect(zeusResults.length).toBeGreaterThan(0)
+    })
   })
 
   describe('autoAssignNames (Klasik Mod)', () => {

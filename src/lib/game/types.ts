@@ -1,6 +1,9 @@
 import type { RoomStatus } from '../database.types'
 
 /**
+import type { RoomStatus } from '../database.types'
+
+/**
  * Sunucu ile istemci arasındaki sözleşme.
  *
  * Ayrı bir dosyada duruyor çünkü engine.ts `server-only` işaretli; istemci bileşenleri
@@ -8,6 +11,24 @@ import type { RoomStatus } from '../database.types'
  */
 
 export type GameMode = 'classic' | 'speed' | 'persistent' | 'shared_target'
+
+export type LobbyCategoryMode = 'single' | 'multi_phase'
+
+export type FamousPersonCategory =
+  | 'all'
+  | 'unluler'
+  | 'tarihi_kisiler'
+  | 'cizgi_karakterler'
+  | 'sporcular'
+  | 'dizi_film_karakterleri'
+
+export interface RoomCategorySettings {
+  categoryMode: LobbyCategoryMode
+  category: FamousPersonCategory
+  phaseCategories: FamousPersonCategory[]
+  currentPhase: number
+  totalPhases: number
+}
 
 export interface SharedQuestionItem {
   id: string
@@ -53,6 +74,13 @@ export interface GameState {
     gameMode: GameMode
     isGameActive: boolean
     currentPlayerId: string | null
+    /** Kategori Lobisi Alanları */
+    categoryMode?: LobbyCategoryMode
+    selectedCategory?: FamousPersonCategory
+    phaseCategories?: FamousPersonCategory[]
+    currentPhase?: number
+    totalPhases?: number
+    activeCategory?: FamousPersonCategory
     /** Israrcı Mod: oyuncu başına toplam soru bütçesi */
     questionBudgetPerPlayer?: number
     /** Ortak Hedef Modu: Hedef isim (SADECE host'a veya hedef açıklandığında gönderilir) */
@@ -114,15 +142,10 @@ export interface GuessResult {
   nextRoundStarted?: boolean
   targetRevealed?: boolean
   revealedTargetName?: string
+  phaseChanged?: boolean
+  newPhase?: number
+  newCategory?: FamousPersonCategory
 }
-
-export type FamousPersonCategory =
-  | 'all'
-  | 'unluler'
-  | 'tarihi_kisiler'
-  | 'cizgi_karakterler'
-  | 'sporcular'
-  | 'dizi_film_karakterleri'
 
 export interface FamousPerson {
   id: string
