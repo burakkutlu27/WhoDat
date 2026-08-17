@@ -7,7 +7,16 @@ import type { RoomStatus } from '../database.types'
  * bu tipleri motoru bundle'a çekmeden kullanabilmeli.
  */
 
-export type GameMode = 'classic' | 'speed' | 'persistent'
+export type GameMode = 'classic' | 'speed' | 'persistent' | 'shared_target'
+
+export interface SharedQuestionItem {
+  id: string
+  askerId: string
+  askerNickname: string
+  questionText: string
+  answer: 'yes' | 'no' | 'uncertain' | null
+  createdAt: string
+}
 
 export interface PublicPlayer {
   id: string
@@ -26,6 +35,12 @@ export interface PublicPlayer {
   nameSolved?: boolean
   /** Israrcı Mod: bu moddaki kazanılan puan */
   persistentScore?: number
+  /** Ortak Hedef Modu: Hakem mi (Host hakemdir, tahmin edemez) */
+  isReferee?: boolean
+  /** Ortak Hedef Modu: Yanlış tahmin sonrası sıra atlama cezası */
+  skippedQuestionTurn?: boolean
+  /** Ortak Hedef Modu: Buzzer tahmin cooldown'ı */
+  hasGuessCooldown?: boolean
 }
 
 export interface GameState {
@@ -40,6 +55,16 @@ export interface GameState {
     currentPlayerId: string | null
     /** Israrcı Mod: oyuncu başına toplam soru bütçesi */
     questionBudgetPerPlayer?: number
+    /** Ortak Hedef Modu: Hedef isim (SADECE host'a veya hedef açıklandığında gönderilir) */
+    sharedTargetName?: string | null
+    /** Ortak Hedef Modu: Hedef isim herkese açıklandı mı */
+    targetRevealed?: boolean
+    /** Ortak Hedef Modu: Hakemin yanıtlamasını bekleyen soru */
+    pendingQuestion?: SharedQuestionItem | null
+    /** Ortak Hedef Modu: Soru-cevap geçmişi not defteri */
+    questionLog?: SharedQuestionItem[]
+    /** Ortak Hedef Modu: Turu kazanan oyuncu */
+    roundWinnerNickname?: string | null
   }
   players: PublicPlayer[]
   you: {
@@ -58,6 +83,12 @@ export interface GameState {
     nameSolved?: boolean
     /** Israrcı Mod: bu moddaki kazanılan puan */
     persistentScore?: number
+    /** Ortak Hedef Modu: Hakem mi */
+    isReferee?: boolean
+    /** Ortak Hedef Modu: Buzzer tahmin yapabilir mi */
+    canBuzz?: boolean
+    /** Ortak Hedef Modu: Sıra atlama cezası var mı */
+    skippedQuestionTurn?: boolean
   }
   /** Tahmin sırası sizdeyse null: doğru cevap tahmin edene gönderilmez. */
   currentName: string | null
@@ -81,6 +112,9 @@ export interface GuessResult {
   turnPassed?: boolean
   pointsEarned?: number
   nextRoundStarted?: boolean
+  targetRevealed?: boolean
+  revealedTargetName?: string
 }
+
 
 

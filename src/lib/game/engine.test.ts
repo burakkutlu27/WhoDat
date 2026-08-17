@@ -14,8 +14,24 @@ vi.mock('@/lib/supabaseAdmin', () => ({
   supabaseAdmin: () => fake.client,
 }))
 
-const { assignNamesForRound, createRoom, getGameState, getRoomMode, leaveRoom, makeGuess, passTurn, setPlayerSpeedData, setRoomMode, startGame, submitNames } =
-  await import('./engine')
+const {
+  answerSharedQuestion,
+  askSharedQuestion,
+  assignNamesForRound,
+  createRoom,
+  getGameState,
+  getRoomMode,
+  leaveRoom,
+  makeGuess,
+  passTurn,
+  setPlayerSpeedData,
+  setRoomMode,
+  setRoomTarget,
+  startGame,
+  startNextSharedTargetRound,
+  submitNames,
+} = await import('./engine')
+
 
 /** İki oyunculu, oyun başlamış bir oda kurar. */
 function playingRoom() {
@@ -590,5 +606,128 @@ describe('Speed Mode (Hız Modu — Az Soru, Çok Puan)', () => {
     expect(guestPlayer.roundScores).toEqual([90, 85])
   })
 })
+
+describe('Ortak Hedef Modu (shared_target)', () => {
+  function sharedTargetRoom() {
+    const room = buildRoom({
+      game_mode: 'shared_target',
+      status: 'playing',
+      is_game_active: true,
+      game_round: 1,
+      total_rounds: 3,
+    })
+    const host = buildPlayer(room.id, { nickname: 'HostHakem', is_host: true })
+    const p1 = buildPlayer(room.id, { nickname: 'Yarisimaci1', is_host: false })
+    const p2 = buildPlayer(room.id, { nickname: 'Yarisimaci2', is_host: false })
+
+    room.current_player_id = p1.id
+    const tables: FakeTables = { rooms: [room], players: [host, p1, p2], names: [] }
+    return { room, host, p1, p2, tables }
+  }
+
+  it('yalnızca oda sahibi (hakem) gizli hedef belirleyebilir', async () => {
+    const { room, host, p1, tables } = sharedTargetRoom()
+    fake = createSupabaseFake(tables)
+
+    await expect(setRoomTarget(room.id, p1.id, 'Kemal Sunal')).rejects.toMatchObject({
+      code: 'not_host',
+      status: 403,
+    })
+
+    const res = await setRoomTarget(room.id, host.id, 'Kemal Sunal')
+    expect(res.targetName).toBe('Kemal Sunal')
+  })
+
+  it('INV-2: Gizli hedef aktifken yarışmacılara sızdırılmaz, sadece hakeme veya tur bitince görünür', async () => {
+    const { room, host, p1, tables } = sharedTargetRoom()
+    fake = createSupabaseFake(tables)
+    await setRoomTarget(room.id, host.id, 'Albert Einstein')
+
+    const hostState = await getGameState(room.id, host.id)
+    expect(hostState.room.sharedTargetName).toBe('Albert Einstein')
+    expect(hostState.you.isReferee).toBe(true)
+
+    const p1State = await getGameState(room.id, p1.id)
+    expect(p1State.room.sharedTargetName).toBeNull()
+    expect(p1State.you.isReferee).toBe(false)
+  })
+
+  it('sırası gelen yarışmacı hakeme soru sorabilir ve hakem yanıtlayabilir', async () => {
+    const { room, host, p1, p2, tables } = sharedTargetRoom()
+    fake = createSupabaseFake(tables)
+    await setRoomTarget(room.id, host.id, 'Albert Einstein')
+
+    // p2 sırası değilken soramaz
+    await expect(askSharedQuestion(room.id, p2.id, 'Erkek mi?')).rejects.toMatchObject({
+      code: 'not_your_turn',
+      status: 403,
+    })
+
+    // p1 sorar
+    const askRes = await askSharedQuestion(room.id, p1.id, 'Erkek mi?')
+    expect(askRes.question.questionText).toBe('Erkek mi?')
+
+    // p1 hakem olmadığı için yanıtlayamaz
+    await expect(answerSharedQuestion(room.id, p1.id, askRes.question.id, 'yes')).rejects.toMatchObject({
+      code: 'not_host',
+      status: 403,
+    })
+
+    // Hakem yanıtlar -> Soru log'a geçer, sıra p2'ye geçer
+    const ansRes = await answerSharedQuestion(room.id, host.id, askRes.question.id, 'yes')
+    expect(ansRes.nextPlayerId).toBe(p2.id)
+
+    const updatedState = await getGameState(room.id, p1.id)
+    expect(updatedState.room.questionLog).toHaveLength(1)
+    expect(updatedState.room.questionLog![0]!.answer).toBe('yes')
+    expect(tables.rooms[0]!.current_player_id).toBe(p2.id)
+  })
+
+  it('herhangi bir yarışmacı sırası onda olmasa bile BUZZER ile tahmin yapabilir', async () => {
+    const { room, host, p1, p2, tables } = sharedTargetRoom()
+    fake = createSupabaseFake(tables)
+    await setRoomTarget(room.id, host.id, 'Albert Einstein')
+
+    // Sıra p1'deyken p2 yanlış tahmin yapar
+    const wrongGuess = await makeGuess(room.id, p2.id, 'Kemal Sunal')
+    expect(wrongGuess.correct).toBe(false)
+    expect(wrongGuess.targetRevealed).toBe(false)
+
+    // Hakem tahmin yapamaz
+    await expect(makeGuess(room.id, host.id, 'Albert Einstein')).rejects.toMatchObject({
+      code: 'host_cannot_guess',
+      status: 403,
+    })
+
+    // p1 doğru tahmin yapar -> +100 puan, hedef açılır
+    const correctGuess = await makeGuess(room.id, p1.id, 'albert einstein')
+    expect(correctGuess.correct).toBe(true)
+    expect(correctGuess.pointsEarned).toBe(100)
+    expect(correctGuess.targetRevealed).toBe(true)
+    expect(correctGuess.revealedTargetName).toBe('Albert Einstein')
+
+    const p1Player = tables.players.find((p) => p.id === p1.id)!
+    expect(p1Player.score).toBe(100)
+
+    // Hedef açıldıktan sonra yarışmacı da hedefi görebilir
+    const p2State = await getGameState(room.id, p2.id)
+    expect(p2State.room.sharedTargetName).toBe('Albert Einstein')
+    expect(p2State.room.targetRevealed).toBe(true)
+  })
+
+  it('hakem sonraki tura yeni bir hedefle geçebilir', async () => {
+    const { room, host, p1, tables } = sharedTargetRoom()
+    fake = createSupabaseFake(tables)
+    await setRoomTarget(room.id, host.id, 'Albert Einstein')
+
+    await startNextSharedTargetRound(room.id, host.id, 'Barış Manço')
+    expect(tables.rooms[0]!.game_round).toBe(2)
+
+    const hostState = await getGameState(room.id, host.id)
+    expect(hostState.room.sharedTargetName).toBe('Barış Manço')
+    expect(hostState.room.targetRevealed).toBe(false)
+  })
+})
+
 
 

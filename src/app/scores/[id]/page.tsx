@@ -262,6 +262,13 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                         </div>
                       )}
 
+                      {/* Ortak Hedef Modu Rolü */}
+                      {state.room.gameMode === 'shared_target' && player.isHost && (
+                        <div className="mt-1 text-xs font-display font-bold text-pencil-orange">
+                          👑 Hakem (Hedefleri Belirleyen & Yanıtlayan)
+                        </div>
+                      )}
+
                       {/* Israrcı Mod Durum Özeti */}
                       {state.room.gameMode === 'persistent' && (
                         <div className="mt-1 flex items-center gap-2 text-xs font-display">
@@ -281,6 +288,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                           )}
                         </div>
                       )}
+
                     </div>
                   </div>
 

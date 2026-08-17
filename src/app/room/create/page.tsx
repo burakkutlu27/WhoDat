@@ -96,7 +96,7 @@ export default function CreateRoomPage() {
               <label className="mb-2 block font-display text-xl font-bold text-ink">
                 Oyun Modu
               </label>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <button
                   type="button"
                   onClick={() => setGameMode('classic')}
@@ -109,7 +109,7 @@ export default function CreateRoomPage() {
                 >
                   <div>
                     <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
-                      <span>🎯 Klasik Mod</span>
+                      <span>🎯 Klasik</span>
                       {gameMode === 'classic' && <span className="text-[10px] bg-pencil-yellow text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
                     <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
@@ -134,7 +134,7 @@ export default function CreateRoomPage() {
                       {gameMode === 'speed' && <span className="text-[10px] bg-pencil-green text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
                     <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
-                      Az Soru, Çok Puan! 3 tur boyunca en az soruyla bil, puanları topla!
+                      Az Soru, Çok Puan! 3 turda en az soruyla bil, puanları topla!
                     </span>
                   </div>
                 </button>
@@ -151,16 +151,38 @@ export default function CreateRoomPage() {
                 >
                   <div>
                     <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
-                      <span>🧠 Israrcı Mod</span>
+                      <span>🧠 Israrcı</span>
                       {gameMode === 'persistent' && <span className="text-[10px] bg-pencil-blue text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
                     <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
-                      10 Soru Bütçesi & 3 Can. Bütçen bitince zorunlu tahmin, az soru çok puan!
+                      10 Soru Bütçesi & 3 Can. Bütçen bitince zorunlu tahmin!
+                    </span>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setGameMode('shared_target')}
+                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 ${
+                    gameMode === 'shared_target'
+                      ? 'sticky-note sticky-note-orange scale-[1.02] shadow-md border-pencil-orange ring-2 ring-pencil-orange'
+                      : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
+                  }`}
+                  style={{ borderRadius: '8px 10px 6px 8px' }}
+                >
+                  <div>
+                    <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
+                      <span>👥 Ortak Hedef</span>
+                      {gameMode === 'shared_target' && <span className="text-[10px] bg-pencil-orange text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                    </span>
+                    <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
+                      Tek Gizli Kişi & Hakem! Sırayla soru sor, buzzer ile ilk sen bil!
                     </span>
                   </div>
                 </button>
               </div>
             </div>
+
 
             {error && (
               <motion.div

@@ -10,7 +10,9 @@ import {
   generateRoomCode,
   selectNameForPlayer,
   selectNextPlayer,
+  selectNextSharedTargetAsker,
 } from './rules'
+
 
 const players = [{ id: 'p1' }, { id: 'p2' }, { id: 'p3' }]
 
@@ -140,3 +142,38 @@ describe('calculatePersistentScore', () => {
     expect(calculatePersistentScore(11)).toBe(20)
   })
 })
+
+describe('selectNextSharedTargetAsker', () => {
+  const roomPlayers = [
+    { id: 'host-1' },
+    { id: 'p1' },
+    { id: 'p2' },
+    { id: 'p3' },
+  ]
+
+  it('hostu atlar ve yarışmacılar arasında döner', () => {
+    const r1 = selectNextSharedTargetAsker(roomPlayers, 'p1', 'host-1')
+    expect(r1.nextPlayer?.id).toBe('p2')
+
+    const r2 = selectNextSharedTargetAsker(roomPlayers, 'p2', 'host-1')
+    expect(r2.nextPlayer?.id).toBe('p3')
+
+    const r3 = selectNextSharedTargetAsker(roomPlayers, 'p3', 'host-1')
+    expect(r3.nextPlayer?.id).toBe('p1')
+  })
+
+  it('cezalı oyuncuyu atlar ve cezasını tüketir', () => {
+    const penalized = new Set(['p2'])
+    const r = selectNextSharedTargetAsker(roomPlayers, 'p1', 'host-1', penalized)
+    expect(r.nextPlayer?.id).toBe('p3')
+    expect(r.consumedPenalties).toEqual(['p2'])
+  })
+
+  it('tüm yarışmacılar cezalıysa sıradaki ilk oyuncuya döner ve cezaları temizler', () => {
+    const penalized = new Set(['p1', 'p2', 'p3'])
+    const r = selectNextSharedTargetAsker(roomPlayers, 'p1', 'host-1', penalized)
+    expect(r.nextPlayer?.id).toBe('p2')
+    expect(r.consumedPenalties).toContain('p2')
+  })
+})
+

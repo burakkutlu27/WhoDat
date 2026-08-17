@@ -28,7 +28,7 @@ export const nameTextSchema = z
   .min(1, 'İsim boş olamaz.')
   .max(60, 'İsim en fazla 60 karakter olabilir.')
 
-export const gameModeSchema = z.enum(['classic', 'speed', 'persistent'])
+export const gameModeSchema = z.enum(['classic', 'speed', 'persistent', 'shared_target'])
 
 export const createRoomSchema = z.object({
   nickname: nicknameSchema,
@@ -54,6 +54,26 @@ export const submitNamesSchema = z.object({
 export const guessSchema = z.object({
   guess: nameTextSchema,
 })
+
+export const askQuestionSchema = z.object({
+  question: z
+    .string()
+    .trim()
+    .min(1, 'Soru metni boş olamaz.')
+    .max(150, 'Soru en fazla 150 karakter olabilir.'),
+})
+
+export const answerQuestionSchema = z.object({
+  questionId: z.string().min(1, 'Soru ID zorunludur.'),
+  answer: z.enum(['yes', 'no', 'uncertain'], {
+    message: 'Cevap Evet, Hayır veya Belirsiz olmalıdır.',
+  }),
+})
+
+export const setTargetSchema = z.object({
+  targetName: nameTextSchema,
+})
+
 
 export function parseBody<Schema extends z.ZodType>(schema: Schema, data: unknown): z.infer<Schema> {
   const result = schema.safeParse(data)
