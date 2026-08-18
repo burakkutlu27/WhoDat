@@ -1149,12 +1149,20 @@ export async function autoAssignNames(
   const gameMode = getRoomMode(roomId, room.game_mode)
 
   if (gameMode === 'shared_target') {
-    const candidates = await getFamousPeople({
+    let candidates = await getFamousPeople({
       category: effectiveCategory,
       random: true,
       limit: 10,
-      maxFameTier: 2,
+      maxFameTier: 1,
     })
+    if (candidates.length === 0) {
+      candidates = await getFamousPeople({
+        category: effectiveCategory,
+        random: true,
+        limit: 10,
+        maxFameTier: 2,
+      })
+    }
     if (candidates.length === 0) {
       throw badRequest('no_famous_people', 'Seçilen kategoride ünlü bulunamadı.')
     }
@@ -1174,13 +1182,27 @@ export async function autoAssignNames(
   const pool = await getFamousPeople({
     category: effectiveCategory,
     random: true,
-    maxFameTier: 2,
+    maxFameTier: 1,
     limit: Math.max(totalNamesNeeded + 10, 50),
   })
 
   if (pool.length < totalNamesNeeded) {
     const extra = await getFamousPeople({
       category: 'all',
+      random: true,
+      maxFameTier: 1,
+      limit: totalNamesNeeded + 10,
+    })
+    for (const item of extra) {
+      if (!pool.some((p) => p.name.toLocaleLowerCase('tr') === item.name.toLocaleLowerCase('tr'))) {
+        pool.push(item)
+      }
+    }
+  }
+
+  if (pool.length < totalNamesNeeded) {
+    const extra = await getFamousPeople({
+      category: effectiveCategory,
       random: true,
       maxFameTier: 2,
       limit: totalNamesNeeded + 10,
@@ -1442,13 +1464,27 @@ async function transitionToNextPhase(
   const pool = await getFamousPeople({
     category: nextCategory,
     random: true,
-    maxFameTier: 2,
+    maxFameTier: 1,
     limit: Math.max(totalNamesNeeded + 10, 50),
   })
 
   if (pool.length < totalNamesNeeded) {
     const extra = await getFamousPeople({
       category: 'all',
+      random: true,
+      maxFameTier: 1,
+      limit: totalNamesNeeded + 10,
+    })
+    for (const item of extra) {
+      if (!pool.some((p) => p.name.toLocaleLowerCase('tr') === item.name.toLocaleLowerCase('tr'))) {
+        pool.push(item)
+      }
+    }
+  }
+
+  if (pool.length < totalNamesNeeded) {
+    const extra = await getFamousPeople({
+      category: nextCategory,
       random: true,
       maxFameTier: 2,
       limit: totalNamesNeeded + 10,

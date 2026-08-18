@@ -110,14 +110,14 @@ describe('Famous People & Auto-Assign Engine', () => {
       expect(hostNames.length).toBe(3)
       expect(guestNames.length).toBe(3)
 
-      // Atanan isimlerin tamamının Tier 1 veya Tier 2 olduğunu doğrula
+      // Atanan isimlerin tamamının Tier 1 olduğunu doğrula
       const { FAMOUS_PEOPLE_SEED } = await import('./famousPeopleData')
       for (const assigned of fake.tables.names) {
         const seed = FAMOUS_PEOPLE_SEED.find(
           (s) => s.name.toLocaleLowerCase('tr') === assigned.name_text.toLocaleLowerCase('tr')
         )
         if (seed) {
-          expect(seed.fameTier).toBeLessThanOrEqual(2)
+          expect(seed.fameTier).toBe(1)
         }
       }
     })

@@ -37,24 +37,759 @@ export interface FamousPersonSeed {
 
 export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
+    "name": "Novak Djokovic",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Rafael Nadal",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Roger Federer",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Usain Bolt",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Mike Tyson",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Muhammed Ali",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Stephen Curry",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Shaquille O'Neal",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "LeBron James",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Kobe Bryant",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Michael Jordan",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Luka Modric",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Robert Lewandowski",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Karim Benzema",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Zlatan Ibrahimovic",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Erling Haaland",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Neymar",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Ronaldo (Nazário)",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Ronaldinho",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "David Beckham",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Zinedine Zidane",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Pelé",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Cristiano Ronaldo",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Dusan Tadic",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Edin Dzeko",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Mauro Icardi",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Toprak Razgatlıoğlu",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Kenan Sofuoğlu",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Semih Saygıner",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Halil Mutlu",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Hamza Yerlikaya",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Taha Akgül",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Rıza Kayaalp",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Mete Gazoz",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Zehra Güneş",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Mehmet Okur",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "İlkay Gündoğan",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Kenan Yıldız",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Kerem Aktürkoğlu",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Hakan Çalhanoğlu",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Sergen Yalçın",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Rüştü Reçber",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Volkan Demirel",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Fernando Muslera",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Gheorghe Hagi",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Naim Süleymanoğlu",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Hakan Şükür",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Şenol Güneş",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Fatih Terim",
+    "category": "sporcular",
+    "fameTier": 1
+  },
+  {
+    "name": "Jackie Chan",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Keanu Reeves",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Will Smith",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Morgan Freeman",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Marilyn Monroe",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Sylvester Stallone",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Arnold Schwarzenegger",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Johnny Depp",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Angelina Jolie",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Tom Cruise",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Leonardo DiCaprio",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Brad Pitt",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Taylor Swift",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Beyoncé",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Rihanna",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Shakira",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Eminem",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Elvis Presley",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Freddie Mercury",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Madonna",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Michael Jackson",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Kenan Doğulu",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Serdar Ortaç",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Gülşen",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Murat Boz",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Hadise",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Yıldız Tilbe",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Beren Saat",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Kıvanç Tatlıtuğ",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Haluk Bilginer",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Beyazıt Öztürk",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Yılmaz Erdoğan",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Nejat Uygur",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Levent Kırca",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Metin Akpınar",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Kadir İnanır",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Hülya Koçyiğit",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Türkan Şoray",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Tarık Akan",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Münir Özkul",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Halit Akçatepe",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Şener Şen",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Cem Yılmaz",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Kemal Sunal",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Aşık Veysel",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Neşet Ertaş",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Orhan Gencebay",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Ahmet Kaya",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Zeki Müren",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "İbrahim Tatlıses",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Müslüm Gürses",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Sezen Aksu",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Tarkan",
+    "category": "unluler",
+    "fameTier": 1
+  },
+  {
+    "name": "Kleopatra",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Thomas Edison",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Stephen Hawking",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Charles Darwin",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Sigmund Freud",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Aristoteles",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Platon",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Sokrates",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Celal Şengör",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "İlber Ortaylı",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Cahit Arf",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Mete Han",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Alparslan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Selahaddin Eyyubi",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Attila",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Timur",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Cengiz Han",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Prenses Diana",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Kraliçe II. Elizabeth",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Che Guevara",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Nelson Mandela",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Mahatma Gandhi",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Joseph Stalin",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Vladimir Lenin",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Abraham Lincoln",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Adolf Hitler",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Napolyon Bonapart",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Jül Sezar",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Büyük İskender",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Kristof Kolomb",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Nikola Tesla",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Leonardo da Vinci",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Isaac Newton",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Piri Reis",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Barbaros Hayreddin Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Yunus Emre",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Mimar Sinan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Mevlana Celaleddin Rumi",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "II. Abdülhamid",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Osman Gazi",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Yavuz Sultan Selim",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Kanuni Sultan Süleyman",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Fatih Sultan Mehmet",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "İsmet İnönü",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
+    "name": "Mustafa Kemal Atatürk",
+    "category": "tarihi_kisiler",
+    "fameTier": 1
+  },
+  {
     "name": "Vito Corleone (Baba / The Godfather)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Michael Corleone",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Sonny Corleone",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Tony Montana (Yaralı Yüz / Scarface)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Walter White (Heisenberg)",
@@ -64,7 +799,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jesse Pinkman",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Saul Goodman (Jimmy McGill)",
@@ -74,22 +809,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gus Fring",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Mike Ehrmantraut",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hank Schrader",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Thomas Shelby (Peaky Blinders)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Arthur Shelby",
@@ -99,57 +834,57 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Polly Gray (Peaky Blinders)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Alfie Solomons",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Jon Snow (Game of Thrones)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Daenerys Targaryen",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Tyrion Lannister",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Cersei Lannister",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Jaime Lannister",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Arya Stark",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Sansa Stark",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Ned Stark",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Gece Kralı (Night King)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Harry Potter",
@@ -159,12 +894,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hermione Granger",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ron Weasley",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Lord Voldemort",
@@ -179,27 +914,27 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Severus Snape",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Sirius Black",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Rubeus Hagrid",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Draco Malfoy",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bellatrix Lestrange",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Dobby (Ev Cini)",
@@ -209,12 +944,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frodo Baggins",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Samwise Gamgee",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Gandalf (Gri/Ak Gandalf)",
@@ -229,17 +964,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Legolas",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Gimli",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Boromir",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Gollum (Smeagol)",
@@ -249,17 +984,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sauron",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Saruman",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Bilbo Baggins",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Luke Skywalker",
@@ -274,17 +1009,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Prenses Leia",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Han Solo",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Chewbacca",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Yoda (Usta Yoda)",
@@ -294,22 +1029,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Obi-Wan Kenobi",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "İmparator Palpatine",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Darth Maul",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Kylo Ren",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Mandalorian (Din Djarin)",
@@ -319,7 +1054,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bebek Yoda (Grogu)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 1
+    "fameTier": 3
   },
   {
     "name": "Kaptan Jack Sparrow",
@@ -329,22 +1064,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Will Turner",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Elizabeth Swann",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Kaptan Hector Barbossa",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Davy Jones",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Sherlock Holmes",
@@ -354,12 +1089,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dr. John Watson",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Profesör James Moriarty",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "James Bond (007)",
@@ -369,12 +1104,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Neo (Matrix / Thomas Anderson)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Morpheus (Matrix)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Trinity (Matrix)",
@@ -384,12 +1119,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ajan Smith",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "John Wick",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Terminatör (T-800)",
@@ -399,17 +1134,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sarah Connor",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Forrest Gump",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Indiana Jones",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 1
   },
   {
     "name": "Rocky Balboa",
@@ -424,12 +1159,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hannibal Lecter",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Tyler Durden (Dövüş Kulübü)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Patrick Bateman (Amerikan Sapığı)",
@@ -459,7 +1194,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Michael Scofield (Prison Break)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Theodore Bagwell (T-Bag)",
@@ -469,22 +1204,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dexter Morgan",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Wednesday Addams",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Eleven (Stranger Things)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Homelander (The Boys)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Billy Butcher (The Boys)",
@@ -504,12 +1239,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Memati Baş",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Abdülhey Çoban",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Seyfo Dayı",
@@ -549,12 +1284,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ezel Bayraktar",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Eyşan Tezcan",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Cengiz Atay",
@@ -569,7 +1304,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kenan Birkan",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Tefo (Tevfik Zaim)",
@@ -579,7 +1314,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Behzat Ç.",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Harun (Behzat Ç.)",
@@ -614,12 +1349,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adnan Ziyagil",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Firdevs Yöreoğlu",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Matmazel (Aşk-ı Memnu)",
@@ -629,7 +1364,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Yamaç Koçovalı",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "İdris Koçovalı",
@@ -639,7 +1374,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Vartolu Sadettin",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Cumali Koçovalı",
@@ -654,32 +1389,32 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mecnun Çınar",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "İsmail Abi",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Erdal Bakkal",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Yılmaz (Gibi)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "İlkkan (Gibi)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Ersoy (Gibi)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Burhan Altıntop",
@@ -699,7 +1434,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kuzey Tekinoğlu",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Güney Tekinoğlu",
@@ -709,7 +1444,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rıza Baba (Arka Sokaklar)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Mesut Komiser",
@@ -724,7 +1459,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hızır Çakırbeyli (EDHO)",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "İlyas Çakırbeyli",
@@ -769,7 +1504,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hakiki Tosun Paşa",
     "category": "dizi_film_karakterleri",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Kibar Feyzo",
@@ -869,7 +1604,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cuma (Robinson Crusoe)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Gulliver (Gulliver’in Gezileri)",
@@ -879,7 +1614,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Huckleberry Finn",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Tom Sawyer",
@@ -909,7 +1644,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kral Lear",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Macbeth",
@@ -929,7 +1664,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mefistofeles (Faust)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Alice (Harikalar Diyarında)",
@@ -944,12 +1679,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kupa Kraliçesi (Queen of Hearts)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Cheshire Kedisi",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Zeze (Şeker Portakalı)",
@@ -959,7 +1694,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kaptan Ahab (Moby Dick)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Moby Dick (Beyaz Balina)",
@@ -1044,7 +1779,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Baba (Kırk Haramiler)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Sinbad (Denizci Sinbad)",
@@ -1214,7 +1949,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kara Dul (Black Widow / Natasha Romanoff)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Doktor Strange (Stephen Strange)",
@@ -1249,17 +1984,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Harley Quinn",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Thanos",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Venom",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "SüngerBob KareŞort",
@@ -1269,17 +2004,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Patrick Yıldız",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Squidward",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Bay Yengeç",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Plankton",
@@ -1299,7 +2034,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Goofy",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Bugs Bunny",
@@ -1309,17 +2044,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Daffy Duck",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Tweety",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Sylvester",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Tom ve Jerry",
@@ -1329,12 +2064,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Scooby-Doo",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Shaggy",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Temel Reis",
@@ -1369,17 +2104,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Asteriks (Asterix)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Oburiks (Obelix)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Tenten (Tintin)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Şirin Baba",
@@ -1409,22 +2144,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cedric",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Heidi",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Winnie the Pooh",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Simba (Aslan Kral)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Mufasa",
@@ -1444,32 +2179,32 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fiona (Shrek)",
     "category": "cizgi_karakterler",
-    "fameTier": 1
+    "fameTier": 2
   },
   {
     "name": "Eşek (Shrek)",
     "category": "cizgi_karakterler",
-    "fameTier": 1
+    "fameTier": 2
   },
   {
     "name": "Çizmeli Kedi",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Kung Fu Panda (Po)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Manny (Buz Devri)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Sid (Buz Devri)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Diego (Buz Devri)",
@@ -1484,22 +2219,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Woody (Oyuncak Hikayesi)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Buzz Lightyear",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Şimşek McQueen (Arabalar)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Nemo (Kayıp Balık Nemo)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Gru (Çılgın Hırsız)",
@@ -1509,32 +2244,32 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Minyonlar (Minions)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Ben 10",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Samurai Jack",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Johnny Bravo",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Gumball",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Darwin (Gumball)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Mordecai (Sürekli Dizi)",
@@ -1574,7 +2309,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kral Şakir",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Fil Necati",
@@ -1584,7 +2319,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Pepee",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Pikachu (Pokemon)",
@@ -1594,12 +2329,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ash Ketchum (Pokemon)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Goku (Dragon Ball)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Vegeta (Dragon Ball)",
@@ -1609,7 +2344,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Naruto Uzumaki",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Sasuke Uchiha",
@@ -1639,7 +2374,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kaptan Tsubasa (Tsubasa Ozora)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Kojiro Hyuga",
@@ -1669,7 +2404,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sonic (Kirpi Sonic)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Link (Zelda)",
@@ -1684,7 +2419,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Pac-Man",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Crash Bandicoot",
@@ -1694,12 +2429,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lara Croft (Tomb Raider)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Kratos (God of War)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Atreus (God of War)",
@@ -1709,7 +2444,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rivialı Geralt (The Witcher)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Ciri (The Witcher)",
@@ -1724,7 +2459,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arthur Morgan (Red Dead Redemption 2)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "John Marston (Red Dead Redemption)",
@@ -1734,12 +2469,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "CJ (Carl Johnson - GTA San Andreas)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Tommy Vercetti (GTA Vice City)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Trevor Philips (GTA V)",
@@ -1799,7 +2534,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Steve (Minecraft)",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Creeper (Minecraft)",
@@ -1824,7 +2559,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abdurrahman Palay",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Abdülhennan Sefa",
@@ -1849,7 +2584,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adem Ayral",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Adem Taşay",
@@ -1864,12 +2599,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adnan Karabacak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Adnan Maral",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Adnan Mersinli",
@@ -1909,7 +2644,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Kayakesen",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Ahmet Kostarika",
@@ -1944,7 +2679,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Saraçoğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ahmet Sezerel",
@@ -1999,7 +2734,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ozan Akbaba",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Akın Akınözü",
@@ -2084,7 +2819,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Buhara Mete",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Cağaloğlu",
@@ -2099,7 +2834,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Çelik",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Demir",
@@ -2169,7 +2904,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Karagöz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Kemal İskender",
@@ -2189,7 +2924,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Poyrazoğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Rıza Kubilay",
@@ -2239,7 +2974,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Uyandıran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Üstüntaş",
@@ -2259,7 +2994,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alican Albayrak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alican Yücesoy",
@@ -2324,7 +3059,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alper Saldıran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alperen Duymaz",
@@ -2384,17 +3119,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ankaralı Turgut",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ararat Mor",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aras Aydın",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aras Bulut İynemli",
@@ -2419,7 +3154,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arda Kural",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Arda Öziri",
@@ -2444,7 +3179,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arif Erkin Güzelbeyoğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Arif Kilisli",
@@ -2489,7 +3224,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Asuman Korad",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ata Berk Mutlu",
@@ -2514,7 +3249,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Atakan Çelik",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Atalay Demirci",
@@ -2554,7 +3289,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Atilla Saral",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Atilla Şendil",
@@ -2569,17 +3304,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Atsız Karaduman",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Attila Olgaç",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Mustafa Avkıran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Avni Dilligil",
@@ -2594,7 +3329,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayberk Attila",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ayberk Pekcan",
@@ -2649,7 +3384,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aykut Oray",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aykut Sözeri",
@@ -2779,7 +3514,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barış Murat Yağcı",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Barış Sezer",
@@ -2799,7 +3534,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Batuhan Karacakaya",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bayhan",
@@ -2844,12 +3579,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Berat Efe Parlar",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Berat Yenilmez",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Berhan Şimşek",
@@ -2879,7 +3614,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Berkay Ateş",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Berke Üzrek",
@@ -2929,27 +3664,27 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bora Akkaş",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bora Ayanoğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bora Cengiz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bora Sivri",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bora Tekay",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Boran Kuzum",
@@ -2964,7 +3699,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kullanıcı:Bugraork/Taslak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Buğra Gülsoy",
@@ -2974,7 +3709,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Buğrahan Çayır",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Onur Buldu",
@@ -2984,32 +3719,32 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bulut Aras",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Alkaş",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Dakak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Davutoğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Demir",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Deniz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Özçivit",
@@ -3019,42 +3754,42 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Sağyaşar",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Satıbol",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Serdar Şanal",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Sergen",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Sevinç",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Tamdoğan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Topaloğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Tozkoparan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Farah Zeynep Abdullah",
@@ -3154,12 +3889,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Derya Alabora",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alara Turan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alev Baymur",
@@ -3174,12 +3909,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alev Koral",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alev Oraloğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alev Sururi",
@@ -3259,12 +3994,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Meriç Aral",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Melda Arat",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Derya Arbaş",
@@ -3369,7 +4104,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aslıhan Malbora",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Asude Kalebek",
@@ -3419,7 +4154,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayça Ayşin Turan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ayça Bingöl",
@@ -3434,7 +4169,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayça Erturan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ayça İnci",
@@ -3489,7 +4224,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayfer Feray",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ayla Arslancan",
@@ -3499,7 +4234,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayla Karaca",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aylin Aslım",
@@ -3509,7 +4244,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aylin Kabasakal",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aylin Kontente",
@@ -3704,7 +4439,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Azra Akın",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bahar Erdeniz",
@@ -3799,7 +4534,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Begüm Kütük Yaşaroğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Begüm Öner",
@@ -3854,7 +4589,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bensu Soral",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bercis Fesçi",
@@ -3884,7 +4619,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Berrak Tüzünataç",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Berrin Akdeniz",
@@ -3924,7 +4659,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Beyhan Saran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Beyza Şekerci",
@@ -3939,7 +4674,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Biğkem Karavus",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bihter Dinçel",
@@ -3969,7 +4704,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Biran Damla Yılmaz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Birce Akalay",
@@ -4039,12 +4774,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burcu Kara",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burcu Kıratlı",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burcu Özberk",
@@ -4074,7 +4809,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Büşra Develi",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Büşra Pekin",
@@ -4099,7 +4834,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sibel Can",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Canan Çiftel",
@@ -4159,7 +4894,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cavidan Dora",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Cemre Baysel",
@@ -4189,7 +4924,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceren Moray",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ceren Soylu",
@@ -4219,12 +4954,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceylan Ece",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Laçin Ceylan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Meltem Cumbul",
@@ -4249,7 +4984,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sanem Çelik",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Feride Çetin",
@@ -4364,7 +5099,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Baykal Saran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Berk Cankat",
@@ -4379,7 +5114,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Berkay Hardal",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Beyazıt Gülercan",
@@ -4389,7 +5124,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Birtan Turan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Emin Boztepe",
@@ -4399,12 +5134,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Buğra Özmüldür",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Aksak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Kut",
@@ -4414,12 +5149,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Yamantürk",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Yörük",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burç Kümbetlioğlu",
@@ -4434,7 +5169,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burçin Oraloğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bülend Çolak",
@@ -4459,12 +5194,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bülent Emin Yarar",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bülent Emrah Parlak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bülent İnal",
@@ -4479,7 +5214,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bülent Oran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bülent Polat",
@@ -4489,17 +5224,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bülent Seyran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bülent Şakrak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bülent Yıldıran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Kerem Bürsin",
@@ -4544,7 +5279,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Can Kahraman",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Can Kolukısa",
@@ -4594,7 +5329,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Caner Kurtaran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Caner Özyurtlu",
@@ -4639,7 +5374,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fırat Çelik",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Celil Nalçakan",
@@ -4719,12 +5454,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Asu Maralman",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Asuman Krause",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ava Yaman",
@@ -4749,7 +5484,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aylin Arasıl",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ayşe Erbulak",
@@ -4779,7 +5514,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bengi İdil Uras",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bengisu Gürbüzer Doğru",
@@ -4799,12 +5534,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Berna Koraltürk",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Berrak Kuş",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burcu Esmersoy",
@@ -4824,7 +5559,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceren Karakoç",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Damla Colbay",
@@ -4834,7 +5569,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Çağla Kubat",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Çağla Şıkel",
@@ -4864,7 +5599,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Bulut",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Tibet Ağırtan",
@@ -4949,7 +5684,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Koray Candemir",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Cansu Koç",
@@ -5034,17 +5769,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Edip Akbayram",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Edis İlhan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Emrah Karaca",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Emre Altuğ",
@@ -5094,7 +5829,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Şebnem Ferah",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Feridun Düzağaç",
@@ -5184,12 +5919,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Haluk Levent",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Harun Tekin",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İlhan İrem",
@@ -5229,7 +5964,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kenan Vural",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Kıraç",
@@ -5274,22 +6009,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Murat Ertel",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Evgin",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Göğebakan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat İlkan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Kekilli",
@@ -5299,7 +6034,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Murat Net",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nedim Hazar",
@@ -5384,12 +6119,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sertab Erener",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Seyhan Karabay",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Seyyal Taner",
@@ -5424,12 +6159,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Tarkan Çakır",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Teoman",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Umut Kaya",
@@ -5524,7 +6259,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak King",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Cakal",
@@ -5544,7 +6279,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Contra",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Dr. Fuchs",
@@ -5614,7 +6349,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kayra",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Keişan",
@@ -5654,7 +6389,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mirac",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Motive",
@@ -5689,7 +6424,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ragga Oktay",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Reyhan Şahin",
@@ -5719,12 +6454,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Server Uraz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Sokrat St",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Şanışer",
@@ -5749,7 +6484,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kullanıcı mesaj:TRMuzikGozlemcisi",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Uzi",
@@ -5799,7 +6534,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Murat Özel",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ahmet Tezcan",
@@ -5839,7 +6574,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayşe Aral",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aslı Hünel",
@@ -5909,7 +6644,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Boran Kaya",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Yiğit Bulut",
@@ -5964,7 +6699,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cem Davran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Cem Kurtoğlu",
@@ -5999,7 +6734,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cenk Koray",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ceyhun Yılmaz",
@@ -6069,7 +6804,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dilara Gönder",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Dilaver Uyanık",
@@ -6089,7 +6824,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Güzide Duran",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ersin Düzen",
@@ -6104,12 +6839,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ebru Gündeş",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Ebru Karanfilci",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ebru Şallı",
@@ -6149,7 +6884,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Emre Karayel",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Engin Altan Düzyatan",
@@ -6164,12 +6899,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Erdöl Boratap",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Gülben Ergen",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 1
   },
   {
     "name": "Erhan Konuk",
@@ -6189,7 +6924,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Esra Eron",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ertem Şener",
@@ -6204,17 +6939,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Esra Balamir",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Esra Ceyhan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Esra Erol",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Eşref Şefik",
@@ -6254,7 +6989,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fatoş Kabasakal",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fatoş Seğmen",
@@ -6289,12 +7024,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gamze Karaman",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Gamze Özçelik",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Gani Müjde",
@@ -6334,7 +7069,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gülseren Budayıcıoğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Güner Ümit",
@@ -6359,7 +7094,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gürsu Arat",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Güven İslamoğlu",
@@ -6374,12 +7109,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hakan Çelik",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hakan Eratik",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hakan Hatipoğlu",
@@ -6389,7 +7124,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hakan Ural",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hakan Yılmaz",
@@ -6414,12 +7149,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Harun Can",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hidayet Karaca",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hilal Cebeci",
@@ -6454,12 +7189,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İbrahim Güneş",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İbrahim Selim",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İclal Aydın",
@@ -6489,7 +7224,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İlker Karagöz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İnci Özkasnak",
@@ -6514,7 +7249,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kaan Kural",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Kaan Sekban",
@@ -6544,7 +7279,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Okan Karacan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Kartal Balaban",
@@ -6564,7 +7299,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kayra Şenocak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Kemal Uçar",
@@ -6574,7 +7309,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kenan İmirzalıoğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Kerem Alışık",
@@ -6664,7 +7399,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Meral Konrat",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Mert Öğün",
@@ -6689,42 +7424,42 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Murat Başoğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Ceylan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Güloğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Kosova",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Murathanoğlu",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Serezli",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Yeni",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Yıldırım",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Mübeccel Argun",
@@ -6759,7 +7494,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nazlı Çelik",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nazlı Tolga",
@@ -6774,7 +7509,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nefise Karatay",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nehir Babataş",
@@ -6819,12 +7554,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nilay Ceylan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nurhayat Kavrak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nursel Ergin",
@@ -6859,7 +7594,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "A Boogie wit da Hoodie",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 5
   },
   {
     "name": "Aaron Himelstein",
@@ -6899,7 +7634,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jake Abel",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Omid Abtahi",
@@ -6999,7 +7734,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alan Rachins",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alan Young",
@@ -7014,7 +7749,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Carlos Alazraqui",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alden Ehrenreich",
@@ -7039,7 +7774,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alfred Lunt",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Jed Allan",
@@ -7129,7 +7864,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Andre Braugher",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Andreas Katsulas",
@@ -7204,7 +7939,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Anthony De La Torre",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 5
   },
   {
     "name": "Anthony Edwards",
@@ -7214,7 +7949,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Anthony Franciosa",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Anthony Geary",
@@ -7229,7 +7964,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Anthony Guidera",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Anthony Jeselnik",
@@ -7254,7 +7989,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Anthony Ramos",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Marc Anthony",
@@ -7319,7 +8054,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Art Metrano",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Arthur Edmund Carewe",
@@ -7359,7 +8094,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fred Astaire",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "René Auberjonois",
@@ -7374,7 +8109,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Austin Abrams",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Austin Butler",
@@ -7384,7 +8119,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frankie Avalon",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "James Avery",
@@ -7659,7 +8394,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Benjamin Bratt",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "H. Jon Benjamin",
@@ -7704,7 +8439,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Warren Berlinger",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Andy Berman",
@@ -7809,12 +8544,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bill Stevenson",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Billy Bob Thornton",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Billy Burke",
@@ -7839,7 +8574,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Billy Drago",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Billy Preston",
@@ -8014,7 +8749,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frank Borzage",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Philip Bosco",
@@ -8074,22 +8809,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Brad Dexter",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Brad Johnson",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Brad Sherwood",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Richard Bradford",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bradley Cooper",
@@ -8099,7 +8834,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bradley Steven Perry",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Beverly Aadlen",
@@ -8209,7 +8944,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Christina Aguilera",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Lassie Lou Ahern",
@@ -8244,32 +8979,32 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alexandra Bokyun Chun",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alexandra Daddario",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alice Brady",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alice Calhoun",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alice Greczyn",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alice Hirson",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alicia Fox",
@@ -8304,12 +9039,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sara Allgood",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Allie Grant",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Allison Miller",
@@ -8364,7 +9099,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Amber Frank",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Amber Heard",
@@ -8454,7 +9189,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Andra Day",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Andrea Barber",
@@ -8654,7 +9389,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arlene Francis",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Arlene Golonka",
@@ -8669,7 +9404,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dimitra Arliss",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Allisyn Ashley Arm",
@@ -8749,7 +9484,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Asia Carrera",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Essence Atkins",
@@ -8769,7 +9504,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Auliʻi Cravalho",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Tina Aumont",
@@ -8814,7 +9549,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barbara Babcock",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Lauren Bacall",
@@ -8844,12 +9579,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barbara Bain",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Diora Baird",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Leah Baird",
@@ -8909,37 +9644,37 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Christine Baranski",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Barbara Bouchet",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Barbara Britton",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Barbara O'Neil",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Barbara Rush",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Barbara Stanwyck",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Barbara Whiting Smith",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Adrienne Barbeau",
@@ -8964,7 +9699,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alice Barrett",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Majel Barrett",
@@ -8974,7 +9709,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barbara Barrie",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Wendy Barrie",
@@ -9104,7 +9839,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barbara Bel Geddes",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Doris Belack",
@@ -9164,7 +9899,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barbara Bennett",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Constance Bennett",
@@ -9234,7 +9969,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Brigid Berlin",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Crystal Bernard",
@@ -9259,7 +9994,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Marcheline Bertrand",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bibi Besch",
@@ -9304,7 +10039,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Betsy Randle",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bette Davis",
@@ -9374,7 +10109,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adrian Rawlins",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Anthony Ainley",
@@ -9399,7 +10134,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alec B. Francis",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alex Lawther",
@@ -9424,7 +10159,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alfred Enoch",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Tom Alter",
@@ -9529,7 +10264,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Roy Barraclough",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Barrie Ingham",
@@ -9544,7 +10279,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Basil Rathbone",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alan Bates",
@@ -9694,12 +10429,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "David Bradley",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Russell Brand",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Brian Bedford",
@@ -9824,7 +10559,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Graham Chapman",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Mark Lindsay Chapman",
@@ -9894,7 +10629,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Claude Rains",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Cliff Richard",
@@ -9934,7 +10669,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Raphaël Coleman",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Colin Firth",
@@ -9969,7 +10704,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Corin Redgrave",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Tom Courtenay",
@@ -9989,7 +10724,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Daniel Craig",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bernard Cribbins",
@@ -10039,7 +10774,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Daniel Radcliffe",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Daniel Sharman",
@@ -10104,7 +10839,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "David Graham",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "David Hewlett",
@@ -10204,7 +10939,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frank Dillane",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Stephen Dillane",
@@ -10259,7 +10994,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Doug Bradley",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Douglas Booth",
@@ -10354,7 +11089,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ralph Fiennes",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Peter Finch",
@@ -10369,17 +11104,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frank Finlay",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Finn Cole",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Albert Finney",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fionn Whitehead",
@@ -10414,17 +11149,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Clement von Franckenstein",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Frank Willams",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Freddie Highmore",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nick Frost",
@@ -10449,7 +11184,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Andrew Garfield",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Tony Garnett",
@@ -10499,12 +11234,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gerald Harper",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Gerald Home",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ricky Gervais",
@@ -10539,17 +11274,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cary Grant",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hugh Grant",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Leslie Grantham",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Rupert Grint",
@@ -10629,7 +11364,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Freya Allan",
     "category": "unluler",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Lily Allen",
@@ -10664,12 +11399,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Angela Thorne",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Anjli Mohindra",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ann Davies",
@@ -10734,7 +11469,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Coral Atkins",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Eileen Atkins",
@@ -10764,12 +11499,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barbara Leigh-Hunt",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alexandra Bastedo",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Helen Baxendale",
@@ -10859,7 +11594,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Leah Bracknell",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Louise Brealey",
@@ -10879,7 +11614,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dora Bryan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nicola Bryant",
@@ -10899,12 +11634,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cara Seymour",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Cara Theobold",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Carmen Chaplin",
@@ -10919,7 +11654,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Carol Raye",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Carole Shelley",
@@ -10944,7 +11679,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kim Cattrall",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Jessie Cave",
@@ -10969,7 +11704,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Charlotte Rampling",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "China Chow",
@@ -11009,7 +11744,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Clare Calbraith",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Petula Clark",
@@ -11139,7 +11874,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frances de la Tour",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Judi Dench",
@@ -11199,7 +11934,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Freda Dowie",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Joan Dowling",
@@ -11274,7 +12009,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Emerald Fennell",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Emilia Clarke",
@@ -11354,7 +12089,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alice Eve",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Evie Templeton",
@@ -11374,7 +12109,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Flora Robson",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Florence Pugh",
@@ -11394,22 +12129,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frances Fisher",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Cornelia Frances",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Francesca Annis",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Liz Fraser",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Anna Friel",
@@ -11484,7 +12219,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fiona Gillies",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Lou Gish",
@@ -11509,7 +12244,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gugu Mbatha-Raw",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Sienna Guillory",
@@ -11534,7 +12269,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hannah Murray",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hannah New",
@@ -11644,7 +12379,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Thora Hird",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Kelly Hunter",
@@ -11689,7 +12424,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Geraldine James",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Louise Jameson",
@@ -11754,7 +12489,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jemma Redgrave",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Julika Jenkins",
@@ -11849,7 +12584,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lara Rajagopalan",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Michael Henderson",
@@ -11894,7 +12629,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Peter Frampton",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Sandy Denny",
@@ -11909,7 +12644,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alain Berliner",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Brenda Song",
@@ -11919,7 +12654,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Catherine O'Hara",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Darren Criss",
@@ -11954,7 +12689,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ruth Prawer Jhabvala",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "John Adams",
@@ -11984,7 +12719,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Madeleine Stowe",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Michael Kamen",
@@ -11999,7 +12734,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mira Nair",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Roger Moore",
@@ -12014,7 +12749,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Oscar Isaac",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Patrick Stewart",
@@ -12024,17 +12759,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Deborah Raffin",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "A. R. Rahman",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ray Dolby",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Mark Ruffalo",
@@ -12109,37 +12844,37 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Roma imparatoru",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Beş İmparator Yılı",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Beş İyi İmparator",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Altı İmparator Yılı",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Antik Roma tarihinin zaman çizelgesi",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Asker imparator",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Caracalla Yazıtı",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Flavius Hanedanı",
@@ -12149,12 +12884,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Herakleios",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İliryalı imparatorlar",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "I. Konstantin",
@@ -12164,12 +12899,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Tetrarşi",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Şablon:Roma imparatorları",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Alain Aspect",
@@ -12199,7 +12934,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alfred Kastler",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hannes Alfvén",
@@ -12294,7 +13029,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lawrence Bragg",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Brian Josephson",
@@ -12309,7 +13044,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bertram Brockhouse",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Louis de Broglie",
@@ -12359,7 +13094,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Steven Chu",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Claude Cohen-Tannoudji",
@@ -12379,7 +13114,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Marie Curie",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Pierre Curie",
@@ -12409,7 +13144,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Raymond Davis",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Clinton Davisson",
@@ -12419,7 +13154,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Paul Dirac",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Donald A. Glaser",
@@ -12464,7 +13199,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "François Englert",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Eric Cornell",
@@ -12489,7 +13224,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ferdinand Braun",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Enrico Fermi",
@@ -12524,7 +13259,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Murray Gell-Mann",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Geoffrey Hinton",
@@ -12554,7 +13289,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gerard 't Hooft",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Gerd Binnig",
@@ -12679,7 +13414,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Isidor Isaac Rabi",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İgor Tamm",
@@ -12689,7 +13424,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İlya Frank",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Jack Steinberger",
@@ -12709,12 +13444,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "James Franck",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "James Rainwater",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Jerome Friedman",
@@ -12794,7 +13529,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ferenc Krausz",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Herbert Kroemer",
@@ -12924,7 +13659,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gérard Mourou",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Rudolf Mössbauer",
@@ -13034,17 +13769,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "C. V. Raman",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Norman Ramsey",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Frederick Reines",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Reinhard Genzel",
@@ -13139,7 +13874,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Shuji Nakamura",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Clifford Shull",
@@ -13164,7 +13899,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Steven Weinberg",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Horst Störmer",
@@ -13174,7 +13909,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Subrahmanyan Chandrasekhar",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Syukuro Manabe",
@@ -13194,7 +13929,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kip Thorne",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "David Thouless",
@@ -13234,7 +13969,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Walter Brattain",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ernest Walton",
@@ -13244,12 +13979,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rainer Weiss",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Frank Wilczek",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Wilhelm Röntgen",
@@ -13269,7 +14004,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "William Bragg",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Kenneth Wilson",
@@ -13319,7 +14054,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Akira Yoshino",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alan MacDiarmid",
@@ -13339,7 +14074,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sidney Altman",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Christian Anfinsen",
@@ -13374,12 +14109,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Avram Hershko",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aziz Sancar",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Adolf von Baeyer",
@@ -13484,7 +14219,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Donald Cram",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Dorothy Hodgkin",
@@ -13554,17 +14289,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frances Arnold",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Francis Aston",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fraser Stoddart",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Frédéric Joliot-Curie",
@@ -13574,12 +14309,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frederick Sanger",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Frederick Soddy",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fritz Pregl",
@@ -13624,7 +14359,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Robert Grubbs",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fritz Haber",
@@ -13689,7 +14424,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dudley Herschbach",
     "category": "tarihi_kisiler",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "George de Hevesy",
@@ -13734,7 +14469,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Joachim Frank",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Johann Deisenhofer",
@@ -13869,7 +14604,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Manfred Eigen",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Rudolph Marcus",
@@ -13974,7 +14709,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Osamu Shimomura",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Otto Diels",
@@ -14044,7 +14779,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Venkatraman Ramakrishnan",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Richard Heck",
@@ -14144,7 +14879,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hideki Shirakawa",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Richard Smalley",
@@ -14174,7 +14909,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Akira Suzuki",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Svante Arrhenius",
@@ -14229,7 +14964,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alfred Werner",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Wilhelm Ostwald",
@@ -14254,7 +14989,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "William Ramsay",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "William Stein",
@@ -14289,12 +15024,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alfred G. Gilman",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Allvar Gullstrand",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "André Michel Lwoff",
@@ -14339,7 +15074,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Baruj Benacerraf",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bengt I. Samuelsson",
@@ -14379,7 +15114,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Konrad Emil Bloch",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Daniel Bovet",
@@ -14424,7 +15159,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Charles Louis Alphonse Laveran",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Charles M. Rice",
@@ -14469,12 +15204,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Craig C. Mello",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Francis Crick",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Henrik Dam",
@@ -14534,7 +15269,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gerald Edelman",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Edgar Douglas Adrian",
@@ -14604,7 +15339,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "John Franklin Enders",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Eric F. Wieschaus",
@@ -14634,7 +15369,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alexander Fleming",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 2
   },
   {
     "name": "Werner Forssmann",
@@ -14644,32 +15379,32 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "François Jacob",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Françoise Barré-Sinoussi",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Frank Macfarlane Burnet",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Fred Ramsdell",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Frederick Banting",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Frederick Gowland Hopkins",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Karl von Frisch",
@@ -14739,7 +15474,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Harald zur Hausen",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Harold E. Varmus",
@@ -14769,7 +15504,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alfred Hershey",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Archibald Hill",
@@ -14869,7 +15604,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Joseph Murray",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Joshua Lederberg",
@@ -14899,7 +15634,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Har Gobind Khorana",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Robert Koch",
@@ -14929,7 +15664,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Konrad Lorenz",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Salvador Edward Luria",
@@ -14939,7 +15674,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Feodor Felix Konrad Lynen",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Barry Marshall",
@@ -14964,7 +15699,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barbara McClintock",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İlya Meçnikov",
@@ -15019,7 +15754,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ferid Murad",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "William P. Murphy",
@@ -15079,7 +15814,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "George Emil Palade",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Paul Hermann Müller",
@@ -15104,7 +15839,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Peter J. Ratcliffe",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Peter Medawar",
@@ -15129,17 +15864,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ragnar Granit",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ralph M. Steinman",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Randy Schekman",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Richard J. Roberts",
@@ -15164,7 +15899,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frederick Chapman Robbins",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Robert Bárány",
@@ -15204,17 +15939,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Francis Peyton Rous",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Santiago Ramón y Cajal",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Satoshi Ōmura",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Andrew Schally",
@@ -15344,7 +16079,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Selman Abraham Waksman",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "George Wald",
@@ -15414,7 +16149,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abdulrazak Gurnah",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Vicente Aleixandre",
@@ -15454,7 +16189,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bertrand Russell",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Björnstjerne Björnson",
@@ -15499,7 +16234,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Grazia Deledda",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Derek Walcott",
@@ -15554,7 +16289,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Anatole France",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Gao Xingjian",
@@ -15599,7 +16334,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Günter Grass",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Halldór Laxness",
@@ -15679,7 +16414,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Juan Ramón Jiménez",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Johannes Vilhelm Jensen",
@@ -15699,12 +16434,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jose Echegaray",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "José Saramago",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Joseph Brodsky",
@@ -15739,7 +16474,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "László Krasznahorkai",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Doris Lessing",
@@ -15759,7 +16494,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Luigi Pirandello",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Maurice Maeterlinck",
@@ -15779,17 +16514,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "François Mauriac",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Frederic Mistral",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Gabriela Mistral",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Mo Yan",
@@ -15804,7 +16539,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alice Munro",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Necib Mahfuz",
@@ -15924,7 +16659,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frans Eemil Sillanpää",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Claude Simon",
@@ -15964,7 +16699,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rabindranath Tagore",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Thomas Mann",
@@ -15974,7 +16709,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Tomas Tranströmer",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Toni Morrison",
@@ -15984,7 +16719,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Uyandırılmış Toprak",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "V. S. Naipaul",
@@ -16039,17 +16774,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Urs Graf",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Francesco Laurana",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Marcantonio Raimondi",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Matteo di Giovanni",
@@ -16059,7 +16794,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Michelangelo",
     "category": "tarihi_kisiler",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Prospero Spani",
@@ -16074,7 +16809,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ana-Maria Avram",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Philippe Boesmans",
@@ -16139,7 +16874,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "María Luisa Ozaita",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Peer Gynt",
@@ -16154,7 +16889,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Spiridon Samaras",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Stefan Pohlit",
@@ -16224,7 +16959,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Paul Henri Thiry d'Holbach",
     "category": "tarihi_kisiler",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Wilhelm Dilthey",
@@ -16274,7 +17009,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ludwig Andreas Feuerbach",
     "category": "tarihi_kisiler",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Johann Gottlieb Fichte",
@@ -16284,17 +17019,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Franz Brentano",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Franz Xaver von Baader",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fredrich Fröbel",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Friedrich Albert Lange",
@@ -16324,7 +17059,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Johann Wolfgang von Goethe",
     "category": "tarihi_kisiler",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Gottfried Leibniz",
@@ -16349,7 +17084,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hans Reichenbach",
     "category": "tarihi_kisiler",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Georg Wilhelm Friedrich Hegel",
@@ -16459,7 +17194,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gotthold Ephraim Lessing",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Ludwig Büchner",
@@ -16474,7 +17209,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Karl Marx",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Max Beer",
@@ -16524,7 +17259,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rüdiger Safranski",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Saint Victorlu Hugh",
@@ -16604,7 +17339,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Antoine Destutt de Tracy",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Auvergneli William",
@@ -16639,7 +17374,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lucien Braun",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Étienne Cabet",
@@ -16679,7 +17414,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "René Descartes",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Denis Diderot",
@@ -16694,7 +17429,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frantz Fanon",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bernard le Bovier de Fontenelle",
@@ -16704,7 +17439,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Francisque Bouillier",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fulcanelli",
@@ -16714,7 +17449,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gaston Bachelard",
     "category": "tarihi_kisiler",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Georges Politzer",
@@ -16739,7 +17474,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jean Bodin",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Jean Buridan",
@@ -16754,7 +17489,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jean-François Lyotard",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Jean-Luc Nancy",
@@ -16779,7 +17514,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Julien Offray de La Mettrie",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Etienne de La Boétie",
@@ -16809,7 +17544,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Maine de Biran",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Sylvain Maréchal",
@@ -16869,7 +17604,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nicholas Malebranche",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Blaise Pascal",
@@ -16909,12 +17644,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rémi Brague",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Renaud Barbaras",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "René Guénon",
@@ -16939,7 +17674,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sarah Kofman",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Lucien Sève",
@@ -17004,7 +17739,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Clarabelle Cow",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Daisy Duck",
@@ -17029,7 +17764,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ludwig Von Drake",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Magica De Spell",
@@ -17109,7 +17844,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Black Widow",
     "category": "cizgi_karakterler",
-    "fameTier": 3
+    "fameTier": 2
   },
   {
     "name": "Blade",
@@ -17134,7 +17869,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Deadpool",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Demir Adam",
@@ -17149,7 +17884,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Doktor Strange",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Dormammu",
@@ -17279,7 +18014,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Para-Man",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Punisher",
@@ -17344,7 +18079,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Wolverine",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "X-Men",
@@ -17364,7 +18099,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aquaman",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Atom",
@@ -17409,12 +18144,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Flash",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "General Zod",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Green Lantern",
@@ -17449,7 +18184,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lex Luthor",
     "category": "cizgi_karakterler",
-    "fameTier": 1
+    "fameTier": 3
   },
   {
     "name": "Lois Lane",
@@ -17469,7 +18204,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Tim Drake",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Vartox",
@@ -17479,7 +18214,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Wonder Woman",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Zatanna",
@@ -17489,7 +18224,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Zatara",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Zehirli Sarmaşık",
@@ -17499,7 +18234,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Süper kahraman",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Freakazoid!",
@@ -17539,7 +18274,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Süper kahraman romanları",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Spawn",
@@ -17549,7 +18284,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abraham Van Helsing",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Bishōjo",
@@ -17584,12 +18319,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Metal Sonic",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Ryuga",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Soft butch",
@@ -17649,7 +18384,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rivyalı Geralt",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Tavşan Cream",
@@ -17659,7 +18394,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Uçan Sincap Ray",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Amanvermez Avni",
@@ -17719,7 +18454,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dedektif Lestrade",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Luke Cage",
@@ -17729,7 +18464,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Madam Vastra, Jenny Flint ve Strax",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Martin Mystère",
@@ -17764,7 +18499,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nick Raider",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Dipper Pines",
@@ -17829,7 +18564,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Apollon",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Arnemetia",
@@ -17849,7 +18584,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hao Asakura",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Athena",
@@ -17929,7 +18664,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cedric Diggory",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Doktor",
@@ -17949,7 +18684,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Efsuncu Amora",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Ekidne Knuckles",
@@ -17959,7 +18694,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Eragon",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Faust",
@@ -17989,7 +18724,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Herakles",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Hermes",
@@ -18024,7 +18759,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kar Kraliçesi",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Karlar Ülkesi",
@@ -18044,7 +18779,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Katara",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Kharis",
@@ -18054,7 +18789,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kırk Haramiler",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Kızıl Cadı",
@@ -18069,7 +18804,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kirpi Sonic",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Korkut Ata",
@@ -18079,7 +18814,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kutsanmış Bran",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Ler",
@@ -18194,7 +18929,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Radagast",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Segomo",
@@ -18214,12 +18949,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Stephen Strange",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Taranis",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Thjalfi ve Röskva",
@@ -18239,12 +18974,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Utgard Loki",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Uther Pendragon",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Väinämöinen",
@@ -18259,7 +18994,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fred ve George Weasley",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Ginny Weasley",
@@ -18274,7 +19009,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Yarasa Rouge",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Yoda",
@@ -18289,7 +19024,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Zia Raşit",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Zuko",
@@ -18299,7 +19034,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kurgusal karakter",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Arif Işık",
@@ -18309,7 +19044,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Büyük Amiral Thrawn",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Candyman",
@@ -18404,7 +19139,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ramona Flowers",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Roxane",
@@ -18479,7 +19214,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aragorn",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Astinus",
@@ -18539,7 +19274,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Blinky Bill",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Bozkurt",
@@ -18579,7 +19314,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cormoran",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Cuchulainn",
@@ -18664,7 +19399,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Frankenstein'ın canavarı",
     "category": "cizgi_karakterler",
-    "fameTier": 1
+    "fameTier": 3
   },
   {
     "name": "Fritz",
@@ -18684,7 +19419,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gargantua ile Pantagruel",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Gawain",
@@ -18704,12 +19439,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gilles de Rais",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Grandgousier",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Gregor Samsa",
@@ -18729,7 +19464,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lemuel Gulliver",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Habbakuk",
@@ -18779,7 +19514,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ichabod Crane",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Ivanhoe",
@@ -18814,7 +19549,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kaptan Nemo",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Kaptan Smollet",
@@ -18844,7 +19579,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kızıl Kral",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Kintarō",
@@ -18859,7 +19594,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kitiara Uth Matar",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Kör Pew",
@@ -18869,12 +19604,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Krabat",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Kral Arthur",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Küçük John",
@@ -18899,7 +19634,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Laurana Kanan",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Dr. Livesey",
@@ -18939,7 +19674,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Raistlin Majere",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Meg McCaffrey",
@@ -19004,17 +19739,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Paladine",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Pamuk Prenses ve Yedi Cüceler",
     "category": "cizgi_karakterler",
-    "fameTier": 1
+    "fameTier": 3
   },
   {
     "name": "Pantagruel",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Panurge",
@@ -19039,17 +19774,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Profesör Aronnax",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Profesör Challenger",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Profesör Moriarty",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Reorx",
@@ -19059,7 +19794,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Scarlet Pimpernel",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Sigurd",
@@ -19099,7 +19834,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Takhisis",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Tanin Majere",
@@ -19179,7 +19914,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Will Scarlet",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Yürek Oğlanı",
@@ -19214,7 +19949,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rodion Romanoviç Raskolnikov",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Rufus Scrimgeour",
@@ -19229,7 +19964,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Vasily Kuragin",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Çirkin Ördek Yavrusu",
@@ -19349,22 +20084,22 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abdurrahim Dursun",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Abdurrahman Canlı",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Abdurrahman Dereli",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Abdurrahman Üresin",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Abdülkadir Akyıldız",
@@ -19379,7 +20114,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abdülkadir Çelik",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Abdülkadir Demirci",
@@ -19389,7 +20124,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abdülkadir Ömür",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Abdürrezzak Tığ",
@@ -19544,7 +20279,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adnan İbrahim Pirioğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Adnan İncirmen",
@@ -19554,7 +20289,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adnan Karahan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Adnan Örnek",
@@ -19604,7 +20339,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Aras",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ahmet Arda Tuzcu",
@@ -19664,7 +20399,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Çağıran",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Ahmet Çalık",
@@ -19674,7 +20409,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Çelikhan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Ahmet Dereli",
@@ -19709,7 +20444,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Karademir",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ahmet Karlıklı",
@@ -19739,7 +20474,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Nuri Çelik",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Ahmet Oğuz",
@@ -19869,7 +20604,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Akdiş",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İsa Akgöl",
@@ -19894,7 +20629,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Akhan Karakurt",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Akın Akman",
@@ -19929,17 +20664,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Akif Başaran",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İbrahim Akın",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Murat Akın",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Göksel Akıncı",
@@ -20044,17 +20779,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Eren Albayrak",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Erhan Albayrak",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Mikail Albayrak",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alberk Koç",
@@ -20089,12 +20824,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Bayraktar",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Beratlıgil",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Beykoz",
@@ -20194,7 +20929,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali İhsan Karayiğit",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali İhsan Okçuoğlu",
@@ -20224,7 +20959,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Kemal Karabal",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Keten",
@@ -20294,7 +21029,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Rıza Turan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Sami Yen",
@@ -20324,7 +21059,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Şen Kandil",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Tandoğan",
@@ -20334,12 +21069,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Turan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ali Turap Bülbül",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Ali Türkan",
@@ -20384,7 +21119,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alican Karadağ",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alican Özfesli",
@@ -20444,17 +21179,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alp Sümeralp",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Alparslan Erdem",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alpaslan Eradlı",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alpaslan Öztürk",
@@ -20479,7 +21214,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arzu Karabulut",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Arzu Sema Canbul",
@@ -20494,7 +21229,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aslı Karataş",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aybüke Arslan",
@@ -20559,7 +21294,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Berra Bayraktar",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bilge Su Koyun",
@@ -20584,12 +21319,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Büşra Ahlatcı",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Büşra Kenet",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Cansu Nur Kaya",
@@ -20644,7 +21379,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Didem Karagenç",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Dilan Ağgül",
@@ -20654,7 +21389,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dilara Soley Deli",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Duygu Erdoğan",
@@ -20664,7 +21399,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ebru Bayraktar",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ebru Topçu",
@@ -20689,7 +21424,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Eda Karataş",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Elif Keskin",
@@ -20699,7 +21434,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Elifenur Karabulut",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Emine Demir",
@@ -20714,7 +21449,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Melahat Eryurt",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Emine Ecem Esen",
@@ -20724,12 +21459,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Esra Özkan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Esra Sibel Tezkan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Eylül Elgalp",
@@ -20744,7 +21479,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fatma Kara",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fatma Şahin",
@@ -20819,12 +21554,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hümeyra Şanver",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "İlayda Cansu Kara",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İlayda Civelek",
@@ -20859,7 +21594,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Esra Manya",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Medine Erkan",
@@ -20904,7 +21639,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Miray Cin",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nagehan Akşan",
@@ -20919,7 +21654,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nihal Saraç",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Nihan Su",
@@ -20934,7 +21669,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nurcan Çelik",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Özlem Başyurt",
@@ -20989,7 +21724,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sejde Abrahamsson",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Selda Akgöz",
@@ -21069,7 +21804,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Tuğba Karataş",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Tuğçe Bayındır",
@@ -21079,12 +21814,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ümran Özev",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Yağmur Uraz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Yaşam Göksu",
@@ -21109,7 +21844,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Can Duran",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ahmet Düverioğlu",
@@ -21174,7 +21909,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alperen Şengün",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Altan Dinçer",
@@ -21219,7 +21954,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hayri Arsebük",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Asım Pars",
@@ -21229,7 +21964,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ata Kahraman",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ata Özbek",
@@ -21269,7 +22004,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayduk Koray",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aytek Gürkan",
@@ -21314,7 +22049,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Avram Barokas",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bartu Encü",
@@ -21329,7 +22064,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bekir Yarangüme",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Berk Demir",
@@ -21349,7 +22084,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Berkay Candan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Berke Aygündüz",
@@ -21374,52 +22109,52 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bora Hun Paçun",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Bora Sancar",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bora Yaşar",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Buğra Gacemer",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Buğrahan Tuncer",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Bıyıktay",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Can Yıldızlı",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Gözeneli",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Burak Sezgin",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Burak Yacan Yüksel",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Ömer Büyükaycan",
@@ -21444,7 +22179,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Can Bartu",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Can Kaan Turgut",
@@ -21519,7 +22254,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cedi Osman",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Cem Akdağ",
@@ -21604,7 +22339,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Derin Saran",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Derya Yannier",
@@ -21639,17 +22374,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Doğuş Balbay",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Doğuş Özdemiroğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Doruk Dora",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Dorukhan Engindeniz",
@@ -21689,7 +22424,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ege Arar",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ege Demir",
@@ -21699,7 +22434,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ege Özçelik",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Egehan Arna",
@@ -21759,7 +22494,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ender Arslan",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Enes Kanter Freedom",
@@ -21774,7 +22509,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Eray Büyükcangaz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Erbey Paltacı",
@@ -21789,7 +22524,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ercan Bayrak",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ercan Osmani",
@@ -21809,7 +22544,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Erdal Poyrazoğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Erdem Türetken",
@@ -21834,7 +22569,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Erdoğan Karabelen",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Eren Beyaz",
@@ -21889,7 +22624,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ersan İlyasova",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Orkun Kemal Ertaş",
@@ -21914,7 +22649,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ertuğrul Bayraktar",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Evren Büker",
@@ -21954,7 +22689,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ferhan Baras",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ferhat Oktay",
@@ -21964,12 +22699,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fırat Alemdaroğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fırat Töz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "David Filiba",
@@ -22039,7 +22774,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sadi Gülçelik",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Yılmaz Gündüz",
@@ -22054,7 +22789,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Güray Kanan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Hadi Özdemir",
@@ -22089,7 +22824,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Halil İbrahim Kuzucu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Halil Üner",
@@ -22104,12 +22839,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Harun Erdenay",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hasan Arat",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Henry Turner",
@@ -22119,7 +22854,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hidayet Türkoğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Hikmet Vardar",
@@ -22134,7 +22869,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hüdai Budanur",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Hüseyin Alp",
@@ -22149,7 +22884,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hüseyin Engin Muratoğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Hüseyin Kozluca",
@@ -22169,12 +22904,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İbrahim Kutluay",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "İbrahim Yıldırım",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İhsan Bayülken",
@@ -22184,7 +22919,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İlkan Karaman",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ömercan İlyasoğlu",
@@ -22214,7 +22949,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İsmail Karabilen",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İzzet Türkyılmaz",
@@ -22234,17 +22969,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kamil Ocak",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Karahan Tuan Efeoğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Kartal Özmızrak",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Kaya Peker",
@@ -22299,7 +23034,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kerem Tunçeri",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Kristijan Nikolov",
@@ -22309,7 +23044,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Leon Harun Apaydın",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Levent Bilgin",
@@ -22339,7 +23074,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alara Altundağ",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aleksia Karutasu",
@@ -22364,7 +23099,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arelya Karasoy",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Arzu Göllü",
@@ -22409,7 +23144,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Asuman Karakoyun",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aybüke Özel",
@@ -22419,7 +23154,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayça Aykaç",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Ayça Naz İhtiyaroğlu",
@@ -22524,12 +23259,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Berra Eren",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Berrak Deniz Kakaşçı",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Berre İnce",
@@ -22549,7 +23284,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bihter Dumanoğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bilge Paşa",
@@ -22584,7 +23319,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Buse Kara",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Buse Kayacan",
@@ -22599,12 +23334,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Büşra Güneş",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Büşra Kılıçlı",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Canel Konvur",
@@ -22644,7 +23379,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cansu Özbay",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 2
   },
   {
     "name": "Cemre Erol",
@@ -22669,7 +23404,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceren Karagöl",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Ceren Mengüç",
@@ -22704,7 +23439,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceylan Arısan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ceylin Kuyan",
@@ -22729,7 +23464,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Çiğdem Öztoprak",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Dalia Wilson",
@@ -22789,7 +23524,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Derya Cebecioğlu",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Derya Çayırgan",
@@ -22814,17 +23549,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dilara Bağcı",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Dilara Bilge",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Dilara Yeşil",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Dilay Özdemir",
@@ -22869,12 +23604,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ebrar Karakurt",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Ebru Ceylan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ebru Elhan",
@@ -22929,7 +23664,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Eda Erdem",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Ege Melisa Bükmen",
@@ -22939,17 +23674,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Elif Ağca Yarar",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Elif Boran",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Elif Gülbayrak",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Elif İlhan",
@@ -22964,7 +23699,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Elif Onur Başaran",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Elif Su Eriçek",
@@ -22979,7 +23714,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Elif Şahin",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Elif Uzun",
@@ -23014,12 +23749,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Esra Gümüş",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Esra Yılmaz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Eylül Durgun",
@@ -23029,7 +23764,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Eylül Karadaş",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Eylül Yatgın",
@@ -23069,7 +23804,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ezgi Kara",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ezgi Uludağ",
@@ -23099,7 +23834,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fulden Ural",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Gamze Alikaya",
@@ -23109,12 +23844,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gizem Çerağ Düzeltir",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Gizem Giraygil",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Gizem Güreşen",
@@ -23124,7 +23859,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gizem Mısra Aşçı",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Gizem Örge",
@@ -23234,7 +23969,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hilal Kocakara",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hilal Yabuz",
@@ -23274,7 +24009,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İlarya Zararsız",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "İlayda Naz Gergef",
@@ -23289,7 +24024,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İlkin Aydın",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "İpar Kurt",
@@ -23334,17 +24069,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kübra Akman",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Kübra Evşen",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Kübra Kegan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Lal Verda Akın",
@@ -23359,7 +24094,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Liray Akpınar",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Liza Safronova",
@@ -23414,7 +24149,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Melissa Vargas",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Merve Atlıer",
@@ -23459,7 +24194,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Meryem Boz",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Mesude Kuyan",
@@ -23469,7 +24204,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nalan Ural",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Natalia Hanikoğlu",
@@ -23479,7 +24214,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Naz Aydemir Akyol",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Naz Döner",
@@ -23504,7 +24239,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nefize Bayramoğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nehir Kurtulan",
@@ -23519,12 +24254,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Neslihan Demir",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Neşve Büyükbayram",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Nihal Yeşil",
@@ -23539,7 +24274,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nilay Karaağaç",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Nilay Konar",
@@ -23584,7 +24319,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alper Timur",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Altan Aksoy",
@@ -23614,7 +24349,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aral Şimşir",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Sabih Arca",
@@ -23624,7 +24359,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arda Güler",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Arda Turan",
@@ -23669,12 +24404,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Emre Aşık",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Atakan Karazor",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Necati Ateş",
@@ -23684,7 +24419,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Atila Turan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Cengiz Atila",
@@ -23709,7 +24444,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aydın Karabulut",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aydın Tohumcu",
@@ -23729,7 +24464,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aykut Kocaman",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Aykut Yiğit",
@@ -23739,7 +24474,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aytaç Kara",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Volkan Babacan",
@@ -23774,12 +24509,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abdülkerim Bardakcı",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Barış Alper Yılmaz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Deniz Barış",
@@ -23789,7 +24524,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Yıldıray Baştürk",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Kemal Batmaz",
@@ -23799,7 +24534,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Batuhan Karadeniz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Faruk Bayar",
@@ -23809,7 +24544,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Altay Bayındır",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Engin Baytar",
@@ -23839,17 +24574,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Berat Özdemir",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Berkan Kutlu",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Berkay Özcan",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Berke Özer",
@@ -23869,7 +24604,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bertuğ Yıldırım",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Bilal Kısa",
@@ -23904,7 +24639,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Uğur Boral",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Umut Bulut",
@@ -23914,7 +24649,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Yılmaz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Burhan Atak",
@@ -23969,12 +24704,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Uğurcan Çakır",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Can Arat",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Can Uzun",
@@ -23984,17 +24719,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Caner Erkin",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Hasan Çelik",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Yasin Çelik",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Celil Sağır",
@@ -24079,7 +24814,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Raşit Çetiner",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Hüseyin Çimşir",
@@ -24149,7 +24884,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rıdvan Dilmen",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Basri Dirimlili",
@@ -24184,12 +24919,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dorukhan Toköz",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Candan Dumanlı",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Abdülkerim Durmaz",
@@ -24209,7 +24944,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Murat Duruer",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Bülent Eken",
@@ -24254,12 +24989,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Emre Akbaba",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Emre Belözoğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Emre Kılınç",
@@ -24274,7 +25009,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Emre Toraman",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ender Konca",
@@ -24284,7 +25019,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Enes Ünal",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Engin Özdemir",
@@ -24334,7 +25069,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arif Erdem",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Naci Erdem",
@@ -24379,7 +25114,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ergün Penbe",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Erhan Arslan",
@@ -24494,7 +25229,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ferdi Kadıoğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Feridun Buğeker",
@@ -24554,7 +25289,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gökdeniz Karadeniz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Gökhan Akkan",
@@ -24569,7 +25304,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gökhan Gönül",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Gökhan Keskin",
@@ -24584,7 +25319,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gökhan Zan",
     "category": "sporcular",
-    "fameTier": 3
+    "fameTier": 5
   },
   {
     "name": "Gökmen Özdenak",
@@ -24614,7 +25349,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceyhun Güray",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Muharrem Gürbüz",
@@ -24669,7 +25404,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abdelaziz Barrada",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Liban Abdi",
@@ -24679,7 +25414,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abdou Razack Traoré",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Abdoul Sissoko",
@@ -24714,7 +25449,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Abdulsamet Burak",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Abdül Cabbar",
@@ -24734,17 +25469,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aboubakar Kamara",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Tammy Abraham",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Abuda",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Adalto",
@@ -24769,7 +25504,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adama Traoré",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Adamo Nagalo",
@@ -24904,7 +25639,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Agim Ibraimi",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Agon Mehmeti",
@@ -25004,7 +25739,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Akhilleas Punguras",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ákos Elek",
@@ -25014,7 +25749,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Akyıldız",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alain Eyobo",
@@ -25024,7 +25759,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alain Traoré",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Alan Cariús",
@@ -25109,7 +25844,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aleksandros Katranis",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aleksandros Kiziridis",
@@ -25139,7 +25874,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alex Teixeira",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alex Telles",
@@ -25224,12 +25959,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alberto Tarantini",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Raúl Albiol",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alcides Ghiggia",
@@ -25269,7 +26004,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alfred Pfaff",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Alessandro Altobelli",
@@ -25299,7 +26034,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "José Andrade",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Ángel Correa",
@@ -25349,7 +26084,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Raimond Aumann",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Aymeric Laporte",
@@ -25359,7 +26094,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Franco Baresi",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Andrea Barzagli",
@@ -25374,7 +26109,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hilderaldo Bellini",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Benjamin Pavard",
@@ -25414,7 +26149,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bixente Lizarazu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Laurent Blanc",
@@ -25439,7 +26174,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rainer Bonhof",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Borja Iglesias",
@@ -25449,7 +26184,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Branco",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Andreas Brehme",
@@ -25584,7 +26319,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "David Raya",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "David Trezeguet",
@@ -25609,7 +26344,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ángel Di María",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Dida",
@@ -25634,7 +26369,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Djibril Sidibé",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Dunga",
@@ -25689,17 +26424,17 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Eusebio Tejera",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Everaldo",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Exequiel Palacios",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fabián Ruiz",
@@ -25734,12 +26469,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ferran Torres",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Giovanni Ferrari",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Filippo Inzaghi",
@@ -25754,32 +26489,32 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Francesco Graziani",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Francesco Totti",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Franco Armani",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Franco Causio",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Frank Leboeuf",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Franz Beckenbauer",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Fulvio Collovati",
@@ -25799,7 +26534,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Oscar Garré",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 5
   },
   {
     "name": "Garrincha",
@@ -25949,7 +26684,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Helmut Rahn",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Thierry Henry",
@@ -26059,7 +26794,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Julian Draxler",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Juliano Belletti",
@@ -26104,7 +26839,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jürgen Grabowski",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 3
   },
   {
     "name": "Jürgen Kohler",
@@ -26189,7 +26924,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Leonardo Araújo",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Leopoldo Luque",
@@ -26199,7 +26934,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lilian Thuram",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Lionel Charbonnier",
@@ -26234,12 +26969,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Luigi Allemandi",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Luigi Bertolini",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Luis Galván",
@@ -26264,12 +26999,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Steve Mandanda",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Manfred Kaltz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Marc Cucurella",
@@ -26309,7 +27044,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Marco Materazzi",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Marco Tardelli",
@@ -26399,12 +27134,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mauro Camoranesi",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Mauro Ramos",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Mauro Silva",
@@ -26424,12 +27159,12 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mesut Özil",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Óscar Míguez",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Miho Fukumoto",
@@ -26484,7 +27219,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alberto Ascari",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ayrton Senna",
@@ -26519,7 +27254,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mike Hawthorn",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Damon Hill",
@@ -26529,7 +27264,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Graham Hill",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "James Hunt",
@@ -26539,7 +27274,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jack Brabham",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Jackie Stewart",
@@ -26594,7 +27329,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lewis Hamilton",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Nigel Mansell",
@@ -26644,92 +27379,92 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Harry Potter'daki büyülü yaratıklar",
     "category": "dizi_film_karakterleri",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Longbottom ailesi",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Luna Lovegood",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Ölüm Yiyen",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Dolores Umbridge",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Ağaçsakal",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Altınyemiş",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Arwen",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Tom Bombadil",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Cadı Kral",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Celebrimbor",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Déagol",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Denethor",
     "category": "dizi_film_karakterleri",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Elrond",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Éomer",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Éowyn",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Faramir",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Galadriel",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Gandalf",
@@ -26739,147 +27474,147 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gollum",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Gothmog",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Gríma Solucandil",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Isildur",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Meriadoc Brandybuck",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Nazgûl",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Peregrin Took",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Shelob",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Théoden",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Lydia Rodarte Quayle",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Marie Schrader",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Saul Goodman",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Skyler White",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Walter White",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Walter White Jr.",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Ada Wong",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Noah Bennet",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "E-123 Omega",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Erin Driscoll",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Kim Bauer",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Leon S. Kennedy",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Matt Parkman",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Max Payne",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Tony Almeida",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Varys",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Kate Austen",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Bea Smith",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Bender",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Benjamin Miles \"C-Note\" Franklin",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Berlin",
@@ -26889,227 +27624,227 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bowser Jr.",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Brian O'Conner",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Carl Johnson",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Claude",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Crazy Eyes",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Daniel Holtz",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Roland Deschain",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Diabolik",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Dominic Toretto",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Mr. Eko",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Electro",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Eric Cartman",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Fernando Sucre",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Figüran Bob",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "James \"Sawyer\" Ford",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Franky Doyle",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Front Man",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Ganon",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Han",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "D.L. Hawkins",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Homer Simpson",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Gregory House",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Jax Teller",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "John Kramer",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Kano",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Keyser Söze",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Kim Wexler",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Kraven the Hunter",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Jin-Soo Kwon",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Lance Vance",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Lorna Morello",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Luis Fernando Lopez",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Frank Martin",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Maxine Conway",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Mona Simpson",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Nelson Muntz",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Nairobi",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Painkiller Jane",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Piper Chapman",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Profesör",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 1
   },
   {
     "name": "Puck",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Raquel Murillo",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Rio",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Rupert Thorne",
     "category": "dizi_film_karakterleri",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Tecavüzcü Coşkun",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Tokyo",
@@ -27119,7 +27854,7 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Toni Cipriani",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Trevor Philips",
@@ -27129,171 +27864,846 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alex Vause",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Vulcan Raven",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Waluigi",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Wario",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Zorro",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Belit",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Black Sails",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Billy Bones",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Bootstrap Bill Turner",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Carina Smyth",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Conan",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "The Curse of Monkey Island",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Çılgın Korsan Jack",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Define Adası",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Define Adasına Dönüş",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Escape from Monkey Island",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Ben Gunn",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Israel Hands",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Hector Barbossa",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Jack Sparrow",
     "category": "dizi_film_karakterleri",
-    "fameTier": 1
+    "fameTier": 4
   },
   {
     "name": "Jim Hawkins",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Joshamee Gibbs",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Kanca",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Karayip Korsanları",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Karayip Korsanları: Dünyanın Sonu",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Karayip Korsanları: Gizemli Denizlerde",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Karayip Korsanları: Ölü Adamın Sandığı",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Karayip Korsanları: Salazar'ın İntikamı",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Karayip Korsanları: Siyah İnci'nin Laneti",
     "category": "dizi_film_karakterleri",
-    "fameTier": 2
+    "fameTier": 4
   },
   {
     "name": "Long John Silver",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Maymun Jack",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Sandokan",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Smee",
     "category": "dizi_film_karakterleri",
-    "fameTier": 3
+    "fameTier": 4
   },
   {
     "name": "Pippi Uzunçorap",
     "category": "dizi_film_karakterleri",
+    "fameTier": 4
+  },
+  {
+    "name": "Namık Kemal",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Mehmet Akif Ersoy",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Ziya Gökalp",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Nazım Hikmet",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Orhan Veli Kanık",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Necip Fazıl Kısakürek",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Yaşar Kemal",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Aziz Nesin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Oğuz Atay",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Sabahattin Ali",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Halide Edip Adıvar",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Reşat Nuri Güntekin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Peyami Safa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Ahmet Hamdi Tanpınar",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Cahit Sıtkı Tarancı",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Attila İlhan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Cemal Süreya",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Edip Cansever",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Turgut Uyar",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "İbn-i Sina (Avicenna)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "İbn-i Rüşd",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "İbn-i Haldun",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Hacı Bektaş-ı Veli",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Evliya Çelebi",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Osman Hamdi Bey",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Ömer Seyfettin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Tevfik Fikret",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Halit Ziya Uşaklıgil",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Adnan Menderes",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Turgut Özal",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Süleyman Demirel",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Bülent Ecevit",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Necmettin Erbakan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Alparslan Türkeş",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Deniz Gezmiş",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Uğur Mumcu",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Abdi İpekçi",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Halil İnalcık",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Bilge Kağan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Kül Tigin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Tonyukuk",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Konfüçyüs",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Buda (Siddhartha Gautama)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Friedrich Nietzsche",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Louis Pasteur",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Alexander Graham Bell",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Pisagor (Pythagoras)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Arşimet (Archimedes)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Hipokrat (Hippocrates)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Spartaküs",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Jeanne d'Arc",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Kraliçe Victoria",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "John F. Kennedy (JFK)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Martin Luther King Jr.",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Ömer Hayyam",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Farabi (Al-Farabi)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Harezmi (Al-Khwarizmi)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Ali Kuşçu",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Katip Çelebi",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Köprülü Mehmet Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Enver Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Talat Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Cemal Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Kazım Karabekir",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Fevzi Çakmak",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Rauf Orbay",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Ali Fuat Cebesoy",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Sabiha Gökçen",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Nene Hatun",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Seyit Onbaşı",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Kara Fatma",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Şerife Bacı",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Sütçü İmam",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Hasan Tahsin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Galileo Galilei",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Johannes Kepler",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Nicolaus Copernicus",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Gregor Mendel",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Dmitri Mendeleyev",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Alfred Nobel",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "James Watt",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Wright Kardeşler",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Yuri Gagarin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Neil Armstrong",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Ferdinand Macellan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Vasco da Gama",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Marco Polo",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "İbni Batuta",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Sun Tzu",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Homeros",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Herodot",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Çiçero (Cicero)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Nero",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Marcus Aurelius",
+    "category": "tarihi_kisiler",
+    "fameTier": 2
+  },
+  {
+    "name": "Semih Kılıçsoy",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Çağlar Söyüncü",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Cenk Tosun",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Selçuk İnan",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Tugay Kerimoğlu",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Nihat Kahveci",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Busenaz Sürmeneli",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Buse Naz Çakıroğlu",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Servet Tazegül",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Şahika Ercümen",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Dries Mertens",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Lucas Torreira",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Vincent Aboubakar",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Fred",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Dominik Livakovic",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Rafa Silva",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Ciro Immobile",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Victor Osimhen",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Kevin De Bruyne",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Mohamed Salah",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Manuel Neuer",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Giannis Antetokounmpo",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Serena Williams",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Conor McGregor",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Khabib Nurmagomedov",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Carlos Alcaraz",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Jannik Sinner",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Pep Guardiola",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Jose Mourinho",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Carlo Ancelotti",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Jürgen Klopp",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Arsène Wenger",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Alex Ferguson",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Didier Drogba",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Wesley Sneijder",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Robin van Persie",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Dirk Kuyt",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Mario Gomez",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Ricardo Quaresma",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Pepe",
+    "category": "sporcular",
+    "fameTier": 2
+  },
+  {
+    "name": "Talisca",
+    "category": "sporcular",
     "fameTier": 2
   }
 ]

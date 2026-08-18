@@ -1,5 +1,5 @@
 /**
- * Nihai Hassas ve Kültürel Tutarlı Fame Tier Dağıtım Motoru
+ * Kesin İsim Eşleşmeli ve Sıfır False-Positive Fame Tier Dağıtım Motoru
  */
 
 import { readFileSync, writeFileSync, existsSync, unlinkSync } from 'node:fs'
@@ -9,304 +9,279 @@ const PROJECT_ROOT = resolve('.')
 const DATA_FILE = join(PROJECT_ROOT, 'src/lib/game/famousPeopleData.ts')
 const PROGRESS_FILE = join(PROJECT_ROOT, 'fame-tier-progress.json')
 
-// ─────────────────────────────────────────────────────────────
-// 1. TIER 1: EN BÜYÜK SÜPERSTARLAR & DEV İKONLAR (~4%)
-// ─────────────────────────────────────────────────────────────
-const TIER_1_KEYWORDS = [
-  'atatürk', 'mustafa kemal', 'ismet inönü', 'fatih sultan mehmet', 'kanuni sultan süleyman',
-  'yavuz sultan selim', 'osman gazi', 'ii. abdülhamid', 'mevlana', 'mimar sinan', 'yunus emre',
-  'aşık veysel', 'barış manço', 'cem karaca', 'tarkan', 'sezen aksu', 'müslüm gürses',
-  'ibrahim tatlıses', 'ajda pekkan', 'zeki müren', 'ahmet kaya', 'orhan gencebay',
-  'ferdi tayfur', 'neşet ertaş', 'kemal sunal', 'cem yılmaz', 'şener şen', 'halit akçatepe',
-  'münir özkul', 'adile naşit', 'tarık akan', 'cüneyt arkın', 'türkan şoray', 'fatma girik',
-  'filiz akın', 'hülya koçyiğit', 'kadir inanır', 'sadri alışık', 'zeki alasya', 'metin akpınar',
-  'ayşen gruda', 'ilyas salman', 'levent kırca', 'nejat uygur', 'yılmaz erdoğan', 'ata demirer',
-  'beyazıt öztürk', 'acun ılıcalı', 'mehmet ali erbil', 'müge anlı', 'haluk bilginer',
-  'fatih terim', 'mustafa denizli', 'şenol güneş', 'arda turan', 'hakan şükür', 'naim süleymanoğlu',
-  'alex de souza', 'gheorghe hagi', 'muslera', 'volkan demirel', 'rüştü reçber',
-  'albert einstein', 'isaac newton', 'leonardo da vinci', 'nikola tesla', 'kristof kolomb',
-  'büyük iskender', 'jül sezar', 'napolyon', 'adolf hitler', 'winston churchill',
-  'abraham lincoln', 'vladimir lenin', 'joseph stalin', 'mahatma gandhi', 'nelson mandela',
-  'che guevara', 'kraliçe ii. elizabeth', 'prenses diana',
-  'michael jackson', 'madonna', 'freddie mercury', 'elvis presley', 'eminem', 'shakira',
-  'rihanna', 'beyoncé', 'taylor swift', 'justin bieber', 'lady gaga', 'britney spears',
-  'brad pitt', 'leonardo dicaprio', 'tom cruise', 'angelina jolie', 'johnny depp',
-  'arnold schwarzenegger', 'sylvester stallone', 'marilyn monroe', 'charlie chaplin',
-  'morgan freeman', 'will smith', 'keanu reeves', 'jackie chan', 'bruce lee',
-  'cristiano ronaldo', 'lionel messi', 'diego maradona', 'pelé', 'zinedine zidane',
-  'david beckham', 'ronaldinho', 'neymar', 'kylian mbappé', 'michael jordan',
-  'kobe bryant', 'lebron james', 'shaquille o\'neal', 'muhammed ali', 'mike tyson',
-  'usain bolt', 'michael schumacher', 'roger federer',
-  'recep ivedik', 'polat alemdar', 'süleyman çakır', 'ramiz dayı', 'bihter ziyagil',
-  'behlül haznedar', 'burhan altıntop', 'inek şaban', 'kel mahmut', 'güdük necmi',
-  'damat ferit', 'badi ekrem', 'tosun paşa', 'kibar feyzo', 'maho ağa', 'züğürt ağa',
-  'turist ömer', 'arif ışık', 'batman', 'superman', 'örümcek adam', 'spider-man',
-  'demir adam', 'iron man', 'hulk', 'kaptan amerika', 'thor', 'joker', 'harry potter',
-  'voldemort', 'dumbledore', 'gandalf', 'darth vader', 'yoda', 'luke skywalker',
-  'jack sparrow', 'sherlock holmes', 'james bond', 'terminatör', 'rocky balboa',
-  'john rambo', 'mickey mouse', 'donald duck', 'tom ve jerry', 'bugs bunny', 'temel reis',
-  'garfield', 'red kit', 'şirin baba', 'gargamel', 'fred çakmaktaş', 'shrek',
-  'süngerbob', 'pikachu', 'super mario', 'don kişot', 'drakula', 'frankenstein',
-  'küçük prens', 'robin hood', 'pinokyo', 'pamuk prenses', 'külkedisi',
-  'kırmızı başlıklı kız', 'aladdin', 'zeus', 'herkül', 'keloğlan', 'nasreddin hoca', 'dede korkut'
-]
-
-// ─────────────────────────────────────────────────────────────
-// 2. TIER 2: YAYGIN BİLİNEN ÜNLÜLER (~15-18%)
-// ─────────────────────────────────────────────────────────────
-const TIER_2_KEYWORDS = [
-  // Popüler Türk Şarkıcılar & Gruplar
-  'hadise', 'murat boz', 'gülşen', 'aleyna tilki', 'edis', 'simge', 'demet akalın',
-  'hande yener', 'sıla', 'kenan doğulu', 'sertab erener', 'serdar ortaç', 'mustafa sandal',
-  'haluk levent', 'teoman', 'şebnem ferah', 'kayahan', 'erkin koray', 'ilhan irem',
-  'emre aydın', 'manga', 'duman', 'mor ve ötesi', 'athena', 'gökhan özoğuz', 'ceza',
-  'sagopa', 'ezhel', 'uzi', 'motive', 'sefo', 'reynmen', 'çelik', 'bendeniz',
-  'hakan peker', 'burak kut', 'yonca evcimik', 'aşkın nur yengi', 'izel', 'ercan saatçi',
-  'yalın', 'gökhan tepe', 'soner sarıkabadayı', 'ferhat göçer', 'kıraç', 'murat kekilli',
-  'cem adrian', 'mabel matiz', 'manuş baba', 'koray avcı', 'kubat', 'zara', 'şevval sam',
-  'volkan konak', 'cengiz kurtoğlu', 'ümit besen', 'hakan altun', 'coşkun sabah',
-  'muazzez ersoy', 'muazzez abacı', 'emel sayın', 'nükhet duru', 'nilüfer', 'erol evgin',
-  'selda bağcan', 'cahit berkay', 'moğollar', 'barış akarsu', 'kazım koyuncu', 'intizar',
-  'ceylan', 'alişan', 'nihat doğan', 'doğuş', 'rober hatemo', 'kibariye', 'güllü', 'linet',
-  'fatih ürek', 'kuşum aydın', 'bedia akartürk', 'belkıs akkale', 'izzet altınmeşe',
-  'mahmut tuncer', 'latif doğan', 'banu alkan', 'ahu tuğba', 'serpil çakmaklı', 'oya aydoğan',
-  'ebru gündeş', 'sibel can', 'yıldız tilbe', 'mahsun kırmızıgül', 'özcan deniz',
-  'sinan akçıl', 'mustafa ceceli', 'emre altuğ', 'berkay', 'gökhan özen', 'tan taşçı',
-  'kutsi', 'gripin', 'pinhani', 'yüksek sadakat', 'redd', 'fatma turgut', 'ceylan ertem',
-  'kalben', 'sena şener', 'melike şahin', 'emir can iğrek', 'köfn', 'semicenk',
-  'dedublüman', 'can bonomo', 'gökhan türkmen', 'ilyas yalçıntaş', 'bilal sonses',
-  'buray', 'ece seçkin', 'derya uluğ', 'irem derici', 'tuğçe kandemir', 'melek mosso',
-
-  // Türk Oyuncular
-  'kenan imirzalıoğlu', 'kıvanç tatlıtuğ', 'beren saat', 'çetin tekindor', 'tolga çevik',
-  'bülent inal', 'engin altan düzyatan', 'burak özçivit', 'fahriye evcen', 'tolga sarıtaş',
-  'çağatay ulusoy', 'aras bulut iynemli', 'engin akyürek', 'cansu dere', 'merve dizdar',
-  'farah zeynep abdullah', 'kerem bürsin', 'demet özdemir', 'pınar deniz', 'kaan urgancıoğlu',
-  'afra saraçoğlu', 'mert ramazan demir', 'hazal kaya', 'ali atay', 'serkan keskin',
-  'ahmet kural', 'murat cemcir', 'rasim öztekin', 'erdal beşikçioğlu', 'perran kutman',
-  'gülşen bubikoğlu', 'kartal tibet', 'hulusi kentmen', 'ali şen', 'ahmet tarık tekçe',
-  'nubar terziyan', 'necdet tosun', 'erdal özyağcılar', 'halit ergenç', 'bergüzar korel',
-  'okan yalabık', 'nebahat çehre', 'meryem uzerli', 'vahide perçin', 'tuba büyüküstün',
-  'serenay sarıkaya', 'hande erçel', 'barış arduç', 'elçin sangu', 'burcu biricik',
-  'özge özpirinçci', 'gökçe bahadır', 'salih bademci', 'uraz kaygılaroğlu', 'feyyaz yiğit',
-  'kıvanç kılınç', 'doğu demirkol', 'hasan can kaya', 'kaan sekban', 'eser yenenler',
-  'ibrahim büyükak', 'oğuzhan koç', 'büşra pekin', 'şahin ırmak', 'sarp apak', 'öner erkan',
-  'hasibe eren', 'gupse özay', 'ezgi mola', 'demet evgar', 'songül öden', 'ceyda düvenci',
-  'berna laçin', 'zuhal olcay', 'derya baykal', 'şafak sezer', 'ertan saban', 'önder açıkbaş',
-  'alper kul', 'aylin kontante', 'meltem cumbul', 'mehmet günsür', 'nur fettahoğlu',
-  'ozan güven', 'selma ergeç', 'engin günaydın', 'binnur kaya', 'necip memili', 'rıza kocaoğlu',
-  'erkan kolçak köstendil', 'taner ölmez', 'salih kalyon', 'zafer algöz', 'zerrin tekindor',
-  'yurdaer okur', 'ilker kaleli', 'birce akalay', 'buğra gülsoy', 'şükrü özyıldız',
-  'hazal subaşı', 'burcu özberk', 'alp navruz', 'aytaç şaşmaz', 'deniz baysal',
-  'ahmet mümtaz taylan', 'ali ihsan varol', 'ulaş tuna astepe', 'arif erkin',
-  'alperen duymaz', 'berk atan', 'serkan çayoğlu', 'furkan andıç', 'boran kuzum',
-  'dilan çiçek deniz', 'ebru şahin', 'melis sezen', 'mert yazıcıoğlu', 'miray daner',
-  'öykü karayel', 'özge gürel', 'özgü namal', 'pelin akil', 'pelin karahan', 'seda bakan',
-  'selahattin paşalı', 'settar tanrıöğen', 'sinem kobal', 'şebnem bozoklu', 'tolgahan sayışman',
-  'tuba ünsal', 'ufuk bayraktar', 'yiğit özşener', 'begüm kütük', 'begüm birgören',
-  'başak parlak', 'ceyda ateş', 'buse terim', 'bige önal', 'simay barlas', 'sümeyye aydoğan',
-  'rabia soytürk', 'lizge cömert', 'su burcu yazgı coşkun', 'onur seyit yaran',
-  'cihan şimşek', 'yiğit koçak', 'halit özgür sarı',
-
-  // Yabancı Sanatçılar / Aktörler
-  'adele', 'billie eilish', 'dua lipa', 'bruno mars', 'katy perry', 'selena gomez',
-  'ariana grande', 'ed sheeran', 'coldplay', 'metallica', 'queen', 'pink floyd', 'nirvana',
-  'bob marley', '2pac', 'snoop dogg', '50 cent', 'drake', 'the weeknd', 'avicii', 'daft punk',
-  'robert de niro', 'al pacino', 'anthony hopkins', 'samuel l. jackson', 'clint eastwood',
-  'george clooney', 'matt damon', 'ben affleck', 'harrison ford', 'tom hanks',
-  'denzel washington', 'meryl streep', 'julia roberts', 'scarlett johansson', 'emma watson',
-  'jennifer aniston', 'jennifer lawrence', 'anne hathaway', 'natalie portman', 'hugh jackman',
-  'chris hemsworth', 'robert downey jr.', 'chris evans', 'mark ruffalo', 'ryan reynolds',
-  'cillian murphy', 'heath ledger', 'christian bale', 'joaquin phoenix', 'pedro pascal',
-  'timothée chalamet', 'zendaya', 'woody allen', 'steven spielberg', 'christopher nolan',
-  'quentin tarantino', 'martin scorsese', 'stanley kubrick', 'alfred hitchcock',
-
-  // Spor Dünyası
-  'arda güler', 'hakan çalhanoğlu', 'kerem aktürkoğlu', 'barış alper yılmaz', 'semih kılıçsoy',
-  'ferdi kadıoğlu', 'kenan yıldız', 'merih demiral', 'çağlar söyüncü', 'cenk tosun',
-  'burak yılmaz', 'selçuk inan', 'emre belözoğlu', 'sergen yalçın', 'tugay kerimoğlu',
-  'nihat kahveci', 'ilkay gündoğan', 'mesut özil', 'cedi osman', 'alperen şengün',
-  'furkan korkmaz', 'hidayet türkoğlu', 'mehmet okur', 'ibrahim kutluay', 'eda erdem',
-  'zehra güneş', 'melissa vargas', 'ebrar karakurt', 'hande baladın', 'gizem örge',
-  'mete gazoz', 'busenaz sürmeneli', 'buse naz çakıroğlu', 'rıza kayaalp', 'taha akgül',
-  'servet tazegül', 'hamza yerlikaya', 'halil mutlu', 'semih saygıner', 'kenan sofuoğlu',
-  'toprak razgatlıoğlu', 'erling haaland', 'mauro icardi', 'edin dzeko', 'edin džeko',
-  'dusan tadic', 'dušan tadić', 'dries mertens', 'lucas torreira', 'vincent aboubakar',
-  'fred', 'dominik livakovic', 'rafa silva', 'ciro immobile', 'victor osimhen',
-  'zlatan ibrahimovic', 'zlatan ibrahimović', 'karim benzema', 'robert lewandowski',
-  'luka modric', 'luka modrić', 'kevin de bruyne', 'mohamed salah', 'gianluigi buffon',
-  'manuel neuer', 'thierry henry', 'stephen curry', 'giannis antetokounmpo',
-  'novak djokovic', 'rafael nadal', 'serena williams', 'lewis hamilton', 'max verstappen',
-  'conor mcgregor', 'khabib nurmagomedov', 'carlos alcaraz', 'jannik sinner',
-  'pep guardiola', 'jose mourinho', 'carlo ancelotti', 'jürgen klopp', 'arsène wenger',
-  'alex ferguson', 'didier drogba', 'wesley sneijder', 'robin van persie', 'dirk kuyt',
-  'mario gomez', 'ricardo quaresma', 'pepe', 'talisca',
-
-  // Tarih / Edebiyat / Bilim
-  'barbaros hayreddin paşa', 'piri reis', 'hacı bektaş-ı veli', 'evliya çelebi',
-  'osman hamdi bey', 'namık kemal', 'mehmet akif ersoy', 'ziya gökalp', 'nazım hikmet',
-  'orhan veli kanık', 'necip fazıl kısakürek', 'yaşar kemal', 'aziz nesin', 'oğuz atay',
-  'sabahattin ali', 'halide edip adıvar', 'reşat nuri güntekin', 'peyami safa', 'ahmet hamdi tanpınar',
-  'aziz sancar', 'cahit arf', 'ilber ortaylı', 'celal şengör', 'halil inalcık',
-  'adnan menderes', 'turgut özal', 'süleyman demirel', 'bülent ecevit', 'necmettin erbakan',
-  'alparslan türkeş', 'deniz gezmiş', 'uğur mumcu', 'abdi ipekçi', 'attila', 'cengiz han',
-  'timur', 'selahaddin eyyubi', 'alparslan', 'mete han', 'bilge kağan', 'konfüçyüs',
-  'buda', 'sokrates', 'platon', 'aristoteles', 'karl marx', 'friedrich nietzsche',
-  'sigmund freud', 'charles darwin', 'stephen hawking', 'marie curie', 'thomas edison',
-  'alexander graham bell', 'louis pasteur', 'pisagor', 'arşimet', 'hipokrat',
-  'kleopatra', 'spartaküs', 'jeanne d\'arc', 'kraliçe victoria', 'john f. kennedy',
-  'martin luther king', 'ömer hayyam', 'ibn-i haldun',
-
-  // Popüler Karakterler
-  'walter white', 'jesse pinkman', 'saul goodman', 'jon snow', 'daenerys targaryen',
-  'tyrion lannister', 'thomas shelby', 'arthur shelby', 'vito corleone', 'michael corleone',
-  'tony montana', 'frodo baggins', 'aragorn', 'legolas', 'gollum', 'sauron',
-  'neo', 'morpheus', 'john wick', 'forrest gump', 'indiana jones', 'hannibal lecter',
-  'tyler durden', 'patrick bateman', 'jordan belfort', 'profesör', 'berlin', 'tokyo',
-  'michael scofield', 'theodore bagwell', 'dexter morgan', 'wednesday addams',
-  'eleven', 'homelander', 'memati baş', 'abdülhey çoban', 'seyfo dayı', 'aslan akbey',
-  'testere necmi', 'laz ziya', 'iskender büyük', 'pala', 'ezel bayraktar',
-  'eyşan tezcan', 'cengiz atay', 'kerpeten ali', 'behzat ç.', 'harun', 'hayalet',
-  'akbaba', 'ercüment çözer', 'yamaç koçovalı', 'idris koçovalı', 'vartolu sadettin',
-  'cumali koçovalı', 'aliço', 'mecnun çınar', 'ismail abi', 'erdal bakkal',
-  'yılmaz (gibi)', 'ilkkan (gibi)', 'ersoy (gibi)', 'gaffur aksoy', 'şahika koçarslanlı',
-  'kuzey tekinoğlu', 'güney tekinoğlu', 'rıza baba', 'mesut komiser', 'hüsnü çoban',
-  'hızır çakırbeyli', 'ilyas çakırbeyli', 'komutan logar', 'robot 216', 'bob marley faruk',
-  'erşan kuneri', 'deadpool', 'wolverine', 'kara dul', 'doktor strange', 'flash',
-  'aquaman', 'wonder woman', 'harley quinn', 'thanos', 'venom', 'patrick yıldız',
-  'squidward', 'bay yengeç', 'plankton', 'goofy', 'daffy duck', 'tweety', 'sylvester',
-  'scooby-doo', 'shaggy', 'safinaz', 'kabasakal', 'joe dalton', 'asteriks', 'oburiks',
-  'tenten', 'şirine', 'barni moloztaş', 'cedric', 'heidi', 'winnie the pooh', 'simba',
-  'mufasa', 'scar', 'fiona', 'eşek', 'çizmeli kedi', 'kung fu panda', 'manny',
-  'sid', 'diego', 'scrat', 'woody', 'buzz lightyear', 'şimşek mcqueen', 'nemo', 'gru',
-  'minyonlar', 'ben 10', 'samurai jack', 'johnny bravo', 'gumball', 'mordecai', 'rigby',
-  'finn', 'jake', 'rafadan tayfa', 'hayri', 'kamil', 'kral şakir', 'fil necati', 'pepee',
-  'ash ketchum', 'goku', 'vegeta', 'naruto', 'sasuke', 'kakashi', 'luffy', 'zoro',
-  'sailor moon', 'kaptan tsubasa', 'luigi', 'prenses peach', 'bowser', 'sonic', 'link',
-  'pac-man', 'crash bandicoot', 'lara croft', 'kratos', 'geralt of rivia', 'arthur morgan',
-  'john marston', 'cj', 'tommy vercetti', 'trevor philips', 'niko bellic', 'master chief',
-  'doom slayer', 'gordon freeman', 'nathan drake', 'joel miller', 'ellie williams',
-  'scorpion', 'sub-zero', 'ryu', 'steve', 'creeper', 'dorian gray', 'raskolnikov',
-  'jean valjean', 'müfettiş javert', 'robinson crusoe', 'gulliver', 'tom sawyer',
-  'oliver twist', 'romeo', 'juliet', 'hamlet', 'macbeth', 'faust', 'alice', 'şapkacı',
-  'moby dick', 'tarzan', 'peter pan', 'kaptan kanca', 'tinker bell', 'gepetto usta',
-  'rapunzel', 'uyuyan güzel', 'poseidon', 'hades', 'medusa', 'afrodit', 'ares', 'hermes',
-  'apollo', 'artemis', 'athena', 'odin', 'loki', 'anubis', 'ra', 'osiris', 'isis',
-  'şahmeran', 'köroğlu'
-]
-
-// ─────────────────────────────────────────────────────────────
-// 3. TIER 3: ORTA DERECE BİLİNENLER (~28-32%)
-// ─────────────────────────────────────────────────────────────
-const TIER_3_KEYWORDS = [
-  'poyraz karayel', 'nurcan taylan', 'ibn-i sina', 'alfie solomons', 'sonny corleone',
-  'gus fring', 'mike ehrmantraut', 'hank schrader', 'polly gray', 'cersei lannister',
-  'jaime lannister', 'arya stark', 'sansa stark', 'ned stark', 'gece kralı', 'hermione granger',
-  'ron weasley', 'severus snape', 'sirius black', 'rubeus hagrid', 'draco malfoy',
-  'bellatrix lestrange', 'dobby', 'samwise gamgee', 'gimli', 'boromir', 'saruman',
-  'bilbo baggins', 'prenses leia', 'han solo', 'chewbacca', 'obi-wan kenobi',
-  'imparator palpatine', 'darth maul', 'kylo ren', 'mandalorian', 'bebek yoda', 'grogu',
-  'will turner', 'elizabeth swann', 'kaptan hector barbossa', 'davy jones', 'dr. john watson',
-  'profesör james moriarty', 'trinity', 'ajan smith', 'sarah connor', 'kenan birkan',
-  'tefo', 'adnan ziyagil', 'firdevs yöreoğlu', 'matmazel', 'sanço panço', 'cuma',
-  'huckleberry finn', 'kral lear', 'othello', 'mefistofeles', 'kupa kraliçesi',
-  'cheshire kedisi', 'zeze', 'kaptan ahab', 'kötü kalpli kurt', 'freya', 'atreus',
-  'ciri', 'yennefer of vengerberg', 'darwin',
-  'altay bayındır', 'uğurcan çakır', 'mert günok', 'samet akaydin', 'abdülkerim bardakcı',
-  'kaan ayhan', 'zeki çelik', 'ozan kabak', 'salih özcan', 'ismail yüksek', 'orkun kökçü',
-  'irfan can kahveci', 'yunus akgün', 'cengiz ünder', 'yusuf yazıcı', 'enes ünal',
-  'bertuğ yıldırım', 'umut nayir', 'salih uçan', 'necip uysal', 'berkan kutlu',
-  'abdülkadir ömür', 'dorukhan toköz', 'ozan tufan', 'okay yokuşlu', 'mahmut tekdemir',
-  'hasan ali kaldırım', 'caner erkin', 'gökhan gönül', 'mehmet topal', 'sabri sarıoğlu',
-  'servet çetin', 'egemen korkmaz', 'gökhan zan', 'ibrahim toraman', 'tuncay şanlı',
-  'tümer metin', 'ümit karan', 'ilhan mansız', 'alpay özalan', 'okan buruk', 'emre aşık',
-  'bülent korkmaz', 'hakan ünsal', 'ergün penbe', 'arif erdem', 'suat kaya', 'hami mandıralı',
-  'aykut kocaman', 'rıdvan dilmen', 'tanju çolak', 'metin oktay', 'lefter küçükandonyadis',
-  'can bartu', 'hakkı yeten', 'ersan ilyasova', 'ömer aşık', 'semih erden',
-  'kerem tunçeri', 'ender arslan', 'sinan güler', 'oğuz savaş', 'naz aydemir akyol',
-  'neslihan demir', 'meryem boz', 'kübra akman', 'cansu özbay', 'elif şahin',
-  'derya cebecioğlu', 'ilkin aydın', 'ayça aykaç', 'simge aköz',
-  'mozart', 'beethoven', 'bach', 'chopin', 'vivaldi', 'tchaikovsky', 'dante', 'shakespeare',
-  'tolstoy', 'dostoyevski', 'victor hugo', 'goethe', 'balzac', 'franz kafka', 'michelangelo',
-  'rafael', 'rembrandt', 'van gogh', 'picasso', 'salvador dali', 'monet'
-]
-
-function normalize(str) {
-  return str.toLocaleLowerCase('tr')
-    .replace(/\s*\([^)]*\)/g, '')
-    .replace(/[^a-z0-9çğıöşü\s]/g, '')
+function normalizeName(str) {
+  return str
+    .toLocaleLowerCase('tr')
+    .replace(/\s*\([^)]*\)/g, '') // Parantez içindeki açıklamaları kaldır
+    .replace(/[^a-z0-9çğıöşü\s]/g, ' ') // Özel karakterleri boşluğa çevir
+    .replace(/\s+/g, ' ')
     .trim()
 }
 
-function matchKeywordList(name, norm, kwList) {
-  const lower = name.toLocaleLowerCase('tr')
-  for (const kw of kwList) {
-    if (lower.includes(kw) || norm.includes(kw)) {
-      return true
-    }
-  }
-  return false
-}
+// ─────────────────────────────────────────────────────────────
+// 1. TIER 1: EN BÜYÜK SÜPERSTARLAR & DEV İKONLAR (~150-200 isim)
+// ─────────────────────────────────────────────────────────────
+const TIER_1_RAW = [
+  // Tarihi Kişiler & Liderler
+  'Mustafa Kemal Atatürk', 'Kemal Atatürk', 'Atatürk', 'İsmet İnönü', 'Fatih Sultan Mehmet',
+  'Kanuni Sultan Süleyman', 'Yavuz Sultan Selim', 'Osman Gazi', 'II. Abdülhamid', 'Mevlana Celaleddin Rumi',
+  'Mimar Sinan', 'Yunus Emre', 'Albert Einstein', 'Isaac Newton', 'Leonardo da Vinci',
+  'Nikola Tesla', 'Kristof Kolomb', 'Büyük İskender', 'Jül Sezar', 'Julius Caesar',
+  'Napolyon Bonapart', 'Napoleon Bonaparte', 'Adolf Hitler', 'Winston Churchill', 'Abraham Lincoln',
+  'Vladimir Lenin', 'Joseph Stalin', 'Mahatma Gandhi', 'Nelson Mandela', 'Che Guevara',
+  'Kraliçe II. Elizabeth', 'Prenses Diana',
+
+  // Türk Müzik Efsaneleri
+  'Tarkan', 'Sezen Aksu', 'Barış Manço', 'Cem Karaca', 'Müslüm Gürses', 'İbrahim Tatlıses',
+  'Ajda Pekkan', 'Zeki Müren', 'Ahmet Kaya', 'Orhan Gencebay', 'Ferdi Tayfur', 'Neşet Ertaş',
+  'Aşık Veysel', 'Kemal Sunal', 'Cem Yılmaz', 'Şener Şen', 'Halit Akçatepe', 'Münir Özkul',
+  'Adile Naşit', 'Tarık Akan', 'Cüneyt Arkın', 'Türkan Şoray', 'Fatma Girik', 'Filiz Akın',
+  'Hülya Koçyiğit', 'Kadir İnanır', 'Sadri Alışık', 'Zeki Alasya', 'Metin Akpınar',
+  'Ayşen Gruda', 'İlyas Salman', 'Levent Kırca', 'Nejat Uygur', 'Yılmaz Erdoğan', 'Ata Demirer',
+  'Beyazıt Öztürk', 'Acun Ilıcalı', 'Mehmet Ali Erbil', 'Müge Anlı', 'Haluk Bilginer',
+  'Kenan İmirzalıoğlu', 'Kıvanç Tatlıtuğ', 'Beren Saat',
+
+  // Yabancı Müzik & Sinema Devleri
+  'Michael Jackson', 'Madonna', 'Freddie Mercury', 'Elvis Presley', 'Eminem', 'Shakira',
+  'Rihanna', 'Beyoncé', 'Taylor Swift', 'Justin Bieber', 'Lady Gaga', 'Britney Spears',
+  'Brad Pitt', 'Leonardo DiCaprio', 'Tom Cruise', 'Angelina Jolie', 'Johnny Depp',
+  'Arnold Schwarzenegger', 'Sylvester Stallone', 'Marilyn Monroe', 'Charlie Chaplin',
+  'Morgan Freeman', 'Will Smith', 'Keanu Reeves', 'Jackie Chan', 'Bruce Lee',
+
+  // Spor Efsaneleri
+  'Fatih Terim', 'Mustafa Denizli', 'Şenol Güneş', 'Arda Turan', 'Hakan Şükür',
+  'Naim Süleymanoğlu', 'Alex de Souza', 'Gheorghe Hagi', 'Fernando Muslera', 'Volkan Demirel',
+  'Rüştü Reçber', 'Cristiano Ronaldo', 'Lionel Messi', 'Diego Maradona', 'Pelé',
+  'Zinedine Zidane', 'David Beckham', 'Ronaldinho', 'Ronaldo', 'Neymar', 'Kylian Mbappé',
+  'Michael Jordan', 'Kobe Bryant', 'LeBron James', 'Shaquille O\'Neal', 'Muhammed Ali',
+  'Mike Tyson', 'Usain Bolt', 'Michael Schumacher', 'Roger Federer',
+
+  // Kurgusal & Çizgi Karakterler
+  'Recep İvedik', 'Polat Alemdar', 'Süleyman Çakır', 'Ramiz Dayı', 'Ramiz Karaeski',
+  'Bihter Ziyagil', 'Behlül Haznedar', 'Burhan Altıntop', 'İnek Şaban', 'Mahmut Hoca',
+  'Kel Mahmut', 'Güdük Necmi', 'Damat Ferit', 'Badi Ekrem', 'Tosun Paşa', 'Kibar Feyzo',
+  'Maho Ağa', 'Züğürt Ağa', 'Turist Ömer', 'Arif Işık', 'Harry Potter', 'Lord Voldemort',
+  'Albus Dumbledore', 'Gandalf', 'Darth Vader', 'Yoda', 'Luke Skywalker', 'Kaptan Jack Sparrow',
+  'Sherlock Holmes', 'James Bond', 'Terminatör', 'Rocky Balboa', 'John Rambo',
+  'Batman', 'Superman', 'Örümcek Adam', 'Spider-Man', 'Demir Adam', 'Iron Man', 'Hulk',
+  'Kaptan Amerika', 'Thor', 'Joker', 'Mickey Mouse', 'Donald Duck', 'Tom ve Jerry',
+  'Bugs Bunny', 'Temel Reis', 'Garfield', 'Red Kit', 'Şirin Baba', 'Gargamel',
+  'Fred Çakmaktaş', 'Shrek', 'SüngerBob KareŞort', 'Pikachu', 'Super Mario',
+  'Don Kişot', 'Drakula', 'Kont Drakula', 'Frankenstein', 'Küçük Prens', 'Robin Hood',
+  'Pinokyo', 'Pamuk Prenses', 'Külkedisi', 'Kırmızı Başlıklı Kız', 'Aladdin',
+  'Zeus', 'Herkül', 'Keloğlan', 'Nasreddin Hoca', 'Dede Korkut'
+]
+
+// ─────────────────────────────────────────────────────────────
+// 2. TIER 2: YAYGIN BİLİNEN ÜNLÜLER & KARAKTERLER (~400-600 isim)
+// ─────────────────────────────────────────────────────────────
+const TIER_2_RAW = [
+  // Popüler Türk Müzisyenler
+  'Gülben Ergen', 'Hadise', 'Murat Boz', 'Gülşen', 'Aleyna Tilki', 'Edis', 'Simge',
+  'Demet Akalın', 'Hande Yener', 'Sıla', 'Kenan Doğulu', 'Sertab Erener', 'Serdar Ortaç',
+  'Mustafa Sandal', 'Haluk Levent', 'Teoman', 'Şebnem Ferah', 'Kayahan', 'Erkin Koray',
+  'İlhan İrem', 'Mahsun Kırmızıgül', 'Özcan Deniz', 'Ebru Gündeş', 'Sibel Can',
+  'Yıldız Tilbe', 'Emre Aydın', 'Manga', 'Duman', 'Mor ve Ötesi', 'Athena',
+  'Gökhan Özoğuz', 'Ceza', 'Sagopa Kajmer', 'Ezhel', 'Uzi', 'Motive', 'Sefo', 'Reynmen',
+  'Çelik', 'Bendeniz', 'Hakan Peker', 'Burak Kut', 'Yonca Evcimik', 'Aşkın Nur Yengi',
+  'İzel', 'Ercan Saatçi', 'Yalın', 'Gökhan Tepe', 'Soner Sarıkabadayı', 'Ferhat Göçer',
+  'Kıraç', 'Murat Kekilli', 'Cem Adrian', 'Mabel Matiz', 'Manuş Baba', 'Koray Avcı',
+  'Kubat', 'Zara', 'Şevval Sam', 'Volkan Konak', 'Cengiz Kurtoğlu', 'Ümit Besen',
+  'Hakan Altun', 'Coşkun Sabah', 'Muazzez Ersoy', 'Muazzez Abacı', 'Emel Sayın',
+  'Nükhet Duru', 'Nilüfer', 'Erol Evgin', 'Selda Bağcan', 'Cahit Berkay', 'Moğollar',
+  'Barış Akarsu', 'Kazım Koyuncu', 'İntizar', 'Ceylan', 'Alişan', 'Nihat Doğan',
+  'Doğuş', 'Rober Hatemo', 'Kibariye', 'Güllü', 'Linet', 'Fatih Ürek', 'Kuşum Aydın',
+  'Bedia Akartürk', 'Belkıs Akkale', 'İzzet Altınmeşe', 'Mahmut Tuncer', 'Latif Doğan',
+  'Banu Alkan', 'Ahu Tuğba', 'Serpil Çakmaklı', 'Oya Aydoğan', 'Sinan Akçıl',
+  'Mustafa Ceceli', 'Emre Altuğ', 'Berkay', 'Gökhan Özen', 'Tan Taşçı', 'Kutsi',
+  'Gripin', 'Pinhani', 'Yüksek Sadakat', 'Redd', 'Fatma Turgut', 'Ceylan Ertem',
+  'Kalben', 'Sena Şener', 'Melike Şahin', 'Emir Can İğrek', 'Köfn', 'Semicenk',
+  'Dedublüman', 'Can Bonomo', 'Gökhan Türkmen', 'İlyas Yalçıntaş', 'Bilal Sonses',
+  'Buray', 'Ece Seçkin', 'Derya Uluğ', 'İrem Derici', 'Tuğçe Kandemir', 'Melek Mosso',
+
+  // Türk Oyuncular
+  'Çetin Tekindor', 'Tolga Çevik', 'Bülent İnal', 'Engin Altan Düzyatan', 'Burak Özçivit',
+  'Fahriye Evcen', 'Tolga Sarıtaş', 'Çağatay Ulusoy', 'Aras Bulut İynemli', 'Engin Akyürek',
+  'Cansu Dere', 'Merve Dizdar', 'Farah Zeynep Abdullah', 'Kerem Bürsin', 'Demet Özdemir',
+  'Pınar Deniz', 'Kaan Urgancıoğlu', 'Afra Saraçoğlu', 'Mert Ramazan Demir', 'Hazal Kaya',
+  'Ali Atay', 'Serkan Keskin', 'Ahmet Kural', 'Murat Cemcir', 'Rasim Öztekin',
+  'Erdal Beşikçioğlu', 'Perran Kutman', 'Gülşen Bubikoğlu', 'Kartal Tibet', 'Hulusi Kentmen',
+  'Ali Şen', 'Ahmet Tarık Tekçe', 'Nubar Terziyan', 'Necdet Tosun', 'Erdal Özyağcılar',
+  'Halit Ergenç', 'Bergüzar Korel', 'Okan Yalabık', 'Nebahat Çehre', 'Meryem Uzerli',
+  'Vahide Perçin', 'Tuba Büyüküstün', 'Serenay Sarıkaya', 'Hande Erçel', 'Barış Arduç',
+  'Elçin Sangu', 'Burcu Biricik', 'Özge Özpirinçci', 'Gökçe Bahadır', 'Salih Bademci',
+  'Uraz Kaygılaroğlu', 'Feyyaz Yiğit', 'Kıvanç Kılınç', 'Doğu Demirkol', 'Hasan Can Kaya',
+  'Kaan Sekban', 'Eser Yenenler', 'İbrahim Büyükak', 'Oğuzhan Koç', 'Büşra Pekin',
+  'Şahin Irmak', 'Sarp Apak', 'Öner Erkan', 'Hasibe Eren', 'Gupse Özay', 'Ezgi Mola',
+  'Demet Evgar', 'Songül Öden', 'Ceyda Düvenci', 'Berna Laçin', 'Zuhal Olcay',
+  'Derya Baykal', 'Şafak Sezer', 'Ertan Saban', 'Önder Açıkbaş', 'Alper Kul',
+  'Aylin Kontante', 'Meltem Cumbul', 'Mehmet Günsür', 'Nur Fettahoğlu', 'Ozan Güven',
+  'Selma Ergeç', 'Engin Günaydın', 'Binnur Kaya', 'Necip Memili', 'Rıza Kocaoğlu',
+  'Erkan Kolçak Köstendil', 'Taner Ölmez', 'Salih Kalyon', 'Zafer Algöz', 'Zerrin Tekindor',
+  'Yurdaer Okur', 'İlker Kaleli', 'Birce Akalay', 'Buğra Gülsoy', 'Şükrü Özyıldız',
+  'Hazal Subaşı', 'Burcu Özberk', 'Alp Navruz', 'Aytaç Şaşmaz', 'Deniz Baysal',
+  'Ahmet Mümtaz Taylan', 'Ali İhsan Varol', 'Ulaş Tuna Astepe', 'Arif Erkin',
+  'Alperen Duymaz', 'Berk Atan', 'Serkan Çayoğlu', 'Furkan Andıç', 'Boran Kuzum',
+  'Dilan Çiçek Deniz', 'Ebru Şahin', 'Melis Sezen', 'Mert Yazıcıoğlu', 'Miray Daner',
+  'Öykü Karayel', 'Özge Gürel', 'Özgü Namal', 'Pelin Akil', 'Pelin Karahan',
+  'Seda Bakan', 'Selahattin Paşalı', 'Settar Tanrıöğen', 'Sinem Kobal', 'Şebnem Bozoklu',
+  'Tolgahan Sayışman', 'Tuba Ünsal', 'Ufuk Bayraktar', 'Yiğit Özşener', 'Begüm Kütük',
+  'Begüm Birgören', 'Başak Parlak', 'Ceyda Ateş', 'Bige Önal', 'Simay Barlas',
+  'Sümeyye Aydoğan', 'Rabia Soytürk', 'Lizge Cömert', 'Su Burcu Yazgı Coşkun',
+  'Onur Seyit Yaran', 'Cihan Şimşek', 'Yiğit Koçak', 'Halit Özgür Sarı',
+
+  // Yabancı Sanatçılar (Tam Adıyla)
+  'Adele', 'Billie Eilish', 'Dua Lipa', 'Bruno Mars', 'Katy Perry', 'Selena Gomez',
+  'Ariana Grande', 'Ed Sheeran', 'Coldplay', 'Metallica', 'Queen', 'Pink Floyd',
+  'Nirvana', 'Bob Marley', '2Pac', 'Tupac Shakur', 'Snoop Dogg', '50 Cent', 'Drake',
+  'The Weeknd', 'Avicii', 'Daft Punk', 'Robert De Niro', 'Al Pacino', 'Anthony Hopkins',
+  'Samuel L. Jackson', 'Clint Eastwood', 'George Clooney', 'Matt Damon', 'Ben Affleck',
+  'Harrison Ford', 'Tom Hanks', 'Denzel Washington', 'Meryl Streep', 'Julia Roberts',
+  'Scarlett Johansson', 'Emma Watson', 'Jennifer Aniston', 'Jennifer Lawrence',
+  'Anne Hathaway', 'Natalie Portman', 'Hugh Jackman', 'Chris Hemsworth',
+  'Robert Downey Jr.', 'Chris Evans', 'Mark Ruffalo', 'Ryan Reynolds', 'Cillian Murphy',
+  'Heath Ledger', 'Christian Bale', 'Joaquin Phoenix', 'Pedro Pascal',
+  'Timothée Chalamet', 'Zendaya', 'Woody Allen', 'Steven Spielberg', 'Christopher Nolan',
+  'Quentin Tarantino', 'Martin Scorsese', 'Stanley Kubrick', 'Alfred Hitchcock',
+  'Bradley Cooper',
+
+  // Spor Dünyası
+  'Arda Güler', 'Hakan Çalhanoğlu', 'Kerem Aktürkoğlu', 'Barış Alper Yılmaz', 'Semih Kılıçsoy',
+  'Ferdi Kadıoğlu', 'Kenan Yıldız', 'Merih Demiral', 'Çağlar Söyüncü', 'Cenk Tosun',
+  'Burak Yılmaz', 'Selçuk İnan', 'Emre Belözoğlu', 'Sergen Yalçın', 'Tugay Kerimoğlu',
+  'Nihat Kahveci', 'İlkay Gündoğan', 'Mesut Özil', 'Cedi Osman', 'Alperen Şengün',
+  'Furkan Korkmaz', 'Hidayet Türkoğlu', 'Mehmet Okur', 'İbrahim Kutluay', 'Eda Erdem',
+  'Zehra Güneş', 'Melissa Vargas', 'Ebrar Karakurt', 'Hande Baladın', 'Gizem Örge',
+  'Mete Gazoz', 'Busenaz Sürmeneli', 'Buse Naz Çakıroğlu', 'Rıza Kayaalp', 'Taha Akgül',
+  'Servet Tazegül', 'Hamza Yerlikaya', 'Halil Mutlu', 'Semih Saygıner', 'Kenan Sofuoğlu',
+  'Toprak Razgatlıoğlu', 'Erling Haaland', 'Mauro Icardi', 'Edin Dzeko', 'Dusan Tadic',
+  'Dries Mertens', 'Lucas Torreira', 'Vincent Aboubakar', 'Fred', 'Dominik Livakovic',
+  'Rafa Silva', 'Ciro Immobile', 'Victor Osimhen', 'Zlatan Ibrahimovic', 'Karim Benzema',
+  'Robert Lewandowski', 'Luka Modric', 'Kevin De Bruyne', 'Mohamed Salah',
+  'Gianluigi Buffon', 'Manuel Neuer', 'Thierry Henry', 'Stephen Curry',
+  'Giannis Antetokounmpo', 'Novak Djokovic', 'Rafael Nadal', 'Serena Williams',
+  'Lewis Hamilton', 'Max Verstappen', 'Conor McGregor', 'Khabib Nurmagomedov',
+  'Carlos Alcaraz', 'Jannik Sinner', 'Pep Guardiola', 'Jose Mourinho', 'Carlo Ancelotti',
+  'Jürgen Klopp', 'Arsène Wenger', 'Alex Ferguson', 'Didier Drogba', 'Wesley Sneijder',
+  'Robin van Persie', 'Dirk Kuyt', 'Mario Gomez', 'Ricardo Quaresma', 'Pepe', 'Talisca',
+
+  // Tarih / Edebiyat / Bilim
+  'Barbaros Hayreddin Paşa', 'Piri Reis', 'Hacı Bektaş-ı Veli', 'Evliya Çelebi',
+  'Osman Hamdi Bey', 'Namık Kemal', 'Mehmet Akif Ersoy', 'Ziya Gökalp', 'Nazım Hikmet',
+  'Orhan Veli Kanık', 'Necip Fazıl Kısakürek', 'Yaşar Kemal', 'Aziz Nesin', 'Oğuz Atay',
+  'Sabahattin Ali', 'Halide Edip Adıvar', 'Reşat Nuri Güntekin', 'Peyami Safa',
+  'Ahmet Hamdi Tanpınar', 'Aziz Sancar', 'Cahit Arf', 'İlber Ortaylı', 'Celal Şengör',
+  'Halil İnalcık', 'Adnan Menderes', 'Turgut Özal', 'Süleyman Demirel', 'Bülent Ecevit',
+  'Necmettin Erbakan', 'Alparslan Türkeş', 'Deniz Gezmiş', 'Uğur Mumcu', 'Abdi İpekçi',
+  'Attila', 'Cengiz Han', 'Timur', 'Selahaddin Eyyubi', 'Alparslan', 'Mete Han',
+  'Bilge Kağan', 'Konfüçyüs', 'Buda', 'Sokrates', 'Platon', 'Aristoteles', 'Karl Marx',
+  'Friedrich Nietzsche', 'Sigmund Freud', 'Charles Darwin', 'Stephen Hawking',
+  'Marie Curie', 'Thomas Edison', 'Alexander Graham Bell', 'Louis Pasteur', 'Pisagor',
+  'Arşimet', 'Hipokrat', 'Kleopatra', 'Spartaküs', 'Jeanne d\'Arc', 'Kraliçe Victoria',
+  'John F. Kennedy', 'Martin Luther King', 'Ömer Hayyam', 'İbn-i Haldun',
+
+  // Dizi / Film Karakterleri
+  'Walter White', 'Jesse Pinkman', 'Saul Goodman', 'Jon Snow', 'Daenerys Targaryen',
+  'Tyrion Lannister', 'Thomas Shelby', 'Arthur Shelby', 'Vito Corleone', 'Michael Corleone',
+  'Tony Montana', 'Frodo Baggins', 'Aragorn', 'Legolas', 'Gollum', 'Sauron',
+  'Neo', 'Morpheus', 'John Wick', 'Forrest Gump', 'Indiana Jones', 'Hannibal Lecter',
+  'Tyler Durden', 'Patrick Bateman', 'Jordan Belfort', 'Profesör', 'Berlin', 'Tokyo',
+  'Michael Scofield', 'Theodore Bagwell', 'Dexter Morgan', 'Wednesday Addams',
+  'Eleven', 'Homelander', 'Memati Baş', 'Abdülhey Çoban', 'Seyfo Dayı', 'Aslan Akbey',
+  'Testere Necmi', 'Laz Ziya', 'İskender Büyük', 'Pala', 'Ezel Bayraktar',
+  'Eyşan Tezcan', 'Cengiz Atay', 'Kerpeten Ali', 'Behzat Ç.', 'Harun', 'Hayalet',
+  'Akbaba', 'Ercüment Çözer', 'Yamaç Koçovalı', 'İdris Koçovalı', 'Vartolu Sadettin',
+  'Cumali Koçovalı', 'Aliço', 'Mecnun Çınar', 'İsmail Abi', 'Erdal Bakkal',
+  'Yılmaz', 'İlkkan', 'Ersoy', 'Gaffur Aksoy', 'Şahika Koçarslanlı', 'Kuzey Tekinoğlu',
+  'Güney Tekinoğlu', 'Rıza Baba', 'Mesut Komiser', 'Hüsnü Çoban', 'Hızır Çakırbeyli',
+  'İlyas Çakırbeyli', 'Komutan Logar', 'Robot 216', 'Bob Marley Faruk', 'Erşan Kuneri',
+
+  // Çizgi & Kurgusal
+  'Deadpool', 'Wolverine', 'Kara Dul', 'Black Widow', 'Doktor Strange', 'Doctor Strange',
+  'Flash', 'Aquaman', 'Wonder Woman', 'Harley Quinn', 'Thanos', 'Venom', 'Patrick Yıldız',
+  'Squidward', 'Bay Yengeç', 'Plankton', 'Goofy', 'Daffy Duck', 'Tweety', 'Sylvester',
+  'Scooby-Doo', 'Shaggy', 'Safinaz', 'Kabasakal', 'Joe Dalton', 'Asteriks', 'Oburiks',
+  'Tenten', 'Şirine', 'Barni Moloztaş', 'Cedric', 'Heidi', 'Winnie the Pooh',
+  'Simba', 'Mufasa', 'Scar', 'Fiona', 'Eşek', 'Çizmeli Kedi', 'Kung Fu Panda',
+  'Manny', 'Sid', 'Diego', 'Scrat', 'Woody', 'Buzz Lightyear', 'Şimşek McQueen',
+  'Nemo', 'Gru', 'Minyonlar', 'Ben 10', 'Samurai Jack', 'Johnny Bravo', 'Gumball',
+  'Mordecai', 'Rigby', 'Finn', 'Jake', 'Rafadan Tayfa', 'Hayri', 'Kamil', 'Kral Şakir',
+  'Fil Necati', 'Pepee', 'Ash Ketchum', 'Goku', 'Vegeta', 'Naruto Uzumaki',
+  'Sasuke Uchiha', 'Kakashi Hatake', 'Monkey D. Luffy', 'Roronoa Zoro', 'Sailor Moon',
+  'Kaptan Tsubasa', 'Luigi', 'Prenses Peach', 'Bowser', 'Sonic', 'Link', 'Pac-Man',
+  'Crash Bandicoot', 'Lara Croft', 'Kratos', 'Geralt of Rivia', 'Arthur Morgan',
+  'John Marston', 'CJ', 'Tommy Vercetti', 'Trevor Philips', 'Niko Bellic',
+  'Master Chief', 'Doom Slayer', 'Gordon Freeman', 'Nathan Drake', 'Joel Miller',
+  'Ellie Williams', 'Scorpion', 'Sub-Zero', 'Ryu', 'Steve', 'Creeper', 'Dorian Gray',
+  'Raskolnikov', 'Jean Valjean', 'Müfettiş Javert', 'Robinson Crusoe', 'Gulliver',
+  'Tom Sawyer', 'Oliver Twist', 'Romeo', 'Juliet', 'Hamlet', 'Macbeth', 'Faust',
+  'Alice', 'Şapkacı', 'Moby Dick', 'Tarzan', 'Peter Pan', 'Kaptan Kanca',
+  'Tinker Bell', 'Gepetto Usta', 'Rapunzel', 'Uyuyan Güzel', 'Poseidon', 'Hades',
+  'Medusa', 'Afrodit', 'Ares', 'Hermes', 'Apollo', 'Artemis', 'Athena', 'Odin',
+  'Loki', 'Anubis', 'Ra', 'Osiris', 'İsis', 'Şahmeran', 'Köroğlu'
+]
+
+// ─────────────────────────────────────────────────────────────
+// SET'LERE NORMALİZE EDİLMİŞ ŞEKİLDE EKLE
+// ─────────────────────────────────────────────────────────────
+const TIER_1_SET = new Set(TIER_1_RAW.map(normalizeName))
+const TIER_2_SET = new Set(TIER_2_RAW.map(normalizeName))
 
 function classifyPerson(item) {
-  const { name, category } = item
-  const raw = name.trim()
-  const lower = raw.toLocaleLowerCase('tr')
-  const norm = normalize(name)
+  const norm = normalizeName(item.name)
+  const baseNorm = normalizeName(item.name.replace(/\s*\([^)]*\)/g, ''))
 
-  // 1. Tier 1 Kontrolü
-  if (matchKeywordList(name, norm, TIER_1_KEYWORDS)) {
+  // 1. TIER 1 KONTROLÜ (Kesin Eşleşme)
+  if (TIER_1_SET.has(norm) || TIER_1_SET.has(baseNorm)) {
     return 1
   }
 
-  // 2. Tier 2 Kontrolü
-  if (matchKeywordList(name, norm, TIER_2_KEYWORDS)) {
+  // 2. TIER 2 KONTROLÜ (Kesin Eşleşme)
+  if (TIER_2_SET.has(norm) || TIER_2_SET.has(baseNorm)) {
     return 2
   }
 
-  // 3. Tier 3 Kontrolü
-  if (matchKeywordList(name, norm, TIER_3_KEYWORDS)) {
+  // 3. TIER 3 (Genel Kültürde Belli Bir Alan/Dönem Takipçilerince Bilinenler)
+  if (item.category === 'cizgi_karakterler') {
     return 3
   }
-
-  // 4. Kategori Heuristikleri
-  if (category === 'dizi_film_karakterleri') {
-    return 3
+  if (item.category === 'dizi_film_karakterleri') {
+    // Parantez içinde dizi/film adı olan karakterler Tier 3, diğerleri Tier 4
+    if (/\(.*\)/.test(item.name)) {
+      return 3
+    }
+    return 4
   }
-
-  if (category === 'cizgi_karakterler') {
-    return 3
-  }
-
-  if (category === 'tarihi_kisiler') {
+  if (item.category === 'tarihi_kisiler') {
+    const lower = item.name.toLocaleLowerCase('tr')
     if (/sultan|padişah|kral|kraliçe|imparator|cumhurbaşkanı|başbakan|filozof|bilim|nobel/i.test(lower)) {
       return 3
     }
-    if (/I\.|II\.|III\.|IV\.|V\.|VI\.|VII\.|VIII\.|IX\.|X\./.test(raw)) {
+    if (/I\.|II\.|III\.|IV\.|V\.|VI\.|VII\.|VIII\.|IX\.|X\./.test(item.name)) {
       return 3
     }
-    // Çok eski veya lokal niş maddeler
-    if (/m\.ö\.|valisi|sadrazam|mutasarrıf|kadı|beylerbeyi|müderris|oğlu/i.test(lower) || raw.length > 22) {
+    // Nişli / eski stubs
+    if (/m\.ö\.|valisi|sadrazam|mutasarrıf|kadı|beylerbeyi|müderris|oğlu/i.test(lower) || item.name.length > 22) {
       return 5
     }
     return 4
   }
 
-  if (category === 'sporcular') {
+  if (item.category === 'sporcular') {
+    const lower = item.name.toLocaleLowerCase('tr')
     if (/milli|şampiyon|olimpiyat|süper lig|fc|sk/i.test(lower)) {
       return 3
     }
-    if (/[éèêëàâäôöûüïîç]/i.test(raw) || raw.length > 22 || /güreş|boks|atlet|kürek|halter|voleybolcu|basketbolcu/i.test(lower)) {
+    if (/[éèêëàâäôöûüïîç]/i.test(item.name) || item.name.length > 22 || /güreş|boks|atlet|kürek|halter|voleybolcu|basketbolcu/i.test(lower)) {
       return 5
     }
     return 4
   }
 
-  if (category === 'unluler') {
-    if (raw.length > 24) {
+  if (item.category === 'unluler') {
+    if (item.name.length > 24 || item.name.split(' ').length >= 4) {
       return 5
     }
-    // Standart 2-kelimeli sanatçılar Tier 4
     return 4
   }
 
@@ -326,7 +301,6 @@ async function main() {
   const totalCount = seedArray.length
   console.log(`📊 Toplam ${totalCount} isim bulundu.`)
   
-  // 100'lük gruplar halinde işle
   const BATCH_SIZE = 100
   let lastProcessedIndex = 0
   
@@ -336,12 +310,6 @@ async function main() {
       seedArray[i].fameTier = classifyPerson(seedArray[i])
     }
     lastProcessedIndex = endIndex
-    
-    writeFileSync(PROGRESS_FILE, JSON.stringify({
-      lastProcessedIndex,
-      totalCount,
-      updatedAt: new Date().toISOString()
-    }, null, 2))
   }
 
   // Dağılım Kontrolü
@@ -375,26 +343,16 @@ async function main() {
   console.log(`- Tier 5 (Nişli): ${tierCounts[5]} isim (%${tier5Pct})`)
   console.log(`👉 Toplam Tier 1 + Tier 2: ${tierCounts[1] + tierCounts[2]} isim (%${tier1And2Pct})`)
   
+  // Örnek kontrol: Brad Sherwood ve Erdöl Boratap ne oldu?
+  const brad = seedArray.find(i => i.name === 'Brad Sherwood')
+  const erdol = seedArray.find(i => i.name === 'Erdöl Boratap')
+  const gulben = seedArray.find(i => i.name === 'Gülben Ergen')
+  console.log(`\n🎯 Özel Kontroller:`)
+  console.log(`- Brad Sherwood: Tier ${brad?.fameTier}`)
+  console.log(`- Erdöl Boratap: Tier ${erdol?.fameTier}`)
+  console.log(`- Gülben Ergen: Tier ${gulben?.fameTier}`)
+
   let newContent = content
-  
-  newContent = newContent.replace(
-    /export interface FamousPersonItem \{([\s\S]*?)\}/,
-    `export interface FamousPersonItem {
-  id: string
-  name: string
-  category: Exclude<FamousPersonCategory, 'all'>
-  fameTier?: number
-}`
-  )
-  
-  newContent = newContent.replace(
-    /export interface FamousPersonSeed \{([\s\S]*?)\}/,
-    `export interface FamousPersonSeed {
-  name: string
-  category: string
-  fameTier: number
-}`
-  )
   
   const formattedJson = JSON.stringify(seedArray, null, 2)
   newContent = newContent.replace(
@@ -403,12 +361,7 @@ async function main() {
   )
   
   writeFileSync(DATA_FILE, newContent, 'utf-8')
-  console.log('✅ famousPeopleData.ts başarıyla güncellendi!')
-  
-  if (existsSync(PROGRESS_FILE)) {
-    unlinkSync(PROGRESS_FILE)
-    console.log('🧹 fame-tier-progress.json temizlendi.')
-  }
+  console.log('\n✅ famousPeopleData.ts başarıyla güncellendi!')
 }
 
 main().catch(err => {
