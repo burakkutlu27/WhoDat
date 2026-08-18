@@ -21,15 +21,17 @@ export const GET = route(async (request: NextRequest) => {
     category: (searchParams.get('category') as FamousPersonCategory) || undefined,
     random: searchParams.get('random') || undefined,
     limit: searchParams.get('limit') || undefined,
+    maxTier: searchParams.get('maxTier') || searchParams.get('max_tier') || undefined,
   }
 
-  const { q, category, random, limit } = parseBody(famousPeopleQuerySchema, rawParams)
+  const { q, category, random, limit, maxTier } = parseBody(famousPeopleQuerySchema, rawParams)
 
   const data = await getFamousPeople({
     query: q,
     category,
     random,
     limit,
+    maxFameTier: maxTier,
   })
 
   return jsonOk({ data })

@@ -26,21820 +26,27274 @@ export interface FamousPersonItem {
   id: string
   name: string
   category: Exclude<FamousPersonCategory, 'all'>
+  fameTier?: number
 }
 
 export interface FamousPersonSeed {
   name: string
   category: string
+  fameTier: number
 }
 
 export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Vito Corleone (Baba / The Godfather)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Michael Corleone",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Sonny Corleone",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Tony Montana (Yaralı Yüz / Scarface)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Walter White (Heisenberg)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Jesse Pinkman",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Saul Goodman (Jimmy McGill)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Gus Fring",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Mike Ehrmantraut",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Hank Schrader",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Thomas Shelby (Peaky Blinders)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Arthur Shelby",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Polly Gray (Peaky Blinders)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Alfie Solomons",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Jon Snow (Game of Thrones)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Daenerys Targaryen",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Tyrion Lannister",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Cersei Lannister",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Jaime Lannister",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Arya Stark",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Sansa Stark",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Ned Stark",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Gece Kralı (Night King)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Harry Potter",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Hermione Granger",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Ron Weasley",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Lord Voldemort",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Albus Dumbledore",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Severus Snape",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Sirius Black",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Rubeus Hagrid",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Draco Malfoy",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Bellatrix Lestrange",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Dobby (Ev Cini)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Frodo Baggins",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Samwise Gamgee",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Gandalf (Gri/Ak Gandalf)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Aragorn (Yolgezer)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Legolas",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Gimli",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Boromir",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Gollum (Smeagol)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Sauron",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Saruman",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Bilbo Baggins",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Luke Skywalker",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Darth Vader (Anakin Skywalker)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Prenses Leia",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Han Solo",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Chewbacca",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Yoda (Usta Yoda)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Obi-Wan Kenobi",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "İmparator Palpatine",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Darth Maul",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Kylo Ren",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Mandalorian (Din Djarin)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Bebek Yoda (Grogu)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Kaptan Jack Sparrow",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Will Turner",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Elizabeth Swann",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Kaptan Hector Barbossa",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Davy Jones",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Sherlock Holmes",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Dr. John Watson",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Profesör James Moriarty",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "James Bond (007)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Neo (Matrix / Thomas Anderson)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Morpheus (Matrix)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Trinity (Matrix)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Ajan Smith",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "John Wick",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Terminatör (T-800)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Sarah Connor",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Forrest Gump",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Indiana Jones",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Rocky Balboa",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "John Rambo",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Hannibal Lecter",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Tyler Durden (Dövüş Kulübü)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Patrick Bateman (Amerikan Sapığı)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Jordan Belfort (Para Avcısı)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Profesör (La Casa de Papel)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Berlin (La Casa de Papel)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Tokyo (La Casa de Papel)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Michael Scofield (Prison Break)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Theodore Bagwell (T-Bag)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Dexter Morgan",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Wednesday Addams",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Eleven (Stranger Things)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Homelander (The Boys)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Billy Butcher (The Boys)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Polat Alemdar",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Süleyman Çakır",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Memati Baş",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Abdülhey Çoban",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Seyfo Dayı",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Aslan Akbey",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Testere Necmi",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Laz Ziya",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "İskender Büyük",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Pala (Kurtlar Vadisi)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Ramiz Dayı (Ramiz Karaeski)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Ezel Bayraktar",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Eyşan Tezcan",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Cengiz Atay",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Kerpeten Ali (Ali Kırgız)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Kenan Birkan",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Tefo (Tevfik Zaim)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Behzat Ç.",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Harun (Behzat Ç.)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Hayalet (Behzat Ç.)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Akbaba (Behzat Ç.)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Ercüment Çözer",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Behlül Haznedar",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Bihter Ziyagil",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Adnan Ziyagil",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Firdevs Yöreoğlu",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Matmazel (Aşk-ı Memnu)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Yamaç Koçovalı",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "İdris Koçovalı",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Vartolu Sadettin",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Cumali Koçovalı",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Aliço (Çukur)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Mecnun Çınar",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "İsmail Abi",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Erdal Bakkal",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Yılmaz (Gibi)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "İlkkan (Gibi)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Ersoy (Gibi)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Burhan Altıntop",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Gaffur Aksoy",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Şahika Koçarslanlı",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Kuzey Tekinoğlu",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Güney Tekinoğlu",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Rıza Baba (Arka Sokaklar)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Mesut Komiser",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Hüsnü Çoban",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Hızır Çakırbeyli (EDHO)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "İlyas Çakırbeyli",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Recep İvedik",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "İnek Şaban",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Damat Ferit",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Güdük Necmi",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Mahmut Hoca (Kel Mahmut)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Badi Ekrem",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Tosun Paşa",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Hakiki Tosun Paşa",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Kibar Feyzo",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Maho Ağa",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Züğürt Ağa",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Turist Ömer",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Arif Işık (G.O.R.A.)",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Komutan Logar",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Robot 216",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Bob Marley Faruk",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Erşan Kuneri",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Don Kişot (Don Quijote)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Sanço Panço (Sancho Panza)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kont Drakula (Dracula)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Frankenstein (Canavar)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Dorian Gray",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Raskolnikov (Suç ve Ceza)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Jean Valjean (Sefiller)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Müfettiş Javert",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Küçük Prens (Le Petit Prince)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Robinson Crusoe",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Cuma (Robinson Crusoe)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Gulliver (Gulliver’in Gezileri)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Huckleberry Finn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Tom Sawyer",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Oliver Twist",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Romeo (Romeo ve Juliet)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Juliet (Romeo ve Juliet)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Hamlet",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kral Lear",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Macbeth",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Othello",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Faust (Goethe)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Mefistofeles (Faust)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Alice (Harikalar Diyarında)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Şapkacı (Mad Hatter)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kupa Kraliçesi (Queen of Hearts)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Cheshire Kedisi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Zeze (Şeker Portakalı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kaptan Ahab (Moby Dick)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Moby Dick (Beyaz Balina)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Tarzan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Robin Hood",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Peter Pan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kaptan Kanca (Captain Hook)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Tinker Bell",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Pinokyo (Pinocchio)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Gepetto Usta",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kırmızı Başlıklı Kız",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Kötü Kalpli Kurt (Masal)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Pamuk Prenses",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Külkedisi (Sindirella)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Rapunzel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Uyuyan Güzel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Aladdin (Alaaddin)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Sihirli Lambanın Cini",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ali Baba (Kırk Haramiler)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Sinbad (Denizci Sinbad)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Zeus (Yunan Baş Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Poseidon (Denizler Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Hades (Yeraltı Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Herkül (Herakles)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Medusa (Yılan Saçlı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Afrodit (Aşk Tanrıçası)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ares (Savaş Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Hermes (Haberci Tanrı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Apollo (Güneş Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Artemis (Avcılık Tanrıçası)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Athena (Bilgelik Tanrıçası)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Odin (İskandinav Baş Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Thor (Şimşek Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Loki (Fesatlık Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Freya",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Anubis (Mısır Ölüm Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ra (Güneş Tanrısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Osiris",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "İsis",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Şahmeran (Yılanların Şahı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Keloğlan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Nasreddin Hoca",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Dede Korkut",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Köroğlu",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Batman (Bruce Wayne)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Joker",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Superman (Clark Kent)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Örümcek Adam (Spider-Man / Peter Parker)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Demir Adam (Iron Man / Tony Stark)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Kaptan Amerika (Steve Rogers)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Thor (Marvel)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Hulk (Bruce Banner)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Kara Dul (Black Widow / Natasha Romanoff)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Doktor Strange (Stephen Strange)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Deadpool (Wade Wilson)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Wolverine (Logan)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Flash (Barry Allen)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Aquaman (Arthur Curry)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Wonder Woman (Diana Prince)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Harley Quinn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Thanos",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Venom",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "SüngerBob KareŞort",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Patrick Yıldız",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Squidward",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Bay Yengeç",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Plankton",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Mickey Mouse",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Donald Duck",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Goofy",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Bugs Bunny",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Daffy Duck",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Tweety",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Sylvester",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Tom ve Jerry",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Scooby-Doo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Shaggy",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Temel Reis",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Safinaz",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kabasakal",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Garfield",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Red Kit (Lucky Luke)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Joe Dalton",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Asteriks (Asterix)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Oburiks (Obelix)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Tenten (Tintin)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Şirin Baba",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Şirine",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Gargamel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Fred Çakmaktaş",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Barni Moloztaş",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Cedric",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Heidi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Winnie the Pooh",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Simba (Aslan Kral)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Mufasa",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Scar (Aslan Kral)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Shrek",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Fiona (Shrek)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Eşek (Shrek)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Çizmeli Kedi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kung Fu Panda (Po)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Manny (Buz Devri)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Sid (Buz Devri)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Diego (Buz Devri)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Scrat (Buz Devri)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Woody (Oyuncak Hikayesi)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Buzz Lightyear",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Şimşek McQueen (Arabalar)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Nemo (Kayıp Balık Nemo)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Gru (Çılgın Hırsız)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Minyonlar (Minions)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ben 10",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Samurai Jack",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Johnny Bravo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Gumball",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Darwin (Gumball)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Mordecai (Sürekli Dizi)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Rigby (Sürekli Dizi)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Finn (Adventure Time)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Jake (Adventure Time)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Rafadan Tayfa",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Hayri (Rafadan Tayfa)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kamil (Rafadan Tayfa)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kral Şakir",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Fil Necati",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Pepee",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Pikachu (Pokemon)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Ash Ketchum (Pokemon)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Goku (Dragon Ball)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Vegeta (Dragon Ball)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Naruto Uzumaki",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Sasuke Uchiha",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kakashi Hatake",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Monkey D. Luffy (One Piece)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Roronoa Zoro (One Piece)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Sailor Moon (Ay Savaşçısı)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kaptan Tsubasa (Tsubasa Ozora)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kojiro Hyuga",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Super Mario",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Luigi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Prenses Peach",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Bowser",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Sonic (Kirpi Sonic)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Link (Zelda)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Prenses Zelda",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Pac-Man",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Crash Bandicoot",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Lara Croft (Tomb Raider)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kratos (God of War)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Atreus (God of War)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Rivialı Geralt (The Witcher)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ciri (The Witcher)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Yennefer of Vengerberg",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Arthur Morgan (Red Dead Redemption 2)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "John Marston (Red Dead Redemption)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "CJ (Carl Johnson - GTA San Andreas)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Tommy Vercetti (GTA Vice City)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Trevor Philips (GTA V)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Niko Bellic (GTA IV)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Master Chief (Halo)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Doom Slayer (Doom)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Gordon Freeman (Half-Life)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Nathan Drake (Uncharted)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Joel Miller (The Last of Us)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ellie Williams (The Last of Us)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Scorpion (Mortal Kombat)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Sub-Zero (Mortal Kombat)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ryu (Street Fighter)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Steve (Minecraft)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Creeper (Minecraft)",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Abdulkadir Tuncer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Şahin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Yüce",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abdurrahman Palay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Abdülhennan Sefa",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abidin Görsev",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abidin Yerebakan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Numan Acar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adem Ayral",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Adem Taşay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adnan Biricik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adnan Karabacak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Adnan Maral",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Adnan Mersinli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adnan Tönel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Agah Hün",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Ağgün",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Arıman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Fehim",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Gülhan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Kayakesen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Ahmet Kostarika",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Kural",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Levendoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Mümtaz Taylan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Özhan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Rıfat Şungar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Saraçoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Sezerel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Şafak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Tarık Tekçe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Uğurlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Uz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Üstel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Üstün",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Varlı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Yenilmez",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ajlan Aktuğ",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ozan Akbaba",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Akın Akınözü",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Akın Tunç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Akın Uğurlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Akif Kilman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Akil Öztuna",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alaeddin Şensoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Zeki Alasya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Alev Sezer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abdi Algül",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sadri Alışık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Ali Atay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ali Avaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Barışık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Başar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Berktay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Biçim",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Buhara Mete",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ali Cağaloğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Çatalbaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Çelik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ali Demir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Demirel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Ecder Akışık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Erkazan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Ersan Duru",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Fuat Onan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Güney",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Hürol",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali İhsan Bozdemir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali İhsan Varol",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ali İl",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali İnce",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali İpin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Karagöz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ali Kemal İskender",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Meriç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Osman Okumuş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Poyrazoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ali Rıza Kubilay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Rıza Soydan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Seçkiner Alıcı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Sirmen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Sunal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Sururi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Sürmeli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Taygun",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Tutal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Uyandıran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ali Üstüntaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Yalaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Yaylı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alican Albayrak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alican Yücesoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alişan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alp Çoker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alp Kırşan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alp Korkmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alp Navruz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alpaslan Özmol",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alpay İzer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alpay Kemal Atalan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alper Atak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alper Kul",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alper Rende",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alper Saldıran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alperen Duymaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alptekin Serdengeçti",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Altan Akışık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Altan Bozkurt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Altan Erbulak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Altan Erkekli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Altan Günbay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hüseyin Altın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrew Hughes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anıl İlter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anıl Tetik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ankaralı Turgut",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ararat Mor",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Aras Aydın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Aras Bulut İynemli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Arda Aydın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arda Esen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arda Kanpolat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arda Kural",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Arda Öziri",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Arduç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Argun Kınal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arif Akkaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arif Erkin Güzelbeyoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Arif Kilisli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arif Pişkin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cüneyt Arkın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Arslan Kacar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arşavir Alyanak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asım Par",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslan Altın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ulaş Tuna Astepe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Asuman Korad",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ata Berk Mutlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ata Demirer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Ata Saka",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atacan Arseven",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atakan Çelik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Atalay Demirci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İrfan Atasoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atıf Kaptan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atilla Alpar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atilla Arcan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atilla Ergün",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atilla Pekdemir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atilla Saral",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Atilla Şendil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atilla Yiğit",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atsız Karaduman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Attila Olgaç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Mustafa Avkıran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Avni Dilligil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Avni Yalçın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayberk Attila",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ayberk Pekcan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydemir Akbaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydın Babaoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydın Haberdar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydın Tezel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydın Tolan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayhan Hülagü",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayhan Işık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayhan Kavas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ozan Ayhan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aykut Oray",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Aykut Sözeri",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aykut Şahin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aytaç Arman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aytaç Şaşmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Aytaç Uşun",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aytaç Yürükaslan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aytekin Akkaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayton Sert",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Azer Bülbül",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aziz Aslan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aziz Basmacı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aziz Sarvan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bahadır Tok",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bahri Ateş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bahri Beyat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bahtiyar Engin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Baki Çallıoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Baki Tamer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Alpaykut",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Atay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Bağcı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Çakmak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Falay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Kılıç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Koçak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Murat Yağcı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Barış Sezer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Yıldız",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Batuhan Aydar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Batuhan Karacakaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bayhan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Baykal Kent",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bedir Bedir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bedri Uğur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Behçet Nacar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Behzat Uygur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bekir Aksoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beklan Algan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berat Efe Parlar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Berat Yenilmez",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Berhan Şimşek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berk Atan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Berk Bakioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berk Hakman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berkan Şal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berkay Ateş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Berke Üzrek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berker Güven",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beyti Engin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bican Günalan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bilal Çatalçekiç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ozan Bilen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bilge Zobu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Birkan Sokullu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Birol Ünel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bora Akkaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bora Ayanoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bora Cengiz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bora Sivri",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bora Tekay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Boran Kuzum",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bozkurt Kuruç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kullanıcı:Bugraork/Taslak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Buğra Gülsoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Buğrahan Çayır",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Onur Buldu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bulut Aras",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Alkaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Dakak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Davutoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Demir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Deniz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Özçivit",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Sağyaşar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Satıbol",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Serdar Şanal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Sergen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Sevinç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Tamdoğan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Topaloğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Tozkoparan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Farah Zeynep Abdullah",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Açelya Akkoyun",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Açelya Devrim Yılhan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Açelya Elmas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Açelya Özcan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Açelya Topaloğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adile Naşit",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Afra Saraçoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ahu Sungur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahu Tuğba",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ahu Türkpençe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahu Yağtu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ajda Pekkan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Akasya Asıltürkmen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Demet Akbağ",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sezin Akbaşoğulları",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Filiz Akın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Zeynep Aksu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sevda Aktolga",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Derya Alabora",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alara Turan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alev Baymur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alev Gürzap",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alev Koral",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alev Oraloğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alev Sururi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aleyna Solaker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayla Algan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Algı Eke",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alina Boz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alisa Sezen Sever",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aliye Rona",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aliye Uzunatağan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Yasemin Allen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alma Terzic",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Almila Bağrıaçık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Almila Uluer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Altan Karındaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mehtap Anıl",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anta Toros",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Meriç Aral",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Melda Arat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Derya Arbaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Zerrin Arbaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arsen Gürzap",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arzu Gamze Kılınç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arzu Okay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arzu Oş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arzu Yanardağ",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asena Keskinci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asena Tuğal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asiye Dinçsoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Altaylar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Bekiroğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Enver",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı İçözü",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı İnandık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Omağ",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Orcan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Öngören",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Tandoğan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslıhan Gürbüz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslıhan Malbora",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Asude Kalebek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asuman Arsan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asuman Dabak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asuman Tuğberk Yolaç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aşkın Nur Yengi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bala Atabek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Vildan Atasever",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hülya Avşar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayben Erman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayça Ayşin Turan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ayça Bingöl",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayça Eren",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayça Erturan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ayça İnci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayça Telırmak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayça Varlıer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayçe Abana",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayçin İnci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayda Aksel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydan Burhan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydan Şener",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydan Taş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayfer Dönmez",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayfer Feray",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ayla Arslancan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayla Karaca",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Aylin Aslım",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aylin Kabasakal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Aylin Kontente",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aylin Tunceli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aynur Aydan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aysan Sümercan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aysel Tanju",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aysun Güven",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aysun Metiner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Emel Mesçi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Günyüz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Kırca",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Kökçü",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Mine",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Nana",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Selen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Tolga",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Tunaboylu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşegül Akdemir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşegül Aldinç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşegül Atik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşegül Cengiz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşegül Çıdamlı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşegül Devrim",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşegül Ünsal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşen Aydemir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşen Cansev",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşen Çetiner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşen Gruda",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Ayşen Tekin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşenil Şamlıoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşenur Yazıcı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşin Atav",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayta Sözeri",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aytaç Öztuna",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayten Erman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayten Koçak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayten Kuyululu Ürkmez",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayten Soykök",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Azize Gencebay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Azra Akın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bahar Erdeniz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bahar Öztan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bahar Şahin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bahar Yanılmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bahri Selin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Banu Alkan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Banu Kuday",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Başak Daşman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Başak Kıvılcım Ertanoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Başak Köklükaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Başak Meşe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Başak Özel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Başak Parlak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Başak Sayan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bedia Ener",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bedia Muvahhit",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Begüm Akkaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Begüm Birgören",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Begüm Kütük Yaşaroğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Begüm Öner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Belçim Bilgin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Belgin Doruk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Belgin Güven",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Belkıs Akkale",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Belkıs Dilligil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bengi Öztürk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Benli Belkıs",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bennu Yıldırımlar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bensu Orhunöz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bensu Soral",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bercis Fesçi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beren Gökyıldız",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berfu Öngören",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bergüzar Korel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Berna Laçin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Berrak Tüzünataç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Berrin Akdeniz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berrin Koper",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beste Bereket",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bestemsu Özdemir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betül Arım",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betül Aşçıoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betül Kızılok Bavli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beyhan Saran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Beyza Şekerci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bige Önal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Biğkem Karavus",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bihter Dinçel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bilge Şen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billur Kalkavan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Binnur Kaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Binnur Özpınar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Biran Damla Yılmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Birce Akalay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Birgül Ulusoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gülse Birsel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Birsen Ayda",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Birsen Dürülü",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Birsen Kaplangı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Birsen Menekşeli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Birtanem Candaner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Boncuk Yılmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Buket Dereoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burcu Altın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burcu Biricik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burcu Gönder",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burcu Kara",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burcu Kıratlı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burcu Özberk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burçin Abdullah",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burçin Orhon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burçin Terzioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Buse Arslan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Büşra Develi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Büşra Pekin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Nihan Büyükağaç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tuba Büyüküstün",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cahide Sonku",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sibel Can",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Canan Çiftel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Canan Hoşgör",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Canan Perver",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Canan Sanan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Belma Canciğer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Candan Erçetin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Candan Sabuncu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hale Caneroğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cansın Özyosun",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cansu Dere",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cansu Tosun",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cavidan Dora",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cemre Baysel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cemre Ebüzziya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cemre Kemer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ceren Benderlioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ceren Erginsoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ceren Moray",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ceren Soylu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ceren Taşçı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ceyda Ateş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ceyda Düvenci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ceyda Kasabalı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ceylan Ece",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Laçin Ceylan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Meltem Cumbul",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Çağla Akalın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Çağla Şimşek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nebahat Çehre",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Sanem Çelik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Feride Çetin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Çiğdem Batur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Çiğdem Selışık Onat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Çiğdem Tunç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayça Damgacı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Damla Sönmez",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Defne Halman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Defne Kayalar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Defne Yalnız",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Zeynep Değirmencioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Demet Evgâr",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Tansu Taşanlar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Atik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Düşenkalkar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alp Öyken",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atakan Özkaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atılay Uluışık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atılgan Gümüş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atilla Klinçe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aybars Kartal Özson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Akarsu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Barış Gönenen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Baykal Saran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Berk Cankat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berk Oktay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berkay Hardal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Beyazıt Gülercan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Birtan Turan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Emin Boztepe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Buğra Özmüldür",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Aksak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Kut",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Yamantürk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burak Yörük",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burç Kümbetlioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burçin Bildik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burçin Oraloğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bülend Çolak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bülent Alkış",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bülent Babayiğit",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bülent Çetinaslan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bülent Emin Yarar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bülent Emrah Parlak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bülent İnal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bülent Kayabaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bülent Oran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bülent Polat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bülent Seyran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bülent Şakrak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bülent Yıldıran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Kerem Bürsin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cahit Gök",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cahit Kaşıkçılar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cahit Şaher",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Başak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Bonomo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Can Doğan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Gürzap",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Kahraman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Can Kolukısa",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Nergis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Sipahi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Verel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Erkan Can",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Canberk Uçucu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Caner Cindoruk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Caner Çandarlı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Caner Erdem",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Caner Kurtaran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Caner Özyurtlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Caner Şahin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Caner Topçu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cansel Elçin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Celal Al",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Celal Belgil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Celal Kadri Kınoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Celal Tak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fırat Çelik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Celil Nalçakan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cem Bender",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahsen Eroğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Merih Akalın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sevil Akı Saner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aleyna Şirin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Almeda Abazi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Almila Ada",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andaç Haznedaroğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ani İpekkaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arzum Onan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Öyken Taylan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Sümen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Yılmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslıhan Kandemir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asu Maralman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Asuman Krause",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ava Yaman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aybüke Pusat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayça Işıldar Ak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayça Mutlugil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aylin Arasıl",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ayşe Erbulak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Hatun Önal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşecan Tatari",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayten Uncuoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Başak Gümülcinelioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bengi İdil Uras",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bengisu Gürbüzer Doğru",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beril Pozam",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berna Başer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berna Koraltürk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Berrak Kuş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Burcu Esmersoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Canan Atalay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cansu Demirci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ceren Karakoç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Damla Colbay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Çağla Kubat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Çağla Şıkel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Çiğdem Gürel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Damla Babacan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Damla Özen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Defne Joy Foster",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burak Bulut",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Tibet Ağırtan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gaye Su Akyol",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asım Can Gündüz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslı Gökyokuş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayça Şen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydilge",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aziz Azmet",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Selda Bağcan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bahadır Akkuzu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barış Manço",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Batu Akdeniz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Batu Mutlugil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gizem Berk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bertuğ Cemil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bilge Kösebalaban",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cahit Berkay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Koray Candemir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cansu Koç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cem Karaca",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Cem Kısmet",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cem Özkan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cemil Demirbakan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cemil Özeren",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cenk Durmazel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cenk Eroğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hayko Cepkin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Çelik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Demir Demirkan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Demirhan Baylan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Deniz Arcak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Deniz Yılmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Deniz Özbey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nev",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Edip Akbayram",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Edis İlhan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Emrah Karaca",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Emre Altuğ",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Emre Aydın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Erdem Yener",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Erhan Güleryüz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barlas Erinç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Erol Büyükburç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ete Kurttekin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fatih Erdemci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fatma Turgut",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Şebnem Ferah",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Feridun Düzağaç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ferman Akgül",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Özge Fışkın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fikret Kızılok",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Genç Osman Yavaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gökalp Baykal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gökçe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gökhan Özoğuz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Gökhan Semiz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Güler",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gülhan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gültekin Kaan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fuat Güner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gür Akad",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gürol Ağırbaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hakan Tunçbilek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Halil Sezai",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Haluk Levent",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Harun Tekin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "İlhan İrem",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Öztürk İlmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İskender Türsen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kaan Boşnak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kaan Tangöze",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kalben",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Kâzım Koyuncu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kenan Vural",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Kıraç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Erkin Koray",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Kudret Kurtcebe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aylin Livaneli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mabel Matiz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Melis Danişmend",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mesut Aytunca",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Metin Kor",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Murat Ertel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Evgin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Göğebakan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat İlkan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Kekilli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Net",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Nedim Hazar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nejat Toksoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nejat Yavaşoğulları",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Niyazi Koyuncu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cahit Oben",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ogün Sanlısoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Orhan Atasoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nazan Öncel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Özgür Çevik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Özlem Tekin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Pınar Aylin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Renan Bilek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sabih Cangil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sarp Sanin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Savaş Alp Başar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Serdar Öztop",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sertab Erener",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Seyhan Karabay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Seyyal Taner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sibel Tüzün",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sinan Kaynakçı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Pamela Spence",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Erkut Taçkın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cenk Taner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tarkan Çakır",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Teoman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Umut Kaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ünol Büyükgönenç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Yamaç Telli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Yasemin Mori",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Yaşar Kurt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Yavuz Çetin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ufo361",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ados",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ağaçkakan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Allâme",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alper Ağa",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anıl Piyancı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ati242",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayben",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Fero",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beta Berk Bayındır",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Blok3",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Boe B",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burak King",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cakal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ceg",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ceza",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Contra",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Dr. Fuchs",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ege Çubukçu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Erci E",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eypio",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ezhel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Fuat Ergin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gazapizm",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Güneş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hayki",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hey! Douglas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kabus Kerim",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kamufle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kubilay Karça",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kayra",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Keişan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Khontkar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Killa Hakan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kool Savas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lvbel C5",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Massaka",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mehmet Borukcu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mirac",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Motive",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murda",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Norm Ender",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ogeday",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ozbi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Patron",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ragga Oktay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Reyhan Şahin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sagopa Kajmer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Saian",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sansar Salvo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sefo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Server Uraz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Sokrat St",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Şanışer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Şehinşah",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tankurt Manas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tepki",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kullanıcı mesaj:TRMuzikGozlemcisi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Uzi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Vio",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Yener Çevik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Zen-G",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İlyas Salman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Oya Başar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Pelinsu Pir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Yasemin Yalçın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Çakar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Murat Özel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Tezcan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Vardar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Yeşiltepe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sunay Akın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hakan Akkaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nur Tuğba Namlı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ali Esin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Aral",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Aslı Hünel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aslıhan Yeltekin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Atilla Taş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Banu Avar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydan Önder",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aydın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hakan Aygün",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aylin Özmenek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aziz Üstel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bahar Feyzan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Banu Atabay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Banu Taviloğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bilgehan Demir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Boran Kaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Yiğit Bulut",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burcu Çetinkaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burcu Kaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bülend Özveren",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bülent Ülgen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Akbel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Ataklı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Can Okanar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cansu Canan Özgen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cem Ceminay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cem Davran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cem Kurtoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cem Küçük",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cem Özer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cemal Can Canseven",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cengiz Çandar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cengiz Semercioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cenk Koray",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ceyhun Yılmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Çağıl Özge Özkul",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Çetin Çiftçioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Faik Çetiner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Demet Akalın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Demet Şener",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Deniz Akkaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Deniz Pulaş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Deniz Seki",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Derya Baykal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Derya Taşbaşı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Didem Arslan Yılmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Didem İnselel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dilara Gönder",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Dilaver Uyanık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Doğa Bekleriz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Doğu Demirkol",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Güzide Duran",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ersin Düzen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ebru Akel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ebru Gündeş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ebru Karanfilci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ebru Şallı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ece Erken",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ece Vahapoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eda Ece",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ela Rumeysa Cebeci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elif Güvendik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emel Büyükburç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emre Karayel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Engin Altan Düzyatan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ercan Saatçi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Erdöl Boratap",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Gülben Ergen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Erhan Konuk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Erhan Yazıcıoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Erol Evgin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Esra Eron",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ertem Şener",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eser Yenenler",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Esra Balamir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Esra Ceyhan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Esra Erol",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Eşref Şefik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Evrim Akın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ezgi Sertel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ezgi Sütcü",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Faik Uyanık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fatih Kısaparmak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fatih Ürek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Fatoş Kabasakal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Fatoş Seğmen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fecri Ebcioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ferdi Tayfur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Ferit Aktuğ",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fikret Bila",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fuat Kozluklu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gamze Karaman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Gamze Özçelik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Gani Müjde",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fatma Girik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Emre Gönlüşen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gözde Kansu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ayşegül Günay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gül Gölge",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gülriz Sururi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gülseren Budayıcıoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Güner Ümit",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Güneri Cıvaoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Güneş Tecelli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Güntekin Onay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gürsu Arat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Güven İslamoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hakan Artış",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hakan Çelik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Hakan Eratik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Hakan Hatipoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hakan Ural",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Hakan Yılmaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Halit Ergenç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Hande Ataizi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hande Kazanova",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Harun Can",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Hidayet Karaca",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Hilal Cebeci",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hilal Ergenekon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Acun Ilıcalı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Uğur Işılak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Işın Eliçin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İbrahim Büyükak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "İbrahim Güneş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "İbrahim Selim",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "İclal Aydın",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İdil Öztamer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İkbal Gürpınar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İlker Akkurt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İlker Ayrık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İlker Karagöz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "İnci Özkasnak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İnci Türkay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İrfan Kangı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İsmet Badem",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kaan Kural",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Kaan Sekban",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Kaan Yakuphan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kadir Çetin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kadir Çöpdemir",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ümit Kantarcılar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Okan Karacan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Kartal Balaban",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Zeynep Kasımlıoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aysun Kayacı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kayra Şenocak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Kemal Uçar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kenan İmirzalıoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Kerem Alışık",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kerem Demircioğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Keriman Ulusoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kıvanç Kasabalı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Korhan Abay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Senem Kuyucuoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "İsmail Küçükkaya",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lemi Filozof",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lerzan Mutlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Levent Ünsal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "M. Serdar Kuzuloğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mahmut Tuncer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Mehmet Ali Erbil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Mehmet Çepiç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mehtap Altunok",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Melek Baykal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Meltem Ören",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Meral Konrat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Mert Öğün",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Merva Ulusoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Metin Uca",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jess Molho",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Murat Başoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Ceylan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Güloğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Kosova",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Murathanoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Serezli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Yeni",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Murat Yıldırım",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Mübeccel Argun",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emel Müftüoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Müge Anlı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Müge Oruçkaptan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nagehan Alçı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nazlı",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nazlı Çelik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Nazlı Tolga",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nebil Özgentürk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nefise Karatay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Nehir Babataş",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nergis Kumbasar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nermin Tuğuşlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Neslihan Yavuzcan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nevşin Mengü",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nihan Günay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nihat Hatipoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nil Pınar İnanoğlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nilay Ceylan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Nurhayat Kavrak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Nursel Ergin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nükhet Duru",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Oğuzhan Koç",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Okan Bayülgen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Oktay Kaynarca",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "50 Cent",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "A Boogie wit da Hoodie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aaron Himelstein",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aaron Paul",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aaron Sorkin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aaron Stanford",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abbott ve Costello",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bud Abbott",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abe Vigoda",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jake Abel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Omid Abtahi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adam Rich",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John Adames",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Don Adams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kip Addotta",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adolphe Menjou",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "James Adomian",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Afa Anoaʻi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Affleck",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Casey Affleck",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jonathan Ahdout",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahilleas-Andreas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aidan Quinn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Danny Aiello",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Liam Aiken",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Al Harrington",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Al Strobel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alan Alda",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alan Arkin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alan Rachins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alan Young",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joe Alaskey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Carlos Alazraqui",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alden Ehrenreich",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alex Cord",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alex D. Linz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jason Alexander",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alfred Lunt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Jed Allan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Marty Allen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Woody Allen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Joaquim de Almeida",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alvin Ing",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dan Amboyer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Morey Amsterdam",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kevin Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anderson Cooper",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Louie Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Michael J. Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Richard Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Richard Dean Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Stanley Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "André 3000",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andre Braugher",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Andreas Katsulas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrew Bowen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrew Divoff",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrew Stanton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brian Andrews",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andy Milonakis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andy Samberg",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Angel Bismark Curiel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jack Angel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Angus Cloud",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Angus T. Jones",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aziz Ansari",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ansel Elgort",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anson Mount",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony De La Torre",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Edwards",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Franciosa",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Anthony Geary",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Gonzalez",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Guidera",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Anthony Jeselnik",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Johnson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Mann",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony O'Sullivan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Ramos",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Marc Anthony",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brent Antonello",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Roscoe Arbuckle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Allan Arbus",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ari Gold",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Armando Silvestre",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Iain Armitage",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "James Arness",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arnold Vosloo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Arquette",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Art Carney",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Art LaFleur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Art Metrano",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Arthur Edmund Carewe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Garfunkel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Kennedy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ashley Hamilton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Luke Askew",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ed Asner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Armand Assante",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fred Astaire",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "René Auberjonois",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John August",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Austin Abrams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Austin Butler",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Frankie Avalon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "James Avery",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tex Avery",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Robert Axelrod",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dan Aykroyd",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hank Azaria",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Babs Olusanmokun",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Michael Bacall",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christopher Backus",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kevin Bacon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Penn Badgley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Max Baer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Larry Bagby",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Scott Baio",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John Baker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Troy Baker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bob Balaban",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adam Baldwin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alec Baldwin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Stephen Baldwin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christian Bale",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Eric Balfour",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bam Bam Bigelow",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jack Bannon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lance Barber",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tony Barbieri",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barney Martin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John Barrowman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barry Nelson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barry Newman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barry Shabaka Henley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barry Watson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John Blyth Barrymore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lionel Barrymore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Blake Bashoff",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Basil Hoffman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lance Bass",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Warner Baxter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Orson Bean",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Clyde Beatty",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ned Beatty",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Warren Beatty",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beau Bridges",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jim Beaver",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Harry Belafonte",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tobin Bell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jim Belushi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John Belushi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Falcone",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Johnson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Jones",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Marsters",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Schwartz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Winchell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jay Benedict",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Benjamin Bratt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "H. Jon Benjamin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Benny Safdie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tom Berenger",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Justin Berfield",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Peter Berg",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Henry Bergman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jeff Bergman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Xander Berkeley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Warren Berlinger",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Andy Berman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christopher Bernau",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bernie Mac",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dehl Berti",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ahmed Best",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Turhan Bey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Michael Biehn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Big Boi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Big Show",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Big Van Vader",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Bixby",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Burr",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Camp",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Cobbs",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Duke",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Goldberg",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Hayes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Maher",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Moseley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Pullman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Stevenson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Billy Bob Thornton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Billy Burke",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billy Crystal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billy Dean",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billy Dee Williams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billy Drago",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Billy Preston",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billy Unger",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bing Crosby",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Biz Markie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Black Thought",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jack Black",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lucas Black",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Shane Black",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tyler Blackburn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Robert Blanche",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hunt Block",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brian Bloom",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Blue",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mark Blum",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bo Burnham",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bo Hopkins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bob Elmore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bob Fosse",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bob Gunton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bob Newhart",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bob Uecker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bobby Darin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bobby Lashley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bobby Rydell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Humphrey Bogart",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ian Bohen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bokeem Woodbine",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joseph Bologna",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jon Bon Jovi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Pat Boone",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Powers Boothe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Boreanaz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ernest Borgnine",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Roscoe Born",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Frank Borzage",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Philip Bosco",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barry Bostwick",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Loren Bouchard",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jim Bouton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dennis Boutsikaris",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bow Wow",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cameron Boyce",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Boyd Holbrook",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jim Boyd",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Stephen Boyd",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charles Boyer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brad Dexter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Brad Johnson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Brad Sherwood",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Richard Bradford",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bradley Cooper",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bradley Steven Perry",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Beverly Aadlen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aaliyah",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abbe Lane",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abby Ryder Fortson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Iris Acker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amy Adams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Edie Adams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jane Adams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joey Lauren Adams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Julie Adams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Marla Adams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Stella Adler",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Pamela Adlon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adria Arjona",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adrienne Ames",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adrienne Bailon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Uzo Aduba",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aarthi Agarwal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Shohreh Aghdashloo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Agnes Ayres",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dianna Agron",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christina Aguilera",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Lassie Lou Ahern",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aimee Garcia",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jessica Alba",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lola Albright",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Rutanya Alda",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alexa Demie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alexandra Bokyun Chun",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alexandra Daddario",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alice Brady",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alice Calhoun",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alice Greczyn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alice Hirson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alicia Fox",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aline MacMahon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gia Allemand",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joan Allen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jonelle Allen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Phyllis Allen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sara Allgood",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Allie Grant",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Allison Miller",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Allison Tolman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ally Walker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alona Tal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gitta Alpár",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Carol Alt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alycia Delmore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amanda Bearse",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amanda Cerny",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amanda Schull",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amber Frank",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Amber Heard",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amber Midthunder",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amerie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mädchen Amick",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amy Acker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amy Gumenick",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amy Jo Johnson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amy Madigan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amy Pietz",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amy Purdy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amy Schumer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ana de Armas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ananda Lewis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bridgette Andersen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nicole Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mary Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mignon Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andra Day",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Andrea Barber",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrea Deck",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrea Evans",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrea Fay Friedman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrea Leeds",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrea Londo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrea Navedo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Patty Andrews",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Angela Kinsey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Angie Everhart",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Angie Stone",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anita Page",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ann Blyth",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ann Cusack",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ann Harding",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ann Rutherford",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ann-Margret",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anna Camp",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anna Chlumsky",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anna Q. Nilsson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anna-Lisa",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Annalise Basso",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "AnnaSophia Robb",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne Buydens",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne Heche",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne Revere",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne Schedeen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne Shirley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne V",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Annette McCarthy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Susan Anspach",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anya Taylor-Joy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christina Applegate",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "April Hunter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne Archer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ariana Greenblatt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ariel Winter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arleen Sorkin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arlene Dahl",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arlene Francis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Arlene Golonka",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arlene Harris",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dimitra Arliss",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Allisyn Ashley Arm",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bess Armstrong",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Samaire Armstrong",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Béatrice Arnac",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alexis Arquette",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Patricia Arquette",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beatrice Arthur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Carol Arthur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Katie Aselton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ashanti",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daphne Ashbrook",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ashley Liao",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ashley Roberts",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ashly Burch",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ashlynn Yennie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asia Carrera",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Essence Atkins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aubrey Plaza",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Audie England",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Auliʻi Cravalho",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Tina Aumont",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aunjanue Ellis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Karen Austin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ava Acres",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Patricia Avery",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Awkwafina",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nicki Aycox",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Odessa A'zion",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barbara Babcock",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Lauren Bacall",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Morena Baccarin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Helen Badgley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jane Badler",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bai Ling",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barbara Bain",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Diora Baird",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Leah Baird",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Carroll Baker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Diane Baker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fairuza Balk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lucille Ball",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kaye Ballard",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mabel Ballin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Talia Balsam",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gertrude Bambrick",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne Bancroft",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tallulah Bankhead",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christine Baranski",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Barbara Bouchet",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Barbara Britton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Barbara O'Neil",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Barbara Rush",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Barbara Stanwyck",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Barbara Whiting Smith",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Adrienne Barbeau",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ellen Barkin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Binnie Barnes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joanne Baron",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alice Barrett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Majel Barrett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barbara Barrie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Wendy Barrie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Patricia Barry",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Drew Barrymore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ethel Barrymore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mischa Barton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Skye McCole Bartusiak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kim Basinger",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nicole Bass",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Angela Bassett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brec Bassinger",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Justine Bateman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kathy Bates",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jessica Barth",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Simone Battle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elizabeth Baur",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne Baxter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beah Richards",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jennifer Beals",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beata Poźniak",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bebe Neuwirth",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Becky Ann Baker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Becky G",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emily Beecham",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Judi Beecher",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nicole Beharie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barbara Bel Geddes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Doris Belack",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ashley Bell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Catherine Bell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emma Bell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kristen Bell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Belle Baker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Camilla Belle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Maria Bello",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Annette Bening",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Chloe Bennet",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alma Bennett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barbara Bennett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Constance Bennett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Haley Bennett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Julie Bennett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Patricia Benoit",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amber Benson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ashley Benson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Berry Berenson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bergen Williams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Candice Bergen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Polly Bergen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Àstrid Bergès-Frisbey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ingrid Bergman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elizabeth Berkley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brigid Berlin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Crystal Bernard",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Susan Bernard",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elizabeth Berridge",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Valerie Bertinelli",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Marcheline Bertrand",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bibi Besch",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bessie Love",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beth Behrs",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beth Broderick",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beth Fowler",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Zina Bethune",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betsy Blair",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betsy Gay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betsy Randle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bette Davis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betty Ann Bruno",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betty Blythe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betty Buckley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betty Compson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Betty Lynn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beulah Bondi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Beverly Todd",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Aaron Taylor-Johnson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adam Astill",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adam Howden",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adeel Akhtar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adewale Akinnuoye-Agbaje",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adrian Rawlins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Anthony Ainley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Akın Gazi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alan Price",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Albert Austin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alec B. Francis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alex Lawther",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Olly Alexander",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alfie Allen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alfie Curtis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alfred Enoch",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Tom Alter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Josef Altin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joe Alwyn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Samuel Anderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrew Jack",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Naveen Andrews",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andy Smart",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Michael Angelis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Quayle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Sher",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Michael Apted",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sean Arnold",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Asa Butterfield",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Rowan Atkinson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Richard Attenborough",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Colin Baker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "George Baker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tom Baker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Max Baldry",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bobby Ball",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Roy Barraclough",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Barrie Ingham",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Keith Barron",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Basil Rathbone",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alan Bates",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Trevor Baxter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Geoffrey Bayldon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sean Bean",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sam Beazley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Max Beesley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Barnes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Cross",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Hull",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Kingsley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Miller",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Roberts",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Benedict Cumberbatch",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Benedict Wong",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John Benfield",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bernard Atha",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bernard Lee",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bertie Carvel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Rodney Bewes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Paul Bhattacharjee",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Bailey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bill Treacher",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billy Armstrong",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billy Idol",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Orlando Bloom",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bob Hoskins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Philip Bond",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Booth",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Bowie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Bradley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Russell Brand",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Brian Bedford",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brian Blessed",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brian Cant",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brian George",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brian Glover",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brian Murphy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tony Britton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jim Broadbent",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Clive Brook",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tim Brooke-Taylor",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bruno Lawrence",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bryan Ferry",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bryan Marshall",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Burt Kwouk",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Callum Blue",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Callum Turner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Earl Cameron",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cary Elwes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Caspar Zafer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John Castle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Keith-Lee Castle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Chance Perdomo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ben Chaplin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charlie Chaplin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Graham Chapman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Mark Lindsay Chapman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charles Dance",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charlie Heaton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charlie Hunnam",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Chiwetel Ejiofor",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Chris Gauthier",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Chris Wiggins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christian Coulson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christian Roberts",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christopher Beeny",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christopher Benjamin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christopher Eccleston",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Noel Clarke",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Claude Rains",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cliff Richard",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Clifford Rose",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Clive Dunn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Clive Mantle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Clive Standen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Colin Clive",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sacha Baron Cohen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Raphaël Coleman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Colin Firth",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Colin Lawrence",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Phil Collins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ronald Colman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Con O'Neill",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Connor Swindells",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Corin Redgrave",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Tom Courtenay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Noël Coward",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charlie Cox",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Craig",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Bernard Cribbins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Quentin Crisp",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andy Cunningham",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Peter Cushing",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dale Meeks",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Day-Lewis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Ings",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Massey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Peacock",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Radcliffe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Daniel Sharman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Daniels",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Phil Daniels",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "James D'Arcy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Darren Kent",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Darren Shahlavi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Paul Darrow",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Darvill",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dave Legeno",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Bailie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Bateson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David English",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Graham",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "David Hewlett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Horovitch",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Jason",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Niven",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Walliams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Warner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jaye Davidson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Greg Davies",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Windsor Davies",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alexander Davion",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Warwick Davis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Peter Davison",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Roger Delgado",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Denholm Elliott",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dennis Waterman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Derek Jacobi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dev Patel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sacha Dhawan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Harris Dickinson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Frank Dillane",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Stephen Dillane",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dirk Bogarde",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Divian Ladwa",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dominic Cooper",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dominic Holland",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dominic Sherwood",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dominic West",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Donald Crisp",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Donald Pleasence",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Robert Donat",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Doug Bradley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Douglas Booth",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sam Douglas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Robin Atkin Downes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dudley Moore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Carl Duering",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Duggie Brown",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Simon Dutton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ed Skrein",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ed Westwick",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eddie Marsan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eddie Redmayne",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mark Eden",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Edmund Gwenn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Edward Fox",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Edward Tudor-Pole",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eric Idle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Julian Fellowes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Tom Felton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ralph Fiennes",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Peter Finch",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Neil Fingleton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Frank Finlay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Finn Cole",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Albert Finney",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Fionn Whitehead",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jason Flemyng",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ian McShane",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bruce Forsyth",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Derek Fowlds",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "James Fox",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Clement von Franckenstein",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Frank Willams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Freddie Highmore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Nick Frost",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Stephen Fry",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Michael Gambon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Matthew Garber",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrew Garfield",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Tony Garnett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mark Gatiss",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "George A. Cooper",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "George Arliss",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "George Blagden",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "George Hilton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "George MacKay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "George Relph",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "George Sanders",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gerald Harper",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Gerald Home",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ricky Gervais",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John Gielgud",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gildart Jackson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Peter Gilmore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Julian Glover",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Adam Godley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cary Grant",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Hugh Grant",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Leslie Grantham",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Rupert Grint",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alec Guinness",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Gyasi",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kenneth Haigh",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Andrew Hall",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Hamilton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Abigail Cruttenden",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Olivia d'Abo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Afshan Azad",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jenny Agutter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Freema Agyeman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alana Boden",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jean Alexander",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alison Carroll",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alison Newman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Freya Allan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 3
   },
   {
     "name": "Lily Allen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amanda Holden",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amanda Tapping",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amy Nuttall",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Julie Andrews",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Angela Pleasence",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Angela Thorne",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Anjli Mohindra",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ann Davies",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ann Emery",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Annabel Scholey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Annabelle Wallis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Anne-Marie Duff",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gabrielle Anwar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mina Anwar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gemma Arterton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jane Asher",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kate Ashfield",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ashley Madekwe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Zawe Ashton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Coral Atkins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Eileen Atkins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gemma Atkinson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Audrey Hepburn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hermione Baddeley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elli Bamber",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Barbara Leigh-Hunt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Alexandra Bastedo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Helen Baxendale",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amber Beattie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Victoria Beckham",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kate Beckinsale",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bel Powley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lynda Bellingham",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eliza Bennett",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Leanne Best",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daisy Bevan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billie Piper",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Billie Whitelaw",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jacqueline Bisset",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Honor Blackman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emily Blunt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lilian Bond",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Helena Bonham Carter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bonnie Langford",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Leah Bracknell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Louise Brealey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brenda Blethyn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Briony McRoberts",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dora Bryan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Nicola Bryant",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jackie Burroughs",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Naomi Campbell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cara Seymour",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cara Theobold",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Carmen Chaplin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Judy Carne",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Carol Raye",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Carole Shelley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Caroline Goodall",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jane Carr",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Catherine McCormack",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Kim Cattrall",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Jessie Cave",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Celia Johnson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Chanel Cresswell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charli XCX",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charlotte Rampling",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "China Chow",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Julie Christie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christina Pickles",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Claire Bloom",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Claire Forlani",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Claire Foy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Claire Rushbrook",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Clare Calbraith",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Petula Clark",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Claudie Blakley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cleo Laine",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Camille Coduri",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lauren Cohan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Christina Cole",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jenna Coleman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joan Collins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joely Collins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lily Collins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Pauline Collins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charlotte Cornwell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cicely Courtneidge",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Peggy Cummins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Pamela Cundell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Cynthia Erivo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dafne Keen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daisy Edgar-Jones",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Daisy Ridley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Damaris Hayman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elizabeth Dawn",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Olivia de Havilland",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Julia Deakin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jeanne de Casalis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Janie Dee",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Frances de la Tour",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Judi Dench",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Denise Bryer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Denise Coffey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Denise van Outen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Diana Dors",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Diana Rigg",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Diane Langton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Diane Morgan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Monica Dolan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Amanda Donohoe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hazel Douglas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Freda Dowie",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Joan Dowling",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Roma Downey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hilary Dwyer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Edith Evans",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Samantha Eggar",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jennifer Ehle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eleanor Tomlinson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elisabeth Sladen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elizabeth Tan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ella Hunt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ellen Terry",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elsa Lanchester",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elsie Kelly",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Bella Emberg",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emerald Fennell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Emilia Clarke",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emilia Jones",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emily Carey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emily Watson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emma Bunton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emma Chambers",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emma Corrin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emma Greenwell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emma Laird",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emma Samms",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gladys Cooper",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jill Esmond",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eileen Essell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Estelle",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eva Le Gallienne",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alice Eve",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Evie Templeton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Suzan Farmer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fenella Fielding",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Flora Robson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Florence Pugh",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joan Fontaine",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emilia Fox",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Frances Fisher",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Cornelia Frances",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Francesca Annis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Liz Fraser",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Anna Friel",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gabriella Wilde",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Patricia Gage",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Charlotte Gainsbourg",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Greer Garson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Patricia Garwood",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jill Gascoine",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eunice Gayson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gemma Chan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gemma Whelan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Geneviève Waïte",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Susan George",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Geri Halliwell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mandip Gill",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Fiona Gillies",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Lou Gish",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Glenda Jackson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lucy Gordon",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mia Goth",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Gugu Mbatha-Raw",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Sienna Guillory",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Rebecca Hall",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hannah Arterton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hannah John-Kamen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hannah Murray",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Hannah New",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hannah Spearritt",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hannah Waddingham",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Harriet Walter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Naomie Harris",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Sally Hawkins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jill Haworth",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Haydn Gwynne",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hayley Atwell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hazel Court",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hazel Crowney",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lena Headey",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Heather Sears",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Emma Heming Willis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Georgie Henley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Elizabeth Henstridge",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Hermione Gingold",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jean Heywood",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joan Hickson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Clare Higgins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jacqueline Hill",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Thora Hird",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 1
   },
   {
     "name": "Kelly Hunter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Rosie Huntington-Whiteley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 5
   },
   {
     "name": "Elizabeth Hurley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ida Lupino",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Imogen Poots",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Isa Briones",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Isla Bevan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jackie Forster",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Geraldine James",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Louise Jameson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jane Birkin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jane Horrocks",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jane Lapotaire",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jane Seymour",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jane Wymark",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Janet McTeer",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jayalalithaa",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jean Lodge",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jean Marsh",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jean Simmons",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jeannette Charles",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jemma Redgrave",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Julika Jenkins",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jenna Russell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jennifer Kendal",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jennifer Saunders",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jenny Seagrove",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jenny Tomasin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jessica Barden",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jessica Brown Findlay",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "AJ Mitchell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Chubby Checker",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Archuleta",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Florence Warner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Buddy Greco",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Harry Nilsson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jeong Yoonchae",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "John Davis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jon McLaughlin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "R. Kelly",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lara Rajagopalan",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Michael Henderson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Redfoo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "SkyBlu",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Smokey Robinson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Trini Lopez",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Lucy Thomas",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Marianne Faithfull",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Nathan Carter",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Peter Frampton",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Sandy Denny",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Shelia Mathews",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Alain Berliner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Brenda Song",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Catherine O'Hara",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Darren Criss",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "David Janssen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dean Martin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Dean Stockwell",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Brian Dennehy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Joely Fisher",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ruth Prawer Jhabvala",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "John Adams",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "László Benedek",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Leonard Nimoy",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Leopold Lindtberg",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Eva Longoria",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Madeleine Stowe",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Michael Kamen",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Milyoner",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mira Nair",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Roger Moore",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Noah Hawley",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Oscar Isaac",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Patrick Stewart",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Deborah Raffin",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "A. R. Rahman",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Ray Dolby",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "Mark Ruffalo",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 2
   },
   {
     "name": "S. Epatha Merkerson",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Simone Signoret",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jason Sudeikis",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Mike Todd",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Paul Verhoeven",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Ving Rhames",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "Jeremy Allen White",
-    "category": "unluler"
+    "category": "unluler",
+    "fameTier": 4
   },
   {
     "name": "II. Bayezid",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Türkiye cumhurbaşkanı",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Ahmet Necdet Sezer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Türkiye cumhurbaşkanı vekili",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Türkiye'de cumhurbaşkanlığı seçimleri",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Şablon:Türkiye cumhurbaşkanları",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Roma imparatoru",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Beş İmparator Yılı",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Beş İyi İmparator",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Altı İmparator Yılı",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Antik Roma tarihinin zaman çizelgesi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Asker imparator",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Caracalla Yazıtı",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Flavius Hanedanı",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Herakleios",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "İliryalı imparatorlar",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "I. Konstantin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Tetrarşi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Şablon:Roma imparatorları",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Alain Aspect",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Aleksandr Prohorov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Aleksey Abrikosov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alex Müller",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jores Alfyorov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alfred Kastler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Hannes Alfvén",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Carl Anderson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Andrea Ghez",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Anne L'Huillier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Anton Zeilinger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arthur B. McDonald",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Schawlow",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Ashkin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Bardeen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Barkla",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Barry Barish",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Henri Becquerel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ben R. Mottelson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hans Bethe",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Patrick Blackett",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Nicolaas Bloembergen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Max Born",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Walther Bothe",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Lawrence Bragg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Brian Josephson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Percy Bridgman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bertram Brockhouse",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Louis de Broglie",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Mario Capecchi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Carl Wieman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Carlo Rubbia",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Owen Chamberlain",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Édouard Guillaume",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Charles Townes",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Wilson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Georges Charpak",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Steven Chu",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Claude Cohen-Tannoudji",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Compton",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Leon Cooper",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Marie Curie",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Pierre Curie",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pavel Çerenkov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gustaf Dalén",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "David Gross",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "David Lee",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Raymond Davis",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Clinton Davisson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Dirac",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Donald A. Glaser",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Donna Strickland",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Douglas Osheroff",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Duncan Haldane",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edward Appleton",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edward Purcell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Albert Einstein",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 1
   },
   {
     "name": "Emilio Segrè",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "François Englert",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Eric Cornell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Leo Esaki",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eugene Wigner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Felix Bloch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ferdinand Braun",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Enrico Fermi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Albert Fert",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Feynman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Fowler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Dennis Gabor",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gabriel Lippmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Murray Gell-Mann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Geoffrey Hinton",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Georg Bednorz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Smith",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Smoot",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Thomson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gerard 't Hooft",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Gerd Binnig",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Riccardo Giacconi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ivar Giaever",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Vitali Ginzburg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Giorgio Parisi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Sheldon Glashow",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roy Glauber",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Maria Goeppert-Mayer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Peter Grünberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Hall",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hans Dehmelt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hans Jensen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Theodor W. Hänsch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Heinrich Rohrer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Werner Heisenberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hendrik Lorentz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Henry Kendall",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gustav Hertz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Victor Hess",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Antony Hewish",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Peter Higgs",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hiroshi Amano",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Russell Hulse",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Isamu Akasaki",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Isidor Isaac Rabi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "İgor Tamm",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "İlya Frank",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Jack Steinberger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "James Chadwick",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "James Cronin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "James Franck",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "James Rainwater",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Jerome Friedman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Clarke",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Clauser",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Cockcroft",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Martinis",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Van Vleck",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John William Strutt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Joseph Taylor",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Kai Siegbahn",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Heike Kamerlingh Onnes",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Kao",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Wolfgang Ketterle",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jack Kilby",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Klaus Hasselmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Klaus von Klitzing",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ferenc Krausz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Herbert Kroemer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Polykarp Kusch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Willis Lamb",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Laughlin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Lauterbur",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ernest Lawrence",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Leon Lederman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Tsung-Dao Lee",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Anthony Leggett",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Philipp Lenard",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Lev Landau",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Luis Alvarez",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Makoto Kobayashi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Manne Siegbahn",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Peter Mansfield",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Guglielmo Marconi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Masatoshi Koshiba",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Mather",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Max von Laue",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michel Mayor",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Melvin Schwartz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michael Kosterlitz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Albert Michelson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert A. Millikan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Nevill Mott",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gérard Mourou",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Rudolf Mössbauer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Muhammed Abdüsselam",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Yoichiro Nambu",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Louis Néel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Nikolay Basov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Konstantin Novoselov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Wolfgang Paul",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Wolfgang Pauli",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jim Peebles",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arno Penzias",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Martin Perl",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Saul Perlmutter",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jean Perrin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Philip Anderson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Phillips",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pierre-Gilles de Gennes",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Max Planck",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "David Politzer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "C. F. Powell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pyotr Kapitsa",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Didier Queloz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "C. V. Raman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Norman Ramsey",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Frederick Reines",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Reinhard Genzel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Taylor",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Owen Richardson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Burton Richter",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Adam Riess",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Hofstadter",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Richardson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Wilson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roger Penrose",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ernst Ruska",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Martin Ryle",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Brian Schmidt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Schrieffer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Erwin Schrödinger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Julian Schwinger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Serge Haroche",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Shin'ichirō Tomonaga",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Shockley",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Shuji Nakamura",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Clifford Shull",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Simon van der Meer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Johannes Stark",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Otto Stern",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Steven Weinberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Horst Störmer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Subrahmanyan Chandrasekhar",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Syukuro Manabe",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Takaaki Kajita",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "J. J. Thomson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Kip Thorne",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 1
   },
   {
     "name": "David Thouless",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Samuel C. C. Ting",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Toshihide Maskawa",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Tsui",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Val Fitch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Johannes Diderik van der Waals",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Martinus Veltman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Walter Brattain",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Ernest Walton",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rainer Weiss",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Frank Wilczek",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Wilhelm Röntgen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Wilhelm Wien",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Willard Boyle",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Bragg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Kenneth Wilson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "David Wineland",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Chen Ning Yang",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hideki Yukava",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pieter Zeeman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Frits Zernike",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Aaron Ciechanover",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Adolf Butenandt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Peter Agre",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Akira Yoshino",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Alan MacDiarmid",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Aleksey Yekimov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alexander Todd",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Sidney Altman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Christian Anfinsen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Archer Martin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arieh Warshel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arne Tiselius",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Harden",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Artturi Virtanen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Avram Hershko",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Aziz Sancar",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Adolf von Baeyer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Barry Sharpless",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Benjamin List",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Berg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Friedrich Bergius",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bernard L. Feringa",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul D. Boyer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bruce Merrifield",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Carl Bosch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Carolyn R. Bertozzi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Thomas Cech",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Pedersen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Yves Chauvin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Cornforth",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Crutzen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Cyril Hinshelwood",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Dan Şehtman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "David MacMillan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Demis Hassabis",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Derek Barton",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Donald Cram",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Dorothy Hodgkin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jacques Dubochet",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Vincent du Vigneaud",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eduard Buchner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ei-ichi Negishi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Elias James Corey",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Emil Fischer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Emmanuelle Charpentier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eric Betzig",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ernst Otto Fischer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Ernst",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Fenn",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Flory",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Frances Arnold",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Francis Aston",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Fraser Stoddart",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Frédéric Joliot-Curie",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Frederick Sanger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Frederick Soddy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Fritz Pregl",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Kenichi Fukui",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Geoffrey Wilkinson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Georg Wittig",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gerhard Ertl",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gerhard Herzberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Walter Gilbert",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Giulio Natta",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Grubbs",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Fritz Haber",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Otto Hahn",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hans Fischer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hans von Euler-Chelpin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hartmut Michel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Herbert A. Hauptman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Norman Haworth",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alan Heeger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Heinrich Wieland",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Henri Moissan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Herbert Brown",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hermann Staudinger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Dudley Herschbach",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "George de Hevesy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roald Hoffmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Irwin Rose",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jacobus Henricus van 't Hoff",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Jaroslav Heyrovský",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jean-Pierre Sauvage",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jennifer Doudna",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jens Skou",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Joachim Frank",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Johann Deisenhofer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John E. Walker",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Goodenough",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Howard Northrop",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Kendrew",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John M. Jumper",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Polanyi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Irène Joliot-Curie",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl Ziegler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jerome Karle",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Aaron Klug",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Brian Kobilka",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Walter Kohn",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Koichi Tanaka",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roger Kornberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Harry Kroto",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Kurt Alder",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Kurt Wüthrich",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Irving Langmuir",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Lavoslav Ružička",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Yuan T. Lee",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jean-Marie Lehn",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Willard Libby",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Lipscomb",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Louis Brus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Luis Leloir",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Manfred Eigen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Rudolph Marcus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Martin Chalfie",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Martin Karplus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edwin McMillan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Melvin Calvin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michael Levitt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michael Smith",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michel Devoret",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Mario Molina",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Stanford Moore",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Morten Meldal",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Moungi Bawendi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert S. Mulliken",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Kary Mullis",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Walther Nernst",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Nikolay Semyonov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ryōji Noyori",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Odd Hassel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Olah",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Lars Onsager",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Osamu Shimomura",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Otto Diels",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Otto Wallach",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Karrer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Modrich",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Sabatier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Linus Pauling",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Max Perutz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Peter Debye",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Polioksimetilen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Pople",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Peter Mitchell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Porter",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ilya Prigogine",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Venkatraman Ramakrishnan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Richard Heck",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Henderson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Kuhn",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Robson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Schrock",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Synge",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Zsigmondy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Curl",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Huber",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Lefkowitz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Robinson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert Woodward",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roderick MacKinnon",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roger Tsien",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ronald Norrish",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Sherwood Rowland",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ernest Rutherford",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Scherrer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Glenn T. Seaborg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hideki Shirakawa",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Richard Smalley",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Stanley Whittingham",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Stefan Hell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "James Sumner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Susumu Kitagawa",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Akira Suzuki",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Svante Arrhenius",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Henry Taube",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Theodor Svedberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Theodore Richards",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Thomas A. Steitz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Tomas Lindahl",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Harold Urey",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Victor Grignard",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Vladimir Prelog",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Wendell Stanley",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alfred Werner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Wilhelm Ostwald",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Giauque",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Knowles",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Moerner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Ramsay",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "William Stein",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Willstätter",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Adolf Windaus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gregory Winter",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ada Yonath",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ahmed Zewail",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alfred G. Gilman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Allvar Gullstrand",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "André Michel Lwoff",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Werner Arber",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ardem Patapoutian",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Kornberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arvid Carlsson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "August Krogh",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Axel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Baruch Samuel Blumberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Baruj Benacerraf",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Bengt I. Samuelsson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Sune Bergström",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bernard Katz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bernardo Houssay",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bert Sakmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bruce Beutler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Günter Blobel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Konrad Emil Bloch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Daniel Bovet",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Sydney Brenner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michael Stuart Brown",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Linda B. Buck",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Carl Ferdinand Cori",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alexis Carrel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "César Milstein",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Brenton Huggins",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Charles Louis Alphonse Laveran",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Charles M. Rice",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Scott Sherrington",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Christiaan Eijkman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Albert Claude",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Stanley Cohen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Allan McLeod Cormack",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Corneille Heymans",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "André Frédéric Cournand",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Craig C. Mello",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Francis Crick",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Henrik Dam",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Carleton Gajdusek",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Jean Dausset",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "David Baltimore",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "David H. Hubel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "David Julius",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Christian de Duve",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Max Delbrück",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gerhard Domagk",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Drew Weissman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Renato Dulbecco",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gerald Edelman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Edgar Douglas Adrian",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edmond H. Fischer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edvard Moser",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edward Adelbert Doisy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edward B. Lewis",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edward Calvin Kendall",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edward Lawrie Tatum",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edwin G. Krebs",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Ehrlich",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gertrude Belle Elion",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Elizabeth Blackburn",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Emil Adolf von Behring",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Emil Theodor Kocher",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Franklin Enders",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Eric F. Wieschaus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eric Kandel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ernst Boris Chain",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Erwin Neher",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Andrew Z. Fire",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alexander Fleming",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Werner Forssmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "François Jacob",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Françoise Barré-Sinoussi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Frank Macfarlane Burnet",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Fred Ramsdell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Frederick Banting",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Frederick Gowland Hopkins",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Karl von Frisch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Georg von Békésy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Wells Beadle",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Georges J. F. Köhler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gerty Theresa Cori",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Joseph L. Goldstein",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Camillo Golgi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Greengard",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gregg L. Semenza",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "H. Robert Horvitz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Haldan Keffer Hartline",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jeffrey C. Hall",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hamilton O. Smith",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Harald zur Hausen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Harold E. Varmus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Leland H. Hartwell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Harvey J. Alter",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Henry Hallett Dale",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Herbert Spencer Gasser",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alfred Hershey",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Archibald Hill",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George H. Hitchings",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alan Lloyd Hodgkin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert William Holley",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Godfrey Hounsfield",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Howard Walter Florey",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Andrew Huxley",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Louis Ignarro",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "J. Michael Bishop",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "James P. Allison",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "James Rothman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "James W. Black",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Carew Eccles",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John E. Sulston",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Gurdon",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John James Rickard Macleod",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "John O'Keefe",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Robert Vane",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Joseph Erlanger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Joseph Murray",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Joshua Lederberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jules A. Hoffmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Julius Axelrod",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Julius Wagner-Jauregg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Katalin Karikó",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Har Gobind Khorana",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Robert Koch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Albrecht Kossel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hans Adolf Krebs",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl Landsteiner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Fritz Albert Lipmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Konrad Lorenz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Salvador Edward Luria",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Feodor Felix Konrad Lynen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Barry Marshall",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Martin Evans",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Martin Rodbell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Mary E. Brunkow",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Barbara McClintock",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "İlya Meçnikov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michael Houghton",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michael Rosbash",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michael W. Young",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Minot",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "António Egas Moniz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jacques Monod",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Luc Montagnier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Thomas Hunt Morgan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hermann Joseph Muller",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ferid Murad",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "William P. Murphy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Nathans",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Nicolle",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Niels Kaj Jerne",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Niels Ryberg Finsen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Marshall Warren Nirenberg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Carol W. Greider",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Christiane Nüsslein-Volhard",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Otto Fritz Meyerhof",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Otto Heinrich Warburg",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Otto Loewi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Emil Palade",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Paul Hermann Müller",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Nurse",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "İvan Pavlov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Peter C. Doherty",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Peter J. Ratcliffe",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Peter Medawar",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Philip Showalter Hench",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Phillip Allen Sharp",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Stanley B. Prusiner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ragnar Granit",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Ralph M. Steinman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Randy Schekman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Richard J. Roberts",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Dickinson Woodruff Richards",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Charles Robert Richet",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rita Levi-Montalcini",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Frederick Chapman Robbins",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Robert Bárány",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert F. Furchgott",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robert G. Edwards",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Robin Warren",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rodney Robert Porter",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roger Guillemin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ronald Ross",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Francis Peyton Rous",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Santiago Ramón y Cajal",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Satoshi Ōmura",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Andrew Schally",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Severo Ochoa",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Shimon Sakaguchi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Shinya Yamanaka",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Oliver Smithies",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Davis Snell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hans Spemann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roger Wolcott Sperry",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Susumu Tonegawa",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Earl Wilbur Sutherland",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Svante Pääbo",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Albert Szent-Györgyi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jack Szostak",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Tadeus Reichstein",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Tasuku Honjo",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Howard Martin Temin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Max Theiler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hugo Theorell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Thomas C. Südhof",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "E. Donnall Thomas",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Tim Hunt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Nikolaas Tinbergen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Tu Youyou",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ulf von Euler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Victor Ambros",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Selman Abraham Waksman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "George Wald",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Walter Rudolf Hess",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "James Dewey Watson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Thomas Huckle Weller",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Whipple",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Torsten N. Wiesel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Maurice Wilkins",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Willem Einthoven",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William C. Campbell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Kaelin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rosalyn Sussman Yalow",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Yoshinori Ohsumi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rolf M. Zinkernagel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Abdulrazak Gurnah",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Vicente Aleixandre",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Aleksandr Soljenitsin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ivo Andrić",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Annie Ernaux",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Miguel Angel Asturias",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Samuel Beckett",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jacinto Benavente",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bertrand Russell",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Björnstjerne Björnson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Heinrich Böll",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Camilo José Cela",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Albert Camus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Elias Canetti",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Carl Spitteler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Winston Churchill",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 1
   },
   {
     "name": "Czesław Miłosz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Grazia Deledda",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Derek Walcott",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bob Dylan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Elfriede Jelinek",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "T. S. Eliot",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Erik Axel Karlfeldt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eugene O'Neill",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eugenio Montale",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eyvind Johnson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Faulkner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Dario Fo",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Anatole France",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Gao Xingjian",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roger Martin du Gard",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Bernard Shaw",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gerhart Hauptmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "André Gide",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Giosue Carducci",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Golding",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Nadine Gordimer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Günter Grass",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Halldór Laxness",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Knut Hamsun",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Han Kang",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Harold Pinter",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Harry Martinson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Seamus Heaney",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ernest Hemingway",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Henri Bergson",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Herta Müller",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hermann Hesse",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Imre Kertész",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "İvan Bunin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "J. M. Coetzee",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jaroslav Seifert",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jean-Marie Gustave Le Clézio",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Juan Ramón Jiménez",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Johannes Vilhelm Jensen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "John Galsworthy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jon Fosse",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jose Echegaray",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "José Saramago",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Joseph Brodsky",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl Adolph Gjellerup",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Kazuo Ishiguro",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Kenzaburo Oe",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rudyard Kipling",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Selma Lagerlöf",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "László Krasznahorkai",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Doris Lessing",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Sinclair Lewis",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Louise Glück",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Luigi Pirandello",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Maurice Maeterlinck",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Mario Vargas Llosa",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gabriel García Márquez",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "François Mauriac",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Frederic Mistral",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Gabriela Mistral",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Mo Yan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Theodor Mommsen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alice Munro",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Necib Mahfuz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pablo Neruda",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Odisseus Elitis",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Orhan Pamuk",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pär Lagerkvist",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Boris Pasternak",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Patrick Modiano",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Patrick White",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Heyse",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Octavio Paz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pearl S. Buck",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Peter Handke",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Henrik Pontoppidan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Salvatore Quasimodo",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Władysław Reymont",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Romain Rolland",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rudolf Christoph Eucken",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Nelly Sachs",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Saint-John Perse",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jean-Paul Sartre",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Saul Bellow",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Shmuel Yosef Agnon",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Henryk Sienkiewicz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Frans Eemil Sillanpää",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Claude Simon",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Isaac Bashevis Singer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Steinbeck",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Sully Prudhomme",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Svetlana Aleksiyeviç",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Wislawa Szymborska",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Mihail Şolohov",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rabindranath Tagore",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Thomas Mann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Tomas Tranströmer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Toni Morrison",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Uyandırılmış Toprak",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "V. S. Naipaul",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Verner von Heidenstam",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "William Butler Yeats",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Wole Soyinka",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Yasunari Kavabata",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Yorgos Seferis",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Annibale Caccavello",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Filippo Brunelleschi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Giorgio Vasari",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Giovanni Antonio Amadeo",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Urs Graf",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Francesco Laurana",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Marcantonio Raimondi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Matteo di Giovanni",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michelangelo",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Prospero Spani",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bülent Arel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ana-Maria Avram",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Philippe Boesmans",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bruno Coulais",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Don Shirley",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ekrem Zeki Ün",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "George Enescu",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eugen Doga",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Giuseppe Torelli",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Marvin Hamlisch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gustav Holst",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Isaac de Camondo",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "John Williams",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Mehmet Ali Bey",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "María Luisa Ozaita",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Peer Gynt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Miklós Rózsa",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Spiridon Samaras",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Stefan Pohlit",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Tomaso Albinoni",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Yiruma",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Albertus Magnus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl-Otto Apel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arnold Gehlen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arnold Ruge",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bruno Bauer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alexander Gottlieb Baumgarten",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Walter Benjamin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jakob Böhme",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Carl Friedrich von Weizsäcker",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Carl Gustav Hempel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Henri Thiry d'Holbach",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Wilhelm Dilthey",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Din Felsefesi Üzerine Dersler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Hoimar von Ditfurth",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eduard Bernstein",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Friedrich Engels",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Erich Fromm",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ernst von Aster",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Eugen Dühring",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ferdinand Fellmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ludwig Andreas Feuerbach",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Johann Gottlieb Fichte",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Franz Brentano",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Franz Xaver von Baader",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Fredrich Fröbel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Friedrich Albert Lange",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Friedrich Meinecke",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Friedrich Schelling",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Friedrich Schiller",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Georg Jellinek",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Johann Wolfgang von Goethe",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Gottfried Leibniz",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gottlob Frege",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jürgen Habermas",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hans Freyer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hans Reichenbach",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Georg Wilhelm Friedrich Hegel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Heinz Heimsoeth",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Johann Gottfried Herder",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Hermann Conring",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Hermann Samuel Reimarus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Paul Hoyningen-Huene",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alexander von Humboldt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Wilhelm von Humboldt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edmund Husserl",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Immanuel Kant",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Johann Friedrich Herbart",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Joseph Dietzgen",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ernst Jünger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl Daub",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl Jaspers",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl Joel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl Korsch",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl Kautsky",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ursula Klein",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ferdinand Lassalle",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Leo Kofler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gotthold Ephraim Lessing",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Ludwig Büchner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Herbert Marcuse",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Karl Marx",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Max Beer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Max Horkheimer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Meister Eckhart",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Nicolai Hartmann",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Oskar Negt",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Otfried Höffe",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Philipp Mainländer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Samuel von Pufendorf",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Richard Avenarius",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rüdiger Safranski",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Saint Victorlu Hugh",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Saksonyalı Albert",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Max Ferdinand Scheler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Friedrich Schleiermacher",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Moritz Schlick",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Arthur Schopenhauer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Oswald Spengler",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edith Stein",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Max Stirner",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Theodor W. Adorno",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ulrich von Hutten",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pierre Abélard",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Miguel Abensour",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Alain Badiou",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Antoine Augustin Cournot",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Antoine Destutt de Tracy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Auvergneli William",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Georges Bataille",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pierre Bayle",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Bernard",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pierre Bourdieu",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Émile Boutroux",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Lucien Braun",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Étienne Cabet",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Bernard Renouvier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Charles Fourier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Christian Bonaud",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Henry Corbin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Daniel Bensaïd",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Guy Debord",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "René Descartes",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Denis Diderot",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Emmanuel Mounier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Frantz Fanon",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Bernard le Bovier de Fontenelle",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Francisque Bouillier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Fulcanelli",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gaston Bachelard",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 3
   },
   {
     "name": "Georges Politzer",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Sophie Germain",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Gustave Le Bon",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jacques-André Naigeon",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jean Bodin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Jean Buridan",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jean le Rond d'Alembert",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Jean-François Lyotard",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Jean-Luc Nancy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Joseph de Maistre",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jules Lachelier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Julia Kristeva",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Julien Offray de La Mettrie",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Etienne de La Boétie",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Didier Lapeyronnie",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Émile Littré",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Louis Althusser",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Louis Claude de Saint-Martin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Maine de Biran",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Sylvain Maréchal",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jacques Maritain",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Marquis de Condorcet",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pierre Louis Maupertuis",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Maurice Clavel",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Maurice Merleau-Ponty",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jean Meslier",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michel de Certeau",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Monique Wittig",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Michel de Montaigne",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Edgar Morin",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Nicholas Malebranche",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Blaise Pascal",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Paul Janet",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Charles Péguy",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pierre Duhem",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pierre Gassendi",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pierre Leroux",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Pierre-Joseph Proudhon",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Rémi Brague",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Renaud Barbaras",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "René Guénon",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roland Barthes",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Roscelinus",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Jean-Jacques Rousseau",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Sarah Kofman",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 2
   },
   {
     "name": "Lucien Sève",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Simone de Beauvoir",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Julius Sezar Skaliger",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Georges Vacher de Lapouge",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 5
   },
   {
     "name": "Vincent Cespedes",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Voltaire",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Astronom",
-    "category": "tarihi_kisiler"
+    "category": "tarihi_kisiler",
+    "fameTier": 4
   },
   {
     "name": "Ayı Humphrey",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Beagle Boys",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Bucky Bug",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Chip 'n' Dale",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Cin, Can ve Cem",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Clarabelle Cow",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Daisy Duck",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "John D. Rockerduck",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "José Carioca",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Justin Russo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ludwig Von Drake",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Magica De Spell",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Max Goof",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "McDuck Klanı",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Paperinik",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Arsız Daffy",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Bosko",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Buddy",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Elmer Fudd",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hızlı Gonzales",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lola Bunny",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Pepé Le Pew",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Porky Pig",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tazmanya Canavarı",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Wile E. Coyote ve Road Runner",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Yosemite Sam",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Black Widow",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Blade",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Carol Danvers",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Daredevil",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Darren Cross",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Deadpool",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Demir Adam",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Doktor Octopus",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Doktor Strange",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Dormammu",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Dum Dum Dugan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Eternals",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "F.R.I.D.A.Y.",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Fantastik Dörtlü",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Leo Fitz",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Howard Stark",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hulk",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "J. Jonah Jameson",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Jane Foster",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Jim Morita",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Joan The Mouse",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kandöken",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kingpin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Mary Jane Watson",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Melinda May",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Morgan Stark",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Mr. Bumpo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ms. Marvel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Mystique",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "New Goblin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Nick Fury",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Nyx",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Optimus Prime",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Örümcek Adam",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Para-Man",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Punisher",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Rogue",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Savaş Makinesi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Skaar",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Storm",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Şahin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Thor",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Tony Stark",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Turk Barrett",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ulik",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Uzay Şövalyesi Rom",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Üç Savaşçılar",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Wolverine",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "X-Men",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ymir",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Zuri",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Aquaman",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Atom",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Batgirl",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Batman",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Black Canary",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Captain Marvel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Cassie Cage",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Doomsday",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Eobard Thawne",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Flash",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "General Zod",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Green Lantern",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Harvey Bullock",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "James Gordon",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Jason Todd",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kedi Kadın",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lana Lang",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lex Luthor",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Lois Lane",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Nightwing",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Superman",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Tim Drake",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Vartox",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Wonder Woman",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Zatanna",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Zatara",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Zehirli Sarmaşık",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Süper kahraman",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Freakazoid!",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Gözcüler",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hellboy",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kâinatın Hâkimleri",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Pırılkız",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Powerpuff Girls",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "The Return of Doctor Mysterio",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Süper kahraman romanları",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Spawn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Abraham Van Helsing",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Bishōjo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Bishōnen",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Eren Yeager",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Jun Misugi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Levi Ackerman",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Light Yagami",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Metal Sonic",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ryuga",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Soft butch",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Spike Spiegel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Amy Rose",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Armadillo Mighty",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Chao Cheese",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Desmond Miles",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Druuna",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kyle Katarn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kirpi Nazo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kirpi Silver",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Prenses Sally Acorn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Rivyalı Geralt",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Tavşan Cream",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Uçan Sincap Ray",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Amanvermez Avni",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Arthur Hastings",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Baker Sokağı Çetesi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Başkomiser Battle",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Başmüfettiş Japp",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Bukalemun Espio",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Dedektif Fix",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Irene Adler",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Jack Bauer",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Jesse Stone",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hans Landa",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Dedektif Lestrade",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Luke Cage",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Madam Vastra, Jenny Flint ve Strax",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Martin Mystère",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Mayk Hammer",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Miss Marple",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Moon Knight",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Mycroft Holmes",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Myron Bolitar",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Nick Raider",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Dipper Pines",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hercule Poirot",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Question",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Robin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Saga Norén",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tommy ve Tuppence",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Velma Dinkley",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Dr. Watson",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Aang",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Aladdin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Alex Russo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Amergin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Apollon",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Arnemetia",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Artemis",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Artio",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hao Asakura",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Athena",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Avcı Herne",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Aveta",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Balder",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Bloom",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Bonnie Bennett",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Brigid",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Búri",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Büyüfiks",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Chao Chocola",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Dagda",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Dellingr",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Demeter",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Demirci Völund",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Denizci Sinbad",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Cedric Diggory",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Doktor",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kont Drakula",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "DreamWorks Ejderhalar",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Efsuncu Amora",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ekidne Knuckles",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Eragon",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Faust",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Freyja",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Glaistig",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hebe",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Heimdallr",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Herakles",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Hermes",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Hermóðr",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hestia",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hogwarts kadrosu",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Iðunn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "İmhotep",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kar Kraliçesi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Karlar Ülkesi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Karlar Ülkesi 2",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Karlar Ülkesi 3",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Katara",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kharis",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kırk Haramiler",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kızıl Cadı",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kirke",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kirpi Sonic",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Korkut Ata",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kutsanmış Bran",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ler",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Light Gaia",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Llyr",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lóðurr",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Loki",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Neville Longbottom",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lugh",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Remus Lupin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Mace Windu",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Minerva McGonagall",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Meili",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Merlin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Miles \"Tails\" Prower",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Móði ve Magni",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Morgan le Fay",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Nuada",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Odin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Óðr",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ogmios",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Oz Büyücüsü",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Prenses Yasemin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Qui-Gon Jinn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Radagast",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Segomo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Shang Tsung",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Sif",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Stephen Strange",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Taranis",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Thjalfi ve Röskva",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Toph Beifong",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tutatis",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Utgard Loki",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Uther Pendragon",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Väinämöinen",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Vili ve Vé",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Fred ve George Weasley",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ginny Weasley",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Wong",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Yarasa Rouge",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Yoda",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Zeus",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Zia Raşit",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Zuko",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kurgusal karakter",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Arif Işık",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Büyük Amiral Thrawn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Candyman",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Creeper",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Desdemona",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Harry Morgan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Jack Twist",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "James Doakes",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Jin Kazama",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Karınca Adam",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Leo Valdez",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Malcolm",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Matt Cordell",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Maurice",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Michael De Santa",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Noddy",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Palyaço Art",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Pinhead",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Proximus Sezar",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Pugsley Addams",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ramona Flowers",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Roxane",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Sezar",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tall Man",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Thénardierler",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tommy Shelby",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Twilight Sparkle",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tywin Lannister",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Victor Crowley",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Victor Trevor",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Abdul Alhazred",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Alığ Han",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Alp Er Tunga",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Alpamış",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Altınay",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Aragorn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Astinus",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ay Kağan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Azmanlar",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Banu Çiçek",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Basat",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Battal Gazi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Bayındır Han",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Begin Oğlu Emren",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Beowulf",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Bernie Rhodenbarr",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Beyaz Tavşan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Blinky Bill",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Bozkurt",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Bremen Mızıkacıları",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Carter Kane",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Chemosh",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Chibiabos",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Chingachook",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Conseil",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Cormoran",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Cuchulainn",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Culhwch",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Cyrus Smith",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "D'Artagnan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Dağ Han",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Dalamar",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Daleli Allan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Deli Dumrul",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Dodo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Don Kişot",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Dr. Jekyll ve Mr. Hyde",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Eldarion",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Erik",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Fatih Robur",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Fistandantilus",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Flint Fireforge",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Frankenstein'ın canavarı",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Fritz",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Galahad",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Gargantua",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Gargantua ile Pantagruel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Gawain",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Gılgamış",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Gilean",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Gilles de Rais",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Grandgousier",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Gregor Samsa",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Grendel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Griffin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lemuel Gulliver",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Habbakuk",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Haldir",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hansel ve Gretel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hanuman",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hiawatha",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hiddukel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Huban Arığ",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Hueil mab Caw",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Humpty Dumpty",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ichabod Crane",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Ivanhoe",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "İason",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "İlmarinen",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kaptan Blood",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kaptan Flint",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kaptan Hook",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kaptan Nemo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kaptan Smollet",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kel Mahmut",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Kertenkele Bill",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Keşiş Tuck",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kıvırcık Çalıdibi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kızıl Kral",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kintarō",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kiri-Jolith",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kitiara Uth Matar",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kör Pew",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Krabat",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Kral Arthur",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Küçük John",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Külkedisi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Kür Şad",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lady Crysania",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Laurana Kanan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Dr. Livesey",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lord Glenarvan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lord Soth",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Maedhros",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Magnus Chase",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Magwa",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Majere",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Raistlin Majere",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Meg McCaffrey",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Mishakal",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Mordred",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Mudjekeevis",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Baron Münchausen",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Natty Bumppo",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Ned Land",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Nehiryeli",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Nottingham Şerifi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Oğuz Kağan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Orodreth",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Paddington Ayısı",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Paladine",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Pamuk Prenses ve Yedi Cüceler",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 1
   },
   {
     "name": "Pantagruel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Panurge",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Percy Jackson",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Picrochole",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Porthos",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Profesör Aronnax",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Profesör Challenger",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Profesör Moriarty",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Reorx",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Scarlet Pimpernel",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Sigurd",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Smaug",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Lemony Snicket",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Squire Trelawney",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Geronimo Stilton",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Sturm Brightblade",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Şapkacı",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Takhisis",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Tanin Majere",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tanis Yarımelf",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tasslehoff Burrfoot",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tepegöz",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "The Yellow Kid",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Theseus",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Thingol",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tika Waylan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tom Ayrton",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tristan",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Tweedledum ve Tweedledee",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Uncas",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Uzun İhsan Efendi",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Vána",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Walt Stone",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Will Scarlet",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Yürek Oğlanı",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Şatarupa",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Thersites",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Can Manay",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Laurent LeClaire",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Piyer Bezuhov",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Rodion Romanoviç Raskolnikov",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Rufus Scrimgeour",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Kilgore Trout",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Vasily Kuragin",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 2
   },
   {
     "name": "Çirkin Ördek Yavrusu",
-    "category": "cizgi_karakterler"
+    "category": "cizgi_karakterler",
+    "fameTier": 3
   },
   {
     "name": "Anıl Abanoz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abbas Elkatipzade",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Eymen Abdülaziz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdi Aktaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdulaziz Demircan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdulaziz Solmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdulhamit Yıldız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdulkadir Kuzey",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdulkadir Özdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdulkadir Parmak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdulkadir Sünger",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdulkadir Şakşak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Avcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Aydın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Balıkuv",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Boz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Çuhacıoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdullah Şahindere",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Topluoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Ünal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdullah Yiğiter",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdulsamed Damlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdurrahim Dursun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Abdurrahman Canlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Abdurrahman Dereli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Abdurrahman Üresin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Abdülkadir Akyıldız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdülkadir Arun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdülkadir Çelik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Abdülkadir Demirci",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdülkadir Ömür",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Abdürrezzak Tığ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abidin Akmanol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Tolgahan Acar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Tunay Acar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Sadullah Acele",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Akın Açık",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Merthan Açıl",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ada İbik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ertan Adatepe",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Aydın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Çak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adem Çalık",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adem Gezici",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Gökçe",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adem Güven",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adem Kaya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Kurukaya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Metin Türk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adem Neboğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Sağlam",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Sarı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Tula",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Yeşilyurt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adil Akyüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adil Demirbağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Olcan Adın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnan Baytar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnan Çavdar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adnan Erkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnan Esen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnan İbrahim Pirioğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Adnan İncirmen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnan Karahan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Adnan Örnek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adnan Sezgin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnan Süvari",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adnan Şentürk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Emrecan Afacanoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Berkan Afşarlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Halil Ağan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmed Ildız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmed Kutucu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Aras",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Arda Tuzcu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Arı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Arslaner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Asena",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Aslan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Bahçıvan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Bal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Börtücene",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Bulut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Burgaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Canbaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Çağıran",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Çalık",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Çelikhan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Dereli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Devret",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Engin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Erol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Gülay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Hacıhamzaoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Karademir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Karlıklı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Keloğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Kılıçarslan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Kurt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Mercan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Nuri Çelik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Oğuz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Özacar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Robenson",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Sabri Fener",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Sağat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Sağlam",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Suat Özyazıcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Suphi Evke",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Şahin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Taşyürek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Yakak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Yılmazer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Ziya Genç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Ziya Yüce",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmetcan Kaplan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmethan Köse",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aytaç Ak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Metin Akan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nihat Akbay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Furkan Akbulut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Akburç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Önder Akdağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Erdal Akdarı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Uğur Akdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Burak Akdiş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "İsa Akgöl",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aykut Akgün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Mehmet Akgün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Oğuzhan Akgün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Akhan Karakurt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Akın Akman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Akın Alkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Akın Beyazoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Akın Sağlam",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Akın Sinan Dağdelen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Akın Vardar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Akif Başaran",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "İbrahim Akın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Murat Akın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Göksel Akıncı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aksel Aktaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gürsel Aksel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Oğuz Aksoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cafercan Aksu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aktan Kutlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Metin Aktaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Orhan Aktaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fatih Akyel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lokman Akyıldız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fahri Akyol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Serhat Akyüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Kerem Can Akyüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Mehmet Al",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alaaddin Okumuş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alaattin Baydar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emin Aladağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alaettin Çiçek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alaettin Ekici",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Sinan Alaağaç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Eren Albayrak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Erhan Albayrak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Mikail Albayrak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alberk Koç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aldoğan Argon",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aleko Yordan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Göksu Alhas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Akdeniz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Akman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Bayraktar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ali Beratlıgil",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ali Beykoz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Bilgin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Çamdalı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Çanakçı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Çebi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Çoban",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Çobanoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Değer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Emre Yanar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Eren Beşerler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Eren İyican",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Filibeli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Gençay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Gültiken",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Günçar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Güneş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Güzeldal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Habeşoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Helvacı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali İhsan Karayiğit",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ali İhsan Okçuoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Kaan Güneren",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Kandil",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Kemal Bakoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Kemal Denizci",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Kemal Karabal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ali Keten",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Kılıç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Kireş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Köksal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Kuçik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Kulaksız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Nail Durmuş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Nihat Çınar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Osman Antepli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Osman Çınar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Öztürk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Rıza Şenol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Rıza Tansu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Rıza Turan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ali Sami Yen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Serçek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Soydan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Sümer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Şahin Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Şen Kandil",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ali Tandoğan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Turan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ali Turap Bülbül",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ali Türkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Uğur Özen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Yalçın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Yaşar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Yavuz Kol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Yüksel Usta",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Zengin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Zorlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alican Karadağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alican Özfesli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alican Tez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alihan Kubalas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alim Koyun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alim Öztürk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alioum Boukar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Alkaşi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bülent Alkılıç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Cenk Ahmet Alkılıç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Álmos Kaan Kalafat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alp Arda",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alp Sümeralp",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alparslan Erdem",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alpaslan Eradlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alpaslan Öztürk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alpay Çelebi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alper Boğuşlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alper Efe Pazar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Arzu Karabulut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Arzu Sema Canbul",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aslı Canan Sabırlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aslı Karataş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Aybüke Arslan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aycan Yanaç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ayfer Topluoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ayşe Kuru",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ayşenur Büyükciğer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bahar Güvenç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bahar Özgüvenç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Başak Ersoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Başak İçinözbebek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Benan Altıntaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Berivan İçen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Berna Yeniçeri",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Berra Bayraktar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Bilge Su Koyun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bilgin Defterli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Birgül Sadıkoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Busem Şeker",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Büşra Ahlatcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Büşra Kenet",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Cansu Nur Kaya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cansu Yağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ceren Nurlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ceren Yağcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Çağla Korkmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Çiğdem Belci",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Damla Bozyel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Demet Bozkurt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Derya Arhan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Didem Dülber",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Didem Karagenç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Dilan Ağgül",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Dilara Soley Deli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Duygu Erdoğan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ebru Bayraktar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ebru Topçu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ece Tekmen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ece Türkoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ecem Cumert",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Eda Karataş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Elif Keskin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Elifenur Karabulut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Emine Demir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emine Gümüş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Melahat Eryurt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Emine Ecem Esen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Esra Özkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Esra Sibel Tezkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Eylül Elgalp",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ezgi Çağlar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Fatma Kara",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Fatma Şahin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fatma Şakar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fatoş Yıldırım",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Feride Akgün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Filiz Koç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gamze Bezan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gamze Nur Yaman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gizem Yazıcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Göknur Güleryüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gizem Gönültaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gülbin Hız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Başak Gündoğdu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Halle Houssein",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hilal Çetinkaya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hümeyra Şanver",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "İlayda Cansu Kara",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "İlayda Civelek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "İrem Damla Şahin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kader Hançar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "İpek Kaya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kezban Tağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lale Orta",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Esra Manya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Medine Erkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Melike Öztürk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Melis Özçiğdem",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Meryem Cennet Çal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Meryem Koç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Meryem Küçükbirinci",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Meryem Özyumşak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Meryem Yamak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Miray Cin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Nagehan Akşan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nazlıcan Parlak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nihal Saraç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Nihan Su",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nihan Üçerler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Nurcan Çelik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Özlem Başyurt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Melike Pekel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Pelin Nur Çelebi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Peritan Bozdağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Reyhan Şeker",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Reyhan Yüksekoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Rojda Doğan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Rojin Polat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Safa Merve Nalçacı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Seda Nur İncik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Sejde Abrahamsson",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Selda Akgöz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Selen Altunkulak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Selin Cemal Başdüdükçü",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Selin Dişli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Selin Sivrikaya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Selina Çerçi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Serenay Aktaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Serenay Öziri",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Servet Uzunlar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Sevgi Çınar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Seyhan Gündüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Sibel Nohut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Sümeyye Özşahin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Şehnaz Dilan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Şevval Alpavut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Tuğba Karataş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Tuğçe Bayındır",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ümran Özev",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Yağmur Uraz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Yaşam Göksu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Yeliz Açar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adem Bona",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Ören",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Can Duran",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ahmet Düverioğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Gürgen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Kandemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Sarı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Şeref Alemdar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Işık",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Limoncuoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Tuncer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alican Güney",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alihan Deniz Genç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alpay Öztaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alper Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alperen Şengün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Altan Dinçer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Altan Erol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Altar Tunçkol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Anıl Alyanak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Arca Tülüoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Arda Berk Kaya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Arda Erdoğan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Armağan Asena",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hayri Arsebük",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Asım Pars",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ata Kahraman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ata Özbek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Atahan Demirtaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ateş Çubukçu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ayberk Olmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aydan Siyavuş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aydın Örs",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aydın Uysal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ayduk Koray",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Aytek Gürkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aziz Bekir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Azizcan Özdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Barış Ermiş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Barış Güney",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Barış Hersek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Barış Küce",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Barış Özcan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Avram Barokas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Bartu Encü",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Battal Durusel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bekir Yarangüme",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Berk Demir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Berk Uğurlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Berkan Durmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Berkay Candan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Berke Aygündüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Berke Büyüktuncel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Birkan Batuk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bobby Dixon",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bora Hun Paçun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Bora Sancar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Bora Yaşar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Buğra Gacemer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Buğrahan Tuncer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Burak Bıyıktay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Burak Can Yıldızlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Burak Gözeneli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Burak Sezgin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Burak Yacan Yüksel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ömer Büyükaycan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bülent Tacettin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Can Akın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Can Altıntığ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Can Bartu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Can Kaan Turgut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Can Korkmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Can Maxim Mutaf",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Can Özcan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Can Sonat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Can Uğur Öğüt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Özhan Canaydın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Canberk Kuş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Caner Erdeniz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Caner Osman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Caner Öner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Caner Topaloğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cavit Altunay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cavit Ege Havsa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cedi Osman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Cem Akdağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cem Dinç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Cemal Nalga",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cenk Akyol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cenk Renda",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cevher Özer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ceyhun Altay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cihan Mumcuoğulları",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cudi İmamoğulları",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cüneyt Erden",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Yunus Çankaya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Damir Mrsic",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Darius Karutasu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Demircan Demir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Deniz Can Çevik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Deniz Kılıçlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Derin Saran",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Derya Yannier",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nejat Diyarbekirli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Doğan Bozveli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Doğan Hakyemez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Doğukan Sönmez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Doğukan Şanlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Doğuş Balbay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Doğuş Özdemiroğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Doruk Dora",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Dorukhan Engindeniz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Duşan Cantekin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Efe Aydan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Efe Postel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Efe Tahmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Efekan Coşar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ege Akçay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ege Arar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ege Demir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ege Özçelik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Egehan Arna",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Egemen Güven",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ekrem Sancaklı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emir Adıgüzel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Emir Arda Sivas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emir Gökalp",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Emir Preldžić",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emircan Koşut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emre Bayav",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emre Ekim",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Zaza Enden",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ender Arslan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Enes Kanter Freedom",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Engin Atsür",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Eray Büyükcangaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Erbey Paltacı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erbil Eroğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ercan Bayrak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ercan Osmani",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erdal Bibo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erdal Koşan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erdal Poyrazoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Erdem Türetken",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Erden Eryüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Erdi Gülaslan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Erdim Öztokat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Erdoğan Karabelen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Eren Beyaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ergi Tırpancı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ergin Ataman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erhan Yetim",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erkan Veyseloğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erkan Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ermal Kurtoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erman Kunter",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erol Demiroma",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erolcan Çinko",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ersan İlyasova",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Orkun Kemal Ertaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ertem Göreç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Erten Gazi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nihat Ertuğ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ertuğrul Bayraktar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Evren Büker",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Faruk Akagün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Faruk Beşok",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fatih Özal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Fatih Solak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fehmi Sadıkoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fensal Gürkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ferhan Baras",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ferhat Oktay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fırat Alemdaroğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Fırat Töz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "David Filiba",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Furkan Aldemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Furkan Haltalı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Furkan Korkmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Gökbörü Aygar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gökhan Şirin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gökhan Üçoklar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gökhan Yazıcıoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Göksenin Köksal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Göktuğ Baş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Görkem Doğan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Görkem Sönmez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Zeki Gülay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Sadi Gülçelik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Yılmaz Gündüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Güner Yalçıner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Güray Kanan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Hadi Özdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hakan Demirel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hakan Köseoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hakan Sayılı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hakan Yapar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Halil Dağlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Halil İbrahim Kuzucu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Halil Üner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Haluk Yıldırım",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Harun Erdenay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Hasan Arat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Henry Turner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hidayet Türkoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Hikmet Vardar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hurşit Baytok",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hüdai Budanur",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Hüseyin Alp",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hüseyin Beşok",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hüseyin Engin Muratoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Hüseyin Kozluca",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hüseyin Öztürk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hüsnü Çakırgil",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "İbrahim Kutluay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "İbrahim Yıldırım",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "İhsan Bayülken",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "İlkan Karaman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ömercan İlyasoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "İnanç Koç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "İnanç Mert Hotamış",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "İren İmre",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "İsmail Cem Ulusoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "İsmail Karabilen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "İzzet Türkyılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Kaan Berk Tarla",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kaan Onat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kamil Ocak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Karahan Tuan Efeoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Kartal Özmızrak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Kaya Peker",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kemal Can Aktuna",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kemal Canbolat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kemal Dinçer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Kemal Erdenay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kemal Tunçeri",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Kenan Sipahi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kerem Gönlüm",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Kerem Hotiç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Kerem Konan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kerem Tunçeri",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Kristijan Nikolov",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Leon Harun Apaydın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Levent Bilgin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Levent Topsakal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Levent Türknas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Levent Yavuz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ada Korkmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alara Altundağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Aleksia Karutasu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aleyna Göçmen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aleyna Sevim",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aleyna Vence",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Arelya Karasoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Arzu Göllü",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Arzum Tezcan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aslı Ertek Aşçıoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aslı Kalaç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aslı Köprülü",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aslı Tecimer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aslıhan Kılıç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aslıhan Sinanoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Asuman Karakoyun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Aybüke Özel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ayça Aykaç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Ayça Naz İhtiyaroğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ayçin Akyol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aylin Sarıoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aylin Toktamış",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aylin Uysalcan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aysun Özbek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ayşe Çürük",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ayşe Melis Gürkaynak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bahanur Gökalp",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bahar Akbay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bahar Mert",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bahar Toksoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Begüm Hepkaptan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Begüm Kaçmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Beliz Başkır",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bengisu Aygün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Beren Yeşilırmak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Beril Çoban",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Berin Yıldırım",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Berka Buse Özden",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Berra Eren",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Berrak Deniz Kakaşçı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Berre İnce",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Beyza Arıcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bianka İlayda Mumcular",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bihter Dumanoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Bilge Paşa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Funda Bilgi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Birgül Güler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Buket Gülübay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Buket Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Burcu Yönder",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Buse Kara",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Buse Kayacan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Buse Ünal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Büşra Güneş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Büşra Kılıçlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Canel Konvur",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cansın Sendir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cansın Şurgun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cansu Aydınoğulları",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cansu Ayyıldız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cansu Bir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cansu Çetin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Cansu Özbay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Cemre Erol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ceren Baysal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ceren Hasdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ceren Kapucu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ceren Karagöl",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ceren Mengüç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ceren Nur Domaç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ceren Önal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ceren Yüzgenç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ceyda Aktaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ceyda Kuyan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ceylan Arısan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ceylin Kuyan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Çağla Akın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Çağla Salih",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Çiğdem Can",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Çiğdem Öztoprak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Dalia Wilson",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Damla Çakıroğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Damla Gül Çakan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Damla Nur Dündar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Damla Tokman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Defne Başyolcu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Defne Kandemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Deniz Emrelli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Deniz Hakyemez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Deniz Nazlıcan Zengin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Deniz Uyanık",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Derya Cebecioğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Derya Çayırgan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Derya Güç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Dicle Nur Babat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Didem Ege",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Dilara Bağcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Dilara Bilge",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Dilara Yeşil",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Dilay Özdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Dilek Kınık",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Duru Aksu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Duru Şah Tırpancı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Duygu Bal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Duygu Çetav",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Duygu Düzceler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Duygu Sipahioğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ebrar Karakurt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ebru Ceylan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ebru Elhan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ece Deniz Uçarı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ece Eke",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ece Hitayca",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ece Hocaoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ece Kozdere",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ece Morova",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ecem Aknam",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ecenur Aksoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ecesu Soner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Eda Erdem",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ege Melisa Bükmen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Elif Ağca Yarar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Elif Boran",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Elif Gülbayrak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Elif İlhan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Elif Kapar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Elif Onur Başaran",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Elif Su Eriçek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Elif Su Yavuz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Elif Şahin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Elif Uzun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Elisa Tuana Köse",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Emine Arıcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erçe Su Kasapoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ergül Avcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Eslem Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Esra Gümüş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Esra Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Eylül Durgun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Eylül Karadaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Eylül Yatgın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ezel Balık",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ezgi Akyaldız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ezgi Arslan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ezgi Bektaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ezgi Dilik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ezgi Kapdan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ezgi Kara",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ezgi Uludağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fatma Beyaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fatma Nur Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fatma Şekerci",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Firdevs Kiremitçi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Fulden Ural",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Gamze Alikaya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gizem Çerağ Düzeltir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Gizem Giraygil",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Gizem Güreşen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gizem Mısra Aşçı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Gizem Örge",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Gizem Türegün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gökçen Denkel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gözde Dal İrgi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gözde Kırdar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gözde Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gülcan Özyıldız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gülce Erdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gülce Güçtekin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gülçin Doğan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gülden Kayalar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Güldeniz Önal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Zülfiye Gündoğdu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Güneş Çapa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hande Baladın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Hande Korkut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hande Naz Sunar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hanife Nur Özaydınlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hazal Nas Bahtiyar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hazal Selin Uygur",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Helin Kayıkçı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hilal Kocakara",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Hilal Yabuz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hülya Cömert",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hülya Erçin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hümay Fırıncıoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Işıl Kartalkanat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Işıl Öz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "İdil Naz Kanbur",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "İlarya Zararsız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "İlayda Naz Gergef",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "İlayda Uçak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "İlkin Aydın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "İpar Kurt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "İpek Soroğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "İrem Çor",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "İrem Nur Özsoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Janset Cemre Erkul",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kardelen İpek Sümer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Karmen Aksoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Oksana Kotelnikova",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kübra Akman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Kübra Evşen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Kübra Kegan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Lal Verda Akın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lila Şengün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Liray Akpınar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Liza Safronova",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mahiru Akdağ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mehtap Öztunalı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Meliha Diken",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Melike Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Melis Demir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Melis Durul",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Melis Erdoğan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Melis Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Melisa Kerman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Melissa Vargas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Merve Atlıer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Merve Çepni",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Merve Dalbeler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Merve İzbilir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Merve Nezir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Merve Nur Öztürk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Merve Tanıl",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Merve Tanyel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Meryem Boz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Mesude Kuyan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nalan Ural",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Natalia Hanikoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Naz Aydemir Akyol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Naz Döner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Nazlı Eda Kafkas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nazlı Özyıldız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Necla Güçlü Esepaşa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Nefize Bayramoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Nehir Kurtulan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Neriman Özsoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Neslihan Demir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Neşve Büyükbayram",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Nihal Yeşil",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nihan Yeldan Güneyligil",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Nilay Karaağaç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Nilay Konar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nisa Kuliyeva",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nisa Nur Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nisan Barut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nisan Eroğuz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nur Hacıeyüpoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Nur Sevil Aydınlar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alper Potuk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alper Timur",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Altan Aksoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Altay Yavuzaslan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erhan Altın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Yusuf Altıntaş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hamit Altıntop",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aral Şimşir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Sabih Arca",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Arda Güler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Arda Turan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 1
   },
   {
     "name": "Arif Güney",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Arif Kocabıyık",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hakan Arıkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Özcan Arkoç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Cihat Arman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Volkan Arslan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Artuner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emre Aşık",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Atakan Karazor",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Necati Ateş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Atila Turan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Cengiz Atila",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Koray Avcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Avni Kurgan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aydemir Nemli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aydın Karabulut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Aydın Tohumcu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ayhan Akman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ayhan Hançer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aykut Kocaman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Aykut Yiğit",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aytaç Kara",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Volkan Babacan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bahaddin Güneş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bahri Altıntabak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bahtiyar Yorulmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Baki Mercimek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Serkan Balcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdülkerim Bardakcı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Barış Alper Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Deniz Barış",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Yıldıray Baştürk",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Kemal Batmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Batuhan Karadeniz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Faruk Bayar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Altay Bayındır",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Engin Baytar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bedri Gürsoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bekir Barçın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bekir İrtegün",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bekir Refet Teker",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Berat Özdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Berkan Kutlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Berkay Özcan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Berke Özer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Candemir Berkman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Berman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bertuğ Yıldırım",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Bilal Kısa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nazmi Bilge",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Zafer Bilgetay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Birol Pekel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Şenol Birol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Rıdvan Bolatlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Uğur Boral",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Umut Bulut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Burak Yılmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Burhan Atak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Burhan Tözer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Adem Büyük",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bülent Baturman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bülent Bölükbaşı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bülent Gürbüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bülent Uygun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Cafer Aydın",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cafer Çağatay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Cahit Dikici",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Uğurcan Çakır",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Can Arat",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Can Uzun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Caner Erkin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Hasan Çelik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Yasin Çelik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Celil Sağır",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cenk Gönen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdullah Çevrim",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ceyhun Eriş",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Orhan Çıkırıkçı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Colin Kâzım-Richards",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Coşkun Ferman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Coşkun Özarı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Çağdaş Atan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Çağlar Birinci",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Çağlayan Derebaşı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Beyhan Çalışkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Tarık Çamdal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ömer Çatkıç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Oğuz Çetin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Çetiner Erdoğan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Raşit Çetiner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Hüseyin Çimşir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Emre Çolak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Uğur Dağdelen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Demir Ege Tıknaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aykut Demir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Muhammet Demir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Merih Demiral",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Coşkun Demirbakan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Deniz Gül",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Deniz Türüç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Mustafa Denizli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 1
   },
   {
     "name": "Oktay Derelioğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Enis Destan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Rıdvan Dilmen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Basri Dirimlili",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Tolga Doğantez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Doğan Alemdar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Doğan Küçükduru",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ziya Doğan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Doğukan Sinik",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Dorukhan Toköz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Candan Dumanlı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Abdülkerim Durmaz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Dursun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Serdar Dursun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Murat Duruer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Bülent Eken",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Reha Eken",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ekrem Günalp",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Mehmet Ekşi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ayfer Elmastaşoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ayhan Elmastaşoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emirhan İlkhan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emirhan Topçu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Emre Akbaba",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Emre Belözoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Emre Kılınç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Emre Taşdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emre Toraman",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ender Konca",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Enes Ünal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Engin Özdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Engin Verel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erbil Uzel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ercan Aktuna",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ercan Koloğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdullah Ercan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ercüment Şahin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aykut Erçetin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Erdal Kocaçimen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Arif Erdem",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Naci Erdem",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erdoğan Arıca",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Eren Elmalı",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Eren Talu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ergin Gürses",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ergün Acuner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ergun Ercins",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ergun Öztuna",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ergün Penbe",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Erhan Arslan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Rebii Erkal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erkan Avseren",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erol Bulut",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erol Dinler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Erol Togay",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ersan Gülüm",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ersel Altıparmak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ersen Martin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ercan Ertuğ",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ertuğrul Ersoy",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Rober Eryol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bülent Esel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Eser Özaltındere",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Eşref Bilgiç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Eşref Özmenç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Evren Turhan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fahrettin Cansever",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Faruk Barlas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Faruk Sağnak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fatih Tekke",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fehmi Sağınoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ferdi Kadıoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Feridun Buğeker",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Feti Okuroğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Feyyaz Uçar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Fikret Arıcan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fikret Demirer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fikret Kırcan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Galip Haktanır",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Garbis İstanbulluoğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mehmet Nazif Gerçin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Sercan Görgülü",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Şeref Görkey",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gökdeniz Karadeniz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Gökhan Akkan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gökhan Gedikali",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gökhan Gönül",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Gökhan Keskin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Gökhan Ünal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Gökhan Zan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 3
   },
   {
     "name": "Gökmen Özdenak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Zafer Göncüler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Şanver Göymen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ceyhun Gülselam",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Emre Güngör",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ceyhun Güray",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Muharrem Gürbüz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Orhan Gülle",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aaron Appindangoyé",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aaron Boupendza",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aaron Lennon",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aaron Opoku",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aatif Chahechouhe",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Muhammed Abarhun",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abat Ayımbetov",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abbasbek Feyzullayev",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdelaziz Barrada",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Liban Abdi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdou Razack Traoré",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Abdoul Sissoko",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdoulay Diaby",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdoulaye Ba",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdoulaye Diallo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdoulaye Touré",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdul Aziz Tetteh",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Abdulsamet Burak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Abdül Cabbar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdülilah Fehmi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Abdüzzâhir es-Saka",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aboubakar Kamara",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Tammy Abraham",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Abuda",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Adalto",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adam Bareiro",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adam Buksa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adam Stachowiak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adama Traoré",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Adamo Nagalo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adamu Mohammed",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emmanuel Adebayor",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adedire Mebude",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adel Bettaieb",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Arus",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Eren Kabak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adem Ljajić",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adis Jahović",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Admir Teli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnan Gušo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnan Januzaj",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnan Uğur",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adnane Tighadouini",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adolfo Gaich",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adolphe Teikeu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adrian Benedyczak",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adriano",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adriano Facchini",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Adrien Regattin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Luis Advíncula",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Afonso Sousa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Afriyie Acquah",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Victor Agali",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alex Agbo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Joachim Yaw",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Agim Ibraimi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Agon Mehmeti",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alloysius Agu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Agus",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmed Bilal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmed el-Mesudi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmed Hassan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmed Musa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmed Salah Hüsnü",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmed Yasin",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmed Yasir Reyyan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Kanca",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ahmet Kıvanç",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ahmet Yazar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aílton",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ismaïl Aissati",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Akaki Hubutia",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jerry Akaminko",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alper Akçam",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Akeem Agbetu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Akhilleas Punguras",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ákos Elek",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Burak Akyıldız",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alain Eyobo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alain Traoré",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alan Cariús",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alan Walsh",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alanzinho",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alassane Ndao",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alban Meha",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Roland Alberg",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Albian Ajeti",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aldin Čajić",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alejandro Capurro",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alejandro Pozuelo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aleksandar Aleksandrov",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aleksandar Jovanović",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aleksandar Pešić",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aleksandar Šćekić",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aleksandre Amisulaşvili",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Aleksandros Ciolis",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aleksandros Katranis",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Aleksandros Kiziridis",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alen Avdić",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alessandro Cambalhota",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alessio Cerci",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alex de Souza",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 1
   },
   {
     "name": "Alex Teixeira",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alex Telles",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alexander Djiku",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alexander Löbe",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alexander Søderlund",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alexander Sørloth",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alexandru Bourceanu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alexandru Cicâldău",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alexandru Maxim",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alexis Flips",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alexis Pérez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ali Adnan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Ahamada",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Faiz Atiyye",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Fuat Demircioğlu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ali Gökdemir",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Alain Boghossian",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alberto Tarantini",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Raúl Albiol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alcides Ghiggia",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aldair",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Aldo Olivieri",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alessandro Del Piero",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Álex Baena",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Álex Grimaldo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alexis Mac Allister",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alfred Pfaff",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Alessandro Altobelli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Amarildo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Amedeo Biavati",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Américo Gallego",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ânderson Polga",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "José Andrade",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ángel Correa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Angelo Peruzzi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Angelo Schiavio",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Antoine Griezmann",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Antonio Cabrini",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Álvaro Arbeloa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Osvaldo Ardiles",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alphonse Areola",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jimmy Armfield",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Raimond Aumann",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Aymeric Laporte",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Franco Baresi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Andrea Barzagli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bebeto",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hilderaldo Bellini",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Benjamin Pavard",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Giuseppe Bergomi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bernard Diomède",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bernard Lama",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bernd Hölzenbein",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bernhard Klodt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Thomas Berthold",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bixente Lizarazu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Laurent Blanc",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jérôme Boateng",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Bobby Charlton",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bodo Illgner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Rainer Bonhof",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Borja Iglesias",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Branco",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Andreas Brehme",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Paul Breitner",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Brito",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bruno Conti",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gianluigi Buffon",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Jorge Burruchaga",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Sergio Busquets",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cafu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fabio Cannavaro",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Carles Puyol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Carlos Alberto Torres",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Carlos Castilho",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Carlos Daniel Tapia",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Carlos Romero",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Iker Casillas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Héctor Castro",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Jack Charlton",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Christophe Dugarry",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Claudio Borghi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Claudio Gentile",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Clodoaldo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Corentin Tolisso",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cristian Romero",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bernhard Cullmann",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Dani Olmo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Daniel Bertoni",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "David Raya",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "David Trezeguet",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "David Villa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Denílson",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Didier Deschamps",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ángel Di María",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Dida",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Didi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Diego Maradona",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 1
   },
   {
     "name": "Djalma Santos",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Djibril Sidibé",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Dunga",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Edílson",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Edmílson",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Émerson Leão",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Emiliano Martínez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Enrique Ballestrero",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Enrique Guaita",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Enzo Fernández",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Eric García",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ernesto Vidal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Eusebio Tejera",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Everaldo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Exequiel Palacios",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Fabián Ruiz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fabien Barthez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fabio Grosso",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Cesc Fàbregas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Felice Borel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Félix",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Ferran Torres",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Giovanni Ferrari",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Filippo Inzaghi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ubaldo Fillol",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Francesco Graziani",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Francesco Totti",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Franco Armani",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Franco Causio",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Frank Leboeuf",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Franz Beckenbauer",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Fulvio Collovati",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gabriele Oriali",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gaetano Scirea",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Oscar Garré",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Garrincha",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gavi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gennaro Gattuso",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Geoff Hurst",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "George Cohen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Germán Pezzella",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gerónimo Rulli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gerry Byrne",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gérson",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Giancarlo Antognoni",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gianluca Zambrotta",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gianpiero Combi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alberto Gilardino",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gilberto Silva",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gilmar",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gilmar Rinaldi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gino Colaussi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Giovanni Galli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Olivier Giroud",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Giuseppe Meazza",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gonzalo Montiel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gordon Banks",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jimmy Greaves",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Guido Buchwald",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Guido Rodríguez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Hans-Georg Schwarzenbeck",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Héctor Enrique",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Héctor Zelada",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Heinz Flohe",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Helmut Rahn",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Thierry Henry",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Uli Hoeneß",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Horst Eckel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Horst-Dieter Höttges",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Hugo Lloris",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ian Callaghan",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Vincenzo Iaquinta",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Andrés Iniesta",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Jair da Costa",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jairzinho",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Joan Capdevila",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Joan García",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jorginho",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "José Altafini",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "José Luis Brown",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "José Luis Cuciuffo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "José Maria Rodrigues Alves",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "José Nasazzi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Josef Posipal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Juan Foyth",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Julián Álvarez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Julian Draxler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Juliano Belletti",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Julio César Britos",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Julio Olarticoechea",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Julio Pérez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Juninho Paulista",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Juninho Pernambucano",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Júnior",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jupp Heynckes",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jürgen Grabowski",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Jürgen Kohler",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Kaká",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "N'Golo Kanté",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Christian Karembeu",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Karl Mai",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Karl-Heinz Riedle",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mario Kempes",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kevin Großkreutz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "José Kléberson",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Jürgen Klinsmann",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Andreas Köpke",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Toni Kroos",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Ricardo La Volpe",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lamine Yamal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lautaro Martínez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Leandro Paredes",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Leonardo Araújo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Leopoldo Luque",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lilian Thuram",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Lionel Charbonnier",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lionel Messi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 1
   },
   {
     "name": "Lisandro Martínez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fernando Llorente",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lucas Hernández",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lúcio",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Luigi Allemandi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Luigi Bertolini",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Luis Galván",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Luis Islas",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Luizão",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Sepp Maier",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Steve Mandanda",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Manfred Kaltz",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Marc Cucurella",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Marc Pubill",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Marcel Desailly",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Marcelo Trobbiani",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Carlos Marchena",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Márcio Santos",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Marco Amelia",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Marco Materazzi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Marco Tardelli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Marcos",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Marcos Acuña",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Marcos Llorente",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jair Marinho",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Gianpiero Marini",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mario Götze",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Mário Zagallo",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Martin Peters",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Martín Zubimendi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Javi Martínez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Roque Máspoli",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Daniele Massaro",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Juan Mata",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lothar Matthäus",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Matthias Ginter",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Blaise Matuidi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mauro Camoranesi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Mauro Ramos",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Mauro Silva",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mazinho",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kylian Mbappé",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 1
   },
   {
     "name": "Mesut Özil",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Óscar Míguez",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Miho Fukumoto",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mikel Merino",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mikel Oyarzabal",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Andreas Möller",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Luis Monti",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Bobby Moore",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Max Morlock",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alan Jones",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Fernando Alonso",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mario Andretti",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alberto Ascari",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Ayrton Senna",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jim Clark",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Denny Hulme",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Giuseppe Farina",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Emerson Fittipaldi",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Mika Häkkinen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Mike Hawthorn",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 1
   },
   {
     "name": "Damon Hill",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Graham Hill",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "James Hunt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jack Brabham",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Jackie Stewart",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jacques Villeneuve",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jenson Button",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jochen Rindt",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Jody Scheckter",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Juan Manuel Fangio",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Keke Rosberg",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Kimi Räikkönen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 5
   },
   {
     "name": "Lando Norris",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Niki Lauda",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Lewis Hamilton",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Nigel Mansell",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Michael Schumacher",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 1
   },
   {
     "name": "Nelson Piquet",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Phil Hill",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Alain Prost",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Nico Rosberg",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Sebastian Vettel",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "John Surtees",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 4
   },
   {
     "name": "Max Verstappen",
-    "category": "sporcular"
+    "category": "sporcular",
+    "fameTier": 2
   },
   {
     "name": "Harry Potter'daki büyülü yaratıklar",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Longbottom ailesi",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Luna Lovegood",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Ölüm Yiyen",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Dolores Umbridge",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Ağaçsakal",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Altınyemiş",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Arwen",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Tom Bombadil",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Cadı Kral",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Celebrimbor",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Déagol",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Denethor",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Elrond",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Éomer",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Éowyn",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Faramir",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Galadriel",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Gandalf",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Gollum",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Gothmog",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Gríma Solucandil",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Isildur",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Meriadoc Brandybuck",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Nazgûl",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Peregrin Took",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Shelob",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Théoden",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Lydia Rodarte Quayle",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Marie Schrader",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Saul Goodman",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Skyler White",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Walter White",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Walter White Jr.",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Ada Wong",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Noah Bennet",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "E-123 Omega",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Erin Driscoll",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Kim Bauer",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Leon S. Kennedy",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Matt Parkman",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Max Payne",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Tony Almeida",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Varys",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Kate Austen",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Bea Smith",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Bender",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Benjamin Miles \"C-Note\" Franklin",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Berlin",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Bowser Jr.",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Brian O'Conner",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Carl Johnson",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Claude",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Crazy Eyes",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Daniel Holtz",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Roland Deschain",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Diabolik",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Dominic Toretto",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Mr. Eko",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Electro",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Eric Cartman",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Fernando Sucre",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Figüran Bob",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "James \"Sawyer\" Ford",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Franky Doyle",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Front Man",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Ganon",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Han",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "D.L. Hawkins",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Homer Simpson",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Gregory House",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Jax Teller",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "John Kramer",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Kano",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Keyser Söze",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Kim Wexler",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Kraven the Hunter",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Jin-Soo Kwon",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Lance Vance",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Lorna Morello",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Luis Fernando Lopez",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Frank Martin",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Maxine Conway",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Mona Simpson",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Nelson Muntz",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Nairobi",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Painkiller Jane",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Piper Chapman",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Profesör",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Puck",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Raquel Murillo",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Rio",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Rupert Thorne",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Tecavüzcü Coşkun",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Tokyo",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Toni Cipriani",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Trevor Philips",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Alex Vause",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Vulcan Raven",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Waluigi",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Wario",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Zorro",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Belit",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Black Sails",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Billy Bones",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Bootstrap Bill Turner",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Carina Smyth",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Conan",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "The Curse of Monkey Island",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Çılgın Korsan Jack",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Define Adası",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Define Adasına Dönüş",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Escape from Monkey Island",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Ben Gunn",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Israel Hands",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Hector Barbossa",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Jack Sparrow",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1
   },
   {
     "name": "Jim Hawkins",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Joshamee Gibbs",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Kanca",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Karayip Korsanları",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Karayip Korsanları: Dünyanın Sonu",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Karayip Korsanları: Gizemli Denizlerde",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Karayip Korsanları: Ölü Adamın Sandığı",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Karayip Korsanları: Salazar'ın İntikamı",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Karayip Korsanları: Siyah İnci'nin Laneti",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   },
   {
     "name": "Long John Silver",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Maymun Jack",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Sandokan",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Smee",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3
   },
   {
     "name": "Pippi Uzunçorap",
-    "category": "dizi_film_karakterleri"
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2
   }
 ]

@@ -186,6 +186,7 @@ export interface FamousPerson {
   id: string
   name: string
   category: string
+  fameTier?: number
 }
 
 export interface AutoAssignResult {

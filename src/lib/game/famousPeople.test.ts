@@ -27,13 +27,13 @@ describe('Famous People & Auto-Assign Engine', () => {
       players: [],
       names: [],
       famous_people: [
-        buildFamousPerson({ name: 'Barış Manço', category: 'unluler' }),
-        buildFamousPerson({ name: 'Cem Yılmaz', category: 'unluler' }),
-        buildFamousPerson({ name: 'Mustafa Kemal Atatürk', category: 'tarihi_kisiler' }),
-        buildFamousPerson({ name: 'Fatih Sultan Mehmet', category: 'tarihi_kisiler' }),
-        buildFamousPerson({ name: 'Batman', category: 'cizgi_karakterler' }),
-        buildFamousPerson({ name: 'Arda Güler', category: 'sporcular' }),
-        buildFamousPerson({ name: 'Behzat Ç.', category: 'dizi_film_karakterleri' }),
+        buildFamousPerson({ name: 'Barış Manço', category: 'unluler', fame_tier: 1 }),
+        buildFamousPerson({ name: 'Cem Yılmaz', category: 'unluler', fame_tier: 1 }),
+        buildFamousPerson({ name: 'Mustafa Kemal Atatürk', category: 'tarihi_kisiler', fame_tier: 1 }),
+        buildFamousPerson({ name: 'Fatih Sultan Mehmet', category: 'tarihi_kisiler', fame_tier: 1 }),
+        buildFamousPerson({ name: 'Batman', category: 'cizgi_karakterler', fame_tier: 1 }),
+        buildFamousPerson({ name: 'Arda Güler', category: 'sporcular', fame_tier: 2 }),
+        buildFamousPerson({ name: 'Behzat Ç.', category: 'dizi_film_karakterleri', fame_tier: 2 }),
       ],
     })
   })
@@ -78,10 +78,22 @@ describe('Famous People & Auto-Assign Engine', () => {
       const zeusResults = await getFamousPeople({ query: 'zeus' })
       expect(zeusResults.length).toBeGreaterThan(0)
     })
+
+    it('fameTier alanını doğru döndürür ve rastgele önerilerde en ünlüleri (Tier 1-2) önceler', async () => {
+      fake.tables.famous_people = []
+      const results = await getFamousPeople({ random: true, limit: 10 })
+      expect(results.length).toBe(10)
+      expect(results.every((r) => typeof r.fameTier === 'number')).toBe(true)
+      
+      // İlk sırada gelen önerilerin Tier 1 veya Tier 2 olması beklenir
+      const firstTier = results[0]?.fameTier
+      expect(firstTier).toBeLessThanOrEqual(2)
+    })
   })
 
   describe('autoAssignNames (Klasik Mod)', () => {
-    it('tüm oyunculara veritabanından 3 benzersiz isim atar', async () => {
+    it('tüm oyunculara veritabanından 3 benzersiz isim atar ve yalnızca Tier 1 veya 2 isimleri seçer', async () => {
+      fake.tables.famous_people = []
       const room = buildRoom({ status: 'waiting', game_mode: 'classic' })
       const host = buildPlayer(room.id, { nickname: 'Host', is_host: true })
       const guest = buildPlayer(room.id, { nickname: 'Misafir' })
@@ -97,6 +109,17 @@ describe('Famous People & Auto-Assign Engine', () => {
       const guestNames = fake.tables.names.filter((n) => n.submitted_by === guest.id)
       expect(hostNames.length).toBe(3)
       expect(guestNames.length).toBe(3)
+
+      // Atanan isimlerin tamamının Tier 1 veya Tier 2 olduğunu doğrula
+      const { FAMOUS_PEOPLE_SEED } = await import('./famousPeopleData')
+      for (const assigned of fake.tables.names) {
+        const seed = FAMOUS_PEOPLE_SEED.find(
+          (s) => s.name.toLocaleLowerCase('tr') === assigned.name_text.toLocaleLowerCase('tr')
+        )
+        if (seed) {
+          expect(seed.fameTier).toBeLessThanOrEqual(2)
+        }
+      }
     })
 
     it('host olmayan oyuncu otomatik isim atayamaz', async () => {

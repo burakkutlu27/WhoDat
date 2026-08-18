@@ -23,18 +23,21 @@ export type Database = {
           id: string
           name: string
           category: string
+          fame_tier?: number | null
         }
         Insert: {
           created_at?: string | null
           id?: string
           name: string
           category: string
+          fame_tier?: number | null
         }
         Update: {
           created_at?: string | null
           id?: string
           name?: string
           category?: string
+          fame_tier?: number | null
         }
         Relationships: []
       }

@@ -127,6 +127,7 @@ export const famousPeopleQuerySchema = z.object({
     .optional()
     .transform((val) => val === true || val === 'true' || val === '1'),
   limit: z.coerce.number().int().min(1).max(50).optional(),
+  maxTier: z.coerce.number().int().min(1).max(5).optional(),
 })
 
 export const autoAssignSchema = z.object({

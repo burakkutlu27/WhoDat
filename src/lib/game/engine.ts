@@ -991,26 +991,38 @@ export async function getFamousPeople(options: {
   category?: FamousPersonCategory
   random?: boolean
   limit?: number
+  maxFameTier?: number
+  fameTiers?: number[]
 }): Promise<FamousPerson[]> {
-  const { query, category, random, limit = 10 } = options
+  const { query, category, random, limit = 10, maxFameTier, fameTiers } = options
   const admin = supabaseAdmin()
 
   const combinedMap = new Map<string, FamousPerson>()
 
   // 1. Supabase veritabanından ara (varsa)
   try {
-    let q = admin.from('famous_people').select('id, name, category')
+    let q = admin.from('famous_people').select('id, name, category, fame_tier')
     if (category && category !== 'all') {
       q = q.eq('category', category)
     }
     if (query && query.trim()) {
       q = q.ilike('name', `%${query.trim()}%`)
     }
+    if (maxFameTier !== undefined) {
+      q = q.lte('fame_tier', maxFameTier)
+    } else if (fameTiers && fameTiers.length > 0) {
+      q = q.in('fame_tier', fameTiers)
+    }
     const { data, error } = await q
     if (!error && data && data.length > 0) {
-      for (const item of data as FamousPerson[]) {
-        const key = item.name.toLocaleLowerCase('tr').trim()
-        combinedMap.set(key, item)
+      for (const rawItem of data as Array<{ id: string; name: string; category: string; fame_tier?: number | null }>) {
+        const key = rawItem.name.toLocaleLowerCase('tr').trim()
+        combinedMap.set(key, {
+          id: rawItem.id,
+          name: rawItem.name,
+          category: rawItem.category,
+          fameTier: rawItem.fame_tier ?? undefined,
+        })
       }
     }
   } catch {
@@ -1030,6 +1042,14 @@ export async function getFamousPeople(options: {
       continue
     }
 
+    const tier = seedItem.fameTier ?? 4
+    if (maxFameTier !== undefined && tier > maxFameTier) {
+      continue
+    }
+    if (fameTiers && fameTiers.length > 0 && !fameTiers.includes(tier)) {
+      continue
+    }
+
     if (rawQ) {
       const lowerName = seedItem.name.toLocaleLowerCase('tr')
       const asciiName = seedItem.name.toLowerCase()
@@ -1044,6 +1064,7 @@ export async function getFamousPeople(options: {
         id: `seed-${idx}`,
         name: seedItem.name,
         category: seedItem.category as Exclude<FamousPersonCategory, 'all'>,
+        fameTier: seedItem.fameTier,
       })
     }
 
@@ -1054,12 +1075,35 @@ export async function getFamousPeople(options: {
 
   const results = Array.from(combinedMap.values())
 
+  // Öneri & Rastgele Mod: Önce fameTier'a göre küçükten büyüğe sırala,
+  // aynı tier içindeki isimleri rastgele karıştır (shuffle) ve ilk limit kadarını getir.
   if (random) {
-    const shuffled = [...results].sort(() => Math.random() - 0.5)
-    return shuffled.slice(0, limit)
+    const tierGroups = new Map<number, FamousPerson[]>()
+    for (const person of results) {
+      const tier = person.fameTier && person.fameTier >= 1 && person.fameTier <= 5 ? person.fameTier : 4
+      const group = tierGroups.get(tier) || []
+      group.push(person)
+      tierGroups.set(tier, group)
+    }
+
+    const sortedTiers = Array.from(tierGroups.keys()).sort((a, b) => a - b)
+    const orderedList: FamousPerson[] = []
+
+    for (const t of sortedTiers) {
+      const group = tierGroups.get(t)!
+      for (let i = group.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        const temp = group[i]!
+        group[i] = group[j]!
+        group[j] = temp
+      }
+      orderedList.push(...group)
+    }
+
+    return orderedList.slice(0, limit)
   }
 
-  // Arama sonuçlarında eşleşme kalitesine göre sırala (kelime başı eşleşenler önce gelir)
+  // Arama sonuçlarında eşleşme kalitesine ve ünlülüğe göre sırala
   if (lowerQ) {
     results.sort((a, b) => {
       const aLower = a.name.toLocaleLowerCase('tr')
@@ -1067,6 +1111,12 @@ export async function getFamousPeople(options: {
       const aStarts = aLower.startsWith(lowerQ) ? 0 : 1
       const bStarts = bLower.startsWith(lowerQ) ? 0 : 1
       if (aStarts !== bStarts) return aStarts - bStarts
+
+      // Aynı eşleşme kalitesinde daha ünlü olanlar (fameTier küçük) önce gelsin
+      const aTier = a.fameTier ?? 4
+      const bTier = b.fameTier ?? 4
+      if (aTier !== bTier) return aTier - bTier
+
       return a.name.length - b.name.length
     })
   }
@@ -1099,7 +1149,12 @@ export async function autoAssignNames(
   const gameMode = getRoomMode(roomId, room.game_mode)
 
   if (gameMode === 'shared_target') {
-    const candidates = await getFamousPeople({ category: effectiveCategory, random: true, limit: 10 })
+    const candidates = await getFamousPeople({
+      category: effectiveCategory,
+      random: true,
+      limit: 10,
+      maxFameTier: 2,
+    })
     if (candidates.length === 0) {
       throw badRequest('no_famous_people', 'Seçilen kategoride ünlü bulunamadı.')
     }
@@ -1119,6 +1174,7 @@ export async function autoAssignNames(
   const pool = await getFamousPeople({
     category: effectiveCategory,
     random: true,
+    maxFameTier: 2,
     limit: Math.max(totalNamesNeeded + 10, 50),
   })
 
@@ -1126,6 +1182,7 @@ export async function autoAssignNames(
     const extra = await getFamousPeople({
       category: 'all',
       random: true,
+      maxFameTier: 2,
       limit: totalNamesNeeded + 10,
     })
     for (const item of extra) {
@@ -1385,6 +1442,7 @@ async function transitionToNextPhase(
   const pool = await getFamousPeople({
     category: nextCategory,
     random: true,
+    maxFameTier: 2,
     limit: Math.max(totalNamesNeeded + 10, 50),
   })
 
@@ -1392,6 +1450,7 @@ async function transitionToNextPhase(
     const extra = await getFamousPeople({
       category: 'all',
       random: true,
+      maxFameTier: 2,
       limit: totalNamesNeeded + 10,
     })
     for (const item of extra) {
