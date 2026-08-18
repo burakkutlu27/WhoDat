@@ -16,7 +16,7 @@ export const POST = route(async (request: NextRequest) => {
     message: 'Çok fazla oda oluşturdunuz. Lütfen birkaç dakika sonra tekrar deneyin.',
   })
 
-  const { nickname, gameMode, categoryMode, category, phaseCategories } = parseBody(
+  const { nickname, gameMode, communicationMode, categoryMode, category, phaseCategories } = parseBody(
     createRoomSchema,
     await readJsonBody(request),
   )
@@ -24,6 +24,7 @@ export const POST = route(async (request: NextRequest) => {
     categoryMode,
     category,
     phaseCategories,
+    communicationMode,
   })
 
   const response = jsonOk({ roomId, roomCode }, { status: 201 })

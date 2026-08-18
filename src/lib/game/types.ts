@@ -12,6 +12,8 @@ import type { RoomStatus } from '../database.types'
 
 export type GameMode = 'classic' | 'speed' | 'persistent' | 'shared_target'
 
+export type CommunicationMode = 'voice' | 'text'
+
 export type LobbyCategoryMode = 'single' | 'multi_phase'
 
 export type FamousPersonCategory =
@@ -37,6 +39,34 @@ export interface SharedQuestionItem {
   questionText: string
   answer: 'yes' | 'no' | 'uncertain' | null
   createdAt: string
+}
+
+/** Tam Metin Modu — İpucu Kartı (Clue Card) Satırı */
+export interface ClueCardItem {
+  id: string
+  questionText: string
+  yesCount: number
+  noCount: number
+  unansweredCount: number
+  majority: 'yes' | 'no' | 'tie'
+  timestamp: string
+}
+
+/** Tam Metin Modu — Aktif Oylama Oturumu */
+export interface TextQuestionVote {
+  id: string
+  askerId: string
+  askerNickname: string
+  questionText: string
+  status: 'open' | 'closed'
+  openedAt: string
+  closesAt: string
+  secondsRemaining: number
+  yesCount: number
+  noCount: number
+  totalEligible: number
+  hasVoted: boolean
+  myAnswer?: boolean
 }
 
 export interface PublicPlayer {
@@ -72,6 +102,7 @@ export interface GameState {
     gameRound: number
     totalRounds: number
     gameMode: GameMode
+    communicationMode: CommunicationMode
     isGameActive: boolean
     currentPlayerId: string | null
     /** Kategori Lobisi Alanları */
@@ -93,6 +124,8 @@ export interface GameState {
     questionLog?: SharedQuestionItem[]
     /** Ortak Hedef Modu: Turu kazanan oyuncu */
     roundWinnerNickname?: string | null
+    /** Tam Metin Modu: Aktif oylama oturumu */
+    activeVote?: TextQuestionVote | null
   }
   players: PublicPlayer[]
   you: {
@@ -117,6 +150,8 @@ export interface GameState {
     canBuzz?: boolean
     /** Ortak Hedef Modu: Sıra atlama cezası var mı */
     skippedQuestionTurn?: boolean
+    /** Tam Metin Modu: Oyuncunun kişisel ipucu kartı (not defteri) */
+    clueCard?: ClueCardItem[]
   }
   /** Tahmin sırası sizdeyse null: doğru cevap tahmin edene gönderilmez. */
   currentName: string | null
@@ -159,3 +194,4 @@ export interface AutoAssignResult {
   isSharedTarget?: boolean
   sharedTargetName?: string
 }
+

@@ -7,7 +7,7 @@ import ThemeSwitcher from './ThemeSwitcher'
 
 export default function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 border-b-2 border-dashed border-paper-border bg-paper-bg/90 backdrop-blur-sm">
+    <nav className="sticky top-0 z-20 border-b-2 border-dashed border-paper-border bg-paper-bg/90 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"

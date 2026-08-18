@@ -7,7 +7,8 @@ import { badRequest, conflict, forbidden, notFound } from '../http'
 import { supabaseAdmin } from '../supabaseAdmin'
 import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
-import type { AutoAssignResult, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, PublicPlayer, SharedQuestionItem } from './types'
+import { QUESTION_BANK_SEED } from './questionBankData'
+import type { AutoAssignResult, ClueCardItem, CommunicationMode, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, PublicPlayer, SharedQuestionItem, TextQuestionVote } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -80,8 +81,23 @@ interface SharedTargetRoomData {
   roundScores: Map<string, number[]>
 }
 
+// Tam Metin Modu Oylama Oturumu State
+export interface TextQuestionVoteInternal {
+  id: string
+  roomId: string
+  askerId: string
+  askerNickname: string
+  questionText: string
+  status: 'open' | 'closed'
+  openedAt: number
+  closesAt: number
+  responses: Map<string, boolean>
+  eligibleVoterIds: Set<string>
+}
+
 const globalRef = globalThis as unknown as {
   __whoDat_roomModeStore?: Map<string, RoomModeData>
+  __whoDat_roomCommunicationModeStore?: Map<string, CommunicationMode>
   __whoDat_roomCategoryStore?: Map<string, RoomCategoryData>
   __whoDat_playerSpeedStore?: Map<string, Map<string, PlayerSpeedData>>
   __whoDat_playerRoundNameStore?: Map<string, Map<string, string>>
@@ -89,9 +105,12 @@ const globalRef = globalThis as unknown as {
   __whoDat_roomUsedNamesStore?: Map<string, Set<string>>
   __whoDat_playerPersistentStore?: Map<string, Map<string, PlayerPersistentData>>
   __whoDat_sharedTargetStore?: Map<string, SharedTargetRoomData>
+  __whoDat_roomActiveVoteStore?: Map<string, TextQuestionVoteInternal>
+  __whoDat_playerClueCardStore?: Map<string, Map<string, ClueCardItem[]>>
 }
 
 globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
+globalRef.__whoDat_roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore ?? new Map()
 globalRef.__whoDat_roomCategoryStore = globalRef.__whoDat_roomCategoryStore ?? new Map()
 globalRef.__whoDat_playerSpeedStore = globalRef.__whoDat_playerSpeedStore ?? new Map()
 globalRef.__whoDat_playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore ?? new Map()
@@ -99,8 +118,11 @@ globalRef.__whoDat_roomLivesStore = globalRef.__whoDat_roomLivesStore ?? new Map
 globalRef.__whoDat_roomUsedNamesStore = globalRef.__whoDat_roomUsedNamesStore ?? new Map()
 globalRef.__whoDat_playerPersistentStore = globalRef.__whoDat_playerPersistentStore ?? new Map()
 globalRef.__whoDat_sharedTargetStore = globalRef.__whoDat_sharedTargetStore ?? new Map()
+globalRef.__whoDat_roomActiveVoteStore = globalRef.__whoDat_roomActiveVoteStore ?? new Map()
+globalRef.__whoDat_playerClueCardStore = globalRef.__whoDat_playerClueCardStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
+const roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore
 const roomCategoryStore = globalRef.__whoDat_roomCategoryStore
 const playerSpeedStore = globalRef.__whoDat_playerSpeedStore
 const playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore
@@ -108,6 +130,8 @@ const roomLivesStore = globalRef.__whoDat_roomLivesStore
 const roomUsedNamesStore = globalRef.__whoDat_roomUsedNamesStore
 const playerPersistentStore = globalRef.__whoDat_playerPersistentStore
 const sharedTargetStore = globalRef.__whoDat_sharedTargetStore
+const roomActiveVoteStore = globalRef.__whoDat_roomActiveVoteStore
+const playerClueCardStore = globalRef.__whoDat_playerClueCardStore
 
 /**
  * Kategori Lobisi & Faz Store Yardımcıları
@@ -197,6 +221,91 @@ export function setRoomModeData(roomId: string, gameMode: GameMode) {
   const data: RoomModeData = { gameMode, totalRounds }
   roomModeStore.set(roomId, data)
   return data
+}
+
+/**
+ * Tam Metin Modu Store & Helper'ları
+ */
+export function getRoomCommunicationMode(roomId: string, dbRoomCommMode?: string | null): CommunicationMode {
+  const stored = roomCommunicationModeStore.get(roomId)
+  if (stored) return stored
+  if (dbRoomCommMode === 'text' || dbRoomCommMode === 'voice') {
+    roomCommunicationModeStore.set(roomId, dbRoomCommMode)
+    return dbRoomCommMode
+  }
+  const defaultMode: CommunicationMode = 'voice'
+  roomCommunicationModeStore.set(roomId, defaultMode)
+  return defaultMode
+}
+
+export function setRoomCommunicationModeData(roomId: string, mode: CommunicationMode) {
+  roomCommunicationModeStore.set(roomId, mode)
+  return mode
+}
+
+export function getPlayerClueCard(roomId: string, playerId: string): ClueCardItem[] {
+  let roomClueMap = playerClueCardStore.get(roomId)
+  if (!roomClueMap) {
+    roomClueMap = new Map()
+    playerClueCardStore.set(roomId, roomClueMap)
+  }
+  let cards = roomClueMap.get(playerId)
+  if (!cards) {
+    cards = []
+    roomClueMap.set(playerId, cards)
+  }
+  return cards
+}
+
+export function addClueCardItem(roomId: string, playerId: string, item: ClueCardItem) {
+  const cards = getPlayerClueCard(roomId, playerId)
+  cards.push(item)
+  return cards
+}
+
+export function getActiveTextVote(roomId: string): TextQuestionVoteInternal | null {
+  const vote = roomActiveVoteStore.get(roomId)
+  if (!vote) return null
+  if (vote.status === 'open' && Date.now() >= vote.closesAt) {
+    resolveTextVoteInternal(roomId, vote.id)
+    return roomActiveVoteStore.get(roomId) ?? null
+  }
+  return vote
+}
+
+export function resolveTextVoteInternal(roomId: string, voteId: string): ClueCardItem | null {
+  const vote = roomActiveVoteStore.get(roomId)
+  if (!vote || vote.id !== voteId) return null
+
+  if (vote.status === 'open') {
+    vote.status = 'closed'
+  }
+
+  let yesCount = 0
+  let noCount = 0
+  for (const answer of vote.responses.values()) {
+    if (answer) yesCount++
+    else noCount++
+  }
+  const unansweredCount = Math.max(0, vote.eligibleVoterIds.size - vote.responses.size)
+  const majority: 'yes' | 'no' | 'tie' = yesCount > noCount ? 'yes' : noCount > yesCount ? 'no' : 'tie'
+
+  const clueItem: ClueCardItem = {
+    id: randomUUID(),
+    questionText: vote.questionText,
+    yesCount,
+    noCount,
+    unansweredCount,
+    majority,
+    timestamp: new Date().toISOString(),
+  }
+
+  addClueCardItem(roomId, vote.askerId, clueItem)
+  return clueItem
+}
+
+function clearRoomTextVoteData(roomId: string) {
+  roomActiveVoteStore.delete(roomId)
 }
 
 // --- Ortak Hedef Modu Store Helpers ---
@@ -453,10 +562,12 @@ export async function createRoom(
     categoryMode?: LobbyCategoryMode
     category?: FamousPersonCategory
     phaseCategories?: FamousPersonCategory[]
+    communicationMode?: CommunicationMode
   },
 ) {
   const admin = supabaseAdmin()
   const totalRounds = gameMode === 'speed' ? DEFAULT_SPEED_ROUNDS : 1
+  const communicationMode = categorySettings?.communicationMode || 'voice'
 
   for (let attempt = 0; attempt < 5; attempt++) {
     const roomCode = generateRoomCode()
@@ -485,6 +596,7 @@ export async function createRoom(
 
     // INV-1: game_mode sadece lobi kurulurken kaydedilir
     setRoomModeData(room.id, gameMode)
+    setRoomCommunicationModeData(room.id, communicationMode)
     setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
 
     const categoryMode: LobbyCategoryMode = categorySettings?.categoryMode || 'single'
@@ -506,6 +618,7 @@ export async function createRoom(
     try {
       await admin.from('rooms').update({
         game_mode: gameMode,
+        communication_mode: communicationMode,
         total_rounds: totalRounds,
         category_mode: categoryMode,
         selected_category: category,
@@ -719,6 +832,39 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     ? (players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS && Boolean(sharedData.targetName))
     : (allPlayersSubmittedNames && players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS)
 
+  const communicationMode = getRoomCommunicationMode(roomId, room.communication_mode)
+  const rawActiveVote = getActiveTextVote(roomId)
+
+  let formattedActiveVote: TextQuestionVote | null = null
+  if (rawActiveVote) {
+    let yesCount = 0
+    let noCount = 0
+    for (const ans of rawActiveVote.responses.values()) {
+      if (ans) yesCount++
+      else noCount++
+    }
+    const remainingMs = Math.max(0, rawActiveVote.closesAt - Date.now())
+    const secondsRemaining = rawActiveVote.status === 'open' ? Math.ceil(remainingMs / 1000) : 0
+
+    formattedActiveVote = {
+      id: rawActiveVote.id,
+      askerId: rawActiveVote.askerId,
+      askerNickname: rawActiveVote.askerNickname,
+      questionText: rawActiveVote.questionText,
+      status: rawActiveVote.status,
+      openedAt: new Date(rawActiveVote.openedAt).toISOString(),
+      closesAt: new Date(rawActiveVote.closesAt).toISOString(),
+      secondsRemaining,
+      yesCount,
+      noCount,
+      totalEligible: rawActiveVote.eligibleVoterIds.size,
+      hasVoted: rawActiveVote.responses.has(viewer.id),
+      myAnswer: rawActiveVote.responses.get(viewer.id),
+    }
+  }
+
+  const viewerClueCard = getPlayerClueCard(roomId, viewer.id)
+
   return {
     room: {
       id: room.id,
@@ -727,6 +873,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       gameRound: currentRound,
       totalRounds,
       gameMode,
+      communicationMode,
       isGameActive: room.is_game_active ?? false,
       currentPlayerId: room.current_player_id,
       categoryMode: categoryData.categoryMode,
@@ -744,6 +891,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       pendingQuestion: isSharedTarget ? sharedData.pendingQuestion : undefined,
       questionLog: isSharedTarget ? sharedData.questionLog : undefined,
       roundWinnerNickname: isSharedTarget ? roundWinner : undefined,
+      activeVote: formattedActiveVote,
     },
     players: publicPlayers,
     you: {
@@ -768,6 +916,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       isReferee: isSharedTarget ? (viewer.is_host ?? false) : undefined,
       canBuzz: isSharedTarget ? (!viewer.is_host && !sharedData.targetRevealed) : undefined,
       skippedQuestionTurn: isSharedTarget ? (sharedData.playerPenalties.get(viewer.id) ?? false) : undefined,
+      clueCard: viewerClueCard,
     },
     currentName: isViewerTurn ? null : (currentName?.name_text ?? null),
     namesTotal: isSharedTarget ? 1 : names.length,
@@ -2334,8 +2483,183 @@ async function handleClassicModePassTurn(
 }
 
 // -------------------------------------------------------------
-// DİĞER FONKSİYONLAR (Reset / Leave)
+// TAM METİN MODU AKSİYON İŞLEYİCİLERİ
 // -------------------------------------------------------------
+
+export async function setCommunicationMode(
+  roomId: string,
+  playerId: string,
+  mode: CommunicationMode,
+) {
+  const players = await loadPlayers(roomId)
+  const player = requireMembership(players, playerId)
+  if (!player.is_host) {
+    throw forbidden('not_host', 'İletişim modunu yalnızca oda sahibi değiştirebilir.')
+  }
+  const room = await loadRoom(roomId)
+  if (room.status !== 'waiting') {
+    throw conflict('game_already_started', 'Oyun başladıktan sonra iletişim modu değiştirilemez.')
+  }
+
+  setRoomCommunicationModeData(roomId, mode)
+  try {
+    await supabaseAdmin().from('rooms').update({ communication_mode: mode }).eq('id', roomId)
+  } catch {
+    // Sütun yoksa yut
+  }
+  return { communicationMode: mode }
+}
+
+export async function askTextQuestion(
+  roomId: string,
+  playerId: string,
+  params: { questionId?: string; questionText?: string },
+) {
+  const [room, players] = await Promise.all([loadRoom(roomId), loadPlayers(roomId)])
+  const player = requireMembership(players, playerId)
+
+  if (room.status !== 'playing' || !room.is_game_active) {
+    throw conflict('game_not_active', 'Oyun şu anda aktif değil.')
+  }
+
+  const commMode = getRoomCommunicationMode(roomId, room.communication_mode)
+  if (commMode !== 'text') {
+    throw badRequest('invalid_communication_mode', 'Bu işlem yalnızca Tam Metin modunda geçerlidir.')
+  }
+
+  if (room.current_player_id !== playerId) {
+    throw forbidden('not_your_turn', 'Soru sorma sırası sizde değil.')
+  }
+
+  // Soru metnini belirle
+  let qText = params.questionText?.trim()
+  if (!qText && params.questionId) {
+    const found = QUESTION_BANK_SEED.find((q) => q.id === params.questionId)
+    if (found) {
+      qText = found.textTr
+    }
+  }
+
+  if (!qText) {
+    throw badRequest('missing_question', 'Lütfen listeden geçerli bir soru seçin veya soru metni girin.')
+  }
+
+  // Önceki açık oylama var mı kontrol et
+  const existingVote = roomActiveVoteStore.get(roomId)
+  if (existingVote && existingVote.status === 'open') {
+    if (Date.now() >= existingVote.closesAt) {
+      resolveTextVoteInternal(roomId, existingVote.id)
+    } else {
+      throw conflict('vote_already_active', 'Şu anda devam eden bir oylama var.')
+    }
+  }
+
+  // Oy kullanabilecek oyuncular: Hedef sahibi (Asker) hariç tüm oyuncular
+  const eligibleVoterIds = new Set(players.filter((p) => p.id !== playerId).map((p) => p.id))
+  if (eligibleVoterIds.size === 0) {
+    throw badRequest('not_enough_voters', 'Oylama için odada başka oyuncu bulunmuyor.')
+  }
+
+  const now = Date.now()
+  const closesAt = now + 15000 // 15 saniye
+
+  const voteInternal: TextQuestionVoteInternal = {
+    id: randomUUID(),
+    roomId,
+    askerId: playerId,
+    askerNickname: player.nickname,
+    questionText: qText,
+    status: 'open',
+    openedAt: now,
+    closesAt,
+    responses: new Map(),
+    eligibleVoterIds,
+  }
+
+  roomActiveVoteStore.set(roomId, voteInternal)
+
+  // Soru sayısını veya bütçesini güncelle
+  const gameMode = getRoomMode(roomId, room.game_mode)
+  if (gameMode === 'speed') {
+    const speed = getPlayerSpeedData(roomId, playerId)
+    setPlayerSpeedData(roomId, playerId, {
+      ...speed,
+      questionsThisRound: speed.questionsThisRound + 1,
+    })
+  } else if (gameMode === 'persistent') {
+    const pData = getPlayerPersistentData(roomId, playerId)
+    pData.questionBudgetRemaining = Math.max(0, pData.questionBudgetRemaining - 1)
+    pData.totalQuestionsUsed += 1
+  } else {
+    // Klasik mod: questions_this_round 1 artar
+    await supabaseAdmin()
+      .from('players')
+      .update({ questions_this_round: (player.questions_this_round ?? 0) + 1 })
+      .eq('id', playerId)
+  }
+
+  // Realtime tetikle
+  await supabaseAdmin().from('rooms').update({ status: room.status }).eq('id', roomId)
+
+  return {
+    message: 'Sorunuz diğer oyunculara iletildi, oylar bekleniyor (15 saniye)...',
+    voteId: voteInternal.id,
+    questionText: qText,
+    closesAt: new Date(closesAt).toISOString(),
+  }
+}
+
+export async function submitTextVote(
+  roomId: string,
+  voterPlayerId: string,
+  voteId: string,
+  answer: boolean,
+) {
+  const players = await loadPlayers(roomId)
+  requireMembership(players, voterPlayerId)
+
+  const vote = roomActiveVoteStore.get(roomId)
+  if (!vote || vote.id !== voteId) {
+    throw notFound('vote_not_found', 'Aktif oylama oturumu bulunamadı.')
+  }
+
+  if (vote.status !== 'open') {
+    throw conflict('vote_closed', 'Bu oylama oturumu sona ermiştir.')
+  }
+
+  if (Date.now() >= vote.closesAt) {
+    resolveTextVoteInternal(roomId, voteId)
+    throw conflict('vote_expired', 'Oylama süresi (15 saniye) doldu.')
+  }
+
+  if (vote.askerId === voterPlayerId) {
+    throw forbidden('asker_cannot_vote', 'Kendi sorduğunuz soruya oy kullanamazsınız.')
+  }
+
+  if (!vote.eligibleVoterIds.has(voterPlayerId)) {
+    throw forbidden('not_eligible_voter', 'Bu soru için oy kullanma yetkiniz bulunmamaktadır.')
+  }
+
+  vote.responses.set(voterPlayerId, answer)
+
+  // Eğer tüm uygun oyuncular oy kullandıysa hemen sonuçlandır
+  let isResolved = false
+  let clueCardItem: ClueCardItem | null = null
+  if (vote.responses.size >= vote.eligibleVoterIds.size) {
+    clueCardItem = resolveTextVoteInternal(roomId, voteId)
+    isResolved = true
+  }
+
+  // Realtime tetikle
+  await supabaseAdmin().from('rooms').update({ status: 'playing' }).eq('id', roomId)
+
+  return {
+    message: 'Oyunuz kaydedildi.',
+    hasVoted: true,
+    isResolved,
+    clueCardItem,
+  }
+}
 
 export async function resetGame(roomId: string, playerId: string) {
   const admin = supabaseAdmin()
@@ -2352,6 +2676,7 @@ export async function resetGame(roomId: string, playerId: string) {
   clearRoomSpeedData(roomId)
   clearRoomPersistentData(roomId)
   clearRoomSharedTargetData(roomId)
+  clearRoomTextVoteData(roomId)
 
   const categoryData = getRoomCategoryData(roomId)
   categoryData.currentPhase = 1

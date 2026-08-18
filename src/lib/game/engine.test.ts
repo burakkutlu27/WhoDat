@@ -18,6 +18,7 @@ vi.mock('@/lib/supabaseAdmin', () => ({
 const {
   answerSharedQuestion,
   askSharedQuestion,
+  askTextQuestion,
   assignNamesForRound,
   autoAssignNames,
   createRoom,
@@ -26,6 +27,7 @@ const {
   leaveRoom,
   makeGuess,
   passTurn,
+  setCommunicationMode,
   setPlayerSpeedData,
   setRoomCategory,
   setRoomMode,
@@ -33,6 +35,7 @@ const {
   startGame,
   startNextSharedTargetRound,
   submitNames,
+  submitTextVote,
 } = await import('./engine')
 
 
@@ -918,6 +921,124 @@ describe('Kategoriye Özel Lobi & 3 Fazlı Karışık Lobi', () => {
     const finalState = await getGameState(roomId, hostId)
     expect(finalState.room.status).toBe('finished')
     expect(finalState.room.isGameActive).toBe(false)
+  })
+})
+
+describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
+  beforeEach(() => {
+    fake = createSupabaseFake()
+  })
+
+  it('createRoom ile communicationMode text olarak başlatılabilir', async () => {
+    const { roomId, playerId } = await createRoom('HostUser', 'classic', {
+      communicationMode: 'text',
+    })
+    const state = await getGameState(roomId, playerId)
+    expect(state.room.communicationMode).toBe('text')
+  })
+
+  it('setCommunicationMode ile host lobide modu değiştirebilir, misafir değiştiremez', async () => {
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic')
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    fake.tables.players.push(guest)
+
+    // Host değiştirebilir
+    const res = await setCommunicationMode(roomId, hostId, 'text')
+    expect(res.communicationMode).toBe('text')
+
+    const state = await getGameState(roomId, hostId)
+    expect(state.room.communicationMode).toBe('text')
+
+    // Misafir değiştiremez
+    await expect(setCommunicationMode(roomId, guest.id, 'voice')).rejects.toMatchObject({
+      code: 'not_host',
+    })
+  })
+
+  it('askTextQuestion ile oylama oturumu başlar, hedef sahibi oy veremez, diğer oyuncular Evet/Hayır oylayabilir', async () => {
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic', {
+      communicationMode: 'text',
+    })
+    const guest1 = buildPlayer(roomId, { nickname: 'Guest1', is_host: false })
+    const guest2 = buildPlayer(roomId, { nickname: 'Guest2', is_host: false })
+    fake.tables.players.push(guest1, guest2)
+
+    await autoAssignNames(roomId, hostId)
+    await startGame(roomId, hostId)
+
+    const stateBefore = await getGameState(roomId, hostId)
+    const currentAskerId = stateBefore.room.currentPlayerId!
+    const otherPlayers = [hostId, guest1.id, guest2.id].filter((id) => id !== currentAskerId)
+
+    // Sırası olmayan soru soramaz
+    await expect(
+      askTextQuestion(roomId, otherPlayers[0]!, { questionId: 'qb-01' }),
+    ).rejects.toMatchObject({
+      code: 'not_your_turn',
+    })
+
+    // Sıradaki oyuncu soru sorar
+    const askRes = await askTextQuestion(roomId, currentAskerId, { questionId: 'qb-01' })
+    expect(askRes.voteId).toBeDefined()
+    expect(askRes.questionText).toBe('Gerçek bir kişi miyim, yoksa kurgu bir karakter miyim?')
+
+    // Oylama oturumu aktif
+    const stateDuring = await getGameState(roomId, currentAskerId)
+    expect(stateDuring.room.activeVote).toBeDefined()
+    expect(stateDuring.room.activeVote?.status).toBe('open')
+    expect(stateDuring.room.activeVote?.totalEligible).toBe(2)
+
+    // Asker (hedef sahibi) kendi sorusuna oy veremez
+    await expect(
+      submitTextVote(roomId, currentAskerId, askRes.voteId, true),
+    ).rejects.toMatchObject({
+      code: 'asker_cannot_vote',
+    })
+
+    // 1. Oyuncu Evet verir
+    const vote1 = await submitTextVote(roomId, otherPlayers[0]!, askRes.voteId, true)
+    expect(vote1.hasVoted).toBe(true)
+    expect(vote1.isResolved).toBe(false)
+
+    // 2. Oyuncu Hayır verir -> Tüm uygun oyuncular oy verdiği için otomatik sonuçlanır
+    const vote2 = await submitTextVote(roomId, otherPlayers[1]!, askRes.voteId, false)
+    expect(vote2.hasVoted).toBe(true)
+    expect(vote2.isResolved).toBe(true)
+    expect(vote2.clueCardItem).toBeDefined()
+    expect(vote2.clueCardItem?.yesCount).toBe(1)
+    expect(vote2.clueCardItem?.noCount).toBe(1)
+    expect(vote2.clueCardItem?.majority).toBe('tie')
+
+    // Askerin İpucu Kartına otomatik eklenmiştir
+    const askerStateAfter = await getGameState(roomId, currentAskerId)
+    expect(askerStateAfter.you.clueCard).toHaveLength(1)
+    expect(askerStateAfter.you.clueCard?.[0]?.questionText).toBe(
+      'Gerçek bir kişi miyim, yoksa kurgu bir karakter miyim?',
+    )
+    expect(askerStateAfter.you.clueCard?.[0]?.yesCount).toBe(1)
+    expect(askerStateAfter.you.clueCard?.[0]?.noCount).toBe(1)
+  })
+
+  it('Israrcı Modda Tam Metin soru sorulduğunda soru bütçesi azalır', async () => {
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'persistent', {
+      communicationMode: 'text',
+    })
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    fake.tables.players.push(guest)
+
+    await autoAssignNames(roomId, hostId)
+    await startGame(roomId, hostId)
+
+    const state = await getGameState(roomId, hostId)
+    const askerId = state.room.currentPlayerId!
+
+    const stateBefore = await getGameState(roomId, askerId)
+    expect(stateBefore.you.questionBudgetRemaining).toBe(10)
+
+    await askTextQuestion(roomId, askerId, { questionText: 'Hayatta mıyım?' })
+
+    const stateAfter = await getGameState(roomId, askerId)
+    expect(stateAfter.you.questionBudgetRemaining).toBe(9)
   })
 })
 

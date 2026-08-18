@@ -11,12 +11,12 @@ export default function VersionDisplay() {
   const [isVisible, setIsVisible] = useState(false)
 
   const versionInfo: VersionInfo = {
-    version: '3.2.0',
+    version: '3.3.0',
     environment: process.env.NODE_ENV || 'development'
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 right-4 z-20">
       <button
         onClick={() => setIsVisible(!isVisible)}
         className="border-2 border-dashed border-paper-border bg-paper-card px-3 py-1 font-mono text-xs text-ink-faded shadow-sm transition-colors hover:border-pencil-yellow hover:text-ink"
@@ -57,7 +57,7 @@ export default function VersionDisplay() {
             </div>
             <div className="divider-sketch my-2" />
             <p className="text-xs text-ink-extra-faded">
-              Kategori Lobisi, 3 Fazlı Mod ve 4 Oyun Modu Aktif
+              Tam Metin / Uzaktan Modu, Soru Bankası, 15sn Oylama, Kategori Lobisi ve 4 Oyun Modu Aktif
             </p>
           </div>
         </div>

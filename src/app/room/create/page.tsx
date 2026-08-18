@@ -1,18 +1,20 @@
 'use client'
 
-import { ArrowLeft, Brain, Check, FileText, Layers, Loader2, Pencil, Target, User, Users, Zap } from 'lucide-react'
+import { ArrowLeft, Brain, Check, FileText, Layers, Loader2, MessageSquare, Mic, Pencil, Target, User, Users, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { CustomSelect } from '@/components/CustomSelect'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
-import type { FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
+import type { CommunicationMode, FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
 
 export default function CreateRoomPage() {
   const router = useRouter()
   const [nickname, setNickname] = useState('')
   const [gameMode, setGameMode] = useState<GameMode>('classic')
+  const [communicationMode, setCommunicationMode] = useState<CommunicationMode>('voice')
   const [categoryMode, setCategoryMode] = useState<LobbyCategoryMode>('single')
   const [selectedCategory, setSelectedCategory] = useState<FamousPersonCategory>('all')
   const [phaseCategories, setPhaseCategories] = useState<FamousPersonCategory[]>([
@@ -36,6 +38,7 @@ export default function CreateRoomPage() {
         body: {
           nickname: nickname.trim(),
           gameMode,
+          communicationMode,
           categoryMode,
           category: selectedCategory,
           phaseCategories: categoryMode === 'multi_phase' ? phaseCategories : undefined,
@@ -65,10 +68,10 @@ export default function CreateRoomPage() {
             <div className="mb-3 inline-block rounded-xl border border-paper-border bg-paper-card p-2.5 text-pencil-red shadow-sm">
               <FileText className="h-8 w-8" />
             </div>
-            <h1 className="font-display text-4xl font-bold text-ink">
+            <h1 className="font-display text-4xl font-bold text-ink sm:text-5xl">
               Yeni Oda Oluştur
             </h1>
-            <p className="mt-1 text-sm text-ink-faded">
+            <p className="mt-1 text-base text-ink-faded">
               Odanı aç, oyun modunu seç ve arkadaşlarını davet et.
             </p>
           </div>
@@ -79,15 +82,15 @@ export default function CreateRoomPage() {
             <div>
               <label
                 htmlFor="nickname"
-                className="mb-2 flex items-center gap-1.5 font-display text-xl font-bold text-ink"
+                className="mb-2 flex items-center gap-1.5 font-display text-2xl font-bold text-ink"
               >
-                <Pencil className="h-4 w-4 text-pencil-yellow" />
+                <Pencil className="h-5 w-5 text-pencil-yellow" />
                 <span>Takma Adınız</span>
               </label>
 
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-ink-extra-faded">
-                  <User className="h-4 w-4" />
+                  <User className="h-5 w-5" />
                 </div>
                 <input
                   id="nickname"
@@ -99,36 +102,36 @@ export default function CreateRoomPage() {
                   autoComplete="nickname"
                   disabled={isSubmitting}
                   aria-describedby={error ? 'create-room-error' : undefined}
-                  className="paper-input pl-10 font-display text-2xl"
+                  className="paper-input pl-11 font-display text-3xl font-bold"
                 />
               </div>
             </div>
 
             {/* Oyun Modu Seçimi */}
             <div>
-              <label className="mb-2 block font-display text-xl font-bold text-ink">
+              <label className="mb-2 block font-display text-2xl font-bold text-ink">
                 Oyun Modu
               </label>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <button
                   type="button"
                   onClick={() => setGameMode('classic')}
-                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 ${
+                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
                     gameMode === 'classic'
                       ? 'sticky-note sticky-note-yellow scale-[1.02] shadow-md border-pencil-yellow ring-2 ring-pencil-yellow'
-                      : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
+                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
                   }`}
                   style={{ borderRadius: '8px 4px 10px 6px' }}
                 >
                   <div>
-                    <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
+                    <span className="font-display text-xl font-bold text-ink flex items-center justify-between gap-1">
                       <span className="flex items-center gap-1.5">
-                        <Target className="h-4 w-4 text-pencil-yellow" />
+                        <Target className="h-5 w-5 text-pencil-yellow" />
                         <span>Klasik</span>
                       </span>
-                      {gameMode === 'classic' && <span className="text-[10px] bg-pencil-yellow text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                      {gameMode === 'classic' && <span className="text-xs bg-pencil-yellow text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
-                    <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
+                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
                       3 Can Hakkı. Yanlış tahmin can götürür, hayatta kalan kazanır!
                     </span>
                   </div>
@@ -137,22 +140,22 @@ export default function CreateRoomPage() {
                 <button
                   type="button"
                   onClick={() => setGameMode('speed')}
-                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 ${
+                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
                     gameMode === 'speed'
                       ? 'sticky-note sticky-note-green scale-[1.02] shadow-md border-pencil-green ring-2 ring-pencil-green'
-                      : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
+                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
                   }`}
                   style={{ borderRadius: '6px 10px 4px 8px' }}
                 >
                   <div>
-                    <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
+                    <span className="font-display text-xl font-bold text-ink flex items-center justify-between gap-1">
                       <span className="flex items-center gap-1.5">
-                        <Zap className="h-4 w-4 text-pencil-green" />
+                        <Zap className="h-5 w-5 text-pencil-green" />
                         <span>Hız Modu</span>
                       </span>
-                      {gameMode === 'speed' && <span className="text-[10px] bg-pencil-green text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                      {gameMode === 'speed' && <span className="text-xs bg-pencil-green text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
-                    <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
+                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
                       Az Soru, Çok Puan! 3 turda en az soruyla bil, puanları topla!
                     </span>
                   </div>
@@ -161,22 +164,22 @@ export default function CreateRoomPage() {
                 <button
                   type="button"
                   onClick={() => setGameMode('persistent')}
-                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 ${
+                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
                     gameMode === 'persistent'
                       ? 'sticky-note sticky-note-blue scale-[1.02] shadow-md border-pencil-blue ring-2 ring-pencil-blue'
-                      : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
+                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
                   }`}
                   style={{ borderRadius: '10px 6px 8px 4px' }}
                 >
                   <div>
-                    <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
+                    <span className="font-display text-xl font-bold text-ink flex items-center justify-between gap-1">
                       <span className="flex items-center gap-1.5">
-                        <Brain className="h-4 w-4 text-pencil-blue" />
+                        <Brain className="h-5 w-5 text-pencil-blue" />
                         <span>Israrcı</span>
                       </span>
-                      {gameMode === 'persistent' && <span className="text-[10px] bg-pencil-blue text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                      {gameMode === 'persistent' && <span className="text-xs bg-pencil-blue text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
-                    <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
+                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
                       10 Soru Bütçesi & 3 Can. Bütçen bitince zorunlu tahmin!
                     </span>
                   </div>
@@ -185,22 +188,22 @@ export default function CreateRoomPage() {
                 <button
                   type="button"
                   onClick={() => setGameMode('shared_target')}
-                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 ${
+                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
                     gameMode === 'shared_target'
                       ? 'sticky-note sticky-note-orange scale-[1.02] shadow-md border-pencil-orange ring-2 ring-pencil-orange'
-                      : 'paper-card hover:bg-paper-card-alt opacity-70 hover:opacity-100'
+                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
                   }`}
                   style={{ borderRadius: '8px 10px 6px 8px' }}
                 >
                   <div>
-                    <span className="font-display text-base font-bold text-ink flex items-center justify-between gap-1">
+                    <span className="font-display text-xl font-bold text-ink flex items-center justify-between gap-1">
                       <span className="flex items-center gap-1.5">
-                        <Users className="h-4 w-4 text-pencil-orange" />
+                        <Users className="h-5 w-5 text-pencil-orange" />
                         <span>Ortak Hedef</span>
                       </span>
-                      {gameMode === 'shared_target' && <span className="text-[10px] bg-pencil-orange text-white px-1.5 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                      {gameMode === 'shared_target' && <span className="text-xs bg-pencil-orange text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
                     </span>
-                    <span className="mt-1 block text-xs text-ink-faded leading-relaxed">
+                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
                       Tek Gizli Kişi & Hakem! Sırayla soru sor, ilk sen bil!
                     </span>
                   </div>
@@ -208,14 +211,79 @@ export default function CreateRoomPage() {
               </div>
             </div>
 
+            {/* İletişim Tarzı (Sesli vs Tam Metin) */}
+            <div>
+              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <MessageSquare className="h-5 w-5 text-pencil-green" />
+                  <span>İletişim Tarzı</span>
+                </span>
+                <span className="text-sm font-sans font-semibold text-ink-faded">
+                  {communicationMode === 'voice' ? 'Sesli Sohbet' : 'Tam Metin Modu'}
+                </span>
+              </label>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setCommunicationMode('voice')}
+                  className={`p-4 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                    communicationMode === 'voice'
+                      ? 'border-pencil-yellow bg-pencil-yellow/10 shadow-xs font-bold text-ink ring-2 ring-pencil-yellow/30'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  <div className="space-y-1.5">
+                    <span className="font-display text-xl font-bold flex items-center gap-2 text-ink">
+                      <Mic className="h-5 w-5 text-pencil-yellow" />
+                      <span>Sesli İletişim (Klasik)</span>
+                    </span>
+                    <span className="block text-sm text-ink-faded font-sans font-normal leading-relaxed">
+                      Sorular ve cevaplar Discord veya sesli ortamda konuşulur.
+                    </span>
+                  </div>
+                  {communicationMode === 'voice' && (
+                    <span className="h-6 w-6 rounded-full bg-pencil-yellow text-white flex items-center justify-center text-sm shrink-0 ml-2">
+                      <Check className="h-4 w-4" />
+                    </span>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setCommunicationMode('text')}
+                  className={`p-4 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                    communicationMode === 'text'
+                      ? 'border-pencil-green bg-pencil-green/10 shadow-xs font-bold text-ink ring-2 ring-pencil-green/30'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  <div className="space-y-1.5">
+                    <span className="font-display text-xl font-bold flex items-center gap-2 text-ink">
+                      <MessageSquare className="h-5 w-5 text-pencil-green" />
+                      <span>Tam Metin / Uzaktan</span>
+                    </span>
+                    <span className="block text-sm text-ink-faded font-sans font-normal leading-relaxed">
+                      Sesli konuşma gerekmez! Hazır soru bankası, 15sn Evet/Hayır oylaması ve not defteri.
+                    </span>
+                  </div>
+                  {communicationMode === 'text' && (
+                    <span className="h-6 w-6 rounded-full bg-pencil-green text-white flex items-center justify-center text-sm shrink-0 ml-2">
+                      <Check className="h-4 w-4" />
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
+
             {/* Kategori Seçimi */}
             <div>
-              <label className="mb-2 block font-display text-xl font-bold text-ink flex items-center justify-between">
+              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <Layers className="h-4 w-4 text-pencil-purple" />
+                  <Layers className="h-5 w-5 text-pencil-purple" />
                   <span>Kategori Havuzu</span>
                 </span>
-                <span className="text-xs font-sans font-normal text-ink-faded">
+                <span className="text-sm font-sans font-semibold text-ink-faded">
                   {categoryMode === 'single' ? 'Tek Kategori' : '3 Fazlı Çoklu Kategori'}
                 </span>
               </label>
@@ -225,24 +293,24 @@ export default function CreateRoomPage() {
                 <button
                   type="button"
                   onClick={() => setCategoryMode('single')}
-                  className={`p-3 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                  className={`p-3.5 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
                     categoryMode === 'single'
                       ? 'border-pencil-blue bg-pencil-blue/5 shadow-xs font-bold text-ink'
                       : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
                   <div>
-                    <span className="font-display text-base flex items-center gap-1.5">
-                      <Target className="h-4 w-4 text-pencil-blue" />
+                    <span className="font-display text-xl font-bold flex items-center gap-1.5">
+                      <Target className="h-5 w-5 text-pencil-blue" />
                       <span>Tek Kategori</span>
                     </span>
-                    <span className="mt-0.5 block text-xs text-ink-faded font-normal">
+                    <span className="mt-1 block text-sm font-sans text-ink-faded font-normal">
                       Tüm oyun tek kategoriden
                     </span>
                   </div>
                   {categoryMode === 'single' && (
-                    <span className="h-5 w-5 rounded-full bg-pencil-blue text-white flex items-center justify-center text-xs shrink-0">
-                      <Check className="h-3.5 w-3.5" />
+                    <span className="h-6 w-6 rounded-full bg-pencil-blue text-white flex items-center justify-center text-sm shrink-0 ml-2">
+                      <Check className="h-4 w-4" />
                     </span>
                   )}
                 </button>
@@ -250,24 +318,24 @@ export default function CreateRoomPage() {
                 <button
                   type="button"
                   onClick={() => setCategoryMode('multi_phase')}
-                  className={`p-3 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                  className={`p-3.5 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
                     categoryMode === 'multi_phase'
                       ? 'border-pencil-purple bg-pencil-purple/5 shadow-xs font-bold text-ink'
                       : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
                   <div>
-                    <span className="font-display text-base flex items-center gap-1.5">
-                      <Layers className="h-4 w-4 text-pencil-purple" />
+                    <span className="font-display text-xl font-bold flex items-center gap-1.5">
+                      <Layers className="h-5 w-5 text-pencil-purple" />
                       <span>3 Fazlı Karışık</span>
                     </span>
-                    <span className="mt-0.5 block text-xs text-ink-faded font-normal">
+                    <span className="mt-1 block text-sm font-sans text-ink-faded font-normal">
                       3 turda 3 farklı kategori
                     </span>
                   </div>
                   {categoryMode === 'multi_phase' && (
-                    <span className="h-5 w-5 rounded-full bg-pencil-purple text-white flex items-center justify-center text-xs shrink-0">
-                      <Check className="h-3.5 w-3.5" />
+                    <span className="h-6 w-6 rounded-full bg-pencil-purple text-white flex items-center justify-center text-sm shrink-0 ml-2">
+                      <Check className="h-4 w-4" />
                     </span>
                   )}
                 </button>
@@ -275,11 +343,11 @@ export default function CreateRoomPage() {
 
               {/* Tek Kategori İçin Kategori Çipleri */}
               {categoryMode === 'single' ? (
-                <div className="p-3.5 rounded-xl border border-paper-border bg-paper-card-alt space-y-2">
-                  <span className="text-xs font-display font-bold text-ink-faded block">
+                <div className="p-4 rounded-xl border border-paper-border bg-paper-card-alt space-y-2.5">
+                  <span className="text-sm font-display text-base font-bold text-ink block">
                     Oynanacak Kategoriyi Seçin:
                   </span>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                     {CATEGORIES.map((cat) => {
                       const isSelected = selectedCategory === cat.id
                       return (
@@ -287,13 +355,13 @@ export default function CreateRoomPage() {
                           key={cat.id}
                           type="button"
                           onClick={() => setSelectedCategory(cat.id)}
-                          className={`px-3 py-2 text-xs font-display font-bold rounded-lg border transition-all flex items-center gap-2 ${
+                          className={`px-3.5 py-2.5 text-sm font-sans font-bold rounded-lg border transition-all flex items-center gap-2 ${
                             isSelected
-                              ? 'bg-paper-card text-ink shadow-xs border-pencil-blue ring-2 ring-pencil-blue/40'
+                              ? 'bg-pencil-blue/15 text-ink shadow-xs border-pencil-blue ring-2 ring-pencil-blue/40'
                               : 'border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
                           }`}
                         >
-                          <span className="text-base">{cat.icon}</span>
+                          <span className="text-lg">{cat.icon}</span>
                           <span className="truncate">{cat.label}</span>
                         </button>
                       )
@@ -302,46 +370,45 @@ export default function CreateRoomPage() {
                 </div>
               ) : (
                 /* 3 Fazlı Mod İçin 3 Aşama Seçimi */
-                <div className="p-3.5 rounded-xl border border-paper-border bg-paper-card-alt space-y-3">
+                <div className="p-4 rounded-xl border border-paper-border bg-paper-card-alt space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-display font-bold text-ink-faded block">
+                    <span className="text-sm font-display text-base font-bold text-ink block">
                       3 Faz İçin Sıralı Kategoriler:
                     </span>
-                    <span className="text-[11px] text-pencil-purple font-display font-bold">
+                    <span className="text-xs text-pencil-purple font-sans font-bold">
                       Fazlar arası can & puan korunur
                     </span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {[0, 1, 2].map((idx) => {
                       const currentVal = phaseCategories[idx] || 'all'
                       return (
                         <div
                           key={idx}
-                          className="p-2.5 bg-paper-card rounded-lg border border-dashed border-paper-border space-y-1"
+                          className="p-3 bg-paper-card rounded-lg border border-dashed border-paper-border space-y-1.5"
                         >
-                          <div className="flex items-center justify-between text-xs font-display font-bold text-ink">
-                            <span className="flex items-center gap-1">
-                              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-pencil-purple/20 text-pencil-purple text-[10px] font-bold">
+                          <div className="flex items-center justify-between text-sm font-sans font-bold text-ink">
+                            <span className="flex items-center gap-1.5">
+                              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-pencil-purple/20 text-pencil-purple text-xs font-bold">
                                 {idx + 1}
                               </span>
                               <span>Faz {idx + 1}</span>
                             </span>
                           </div>
-                          <select
+                          <CustomSelect
                             value={currentVal}
-                            onChange={(e) => {
+                            onChange={(val) => {
                               const next = [...phaseCategories]
-                              next[idx] = e.target.value as FamousPersonCategory
+                              next[idx] = val as FamousPersonCategory
                               setPhaseCategories(next)
                             }}
-                            className="w-full rounded-md border border-paper-border bg-paper-card-alt px-2 py-1.5 text-xs font-display text-ink"
-                          >
-                            {CATEGORIES.filter((c) => c.id !== 'all').map((c) => (
-                              <option key={c.id} value={c.id}>
-                                {c.icon} {c.label}
-                              </option>
-                            ))}
-                          </select>
+                            options={CATEGORIES.filter((c) => c.id !== 'all').map((c) => ({
+                              value: c.id,
+                              label: c.label,
+                              icon: c.icon,
+                            }))}
+                            className="w-full"
+                          />
                         </div>
                       )
                     })}
@@ -371,11 +438,11 @@ export default function CreateRoomPage() {
                 whileHover={{ scale: 1.02, rotate: -0.5 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isSubmitting || !nickname.trim()}
-                className="btn-pencil-red flex w-full items-center justify-center gap-2 py-3.5 font-display text-xl"
+                className="btn-pencil-red flex w-full items-center justify-center gap-2 py-4 font-display text-2xl font-bold tracking-wide"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 className="h-5 w-5 animate-spin" />
                     <span>Oda Oluşturuluyor...</span>
                   </>
                 ) : (
@@ -389,9 +456,9 @@ export default function CreateRoomPage() {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => router.push('/')}
                 disabled={isSubmitting}
-                className="btn-outline flex w-full items-center justify-center gap-2 py-3.5 font-display text-base"
+                className="btn-outline flex w-full items-center justify-center gap-2 py-3.5 font-display text-xl font-bold"
               >
-                <ArrowLeft className="h-4 w-4" />
+                <ArrowLeft className="h-5 w-5" />
                 <span>Geri Dön</span>
               </motion.button>
             </div>

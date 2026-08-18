@@ -164,10 +164,10 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
           )}
 
           {/* Kategori ve Faz Özeti */}
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
             {state.room.categoryMode === 'multi_phase' ? (
-              <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1.5">
-                <Layers className="h-3.5 w-3.5" />
+              <span className="tag border-pencil-purple text-pencil-purple font-bold text-sm flex items-center gap-1.5">
+                <Layers className="h-4 w-4" />
                 <span>
                   3 Fazlı Oyun Tamamlandı:{' '}
                   {(state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'])
@@ -176,8 +176,8 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                 </span>
               </span>
             ) : (
-              <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1.5">
-                <Layers className="h-3.5 w-3.5" />
+              <span className="tag border-pencil-purple text-pencil-purple font-bold text-sm flex items-center gap-1.5">
+                <Layers className="h-4 w-4" />
                 <span>
                   Kategori:{' '}
                   {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.icon || '🎲'}{' '}
@@ -201,7 +201,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                 <Copy className="h-4 w-4 opacity-60 group-hover:opacity-100" />
               )}
               {copied && (
-                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded bg-ink px-2 py-0.5 font-sans text-xs font-semibold text-paper-card shadow-md">
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded bg-ink px-2.5 py-1 font-sans text-xs font-semibold text-paper-card shadow-md">
                   Kopyalandı!
                 </span>
               )}
@@ -238,7 +238,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                 >
                   <div className="flex items-center gap-4 min-w-0">
                     <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center font-display text-lg font-bold ${
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center font-display text-xl font-bold ${
                         index === 0
                           ? 'bg-pencil-yellow text-white'
                           : index === 1
@@ -250,11 +250,11 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                       style={{ borderRadius: '8px 4px 10px 6px' }}
                     >
                       {index === 0 ? (
-                        <Crown className="h-5 w-5 text-white" />
+                        <Crown className="h-6 w-6 text-white" />
                       ) : index === 1 ? (
-                        <Medal className="h-5 w-5 text-white" />
+                        <Medal className="h-6 w-6 text-white" />
                       ) : index === 2 ? (
-                        <Award className="h-5 w-5 text-white" />
+                        <Award className="h-6 w-6 text-white" />
                       ) : (
                         index + 1
                       )}
@@ -265,21 +265,21 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                         {player.isHost && (
                           <Crown className="h-4 w-4 shrink-0 text-pencil-yellow" aria-label="Oda Sahibi" />
                         )}
-                        <span className="truncate font-display text-xl font-bold text-ink">
+                        <span className="truncate font-display text-2xl font-bold text-ink">
                           {player.nickname}
                         </span>
                         {isYou && (
-                          <span className="tag tag-you">SEN</span>
+                          <span className="tag tag-you text-xs">SEN</span>
                         )}
                       </div>
 
                       {/* Hız Modu Tur Kırılımı */}
                       {state.room.gameMode === 'speed' && player.roundScores && player.roundScores.length > 0 && (
-                        <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs font-display">
+                        <div className="mt-1 flex flex-wrap items-center gap-1.5 text-sm font-sans">
                           {player.roundScores.map((rScore, roundIdx) => (
                             <span
                               key={roundIdx}
-                              className="rounded bg-paper-card-alt px-1.5 py-0.5 border border-paper-border text-ink-faded font-mono"
+                              className="rounded bg-paper-card-alt px-2 py-0.5 border border-paper-border text-xs text-ink-faded font-mono font-medium"
                             >
                               T{roundIdx + 1}: <strong className="text-ink">{rScore}P</strong>
                             </span>
@@ -289,18 +289,18 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
 
                       {/* Ortak Hedef Modu Rolü */}
                       {state.room.gameMode === 'shared_target' && player.isHost && (
-                        <div className="mt-1 text-xs font-display font-bold text-pencil-orange flex items-center gap-1.5">
-                          <Crown className="h-3.5 w-3.5" />
+                        <div className="mt-1 text-sm font-sans font-bold text-pencil-orange flex items-center gap-1.5">
+                          <Crown className="h-4 w-4" />
                           <span>Hakem (Hedefleri Belirleyen & Yanıtlayan)</span>
                         </div>
                       )}
 
                       {/* Israrcı Mod Durum Özeti */}
                       {state.room.gameMode === 'persistent' && (
-                        <div className="mt-1 flex items-center gap-2 text-xs font-display">
+                        <div className="mt-1 flex items-center gap-2 text-sm font-sans">
                           {player.nameSolved ? (
                             <span className="text-pencil-green font-bold flex items-center gap-1">
-                              <Check className="h-3.5 w-3.5" />
+                              <Check className="h-4 w-4" />
                               <span>İsim Çözüldü</span>
                               {typeof player.questionBudgetRemaining === 'number' && (
                                 <span className="text-ink-faded font-normal">
@@ -310,7 +310,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                             </span>
                           ) : (
                             <span className="text-pencil-red font-bold flex items-center gap-1">
-                              <LogOut className="h-3.5 w-3.5" />
+                              <LogOut className="h-4 w-4" />
                               <span>Elendi (0 Puan)</span>
                             </span>
                           )}
@@ -321,8 +321,8 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                     </div>
                   </div>
 
-                  <span className="shrink-0 font-display text-2xl font-bold text-ink">
-                    {player.score} <span className="text-xs text-ink-extra-faded">Puan</span>
+                  <span className="shrink-0 font-display text-3xl font-bold text-ink">
+                    {player.score} <span className="text-sm text-ink-extra-faded font-sans">Puan</span>
                   </span>
                 </motion.li>
               )
@@ -344,16 +344,16 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
               whileTap={{ scale: 0.98 }}
               onClick={() => void handlePlayAgain()}
               disabled={isBusy}
-              className="btn-pencil-green flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-xl"
+              className="btn-pencil-green flex flex-1 items-center justify-center gap-2 py-4 font-display text-2xl font-bold"
             >
               {isBusy ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin" />
                   <span>Hazırlanıyor...</span>
                 </>
               ) : (
                 <>
-                  <RefreshCw className="h-4 w-4" />
+                  <RefreshCw className="h-5 w-5" />
                   <span>Yeni Tur Başlat</span>
                 </>
               )}
@@ -364,15 +364,15 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => void handleLeave()}
-            className="btn-outline flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-base"
+            className="btn-outline flex flex-1 items-center justify-center gap-2 py-4 font-display text-xl font-bold"
           >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="h-5 w-5" />
             <span>Odadan Çık</span>
           </motion.button>
         </div>
 
         {!state.you.isHost && (
-          <p className="text-center font-display text-base text-ink-faded" aria-live="polite">
+          <p className="text-center font-display text-lg text-ink-faded" aria-live="polite">
             Oda sahibinin yeni bir tur başlatması bekleniyor.
           </p>
         )}

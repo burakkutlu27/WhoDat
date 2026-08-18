@@ -134,9 +134,40 @@ export type Database = {
           },
         ]
       }
+      question_bank: {
+        Row: {
+          category_scope: string[] | null
+          created_at: string | null
+          difficulty: string | null
+          id: string
+          sort_order: number | null
+          tag: string | null
+          text_tr: string
+        }
+        Insert: {
+          category_scope?: string[] | null
+          created_at?: string | null
+          difficulty?: string | null
+          id?: string
+          sort_order?: number | null
+          tag?: string | null
+          text_tr: string
+        }
+        Update: {
+          category_scope?: string[] | null
+          created_at?: string | null
+          difficulty?: string | null
+          id?: string
+          sort_order?: number | null
+          tag?: string | null
+          text_tr?: string
+        }
+        Relationships: []
+      }
       rooms: {
         Row: {
           category_mode: string | null
+          communication_mode: string | null
           created_at: string | null
           current_identity_id: string | null
           current_phase: number | null
@@ -154,6 +185,7 @@ export type Database = {
         }
         Insert: {
           category_mode?: string | null
+          communication_mode?: string | null
           created_at?: string | null
           current_identity_id?: string | null
           current_phase?: number | null
@@ -171,6 +203,7 @@ export type Database = {
         }
         Update: {
           category_mode?: string | null
+          communication_mode?: string | null
           created_at?: string | null
           current_identity_id?: string | null
           current_phase?: number | null

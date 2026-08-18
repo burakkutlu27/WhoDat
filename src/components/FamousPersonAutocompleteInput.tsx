@@ -136,13 +136,13 @@ export default function FamousPersonAutocompleteInput({
             }
           }}
           onKeyDown={handleKeyDown}
-          className={`paper-input font-display text-xl w-full pr-10 ${className}`}
+          className={`paper-input font-display text-2xl w-full pr-10 ${className}`}
         />
         <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-extra-faded">
           {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin text-pencil-yellow" />
+            <Loader2 className="h-5 w-5 animate-spin text-pencil-yellow" />
           ) : (
-            <Search className="h-4 w-4 opacity-40" />
+            <Search className="h-5 w-5 opacity-40" />
           )}
         </div>
       </div>
@@ -172,10 +172,10 @@ export default function FamousPersonAutocompleteInput({
                       : 'text-ink hover:bg-paper-card-alt'
                   }`}
                 >
-                  <span className="font-display text-lg">{person.name}</span>
+                  <span className="font-display text-xl font-bold">{person.name}</span>
                   {catInfo && (
                     <span
-                      className="inline-flex items-center gap-1 rounded-md border border-dashed border-paper-border bg-paper-card px-2 py-0.5 font-sans text-xs text-ink-faded"
+                      className="inline-flex items-center gap-1 rounded-md border border-dashed border-paper-border bg-paper-card px-2.5 py-1 font-sans text-xs font-semibold text-ink-faded"
                       style={{ borderRadius: '6px 4px 6px 4px' }}
                     >
                       <span>{catInfo.icon}</span>

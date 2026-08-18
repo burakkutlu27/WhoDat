@@ -247,6 +247,7 @@ export function buildRoom(overrides: Partial<RoomRow> = {}): RoomRow {
     current_player_id: null,
     current_identity_id: null,
     game_mode: 'classic',
+    communication_mode: 'voice',
     game_round: 1,
     is_game_active: false,
     total_rounds: 3,

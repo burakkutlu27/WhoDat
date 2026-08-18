@@ -1,4 +1,4 @@
-# KimBu (v3.2)
+# KimBu (v3.3)
 
 **Ben Kimim? (Who Am I?)** parti ve masa oyununun Next.js ve Supabase ile geliştirilmiş çok oyunculu çevrimiçi sürümü.
 
@@ -10,9 +10,17 @@ Oyuncular 6 haneli oda koduyla aynı lobiye katılır, seçilen oyun moduna ve k
 
 ---
 
-## Öne Çıkan Özellikler (v3.2)
+## Öne Çıkan Özellikler (v3.3)
 
-### Kategoriye Özel Lobi (Tek Kategori Modu)
+### 💬 Tam Metin / Uzaktan Oyun Modu (Text Mode)
+- **Sesli Konuşma Gerektirmez:** Discord veya harici sesli sohbet olmadan, tamamen oyun içi etkileşimle uzaktan oynama imkanı.
+- **Hazır Soru Bankası & Canlı Arama:** 15 temel Türkçe soru (Kimlik, Yaşam, Meslek, Sanat, Coğrafya vb.) arasından hızlı filtreleme ve tek tıkla soru sorma.
+- **Özel Soru Desteği:** İsteğe bağlı olarak kendi özel sorusunu elle yazıp gönderebilme.
+- **15 Saniyelik Canlı Evet / Hayır Oylaması:** Soru sorulduğunda hedef sahibi hariç odadaki tüm oyuncuların ekranında geri sayımlı oylama kartı (`VotingModal`) belirir.
+- **Otomatik İpucu Not Defteri (Clue Card):** Oylama sonuçları ("3 Evet, 1 Hayır") çoğunluk rozetleriyle oyuncunun ekranındaki not defterine otomatik ve kronolojik olarak işlenir.
+- **Tüm Modlarla Tam Uyum:** Klasik (canlı), Hız (puanlı) ve Israrcı (bütçeli) modların tüm kuralları Tam Metin moduyla senkronize çalışır.
+
+### 🎭 Kategoriye Özel Lobi (Tek Kategori Modu)
 - Oda kurulurken veya lobi bekleme ekranında oda sahibi dilediği konsepti seçebilir.
 - **Kategoriler:**
   - **Sporcular:** Süper Lig & milli takım futbolcuları, NBA yıldızları, Filenin Sultanları, Olimpiyat şampiyonları, F1 pilotları.
@@ -22,19 +30,19 @@ Oyuncular 6 haneli oda koduyla aynı lobiye katılır, seçilen oyun moduna ve k
   - **Dizi & Film Karakterleri:** Popüler yerli ve yabancı yapımlardaki kült karakterler.
   - **Tümü (Karışık):** Tüm kategorilerden karma isim havuzu.
 
-### 3 Fazlı Karışık Lobi (Multi-Phase Mode)
+### 🔄 3 Fazlı Karışık Lobi (Multi-Phase Mode)
 - Oyun 3 aşamalı sıralı bir akışta oynanır (Örn: 1. Faz: Sporcular -> 2. Faz: Çizgi Karakterler -> 3. Faz: Tarihi Kişiler).
 - **Kümülatif İlerleme:** Her faz tamamlandığında yeni kategoriden taze isimler dağıtılır; oyuncuların önceki fazlardan kazandığı puanlar ve kalan canları korunur.
 - **Faz Geçiş Modalı:** Faz tamamlandığında ara geçiş ekranı açılır ve oyuncuları yeni faza hazırlar.
 
-### Gönderilen İsimleri Düzenleme
+### ✏️ Gönderilen İsimleri Düzenleme
 - İsimlerini gönderen oyuncular, lobi onay kartındaki **İsimleri Düzenle** butonunu kullanarak oyun başlamadan önce isimlerini geri yükleyebilir ve güncelleyebilir.
 
-### Kategoriye Duyarlı Öneri ve Otomatik Atama
+### 🎲 Kategoriye Duyarlı Öneri ve Otomatik Atama
 - Lobide belirli bir kategori seçildiğinde, isim önerileri ve hızlı doldurma fonksiyonları yalnızca seçili kategoriyle filtrelenir.
 - **Hızlı Başlat:** Oda sahibi tek tıkla tüm oyunculara seçili kategoriye uygun benzersiz isimler atayabilir.
 
-### Hibrit Arama Altyapısı
+### 🔍 Hibrit Arama Altyapısı
 - Supabase veritabanı ile yerel seed verilerini aynı anda tarayan hibrit arama mekanizması.
 - Yazılan kelimeyle başlayan eşleşmeleri önceliklendiren akıllı sıralama.
 
@@ -74,10 +82,10 @@ Oda kurulurken veya lobide oda sahibi tarafından 4 farklı oyun modu seçilebil
 
 ## Mimari ve Güvenlik
 
-- **Yetkili (Authoritative) Sunucu:** Eşleştirme, gizli isim dağıtımı, soru rotasyonu, can/bütçe takibi ve puanlama sunucu tarafında doğrulanır.
+- **Yetkili (Authoritative) Sunucu:** Eşleştirme, gizli isim dağıtımı, soru rotasyonu, oylama oturumları, can/bütçe takibi ve puanlama sunucu tarafında doğrulanır.
 - **Güvenli Oturumlar:** HMAC imzalı HTTP-only çerezler ile oyuncu kimlik doğrulaması (`session.ts`).
 - **Canlı Senkronizasyon:** Supabase Realtime WebSocket bildirimleri ve aralıklı polling mekanizması.
-- **Arayüz:** Kraft ve koyu kağıt teması, organik kenarlıklar ve Lucide ikon seti.
+- **Arayüz:** Kraft ve koyu kağıt teması, organik kenarlıklar, modern CustomSelect bileşenleri ve Lucide ikon seti.
 
 ---
 
@@ -86,7 +94,7 @@ Oda kurulurken veya lobide oda sahibi tarafından 4 farklı oyun modu seçilebil
 - **Frontend:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, motion (Framer Motion), lucide-react
 - **Tipografi:** Google Fonts (Caveat, Nunito, JetBrains Mono)
 - **Backend & Veritabanı:** Supabase (PostgreSQL), Service Role Client, HMAC imzalı çerezler, Supabase Realtime
-- **Test:** Vitest (113 birim, kural ve entegrasyon testi)
+- **Test:** Vitest (117 birim, kural ve entegrasyon testi)
 
 ---
 
@@ -118,5 +126,5 @@ Oda kurulurken veya lobide oda sahibi tarafından 4 farklı oyun modu seçilebil
 - `npm run build`: Production derlemesini alır (Turbopack).
 - `npm run typecheck`: TypeScript tip denetimini çalıştırır.
 - `npm run lint`: ESLint kod kalitesi kontrolünü çalıştırır.
-- `npm test`: Vitest test takımını çalıştırır (113 test).
+- `npm test`: Vitest test takımını çalıştırır (117 test).
 - `node scripts/build-complete-dataset.mjs`: Karakter veri setini derler.

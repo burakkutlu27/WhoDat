@@ -125,10 +125,10 @@ export default function NameSuggestions({
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2">
           <Lightbulb className="h-5 w-5 text-pencil-yellow" />
-          <h3 className="font-display text-xl font-bold text-ink">
+          <h3 className="font-display text-2xl font-bold text-ink">
             Fikir mi lazım?
           </h3>
-          <span className="text-xs text-ink-faded font-sans hidden sm:inline">
+          <span className="text-sm text-ink-faded font-sans hidden sm:inline">
             (Tıkla, kutuna eklensin)
           </span>
         </div>
@@ -138,10 +138,10 @@ export default function NameSuggestions({
             type="button"
             disabled={isLoading || disabled}
             onClick={() => void handleRefresh()}
-            className="btn-outline flex items-center gap-1.5 px-2.5 py-1 text-xs font-display text-ink hover:text-pencil-red transition-all"
+            className="btn-outline flex items-center gap-1.5 px-3 py-1.5 text-sm font-sans font-bold text-ink hover:text-pencil-red transition-all"
             title="Yeni öneriler getir"
           >
-            <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
             <span>Yenile</span>
           </button>
 
@@ -150,13 +150,13 @@ export default function NameSuggestions({
               type="button"
               disabled={isFillingAll || disabled}
               onClick={() => void handleFillAll()}
-              className="btn-pencil-yellow flex items-center gap-1.5 px-3 py-1 text-xs font-display font-bold transition-all shadow-xs"
+              className="btn-pencil-yellow flex items-center gap-1.5 px-3.5 py-1.5 text-sm font-sans font-bold transition-all shadow-xs"
               title="Kalan boş kutuları rastgele isimlerle doldur"
             >
               {isFillingAll ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                <Shuffle className="h-3.5 w-3.5" />
+                <Shuffle className="h-4 w-4" />
               )}
               <span>Rastgele Doldur</span>
             </button>
@@ -167,16 +167,16 @@ export default function NameSuggestions({
       {/* Category Filter Chips / Locked Badge */}
       {isLockedCategory ? (
         <div className="flex items-center gap-2 mb-3">
-          <span className="tag border-pencil-purple text-pencil-purple font-bold text-xs flex items-center gap-1">
+          <span className="tag border-pencil-purple text-pencil-purple font-bold text-sm flex items-center gap-1">
             <span>{CATEGORIES.find((c) => c.id === categoryFilter)?.icon}</span>
             <span>{CATEGORIES.find((c) => c.id === categoryFilter)?.label || categoryFilter} Kategorisi</span>
           </span>
-          <span className="text-[11px] text-ink-faded font-sans">
+          <span className="text-xs text-ink-faded font-sans">
             (Lobi kategorisinden öneriler listeleniyor)
           </span>
         </div>
       ) : (
-        <div className="flex flex-wrap gap-1.5 mb-3.5">
+        <div className="flex flex-wrap gap-2 mb-3.5">
           {CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat.id
             return (
@@ -185,7 +185,7 @@ export default function NameSuggestions({
                 type="button"
                 disabled={disabled}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`flex items-center gap-1 px-2.5 py-1 text-xs font-display font-bold rounded-lg transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-sans font-bold rounded-lg transition-all ${
                   isActive
                     ? 'bg-ink text-paper-card shadow-xs ring-1 ring-ink'
                     : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
@@ -200,16 +200,14 @@ export default function NameSuggestions({
       )}
 
       {/* Suggestions Grid */}
-
-      {/* Suggestions Grid */}
       <div className="min-h-[64px]">
         {isLoading ? (
-          <div className="flex items-center justify-center py-6 text-xs text-ink-faded font-display gap-2">
+          <div className="flex items-center justify-center py-6 text-sm text-ink-faded font-sans gap-2">
             <Loader2 className="h-4 w-4 animate-spin text-pencil-yellow" />
             <span>Öneriler aranıyor...</span>
           </div>
         ) : suggestions.length === 0 ? (
-          <div className="py-4 text-center text-xs text-ink-faded font-display">
+          <div className="py-4 text-center text-sm text-ink-faded font-sans">
             Bu kategoride öneri bulunamadı.
           </div>
         ) : (
@@ -234,7 +232,7 @@ export default function NameSuggestions({
                     type="button"
                     disabled={disabled || isAlreadySelected}
                     onClick={() => handleCardClick(person)}
-                    className={`group relative flex items-center gap-1.5 rounded-lg border-2 border-dashed px-3 py-1.5 font-display text-sm font-bold transition-all shadow-2xs ${rotClass} ${
+                    className={`group relative flex items-center gap-1.5 rounded-lg border-2 border-dashed px-3.5 py-2 font-display text-base font-bold transition-all shadow-2xs ${rotClass} ${
                       isAlreadySelected
                         ? 'opacity-40 line-through border-paper-border text-ink-faded cursor-not-allowed bg-paper-card'
                         : `${colorClasses} cursor-pointer`
@@ -242,7 +240,7 @@ export default function NameSuggestions({
                     style={{ borderRadius: '8px 10px 6px 12px' }}
                   >
                     <span>+ {person.name}</span>
-                    <Plus className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                    <Plus className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                   </motion.button>
                 )
               })}

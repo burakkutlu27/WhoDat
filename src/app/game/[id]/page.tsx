@@ -15,6 +15,7 @@ import {
   Loader2,
   LogOut,
   MessageSquare,
+  Mic,
   Pencil,
   Send,
   SkipForward,
@@ -31,6 +32,9 @@ import { useRouter } from 'next/navigation'
 import { use, useEffect, useRef, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
+import { ClueCard } from '@/components/ClueCard'
+import { QuestionPicker } from '@/components/QuestionPicker'
+import { VotingModal } from '@/components/VotingModal'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import type { FamousPersonCategory, GuessResult } from '@/lib/game/types'
@@ -59,6 +63,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const [guess, setGuess] = useState('')
   const [buzzerGuess, setBuzzerGuess] = useState('')
   const [isBuzzerOpen, setIsBuzzerOpen] = useState(false)
+  const [isQuestionPickerOpen, setIsQuestionPickerOpen] = useState(false)
   const [questionText, setQuestionText] = useState('')
   const [nextTargetInput, setNextTargetInput] = useState('')
   const [isBusy, setIsBusy] = useState(false)
@@ -151,12 +156,29 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   }, [currentPhase, state])
 
   const currentPlayerId = state?.room.currentPlayerId ?? null
+  const activeVoteStatus = state?.room.activeVote?.status
   const [turnShown, setTurnShown] = useState(currentPlayerId)
   if (turnShown !== currentPlayerId) {
     setTurnShown(currentPlayerId)
     setFeedback(null)
     setGuess('')
   }
+
+  // Feedback mesajlarının ekranda kalıcı olmasını önlemek için zamanlayıcı
+  useEffect(() => {
+    if (!feedback) return
+    const timer = setTimeout(() => {
+      setFeedback(null)
+    }, 4000)
+    return () => clearTimeout(timer)
+  }, [feedback])
+
+  // Oylama veya sıra durumu değiştiğinde eski bildirimleri temizle
+  useEffect(() => {
+    if (!activeVoteStatus || activeVoteStatus === 'closed') {
+      // Oylama kapandığında veya sıra devrinde temizle
+    }
+  }, [activeVoteStatus, currentPlayerId])
 
   const handleGuess = async (event: React.FormEvent) => {
     event.preventDefault()
@@ -258,6 +280,46 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         text: caught instanceof ApiClientError ? caught.message : 'Soru gönderilemedi.',
       })
       await refresh()
+    } finally {
+      setIsBusy(false)
+    }
+  }
+
+  const handleTextQuestionSubmit = async (params: { questionId?: string; questionText: string }) => {
+    setIsBusy(true)
+    try {
+      const result = await apiRequest<{ message: string; closesAt: string }>(`/api/rooms/${roomId}/text-question`, {
+        method: 'POST',
+        body: params,
+      })
+      setIsQuestionPickerOpen(false)
+      setFeedback({ tone: 'success', text: result.message })
+      await refresh()
+    } catch (caught) {
+      setFeedback({
+        tone: 'error',
+        text: caught instanceof ApiClientError ? caught.message : 'Soru iletilemedi.',
+      })
+    } finally {
+      setIsBusy(false)
+    }
+  }
+
+  const handleTextVoteSubmit = async (answer: boolean) => {
+    if (!state?.room.activeVote || isBusy) return
+    setIsBusy(true)
+    try {
+      const result = await apiRequest<{ message: string; isResolved: boolean }>(`/api/rooms/${roomId}/vote`, {
+        method: 'POST',
+        body: { voteId: state.room.activeVote.id, answer },
+      })
+      setFeedback({ tone: 'success', text: result.message })
+      await refresh()
+    } catch (caught) {
+      setFeedback({
+        tone: 'error',
+        text: caught instanceof ApiClientError ? caught.message : 'Oy iletilemedi.',
+      })
     } finally {
       setIsBusy(false)
     }
@@ -383,7 +445,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
       {/* Hız Modu Tur Geçiş Ekranı Overlay */}
       {roundTransition && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
           <motion.div
             initial={{ scale: 0.85, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -395,31 +457,31 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
             </div>
 
             <div>
-              <span className="tag border-pencil-yellow text-pencil-yellow font-bold text-xs uppercase tracking-wider">
+              <span className="tag border-pencil-yellow text-pencil-yellow font-bold text-sm uppercase tracking-wider">
                 Tur Sonu Özeti
               </span>
               <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-ink">
                 {roundTransition.completedRound}. Tur Tamamlandı!
               </h2>
-              <p className="mt-1 text-sm text-ink-faded font-display">
+              <p className="mt-1 text-base text-ink-faded font-display">
                 {roundTransition.nextRound}. Tur Başlıyor — <strong className="text-pencil-green">Yeni Gizli İsimler Dağıtıldı!</strong>
               </p>
             </div>
 
             <div className="space-y-2 rounded-xl bg-paper-card-alt p-4 border-2 border-dashed border-paper-border text-left">
-              <div className="text-xs font-display font-bold text-ink-faded uppercase tracking-wider mb-2">
+              <div className="text-sm font-sans font-bold text-ink-faded uppercase tracking-wider mb-2">
                 Bu Turdaki Skorlar:
               </div>
               {roundTransition.scores.map((p, idx) => (
-                <div key={idx} className="flex items-center justify-between font-display text-sm py-1 border-b border-paper-border/50 last:border-0">
+                <div key={idx} className="flex items-center justify-between font-display text-base py-1 border-b border-paper-border/50 last:border-0">
                   <div className="flex items-center gap-1.5">
-                    {p.isHost && <Crown className="h-3.5 w-3.5 text-pencil-yellow" />}
+                    {p.isHost && <Crown className="h-4 w-4 text-pencil-yellow" />}
                     <span className="font-bold text-ink">{p.nickname}</span>
-                    {p.isYou && <span className="tag tag-you text-[9px]">SEN</span>}
+                    {p.isYou && <span className="tag tag-you text-xs">SEN</span>}
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-pencil-green font-bold">+{p.roundScore} P</span>
-                    <span className="text-ink-faded text-xs font-semibold">({p.totalScore} P Toplam)</span>
+                    <span className="text-ink-faded text-sm font-semibold">({p.totalScore} P Toplam)</span>
                   </div>
                 </div>
               ))}
@@ -427,7 +489,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
             <button
               onClick={() => setRoundTransition(null)}
-              className="btn-pencil-yellow w-full py-3 font-display text-base font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-transform"
+              className="btn-pencil-yellow w-full py-3.5 font-display text-xl font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-transform"
             >
               {roundTransition.nextRound}. Tura Başla →
             </button>
@@ -438,7 +500,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
       {/* Ortak Hedef Modu — Tahmin Modalı */}
       <AnimatePresence>
         {isBuzzerOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -446,23 +508,23 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               className="paper-card-lg max-w-md w-full p-6 sm:p-8 text-center border-2 border-pencil-green shadow-2xl space-y-4"
             >
               <div className="flex items-center justify-between">
-                <span className="tag border-pencil-green text-pencil-green font-bold text-xs uppercase flex items-center gap-1.5">
-                  <Target className="h-3.5 w-3.5 text-pencil-green" />
+                <span className="tag border-pencil-green text-pencil-green font-bold text-sm uppercase flex items-center gap-1.5">
+                  <Target className="h-4 w-4 text-pencil-green" />
                   <span>Gizli Hedef Tahmini</span>
                 </span>
                 <button
                   type="button"
                   onClick={() => setIsBuzzerOpen(false)}
-                  className="rounded-full p-1 text-ink-faded hover:bg-paper-card-alt hover:text-ink transition-colors"
+                  className="rounded-full p-1.5 text-ink-faded hover:bg-paper-card-alt hover:text-ink transition-colors"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
-              <h3 className="font-display text-2xl sm:text-3xl font-bold text-ink">
+              <h3 className="font-display text-3xl sm:text-4xl font-bold text-ink">
                 Gizli Hedef Kim?
               </h3>
-              <p className="text-sm text-ink-faded font-sans">
+              <p className="text-base text-ink-faded font-sans">
                 Doğru bilirseniz <strong className="text-pencil-green">+100 Puan</strong> kazanırsınız. Yanlış bilirseniz sonraki soru sıranız atlanır.
               </p>
 
@@ -475,22 +537,22 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   maxLength={60}
                   autoFocus
                   disabled={isBusy}
-                  className="paper-input-boxed text-center font-display text-2xl w-full"
+                  className="paper-input-boxed text-center font-display text-3xl font-bold w-full"
                 />
 
                 <div className="flex gap-2">
                   <button
                     type="submit"
                     disabled={isBusy || !buzzerGuess.trim()}
-                    className="btn-pencil-green flex-1 py-3.5 font-display text-lg font-bold flex items-center justify-center gap-2 shadow-sm"
+                    className="btn-pencil-green flex-1 py-3.5 font-display text-xl font-bold flex items-center justify-center gap-2 shadow-sm"
                   >
-                    {isBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : <><span>Tahmini Gönder</span><Send className="h-4 w-4" /></>}
+                    {isBusy ? <Loader2 className="h-5 w-5 animate-spin" /> : <><span>Tahmini Gönder</span><Send className="h-5 w-5" /></>}
                   </button>
                   <button
                     type="button"
                     onClick={() => setIsBuzzerOpen(false)}
                     disabled={isBusy}
-                    className="btn-outline px-4 py-3.5 font-display text-sm font-bold"
+                    className="btn-outline px-5 py-3.5 font-display text-base font-bold"
                   >
                     İptal
                   </button>
@@ -504,7 +566,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
       {/* 3 Fazlı Mod Faz Geçişi Overlay */}
       {phaseTransition && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
           <motion.div
             initial={{ scale: 0.8, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -516,27 +578,27 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
             </div>
 
             <div>
-              <span className="tag border-pencil-purple text-pencil-purple font-bold text-xs uppercase tracking-wider">
+              <span className="tag border-pencil-purple text-pencil-purple font-bold text-sm uppercase tracking-wider">
                 🎉 Faz Tamamlandı!
               </span>
               <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-ink">
                 {phaseTransition.completedPhase}. Faz Sona Erdi!
               </h2>
               <div className="mt-3 p-3.5 rounded-xl bg-pencil-purple/10 border border-pencil-purple/30 text-pencil-purple">
-                <span className="text-sm font-display block font-normal">Sıradaki Aşama:</span>
+                <span className="text-base font-display block font-normal">Sıradaki Aşama:</span>
                 <span className="font-display text-2xl font-bold flex items-center justify-center gap-2 mt-1">
                   <span>{CATEGORIES.find((c) => c.id === phaseTransition.newCategory)?.icon}</span>
                   <span>{phaseTransition.nextPhase}. Faz: {CATEGORIES.find((c) => c.id === phaseTransition.newCategory)?.label || phaseTransition.newCategory}</span>
                 </span>
               </div>
-              <p className="mt-3 text-xs text-ink-faded font-sans">
+              <p className="mt-3 text-sm text-ink-faded font-sans">
                 ✨ Yeni kategoriden yeni isimler dağıtıldı! Puanlarınız ve canlarınız aynen korunuyor.
               </p>
             </div>
 
             <button
               onClick={() => setPhaseTransition(null)}
-              className="btn-pencil-red w-full py-3.5 font-display text-lg font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-transform"
+              className="btn-pencil-red w-full py-4 font-display text-xl font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-transform"
             >
               {phaseTransition.nextPhase}. Faza Başla 🚀
             </button>
@@ -557,7 +619,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                 <span className="font-display text-3xl font-bold text-ink">
                   KimBu<span className="inline-block animate-wiggle text-pencil-yellow">?</span>
                 </span>
-                <span className="tag font-mono text-xs font-bold tracking-widest text-pencil-red tag-animate">
+                <span className="tag font-mono text-sm font-bold tracking-widest text-pencil-red tag-animate">
                   {state.room.roomCode}
                 </span>
               </div>
@@ -571,10 +633,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         ? 'border-pencil-orange text-pencil-orange font-bold'
                         : 'border-pencil-yellow text-pencil-yellow font-bold'
                 }`}>
-                  {isSpeed && <Zap className="h-3.5 w-3.5 mr-1 inline" />}
-                  {isPersistent && <Brain className="h-3.5 w-3.5 mr-1 inline" />}
-                  {isSharedTarget && <Users className="h-3.5 w-3.5 mr-1 inline" />}
-                  {!isSpeed && !isPersistent && !isSharedTarget && <Target className="h-3.5 w-3.5 mr-1 inline" />}
+                  {isSpeed && <Zap className="h-4 w-4 mr-1 inline" />}
+                  {isPersistent && <Brain className="h-4 w-4 mr-1 inline" />}
+                  {isSharedTarget && <Users className="h-4 w-4 mr-1 inline" />}
+                  {!isSpeed && !isPersistent && !isSharedTarget && <Target className="h-4 w-4 mr-1 inline" />}
                   {isSpeed
                     ? `Hız Modu (Tur ${state.room.gameRound} / ${state.room.totalRounds})`
                     : isPersistent
@@ -587,17 +649,17 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                 {/* Kategori ve Faz Bilgisi */}
                 {state.room.categoryMode === 'multi_phase' ? (
                   <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1.5">
-                    <Layers className="h-3.5 w-3.5" />
+                    <Layers className="h-4 w-4" />
                     <span>
                       Faz {state.room.currentPhase || 1}/{state.room.totalPhases || 3}:{' '}
                       {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.icon}{' '}
                       {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.label || state.room.activeCategory}
                     </span>
-                    <span className="ml-1 flex items-center gap-1 text-[10px]">
+                    <span className="ml-1 flex items-center gap-1 text-xs">
                       {[1, 2, 3].map((step) => (
                         <span
                           key={step}
-                          className={`h-2 w-2 rounded-full ${
+                          className={`h-2.5 w-2.5 rounded-full ${
                             step === (state.room.currentPhase || 1)
                               ? 'bg-pencil-purple ring-2 ring-pencil-purple/40'
                               : step < (state.room.currentPhase || 1)
@@ -610,7 +672,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   </span>
                 ) : (
                   <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1">
-                    <Layers className="h-3.5 w-3.5" />
+                    <Layers className="h-4 w-4" />
                     <span>
                       {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.icon || '🎲'}{' '}
                       {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}
@@ -623,9 +685,26 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     {state.namesRemaining} İsim Kaldı
                   </span>
                 )}
+                <span className={`tag ${
+                  state.room.communicationMode === 'text'
+                    ? 'border-pencil-green text-pencil-green font-bold'
+                    : 'border-pencil-yellow text-pencil-yellow font-bold'
+                }`}>
+                  {state.room.communicationMode === 'text' ? (
+                    <>
+                      <MessageSquare className="h-4 w-4 mr-1 inline" />
+                      <span>Tam Metin</span>
+                    </>
+                  ) : (
+                    <>
+                      <Mic className="h-4 w-4 mr-1 inline" />
+                      <span>Sesli İletişim</span>
+                    </>
+                  )}
+                </span>
                 {isSharedTarget && isReferee && (
                   <span className="tag border-pencil-yellow text-pencil-yellow font-bold flex items-center gap-1">
-                    <Crown className="h-3.5 w-3.5 text-pencil-yellow" />
+                    <Crown className="h-4 w-4 text-pencil-yellow" />
                     <span>Hakem Rolündesiniz</span>
                   </span>
                 )}
@@ -636,7 +715,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => void handleLeave()}
-              className="btn-outline flex items-center gap-2 px-4 py-2.5 font-display text-sm"
+              className="btn-outline flex items-center gap-2 px-4 py-2.5 font-display text-lg font-bold"
             >
               <LogOut className="h-4 w-4" />
               <span>Oyundan Çık</span>
@@ -668,16 +747,16 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="sticky-note sticky-note-yellow p-5 text-center shadow-md border-2 border-pencil-yellow"
+                        className="sticky-note sticky-note-yellow p-6 text-center shadow-md border-2 border-pencil-yellow"
                       >
-                        <span className="flex items-center justify-center gap-1.5 font-display text-sm font-bold text-pencil-yellow uppercase tracking-wider">
+                        <span className="flex items-center justify-center gap-1.5 font-display text-base font-bold text-pencil-yellow uppercase tracking-wider">
                           <Crown className="h-5 w-5" />
                           <span>GİZLİ HEDEF (YALNIZCA SİZ GÖRÜYORSUNUZ)</span>
                         </span>
-                        <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-ink">
+                        <h2 className="mt-2 font-display text-4xl sm:text-5xl font-bold text-ink">
                           {state.room.sharedTargetName ?? 'Hedef Belirlenmedi'}
                         </h2>
-                        <p className="mt-1 text-xs text-ink-faded">
+                        <p className="mt-1 text-sm text-ink-faded font-sans">
                           Yarışmacıların sorularını aşağıdaki butonlarla dürüstçe yanıtlayın.
                         </p>
                       </motion.div>
@@ -687,16 +766,16 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         <motion.div
                           initial={{ opacity: 0, scale: 0.95 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          className="paper-card-alt p-5 border-2 border-pencil-orange rounded-xl text-center space-y-4"
+                          className="paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-xl text-center space-y-4"
                         >
-                          <span className="tag border-pencil-orange text-pencil-orange font-bold text-xs uppercase animate-pulse">
+                          <span className="tag border-pencil-orange text-pencil-orange font-bold text-sm uppercase animate-pulse">
                             Yeni Soru Geldi!
                           </span>
                           <div>
-                            <span className="font-display text-sm font-bold text-ink-faded block">
+                            <span className="font-display text-base font-bold text-ink-faded block">
                               {state.room.pendingQuestion.askerNickname} Soruyor:
                             </span>
-                            <p className="font-display text-2xl font-bold text-ink mt-1">
+                            <p className="font-display text-3xl font-bold text-ink mt-1">
                               &ldquo;{state.room.pendingQuestion.questionText}&rdquo;
                             </p>
                           </div>
@@ -707,9 +786,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               whileTap={{ scale: 0.97 }}
                               onClick={() => void handleAnswerQuestion('yes')}
                               disabled={isBusy}
-                              className="btn-pencil-green py-3.5 font-display text-lg font-bold flex items-center justify-center gap-1.5"
+                              className="btn-pencil-green py-4 font-display text-xl font-bold flex items-center justify-center gap-2"
                             >
-                              <Check className="h-5 w-5" />
+                              <Check className="h-6 w-6" />
                               <span>EVET</span>
                             </motion.button>
                             <motion.button
@@ -717,9 +796,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               whileTap={{ scale: 0.97 }}
                               onClick={() => void handleAnswerQuestion('no')}
                               disabled={isBusy}
-                              className="btn-pencil-red py-3.5 font-display text-lg font-bold flex items-center justify-center gap-1.5"
+                              className="btn-pencil-red py-4 font-display text-xl font-bold flex items-center justify-center gap-2"
                             >
-                              <X className="h-5 w-5" />
+                              <X className="h-6 w-6" />
                               <span>HAYIR</span>
                             </motion.button>
                             <motion.button
@@ -727,9 +806,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               whileTap={{ scale: 0.97 }}
                               onClick={() => void handleAnswerQuestion('uncertain')}
                               disabled={isBusy}
-                              className="btn-outline py-3.5 font-display text-base font-bold flex items-center justify-center gap-1.5"
+                              className="btn-outline py-4 font-display text-lg font-bold flex items-center justify-center gap-2"
                             >
-                              <HelpCircle className="h-5 w-5 text-ink-faded" />
+                              <HelpCircle className="h-6 w-6 text-ink-faded" />
                               <span>BELİRSİZ</span>
                             </motion.button>
                           </div>
@@ -747,13 +826,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               {state.room.roundWinnerNickname ? `${state.room.roundWinnerNickname} Hedefi Bildi!` : 'Tur Tamamlandı!'}
                             </h3>
                           </div>
-                          <p className="text-sm text-ink">
+                          <p className="text-base text-ink font-sans">
                             Gizli hedef <strong>{state.room.sharedTargetName}</strong> herkese açıklandı.
                           </p>
 
                           {state.room.gameRound < state.room.totalRounds ? (
                             <div className="space-y-3 pt-2 border-t border-paper-border">
-                              <label className="block font-display text-sm font-bold text-ink text-left">
+                              <label className="block font-display text-base font-bold text-ink text-left">
                                 {state.room.gameRound + 1}. Tur İçin Yeni Gizli Hedef Belirleyin:
                               </label>
                               <div className="flex gap-2">
@@ -764,25 +843,25 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                   placeholder="Örn: Barış Manço..."
                                   maxLength={60}
                                   disabled={isBusy}
-                                  className="paper-input font-display text-xl flex-1"
+                                  className="paper-input font-display text-2xl flex-1"
                                 />
                                 <button
                                   type="button"
                                   onClick={() => void handleStartNextRound()}
                                   disabled={isBusy || !nextTargetInput.trim()}
-                                  className="btn-pencil-green px-5 py-3 font-display text-base font-bold shrink-0"
+                                  className="btn-pencil-green px-6 py-3.5 font-display text-xl font-bold shrink-0"
                                 >
-                                  {isBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : `${state.room.gameRound + 1}. Tura Başla →`}
+                                  {isBusy ? <Loader2 className="h-5 w-5 animate-spin" /> : `${state.room.gameRound + 1}. Tura Başla →`}
                                 </button>
                               </div>
 
-                              <div className="flex flex-wrap gap-1.5 text-left">
+                              <div className="flex flex-wrap gap-2 text-left">
                                 {NEXT_ROUND_SUGGESTIONS.slice(0, 5).map((sug) => (
                                   <button
                                     key={sug}
                                     type="button"
                                     onClick={() => setNextTargetInput(sug)}
-                                    className="rounded bg-paper-card-alt px-2.5 py-1 text-[11px] font-display font-semibold border border-paper-border hover:border-pencil-green"
+                                    className="rounded-lg bg-paper-card-alt px-3 py-1.5 text-xs font-sans font-bold border border-paper-border hover:border-pencil-green"
                                   >
                                     + {sug}
                                   </button>
@@ -790,7 +869,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               </div>
                             </div>
                           ) : (
-                            <div className="p-3 bg-pencil-green/10 rounded-lg text-sm font-display font-bold text-pencil-green">
+                            <div className="p-3 bg-pencil-green/10 rounded-lg text-base font-display font-bold text-pencil-green">
                               Tüm turlar tamamlandı! Skor ekranına yönlendiriliyorsunuz...
                             </div>
                           )}
@@ -798,10 +877,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                       ) : (
                         <div className="text-center py-6 text-ink-faded font-display space-y-2">
                           <Clock className="h-8 w-8 mx-auto animate-spin text-pencil-yellow" style={{ animationDuration: '6s' }} />
-                          <p className="text-xl font-bold text-ink">
+                          <p className="text-2xl font-bold text-ink">
                             {currentPlayer?.nickname ?? 'Yarışmacının'} Soru Sorması Bekleniyor...
                           </p>
-                          <p className="text-xs text-ink-extra-faded">
+                          <p className="text-sm text-ink-extra-faded font-sans">
                             Soru geldiğinde ekranınızda Evet/Hayır butonları belirecektir.
                           </p>
                         </div>
@@ -813,14 +892,14 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                       {/* Tahmin Butonu & Bilgilendirme */}
                       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-paper-card-alt border-2 border-dashed border-pencil-green/40 shadow-xs">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pencil-green/15 text-pencil-green shadow-xs">
-                            <Lightbulb className="h-6 w-6" />
+                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-pencil-green/15 text-pencil-green shadow-xs">
+                            <Lightbulb className="h-7 w-7" />
                           </div>
                           <div>
                             <span className="block font-display text-2xl font-bold text-ink leading-tight">
                               Gizli Hedefi Biliyor Musun?
                             </span>
-                            <p className="mt-0.5 text-sm text-ink-faded font-sans">
+                            <p className="mt-0.5 text-base text-ink-faded font-sans">
                               Sıranızı beklemeden her an tahmin hakkınızı kullanabilirsiniz.
                             </p>
                           </div>
@@ -832,14 +911,12 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           whileTap={{ scale: 0.97 }}
                           onClick={() => setIsBuzzerOpen(true)}
                           disabled={isBusy || isTargetRevealed}
-                          className="btn-pencil-green px-6 py-3 font-display text-lg font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all shrink-0"
+                          className="btn-pencil-green px-7 py-3.5 font-display text-xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all shrink-0"
                         >
                           <Target className="h-5 w-5" />
                           <span>Tahminde Bulun</span>
                         </motion.button>
                       </div>
-
-
 
                       {/* Soru Sorma Durumu */}
                       {isTargetRevealed ? (
@@ -848,13 +925,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           animate={{ opacity: 1, scale: 1 }}
                           className="sticky-note sticky-note-green p-6 text-center shadow-lg"
                         >
-                          <span className="font-display text-sm font-bold text-pencil-green uppercase">
+                          <span className="font-display text-base font-bold text-pencil-green uppercase">
                             HEDEF BULUNDU!
                           </span>
                           <h3 className="mt-2 font-display text-4xl font-bold text-ink">
                             {state.room.sharedTargetName}
                           </h3>
-                          <p className="mt-2 text-xs text-ink-faded">
+                          <p className="mt-2 text-sm text-ink-faded font-sans">
                             {state.room.roundWinnerNickname ? `Tebrikler ${state.room.roundWinnerNickname}! (+100 Puan)` : ''} Hakemin yeni turu başlatması bekleniyor...
                           </p>
                         </motion.div>
@@ -864,24 +941,24 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             <div className="alert-error p-4 text-left flex items-start gap-3">
                               <AlertCircle className="h-6 w-6 text-pencil-red shrink-0 mt-0.5" />
                               <div>
-                                <span className="font-display text-base font-bold block">
+                                <span className="font-display text-lg font-bold block">
                                   Soru Sıranız Atlandı (Ceza)
                                 </span>
-                                <span className="text-xs text-ink-faded">
+                                <span className="text-sm text-ink-faded font-sans">
                                   Daha önce yanlış tahmin yaptığınız için bu soru sıranız atlandı. Sırayı devretmek için butona basın. (Buzzer tahmin hakkınız devam etmektedir!)
                                 </span>
                               </div>
                             </div>
                           ) : (
                             <div>
-                              <span className="highlight-yellow font-display text-xl font-bold text-pencil-yellow tracking-wide inline-flex items-center gap-1.5 mb-2">
-                                <Gamepad2 className="h-5 w-5 animate-bounce" />
+                              <span className="highlight-yellow font-display text-2xl font-bold text-pencil-yellow tracking-wide inline-flex items-center gap-1.5 mb-2">
+                                <Gamepad2 className="h-6 w-6 animate-bounce" />
                                 <span>SENİN SORU SIRAN!</span>
                               </span>
-                              <h3 className="font-display text-2xl font-bold text-ink">
+                              <h3 className="font-display text-3xl font-bold text-ink">
                                 Hakeme Bir Soru Sor
                               </h3>
-                              <p className="text-xs text-ink-faded mb-4">
+                              <p className="text-sm text-ink-faded font-sans mb-4">
                                 Hakemin Evet ya da Hayır diyebileceği bir soru yazın (Örn: &ldquo;Yaşıyor mu?&rdquo;, &ldquo;Sanatçı mı?&rdquo;).
                               </p>
 
@@ -893,7 +970,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                   placeholder="Örn: Gerçek bir kişi mi? Erkek mi?..."
                                   maxLength={150}
                                   disabled={isBusy}
-                                  className="paper-input font-display text-xl w-full text-center"
+                                  className="paper-input font-display text-2xl w-full text-center"
                                 />
 
                                 <div className="flex gap-2">
@@ -902,9 +979,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     disabled={isBusy || !questionText.trim()}
-                                    className="btn-pencil-red flex-1 py-3 font-display text-base font-bold flex items-center justify-center gap-1.5"
+                                    className="btn-pencil-red flex-1 py-3.5 font-display text-xl font-bold flex items-center justify-center gap-2"
                                   >
-                                    {isBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : <><span>Soruyu İlet</span><Send className="h-4 w-4" /></>}
+                                    {isBusy ? <Loader2 className="h-5 w-5 animate-spin" /> : <><span>Soruyu İlet</span><Send className="h-5 w-5" /></>}
                                   </motion.button>
 
                                   <motion.button
@@ -913,9 +990,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => void handlePass()}
                                     disabled={isBusy}
-                                    className="btn-outline px-4 py-3 font-display text-sm"
+                                    className="btn-outline px-5 py-3.5 font-display text-base font-bold"
                                   >
-                                    <SkipForward className="h-4 w-4" />
+                                    <SkipForward className="h-5 w-5" />
                                     <span>Pas</span>
                                   </motion.button>
                                 </div>
@@ -928,7 +1005,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               type="button"
                               onClick={() => void handlePass()}
                               disabled={isBusy}
-                              className="btn-outline w-full max-w-xs mx-auto py-3 font-display text-base font-bold"
+                              className="btn-outline w-full max-w-xs mx-auto py-3.5 font-display text-lg font-bold"
                             >
                               Sırayı Devret →
                             </button>
@@ -936,10 +1013,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         </div>
                       ) : (
                         <div className="text-center py-4 font-display text-ink-faded space-y-1">
-                          <p className="text-lg font-bold text-ink">
+                          <p className="text-xl font-bold text-ink">
                             {currentPlayer?.nickname ?? 'Yarışmacı'} Hakeme Soru Soruyor...
                           </p>
-                          <p className="text-xs text-ink-extra-faded">
+                          <p className="text-sm text-ink-extra-faded font-sans">
                             Gelen soru ve Hakemin cevabı aşağıdaki not defterine anında eklenecektir.
                           </p>
                         </div>
@@ -966,7 +1043,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                       </motion.div>
                     ) : (
                       <div className="tag tag-turn mx-auto inline-flex items-center gap-1.5 text-sm tag-animate">
-                        <Target className="h-3.5 w-3.5 animate-spin" style={{ animationDuration: '6s' }} />
+                        <Target className="h-4 w-4 animate-spin" style={{ animationDuration: '6s' }} />
                         <span>{currentPlayer?.nickname ?? 'Oyuncu'} Tahmin Ediyor</span>
                       </div>
                     )}
@@ -978,7 +1055,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           : 'Ben Kimim? Soru Sor & Tahmin Et!'
                         : `${currentPlayer?.nickname ?? 'Oyuncu'} İpucu Arıyor`}
                     </h2>
-                    <p className="mx-auto mt-2 max-w-md text-sm text-ink-faded">
+                    <p className="mx-auto mt-2 max-w-md text-base text-ink-faded font-sans">
                       {state.you.isYourTurn
                         ? isSpeed
                           ? 'Sorunu sesli sor ve "Soru Sordum" butonuna bas, ya da emin olduğunda tahminini yap!'
@@ -1020,10 +1097,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                         : 'text-pencil-blue'
                                   }`}
                                 />
-                                <span className="font-display text-base font-bold text-ink">
+                                <span className="font-display text-lg font-bold text-ink">
                                   {state.you.isYourTurn ? 'Soru Bütçen: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Bütçesi: `}
                                   <span
-                                    className={`text-lg font-bold ${
+                                    className={`text-xl font-bold ${
                                       isZero
                                         ? 'text-pencil-red'
                                         : isLow
@@ -1041,7 +1118,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
                           {/* Can / Tahmin Hakkı Göstergesi */}
                           <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
-                            <span className="font-display text-sm font-bold text-ink-faded">
+                            <span className="font-display text-base font-bold text-ink-faded">
                               Tahmin Hakkı:
                             </span>
                             <div className="flex items-center gap-1.5">
@@ -1071,9 +1148,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           {/* Potansiyel Puan */}
                           <div className="flex items-center gap-2 rounded-xl border-2 border-solid border-pencil-green bg-paper-card px-4 py-2 shadow-sm">
                             <Zap className="h-5 w-5 text-pencil-green animate-pulse" />
-                            <span className="font-display text-base font-bold text-ink">
+                            <span className="font-display text-lg font-bold text-ink">
                               {state.you.isYourTurn ? 'Şimdi Bilirsen: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Bilirse: `}
-                              <span className="text-pencil-green text-lg font-bold">
+                              <span className="text-pencil-green text-xl font-bold">
                                 +{state.you.isYourTurn ? (state.you.estimatedPoints ?? 100) : (currentPlayer?.estimatedPoints ?? 100)} P
                               </span>
                             </span>
@@ -1081,7 +1158,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         </div>
 
                         {!state.you.isYourTurn && (
-                          <div className="text-center font-display text-xs text-ink-faded">
+                          <div className="text-center font-sans text-sm text-ink-faded">
                             Senin durumun: <strong className="text-ink">{state.you.questionBudgetRemaining ?? 10}/10 Soru Bütçesi</strong> • <strong className="text-pencil-red">{myLives} Can</strong> • Sıran geldiğinde bilirsen: <strong className="text-pencil-green">+{state.you.estimatedPoints ?? 100} P</strong>
                           </div>
                         )}
@@ -1091,9 +1168,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         <div className="flex flex-wrap items-center justify-center gap-4">
                           <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
                             <Clock className="h-5 w-5 text-pencil-blue" />
-                            <span className="font-display text-base font-bold text-ink">
+                            <span className="font-display text-lg font-bold text-ink">
                               {state.you.isYourTurn ? 'Senin Soru Sayın: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Soru Sayısı: `}
-                              <span className="text-pencil-blue text-lg">
+                              <span className="text-pencil-blue text-xl font-bold">
                                 {state.you.isYourTurn ? state.you.questionsThisRound : (currentPlayer?.questionsThisRound ?? 0)}
                               </span> / 20
                             </span>
@@ -1101,9 +1178,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
                           <div className="flex items-center gap-2 rounded-xl border-2 border-solid border-pencil-green bg-paper-card px-4 py-2 shadow-sm">
                             <Zap className="h-5 w-5 text-pencil-green animate-pulse" />
-                            <span className="font-display text-base font-bold text-ink">
+                            <span className="font-display text-lg font-bold text-ink">
                               {state.you.isYourTurn ? 'Şimdi Bilirsen: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Bilirse: `}
-                              <span className="text-pencil-green text-lg font-bold">
+                              <span className="text-pencil-green text-xl font-bold">
                                 +{state.you.isYourTurn ? state.you.estimatedPoints : (currentPlayer?.estimatedPoints ?? 100)} P
                               </span>
                             </span>
@@ -1111,14 +1188,14 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         </div>
 
                         {!state.you.isYourTurn && (
-                          <div className="text-center font-display text-xs text-ink-faded">
+                          <div className="text-center font-sans text-sm text-ink-faded">
                             Senin durumun: <strong className="text-ink">{state.you.questionsThisRound} Soru</strong> • Sıran geldiğinde bilirsen: <strong className="text-pencil-green">+{state.you.estimatedPoints} P</strong>
                           </div>
                         )}
                       </div>
                     ) : (
                       <div className="mt-4 flex items-center justify-center gap-2">
-                        <span className="font-display text-sm font-bold text-ink-faded">
+                        <span className="font-display text-base font-bold text-ink-faded">
                           {state.you.isYourTurn ? 'Kalan Canınız:' : `${currentPlayer?.nickname ?? 'Oyuncu'} Kalan Canı:`}
                         </span>
                         <div className="flex items-center gap-1.5">
@@ -1147,67 +1224,98 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     )}
                   </div>
 
+                  {/* Aktif Tam Metin Oylaması Varsa Göster */}
+                  {state.room.activeVote && state.room.activeVote.status === 'open' && (
+                    <div className="mb-6">
+                      <VotingModal
+                        vote={state.room.activeVote}
+                        isAsker={state.room.activeVote.askerId === state.you.playerId}
+                        onVote={handleTextVoteSubmit}
+                        isBusy={isBusy}
+                      />
+                    </div>
+                  )}
+
                   {/* Action Form or Secret Card */}
                   {state.you.isYourTurn ? (
                     isSpeed || myLives > 0 ? (
-                      <form onSubmit={handleGuess} className="mx-auto max-w-md space-y-4">
-                        <div>
-                          <label
-                            htmlFor="guess"
-                            className="mb-2 flex items-center justify-center gap-1.5 font-display text-xl font-bold text-ink"
-                          >
-                            <Pencil className="h-5 w-5 text-pencil-red" />
-                            <span>Tahmininiz</span>
-                          </label>
-                          <input
-                            id="guess"
-                            type="text"
-                            value={guess}
-                            onChange={(event) => setGuess(event.target.value)}
-                            placeholder="Örn: Kemal Sunal"
-                            maxLength={60}
-                            autoComplete="off"
-                            disabled={isBusy}
-                            className="paper-input-boxed text-center font-display text-2xl transition-all duration-200 focus:scale-[1.02]"
-                          />
-                        </div>
-
-                        <div className="flex flex-col gap-3 sm:flex-row">
-                          <motion.button
-                            type="submit"
-                            whileHover={{ scale: 1.03, rotate: -0.5 }}
-                            whileTap={{ scale: 0.97 }}
-                            disabled={isBusy || !guess.trim()}
-                            className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-lg shadow-md"
-                          >
-                            {isBusy ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <>
-                                <Send className="h-4 w-4" />
-                                <span>Tahmin Et</span>
-                              </>
-                            )}
-                          </motion.button>
-                          
-                          {/* Israrcı Modda Bütçe 0 ise "Soru Sordum" butonu kalkar (Kural A: Zorunlu Tahmin) */}
-                          {(!isPersistent || (state.you.questionBudgetRemaining ?? 10) > 0) && (
+                      <div className="mx-auto max-w-md space-y-4">
+                        {/* Tam Metin Modu: Soru Bankasından Soru Seç Butonu */}
+                        {state.room.communicationMode === 'text' && (!state.room.activeVote || state.room.activeVote.status === 'closed') && (
+                          (!isPersistent || (state.you.questionBudgetRemaining ?? 10) > 0) && (
                             <motion.button
                               type="button"
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
-                              onClick={() => void handlePass()}
+                              onClick={() => setIsQuestionPickerOpen(true)}
                               disabled={isBusy}
-                              className="btn-outline flex items-center justify-center gap-2 px-6 py-3.5 font-display text-base"
+                              className="btn-pencil-yellow w-full py-4 font-display text-xl font-bold flex items-center justify-center gap-2 shadow-md border-2 border-pencil-yellow"
                             >
-                              <SkipForward className="h-4 w-4" />
-                              <span>{isSpeed || isPersistent ? 'Soru Sordum' : 'Pas Geç'}</span>
+                              <HelpCircle className="h-6 w-6" />
+                              <span>Soru Bankasından Soru Sor (15sn Oylama)</span>
                             </motion.button>
-                          )}
-                        </div>
-                      </form>
+                          )
+                        )}
+
+                        <form onSubmit={handleGuess} className="space-y-4">
+                          <div>
+                            <label
+                              htmlFor="guess"
+                              className="mb-2 flex items-center justify-center gap-1.5 font-display text-2xl font-bold text-ink"
+                            >
+                              <Pencil className="h-5 w-5 text-pencil-red" />
+                              <span>Tahmininiz</span>
+                            </label>
+                            <input
+                              id="guess"
+                              type="text"
+                              value={guess}
+                              onChange={(event) => setGuess(event.target.value)}
+                              placeholder="Örn: Kemal Sunal"
+                              maxLength={60}
+                              autoComplete="off"
+                              disabled={isBusy}
+                              className="paper-input-boxed text-center font-display text-3xl font-bold transition-all duration-200 focus:scale-[1.02]"
+                            />
+                          </div>
+
+                          <div className="flex flex-col gap-3 sm:flex-row">
+                            <motion.button
+                              type="submit"
+                              whileHover={{ scale: 1.03, rotate: -0.5 }}
+                              whileTap={{ scale: 0.97 }}
+                              disabled={isBusy || !guess.trim()}
+                              className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-4 font-display text-2xl font-bold shadow-md"
+                            >
+                              {isBusy ? (
+                                <Loader2 className="h-5 w-5 animate-spin" />
+                              ) : (
+                                <>
+                                  <Send className="h-5 w-5" />
+                                  <span>Tahmin Et</span>
+                                </>
+                              )}
+                            </motion.button>
+                            
+                            {/* Israrcı Modda Bütçe 0 ise "Soru Sordum" butonu kalkar (Kural A: Zorunlu Tahmin) */}
+                            {(!isPersistent || (state.you.questionBudgetRemaining ?? 10) > 0) && (
+                              <motion.button
+                                type="button"
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => void handlePass()}
+                                disabled={isBusy}
+                                className="btn-outline flex items-center justify-center gap-2 px-6 py-4 font-display text-lg font-bold"
+                              >
+                                <SkipForward className="h-5 w-5" />
+                                <span>{isSpeed || isPersistent ? (state.room.communicationMode === 'text' ? 'Sırayı Devret' : 'Soru Sordum') : 'Pas Geç'}</span>
+                              </motion.button>
+                            )}
+                          </div>
+                        </form>
+                      </div>
                     ) : (
-                      <div className="p-4 text-center font-display text-lg font-bold text-pencil-red">
+                      <div className="p-4 text-center font-display text-xl font-bold text-pencil-red">
                         Canınız bittiği için tahmin hakkınız bulunmamaktadır. Sıranız otomatik olarak devredilmiştir.
                       </div>
                     )
@@ -1226,7 +1334,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         <p className="mt-2 font-display text-4xl font-bold text-ink tracking-wide">
                           {state.currentName}
                         </p>
-                        <p className="mt-2 text-xs text-ink-faded">
+                        <p className="mt-2 text-sm text-ink-faded font-sans">
                           {currentPlayer?.nickname ?? 'Sıradaki oyuncu'} bu ismi tahmin etmeye çalışıyor.
                         </p>
                       </motion.div>
@@ -1246,7 +1354,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         : { opacity: 1, scale: 1 }
                     }
                     transition={{ duration: 0.4 }}
-                    className={`mx-auto max-w-md text-center font-display text-base font-bold tag-animate ${
+                    className={`mx-auto max-w-md text-center font-display text-lg font-bold tag-animate ${
                       feedback.tone === 'success'
                         ? 'alert-success'
                         : 'alert-error'
@@ -1266,11 +1374,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                 className="paper-card-alt p-6 rounded-xl border-2 border-dashed border-paper-border space-y-4"
               >
                 <div className="flex items-center justify-between border-b border-paper-border pb-3">
-                  <h3 className="font-display text-xl font-bold text-ink flex items-center gap-2">
+                  <h3 className="font-display text-2xl font-bold text-ink flex items-center gap-2">
                     <MessageSquare className="h-5 w-5 text-pencil-blue" />
                     <span>Ortak Soru-Cevap Not Defteri</span>
                   </h3>
-                  <span className="text-xs font-mono text-ink-faded">
+                  <span className="text-sm font-mono text-ink-faded">
                     {state.room.questionLog?.length ?? 0} Soru
                   </span>
                 </div>
@@ -1280,10 +1388,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     {state.room.questionLog.map((item, idx) => (
                       <div
                         key={item.id || idx}
-                        className="flex flex-wrap items-center justify-between gap-2 p-3 bg-paper-card rounded-lg border border-paper-border text-sm font-display shadow-xs"
+                        className="flex flex-wrap items-center justify-between gap-2 p-3.5 bg-paper-card rounded-lg border border-paper-border text-base font-display shadow-xs"
                       >
                         <div className="flex items-center gap-2 min-w-0">
-                          <span className="text-xs font-mono font-bold text-ink-faded">#{idx + 1}</span>
+                          <span className="text-sm font-mono font-bold text-ink-extra-faded">#{idx + 1}</span>
                           <strong className="text-pencil-blue">{item.askerNickname}:</strong>
                           <span className="text-ink truncate">&ldquo;{item.questionText}&rdquo;</span>
                         </div>
@@ -1309,7 +1417,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     ))}
                   </div>
                 ) : (
-                  <p className="text-center py-4 text-xs font-display text-ink-faded italic">
+                  <p className="text-center py-4 text-sm font-sans text-ink-faded italic">
                     Henüz soru sorulmadı. Sırası gelen oyuncunun sorusu ve hakemin cevabı burada listelenecektir.
                   </p>
                 )}
@@ -1317,12 +1425,15 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
             )}
           </main>
 
-          {/* Live Scoreboard Sidebar */}
-          <aside className="lg:col-span-1">
+          {/* Live Scoreboard & ClueCard Sidebar */}
+          <aside className="lg:col-span-1 space-y-6">
+            {/* İpucu Kartı (Tam Metin Modu veya Soru Not Defteri) */}
+            <ClueCard clueItems={state.you.clueCard} />
+
             <div className="paper-card-alt p-6">
               <div className="mb-4 flex items-center justify-between">
                 <h3 className="font-display text-2xl font-bold text-ink flex items-center gap-2">
-                  <Trophy className="h-5 w-5 text-pencil-yellow" />
+                  <Trophy className="h-6 w-6 text-pencil-yellow" />
                   <span>Skor Tablosu</span>
                 </h3>
               </div>
@@ -1339,16 +1450,16 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     <motion.div
                       key={player.id}
                       layout
-                      className={`flex items-center justify-between border-2 p-3 transition-all ${
+                      className={`flex items-center justify-between border-2 p-3.5 transition-all ${
                         isCurrent && !isPlayerReferee
                           ? 'border-solid border-pencil-yellow bg-paper-card shadow-sm'
                           : 'border-dashed border-paper-border bg-paper-card'
                       }`}
                       style={{ borderRadius: '8px 4px 10px 6px' }}
                     >
-                      <div className="flex min-w-0 items-center gap-2.5">
+                      <div className="flex min-w-0 items-center gap-3">
                         <div
-                          className={`flex h-8 w-8 shrink-0 items-center justify-center font-display text-sm font-bold text-white ${
+                          className={`flex h-9 w-9 shrink-0 items-center justify-center font-display text-base font-bold text-white ${
                             isPlayerReferee
                               ? 'bg-pencil-orange'
                               : isCurrent
@@ -1362,16 +1473,16 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5">
                             {isCurrent && !isPlayerReferee && (
-                              <Target className="h-3.5 w-3.5 shrink-0 text-pencil-yellow animate-pulse" aria-label="Sırası" />
+                              <Target className="h-4 w-4 shrink-0 text-pencil-yellow animate-pulse" aria-label="Sırası" />
                             )}
                             {player.isHost && (
-                              <Crown className="h-3.5 w-3.5 shrink-0 text-pencil-yellow" aria-label="Oda Sahibi / Hakem" />
+                              <Crown className="h-4 w-4 shrink-0 text-pencil-yellow" aria-label="Oda Sahibi / Hakem" />
                             )}
-                            <span className="truncate font-display text-lg font-bold text-ink">
+                            <span className="truncate font-display text-xl font-bold text-ink">
                               {player.nickname}
                             </span>
                             {isYou && (
-                              <span className="tag tag-you text-[9px]">SEN</span>
+                              <span className="tag tag-you text-xs">SEN</span>
                             )}
                           </div>
 
@@ -1379,17 +1490,17 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           {isSharedTarget ? (
                             <div className="mt-1">
                               {isPlayerReferee ? (
-                                <span className="text-[11px] font-display font-bold text-pencil-orange flex items-center gap-1">
-                                  <Crown className="h-3 w-3" />
+                                <span className="text-xs font-sans font-bold text-pencil-orange flex items-center gap-1">
+                                  <Crown className="h-3.5 w-3.5" />
                                   <span>Hakem</span>
                                 </span>
                               ) : player.skippedQuestionTurn ? (
-                                <span className="text-[11px] font-display font-semibold text-pencil-red flex items-center gap-1">
-                                  <AlertCircle className="h-3 w-3" />
+                                <span className="text-xs font-sans font-semibold text-pencil-red flex items-center gap-1">
+                                  <AlertCircle className="h-3.5 w-3.5" />
                                   <span>Sıra Cezalı</span>
                                 </span>
                               ) : (
-                                <span className="text-[11px] font-display text-ink-faded">
+                                <span className="text-xs font-sans text-ink-faded">
                                   Yarışmacı
                                 </span>
                               )}
@@ -1397,23 +1508,23 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           ) : isPersistent ? (
                             <div className="mt-1 space-y-1">
                               {player.nameSolved ? (
-                                <div className="flex items-center gap-1.5 text-xs font-display">
-                                  <span className="flex items-center gap-1 text-pencil-green font-bold">
-                                    <CheckCircle2 className="h-3.5 w-3.5" />
+                                <div className="flex items-center gap-1.5 text-xs font-sans font-bold">
+                                  <span className="flex items-center gap-1 text-pencil-green">
+                                    <CheckCircle2 className="h-4 w-4" />
                                     <span>Bildi (+{player.score}P)</span>
                                   </span>
                                 </div>
                               ) : pLives <= 0 ? (
-                                <div className="flex items-center gap-1.5 text-xs font-display">
-                                  <span className="text-pencil-red font-bold flex items-center gap-1">
-                                    <X className="h-3.5 w-3.5" />
+                                <div className="flex items-center gap-1.5 text-xs font-sans font-bold">
+                                  <span className="text-pencil-red flex items-center gap-1">
+                                    <X className="h-4 w-4" />
                                     <span>Elendi (0P)</span>
                                   </span>
                                 </div>
                               ) : (
 
                                 <div className="space-y-1">
-                                  <div className="flex items-center justify-between gap-2 text-xs font-display">
+                                  <div className="flex items-center justify-between gap-2 text-xs font-sans">
                                     <span className="text-ink-faded">
                                       Bütçe: <strong className="text-pencil-blue">{player.questionBudgetRemaining ?? 10}/10</strong>
                                     </span>
@@ -1425,7 +1536,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                     {Array.from({ length: maxLives }).map((_, idx) => (
                                       <Heart
                                         key={idx}
-                                        className={`h-3 w-3 ${
+                                        className={`h-3.5 w-3.5 ${
                                           idx < pLives
                                             ? 'fill-pencil-red text-pencil-red'
                                             : 'fill-transparent text-ink-extra-faded opacity-30'
@@ -1438,10 +1549,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             </div>
                           ) : isSpeed ? (
                             <div className="mt-1 space-y-1">
-                              <div className="flex items-center gap-1.5 text-xs font-display">
+                              <div className="flex items-center gap-1.5 text-xs font-sans">
                                 {player.hasFinishedRound ? (
                                   <span className="flex items-center gap-1 text-pencil-green font-bold">
-                                    <CheckCircle2 className="h-3.5 w-3.5" />
+                                    <CheckCircle2 className="h-4 w-4" />
                                     <span>Turu Bitirdi</span>
                                   </span>
                                 ) : (
@@ -1455,7 +1566,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                   {player.roundScores.map((rScore, roundIdx) => (
                                     <span
                                       key={roundIdx}
-                                      className="rounded bg-paper-card-alt px-1.5 py-0.5 border border-paper-border text-[10px] text-ink-faded font-mono"
+                                      className="rounded bg-paper-card-alt px-1.5 py-0.5 border border-paper-border text-xs text-ink-faded font-mono"
                                     >
                                       T{roundIdx + 1}: <strong className="text-ink">{rScore}P</strong>
                                     </span>
@@ -1468,7 +1579,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               {Array.from({ length: maxLives }).map((_, idx) => (
                                 <Heart
                                   key={idx}
-                                  className={`h-3.5 w-3.5 transition-all ${
+                                  className={`h-4 w-4 transition-all ${
                                     idx < pLives
                                       ? 'fill-pencil-red text-pencil-red'
                                       : 'fill-transparent text-ink-extra-faded opacity-30'
@@ -1480,7 +1591,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         </div>
                       </div>
 
-                      <span className="shrink-0 font-display text-xl font-bold text-ink">
+                      <span className="shrink-0 font-display text-2xl font-bold text-ink">
                         {isPlayerReferee ? '-' : `${player.score} `}
                         {!isPlayerReferee && <span className="text-xs text-ink-extra-faded">P</span>}
                       </span>
@@ -1492,6 +1603,14 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
           </aside>
         </div>
       </div>
+
+      {/* Soru Seçici Modal */}
+      <QuestionPicker
+        isOpen={isQuestionPickerOpen}
+        onClose={() => setIsQuestionPickerOpen(false)}
+        onSelectQuestion={handleTextQuestionSubmit}
+        isBusy={isBusy}
+      />
     </div>
   )
 }

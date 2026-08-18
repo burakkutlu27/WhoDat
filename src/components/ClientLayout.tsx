@@ -15,7 +15,7 @@ export default function ClientLayout({
       <div className="relative min-h-screen bg-paper-bg transition-colors">
         <FloatingDoodles />
         <Navbar />
-        <main className="relative z-10">{children}</main>
+        <main className="relative">{children}</main>
         <VersionDisplay />
       </div>
     </ThemeProvider>

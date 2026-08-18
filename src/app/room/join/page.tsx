@@ -61,7 +61,7 @@ function JoinRoomForm() {
             <h1 className="font-display text-4xl font-bold text-ink">
               Odaya Katıl
             </h1>
-            <p className="mt-1 text-sm text-ink-faded">
+            <p className="mt-1 text-base text-ink-faded font-sans">
               Arkadaşının paylaştığı 6 haneli oda kodunu gir.
             </p>
           </div>
@@ -72,14 +72,14 @@ function JoinRoomForm() {
             <div>
               <label
                 htmlFor="roomCode"
-                className="mb-2 flex items-center gap-1.5 font-display text-xl font-bold text-ink"
+                className="mb-2 flex items-center gap-1.5 font-display text-2xl font-bold text-ink"
               >
-                <KeyRound className="h-4 w-4 text-pencil-yellow" />
+                <KeyRound className="h-5 w-5 text-pencil-yellow" />
                 <span>Oda Kodu</span>
               </label>
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-ink-extra-faded">
-                  <KeyRound className="h-4 w-4" />
+                  <KeyRound className="h-5 w-5" />
                 </div>
                 <input
                   id="roomCode"
@@ -101,15 +101,15 @@ function JoinRoomForm() {
             <div>
               <label
                 htmlFor="nickname"
-                className="mb-2 flex items-center gap-1.5 font-display text-xl font-bold text-ink"
+                className="mb-2 flex items-center gap-1.5 font-display text-2xl font-bold text-ink"
               >
-                <Pencil className="h-4 w-4 text-pencil-green" />
+                <Pencil className="h-5 w-5 text-pencil-green" />
                 <span>Takma Adınız</span>
               </label>
 
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-ink-extra-faded">
-                  <User className="h-4 w-4" />
+                  <User className="h-5 w-5" />
                 </div>
                 <input
                   id="nickname"
@@ -121,7 +121,7 @@ function JoinRoomForm() {
                   autoComplete="nickname"
                   disabled={isSubmitting}
                   aria-describedby={error ? 'join-room-error' : undefined}
-                  className="paper-input pl-10 font-display text-2xl"
+                  className="paper-input pl-11 font-display text-2xl font-bold"
                 />
               </div>
             </div>
@@ -145,11 +145,11 @@ function JoinRoomForm() {
                 whileHover={{ scale: 1.02, rotate: -0.5 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isSubmitting || !roomCode.trim() || !nickname.trim()}
-                className="btn-pencil-red flex w-full items-center justify-center gap-2 py-3.5 font-display text-xl"
+                className="btn-pencil-red flex w-full items-center justify-center gap-2 py-4 font-display text-2xl font-bold shadow-md"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 className="h-5 w-5 animate-spin" />
                     <span>Katılınıyor...</span>
                   </>
                 ) : (
@@ -163,9 +163,9 @@ function JoinRoomForm() {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => router.push('/')}
                 disabled={isSubmitting}
-                className="btn-outline flex w-full items-center justify-center gap-2 py-3.5 font-display text-base"
+                className="btn-outline flex w-full items-center justify-center gap-2 py-3.5 font-display text-lg font-bold"
               >
-                <ArrowLeft className="h-4 w-4" />
+                <ArrowLeft className="h-5 w-5" />
                 <span>Geri Dön</span>
               </motion.button>
             </div>

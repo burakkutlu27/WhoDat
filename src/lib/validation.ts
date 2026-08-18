@@ -30,6 +30,8 @@ export const nameTextSchema = z
 
 export const gameModeSchema = z.enum(['classic', 'speed', 'persistent', 'shared_target'])
 
+export const communicationModeSchema = z.enum(['voice', 'text'])
+
 export const lobbyCategoryModeSchema = z.enum(['single', 'multi_phase'])
 
 export const famousPersonCategorySchema = z.enum([
@@ -44,6 +46,7 @@ export const famousPersonCategorySchema = z.enum([
 export const createRoomSchema = z.object({
   nickname: nicknameSchema,
   gameMode: gameModeSchema.optional(),
+  communicationMode: communicationModeSchema.optional(),
   categoryMode: lobbyCategoryModeSchema.optional(),
   category: famousPersonCategorySchema.optional(),
   phaseCategories: z.array(famousPersonCategorySchema).min(1).max(3).optional(),
@@ -51,6 +54,10 @@ export const createRoomSchema = z.object({
 
 export const setRoomModeSchema = z.object({
   gameMode: gameModeSchema,
+})
+
+export const setCommunicationModeSchema = z.object({
+  communicationMode: communicationModeSchema,
 })
 
 export const setRoomCategorySchema = z.object({
@@ -92,6 +99,23 @@ export const answerQuestionSchema = z.object({
 
 export const setTargetSchema = z.object({
   targetName: nameTextSchema,
+})
+
+export const askTextQuestionSchema = z.object({
+  questionId: z.string().optional(),
+  questionText: z
+    .string()
+    .trim()
+    .min(1, 'Soru metni boş olamaz.')
+    .max(200, 'Soru en fazla 200 karakter olabilir.')
+    .optional(),
+})
+
+export const submitTextVoteSchema = z.object({
+  voteId: z.string().min(1, 'Oylama ID zorunludur.'),
+  answer: z.boolean({
+    message: 'Cevap Evet (true) veya Hayır (false) olmalıdır.',
+  }),
 })
 
 
