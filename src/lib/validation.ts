@@ -28,13 +28,55 @@ export const nameTextSchema = z
   .min(1, 'İsim boş olamaz.')
   .max(60, 'İsim en fazla 60 karakter olabilir.')
 
+export const gameModeSchema = z.enum(['classic', 'speed', 'persistent', 'shared_target'])
+
+export const communicationModeSchema = z.enum(['voice', 'text'])
+
+export const lobbyCategoryModeSchema = z.enum(['single', 'multi_phase'])
+
+export const famousPersonCategorySchema = z.enum([
+  'all',
+  'unluler',
+  'tarihi_kisiler',
+  'cizgi_karakterler',
+  'sporcular',
+  'dizi_film_karakterleri',
+])
+
+export const deviceIdSchema = z.string().trim().min(1).max(100)
+
 export const createRoomSchema = z.object({
   nickname: nicknameSchema,
+  gameMode: gameModeSchema.optional(),
+  communicationMode: communicationModeSchema.optional(),
+  categoryMode: lobbyCategoryModeSchema.optional(),
+  category: famousPersonCategorySchema.optional(),
+  phaseCategories: z.array(famousPersonCategorySchema).min(1).max(3).optional(),
+  deviceId: deviceIdSchema.optional(),
+})
+
+export const setRoomModeSchema = z.object({
+  gameMode: gameModeSchema,
+})
+
+export const setCommunicationModeSchema = z.object({
+  communicationMode: communicationModeSchema,
+})
+
+export const setRoomCategorySchema = z.object({
+  categoryMode: lobbyCategoryModeSchema.optional(),
+  category: famousPersonCategorySchema.optional(),
+  phaseCategories: z.array(famousPersonCategorySchema).min(1).max(3).optional(),
 })
 
 export const joinRoomSchema = z.object({
   roomCode: roomCodeSchema,
   nickname: nicknameSchema,
+  deviceId: deviceIdSchema.optional(),
+})
+
+export const statsQuerySchema = z.object({
+  deviceId: deviceIdSchema,
 })
 
 export const submitNamesSchema = z.object({
@@ -47,6 +89,59 @@ export const submitNamesSchema = z.object({
 export const guessSchema = z.object({
   guess: nameTextSchema,
 })
+
+export const askQuestionSchema = z.object({
+  question: z
+    .string()
+    .trim()
+    .min(1, 'Soru metni boş olamaz.')
+    .max(150, 'Soru en fazla 150 karakter olabilir.'),
+})
+
+export const answerQuestionSchema = z.object({
+  questionId: z.string().min(1, 'Soru ID zorunludur.'),
+  answer: z.enum(['yes', 'no', 'uncertain'], {
+    message: 'Cevap Evet, Hayır veya Belirsiz olmalıdır.',
+  }),
+})
+
+export const setTargetSchema = z.object({
+  targetName: nameTextSchema,
+})
+
+export const askTextQuestionSchema = z.object({
+  questionId: z.string().optional(),
+  questionText: z
+    .string()
+    .trim()
+    .min(1, 'Soru metni boş olamaz.')
+    .max(200, 'Soru en fazla 200 karakter olabilir.')
+    .optional(),
+})
+
+export const submitTextVoteSchema = z.object({
+  voteId: z.string().min(1, 'Oylama ID zorunludur.'),
+  answer: z.boolean({
+    message: 'Cevap Evet (true) veya Hayır (false) olmalıdır.',
+  }),
+})
+
+
+export const famousPeopleQuerySchema = z.object({
+  q: z.string().trim().max(60).optional(),
+  category: famousPersonCategorySchema.optional(),
+  random: z
+    .union([z.boolean(), z.enum(['true', 'false', '1', '0'])])
+    .optional()
+    .transform((val) => val === true || val === 'true' || val === '1'),
+  limit: z.coerce.number().int().min(1).max(50).optional(),
+  maxTier: z.coerce.number().int().min(1).max(5).optional(),
+})
+
+export const autoAssignSchema = z.object({
+  category: famousPersonCategorySchema.optional(),
+})
+
 
 export function parseBody<Schema extends z.ZodType>(schema: Schema, data: unknown): z.infer<Schema> {
   const result = schema.safeParse(data)

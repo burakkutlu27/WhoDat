@@ -17,6 +17,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      famous_people: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          category: string
+          fame_tier?: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          category: string
+          fame_tier?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          category?: string
+          fame_tier?: number | null
+        }
+        Relationships: []
+      }
       names: {
         Row: {
           assigned_to: string | null
@@ -69,29 +93,107 @@ export type Database = {
           },
         ]
       }
+      game_results: {
+        Row: {
+          game_mode: string
+          game_room_id: string | null
+          id: string
+          placement: number
+          played_at: string | null
+          player_profile_id: string
+          score: number
+          survived: boolean
+        }
+        Insert: {
+          game_mode: string
+          game_room_id?: string | null
+          id?: string
+          placement?: number
+          played_at?: string | null
+          player_profile_id: string
+          score?: number
+          survived?: boolean
+        }
+        Update: {
+          game_mode?: string
+          game_room_id?: string | null
+          id?: string
+          placement?: number
+          played_at?: string | null
+          player_profile_id?: string
+          score?: number
+          survived?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'game_results_player_profile_id_fkey'
+            columns: ['player_profile_id']
+            isOneToOne: false
+            referencedRelation: 'player_profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'game_results_game_room_id_fkey'
+            columns: ['game_room_id']
+            isOneToOne: false
+            referencedRelation: 'rooms'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      player_profiles: {
+        Row: {
+          created_at: string | null
+          device_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string | null
+          device_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string | null
+          device_id?: string
+          id?: string
+        }
+        Relationships: []
+      }
       players: {
         Row: {
           created_at: string
+          device_id: string | null
+          has_finished_round: boolean
           id: string
           is_host: boolean | null
           nickname: string
+          questions_this_round: number
           room_id: string
+          round_scores: Json
           score: number | null
         }
         Insert: {
           created_at?: string
+          device_id?: string | null
+          has_finished_round?: boolean
           id?: string
           is_host?: boolean | null
           nickname: string
+          questions_this_round?: number
           room_id: string
+          round_scores?: Json
           score?: number | null
         }
         Update: {
           created_at?: string
+          device_id?: string | null
+          has_finished_round?: boolean
           id?: string
           is_host?: boolean | null
           nickname?: string
+          questions_this_round?: number
           room_id?: string
+          round_scores?: Json
           score?: number | null
         }
         Relationships: [
@@ -104,36 +206,90 @@ export type Database = {
           },
         ]
       }
+      question_bank: {
+        Row: {
+          category_scope: string[] | null
+          created_at: string | null
+          difficulty: string | null
+          id: string
+          sort_order: number | null
+          tag: string | null
+          text_tr: string
+        }
+        Insert: {
+          category_scope?: string[] | null
+          created_at?: string | null
+          difficulty?: string | null
+          id?: string
+          sort_order?: number | null
+          tag?: string | null
+          text_tr: string
+        }
+        Update: {
+          category_scope?: string[] | null
+          created_at?: string | null
+          difficulty?: string | null
+          id?: string
+          sort_order?: number | null
+          tag?: string | null
+          text_tr?: string
+        }
+        Relationships: []
+      }
       rooms: {
         Row: {
+          category_mode: string | null
+          communication_mode: string | null
           created_at: string | null
           current_identity_id: string | null
+          current_phase: number | null
           current_player_id: string | null
+          game_mode: string | null
           game_round: number | null
           id: string
           is_game_active: boolean | null
+          phase_categories: Json | null
           room_code: string
+          selected_category: string | null
           status: string | null
+          total_phases: number | null
+          total_rounds: number | null
         }
         Insert: {
+          category_mode?: string | null
+          communication_mode?: string | null
           created_at?: string | null
           current_identity_id?: string | null
+          current_phase?: number | null
           current_player_id?: string | null
+          game_mode?: string | null
           game_round?: number | null
           id?: string
           is_game_active?: boolean | null
+          phase_categories?: Json | null
           room_code: string
+          selected_category?: string | null
           status?: string | null
+          total_phases?: number | null
+          total_rounds?: number | null
         }
         Update: {
+          category_mode?: string | null
+          communication_mode?: string | null
           created_at?: string | null
           current_identity_id?: string | null
+          current_phase?: number | null
           current_player_id?: string | null
+          game_mode?: string | null
           game_round?: number | null
           id?: string
           is_game_active?: boolean | null
+          phase_categories?: Json | null
           room_code?: string
+          selected_category?: string | null
           status?: string | null
+          total_phases?: number | null
+          total_rounds?: number | null
         }
         Relationships: [
           {
@@ -174,5 +330,8 @@ export type Database = {
 export type RoomRow = Database['public']['Tables']['rooms']['Row']
 export type PlayerRow = Database['public']['Tables']['players']['Row']
 export type NameRow = Database['public']['Tables']['names']['Row']
+export type FamousPersonRow = Database['public']['Tables']['famous_people']['Row']
+export type PlayerProfileRow = Database['public']['Tables']['player_profiles']['Row']
+export type GameResultRow = Database['public']['Tables']['game_results']['Row']
 
 export type RoomStatus = 'waiting' | 'playing' | 'finished' | 'closed'

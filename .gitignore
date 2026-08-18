@@ -19,6 +19,7 @@ build/
 .idea/
 *.swp
 *.swo
+.agents/
 
 # OS
 .DS_Store
@@ -52,3 +53,14 @@ build/
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Plans
+plans
+AGENTS.md
+CLAUDE.md
+DEEPSEEK.md
+GEMINI.md
+GROK.md
+KORREL.md
+NOMIC.md
+NOMIC.md

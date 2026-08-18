@@ -1,13 +1,16 @@
 'use client'
 
-import { ArrowRight, KeyRound, Pencil, Pin, Play, Sparkles } from 'lucide-react'
+import { ArrowRight, KeyRound, Pencil, Pin, Play, Trophy } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { StatsModal } from '@/components/StatsModal'
+
 export default function Home() {
   const router = useRouter()
   const [quickCode, setQuickCode] = useState('')
+  const [showStats, setShowStats] = useState(false)
 
   const handleJoinWithCode = (e: React.FormEvent) => {
     e.preventDefault()
@@ -19,26 +22,39 @@ export default function Home() {
   }
 
   return (
-    <main className="page-enter mx-auto flex min-h-[calc(100vh-4rem)] max-w-5xl flex-col justify-center px-4 py-8">
-      {/* Hero Header */}
-      <div className="text-center sm:text-left">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
-          className="max-w-2xl"
-        >
-          <h1 className="font-display text-5xl font-bold text-ink sm:text-7xl">
-            Ben Kimim? <br />
-            <span className="underline-sketch text-pencil-red inline-block transform transition-transform hover:scale-[1.02]">
-              Kimliğini bul, puanları kap.
-            </span>
-          </h1>
-          <p className="mt-4 text-base text-ink-faded sm:text-lg">
-            Arkadaşlarınla aynı odada toplan, gizli isimler belirle ve sorular sorarak kim olduğunu tahmin et!
-          </p>
-        </motion.div>
-      </div>
+    <>
+      <main className="page-enter mx-auto flex min-h-[calc(100vh-4rem)] max-w-5xl flex-col justify-center px-4 py-8">
+        {/* Hero Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-center sm:text-left">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+            className="max-w-2xl"
+          >
+            <h1 className="font-display text-5xl font-bold text-ink sm:text-7xl">
+              Ben Kimim? <br />
+              <span className="underline-sketch text-pencil-red inline-block transform transition-transform hover:scale-[1.02]">
+                Kimliğini bul, puanları kap.
+              </span>
+            </h1>
+            <p className="mt-4 text-base text-ink-faded sm:text-lg">
+              Arkadaşlarınla aynı odada toplan, gizli isimler belirle ve sorular sorarak kim olduğunu tahmin et!
+            </p>
+          </motion.div>
+
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowStats(true)}
+            className="group self-center sm:self-end flex items-center gap-2 rounded-xl border-2 border-dashed border-pencil-yellow bg-paper-card px-4 py-2.5 font-display text-lg font-bold text-ink shadow-sm transition-all hover:bg-pencil-yellow hover:text-white"
+          >
+            <Trophy className="h-5 w-5 text-pencil-yellow transition-colors group-hover:text-white" />
+            <span>İstatistiklerim</span>
+          </motion.button>
+        </div>
 
       {/* Main Action Hub Grid */}
       <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-12">
@@ -176,6 +192,9 @@ export default function Home() {
         </div>
       </div>
     </main>
-  )
+
+    <StatsModal isOpen={showStats} onClose={() => setShowStats(false)} />
+  </>
+)
 
 }

@@ -46,6 +46,7 @@ export default function Confetti({ trigger }: { trigger: boolean }) {
 
   useEffect(() => {
     if (trigger) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPieces(createPieces())
       setActive(true)
       const timer = setTimeout(() => setActive(false), 1500)

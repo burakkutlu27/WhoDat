@@ -2,11 +2,17 @@ import { describe, expect, it } from 'vitest'
 
 import {
   ROOM_CODE_LENGTH,
+  calculatePersistentScore,
+  calculateSpeedScore,
   distributeNames,
+  estimatePersistentScore,
+  estimateSpeedScore,
   generateRoomCode,
   selectNameForPlayer,
   selectNextPlayer,
+  selectNextSharedTargetAsker,
 } from './rules'
+
 
 const players = [{ id: 'p1' }, { id: 'p2' }, { id: 'p3' }]
 
@@ -95,3 +101,79 @@ describe('generateRoomCode', () => {
     expect(codes).not.toMatch(/[IO01]/)
   })
 })
+
+describe('calculateSpeedScore', () => {
+  it('0 soruda (ilk tahminde) tam 100 puan verir', () => {
+    expect(calculateSpeedScore(0)).toBe(100)
+    expect(estimateSpeedScore(0)).toBe(100)
+  })
+
+  it('her soruda 5 puan düşürür', () => {
+    expect(calculateSpeedScore(1)).toBe(95)
+    expect(calculateSpeedScore(3)).toBe(85)
+    expect(calculateSpeedScore(12)).toBe(40)
+  })
+
+  it('taban puanın altına düşmez (en az 10 puan)', () => {
+    expect(calculateSpeedScore(18)).toBe(10)
+    expect(calculateSpeedScore(19)).toBe(10)
+  })
+
+  it('20 veya daha fazla soruda limit aşıldığı için 0 puan verir', () => {
+    expect(calculateSpeedScore(20)).toBe(0)
+    expect(calculateSpeedScore(25)).toBe(0)
+  })
+})
+
+describe('calculatePersistentScore', () => {
+  it('0 soruda (ilk tahminde) tam 100 puan verir', () => {
+    expect(calculatePersistentScore(0)).toBe(100)
+    expect(estimatePersistentScore(0)).toBe(100)
+  })
+
+  it('her soruda 8 puan düşürür', () => {
+    expect(calculatePersistentScore(1)).toBe(92)
+    expect(calculatePersistentScore(2)).toBe(84)
+    expect(calculatePersistentScore(5)).toBe(60)
+  })
+
+  it('taban puanın altına düşmez (10. soruda bile en az 20 puan)', () => {
+    expect(calculatePersistentScore(10)).toBe(20)
+    expect(calculatePersistentScore(11)).toBe(20)
+  })
+})
+
+describe('selectNextSharedTargetAsker', () => {
+  const roomPlayers = [
+    { id: 'host-1' },
+    { id: 'p1' },
+    { id: 'p2' },
+    { id: 'p3' },
+  ]
+
+  it('hostu atlar ve yarışmacılar arasında döner', () => {
+    const r1 = selectNextSharedTargetAsker(roomPlayers, 'p1', 'host-1')
+    expect(r1.nextPlayer?.id).toBe('p2')
+
+    const r2 = selectNextSharedTargetAsker(roomPlayers, 'p2', 'host-1')
+    expect(r2.nextPlayer?.id).toBe('p3')
+
+    const r3 = selectNextSharedTargetAsker(roomPlayers, 'p3', 'host-1')
+    expect(r3.nextPlayer?.id).toBe('p1')
+  })
+
+  it('cezalı oyuncuyu atlar ve cezasını tüketir', () => {
+    const penalized = new Set(['p2'])
+    const r = selectNextSharedTargetAsker(roomPlayers, 'p1', 'host-1', penalized)
+    expect(r.nextPlayer?.id).toBe('p3')
+    expect(r.consumedPenalties).toEqual(['p2'])
+  })
+
+  it('tüm yarışmacılar cezalıysa sıradaki ilk oyuncuya döner ve cezaları temizler', () => {
+    const penalized = new Set(['p1', 'p2', 'p3'])
+    const r = selectNextSharedTargetAsker(roomPlayers, 'p1', 'host-1', penalized)
+    expect(r.nextPlayer?.id).toBe('p2')
+    expect(r.consumedPenalties).toContain('p2')
+  })
+})
+

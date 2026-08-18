@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 
-import type { NameRow, PlayerRow, RoomRow } from '@/lib/database.types'
+import type { FamousPersonRow, GameResultRow, NameRow, PlayerProfileRow, PlayerRow, RoomRow } from '@/lib/database.types'
 
 /**
  * Bellek içi Supabase test ikizi.
@@ -14,6 +14,9 @@ export interface FakeTables {
   rooms: RoomRow[]
   players: PlayerRow[]
   names: NameRow[]
+  famous_people?: FamousPersonRow[]
+  player_profiles?: PlayerProfileRow[]
+  game_results?: GameResultRow[]
 }
 
 type TableName = keyof FakeTables
@@ -27,8 +30,9 @@ interface Result<T> {
 class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
   private operation: 'select' | 'insert' | 'update' | 'upsert' | 'delete' = 'select'
   private payload: Row[] = []
-  private filters: Array<[string, unknown]> = []
+  private filters: Array<[string, unknown, 'eq' | 'ilike']> = []
   private sorts: Array<{ column: string; ascending: boolean }> = []
+  private limitCount?: number
   private wantsRows = false
   private cardinality: 'many' | 'maybe' | 'one' = 'many'
   private conflictColumns: string[] = ['id']
@@ -40,7 +44,10 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
   ) {}
 
   private get rows(): Row[] {
-    return this.tables[this.table] as unknown as Row[]
+    if (!this.tables[this.table]) {
+      ;(this.tables as unknown as Record<string, Row[]>)[this.table] = []
+    }
+    return (this.tables[this.table] ?? []) as unknown as Row[]
   }
 
   select() {
@@ -74,7 +81,17 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
   }
 
   eq(column: string, value: unknown) {
-    this.filters.push([column, value])
+    this.filters.push([column, value, 'eq'])
+    return this
+  }
+
+  ilike(column: string, pattern: string) {
+    this.filters.push([column, pattern, 'ilike'])
+    return this
+  }
+
+  limit(count: number) {
+    this.limitCount = count
     return this
   }
 
@@ -94,7 +111,14 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
   }
 
   private matches(row: Row): boolean {
-    return this.filters.every(([column, value]) => row[column] === value)
+    return this.filters.every(([column, value, op]) => {
+      if (op === 'ilike') {
+        const strVal = String(row[column] ?? '').toLocaleLowerCase('tr')
+        const pattern = String(value ?? '').replace(/%/g, '').toLocaleLowerCase('tr')
+        return strVal.includes(pattern)
+      }
+      return row[column] === value
+    })
   }
 
   private sorted(rows: Row[]): Row[] {
@@ -114,9 +138,11 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
     let affected: Row[] = []
 
     switch (this.operation) {
-      case 'select':
-        affected = this.sorted(this.rows.filter((row) => this.matches(row)))
+      case 'select': {
+        const filtered = this.sorted(this.rows.filter((row) => this.matches(row)))
+        affected = this.limitCount !== undefined ? filtered.slice(0, this.limitCount) : filtered
         break
+      }
 
       case 'insert':
       case 'upsert': {
@@ -186,7 +212,15 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
   }
 }
 
-export function createSupabaseFake(tables: FakeTables) {
+export function createSupabaseFake(
+  tables: FakeTables = { rooms: [], players: [], names: [], famous_people: [], player_profiles: [], game_results: [] },
+) {
+  if (!tables.famous_people) tables.famous_people = []
+  if (!tables.rooms) tables.rooms = []
+  if (!tables.players) tables.players = []
+  if (!tables.names) tables.names = []
+  if (!tables.player_profiles) tables.player_profiles = []
+  if (!tables.game_results) tables.game_results = []
   return {
     tables,
     client: {
@@ -216,8 +250,16 @@ export function buildRoom(overrides: Partial<RoomRow> = {}): RoomRow {
     status: 'waiting',
     current_player_id: null,
     current_identity_id: null,
+    game_mode: 'classic',
+    communication_mode: 'voice',
     game_round: 1,
     is_game_active: false,
+    total_rounds: 3,
+    category_mode: 'single',
+    selected_category: 'all',
+    phase_categories: null,
+    current_phase: 1,
+    total_phases: 1,
     ...overrides,
   }
 }
@@ -229,6 +271,10 @@ export function buildPlayer(roomId: string, overrides: Partial<PlayerRow> = {}):
     nickname: 'oyuncu',
     is_host: false,
     score: 0,
+    round_scores: [],
+    questions_this_round: 0,
+    has_finished_round: false,
+    device_id: null,
     created_at: nextTimestamp(),
     ...overrides,
   }
@@ -250,3 +296,14 @@ export function buildName(
     ...overrides,
   }
 }
+
+export function buildFamousPerson(overrides: Partial<FamousPersonRow> = {}): FamousPersonRow {
+  return {
+    id: randomUUID(),
+    name: 'Barış Manço',
+    category: 'unluler',
+    created_at: nextTimestamp(),
+    ...overrides,
+  }
+}
+

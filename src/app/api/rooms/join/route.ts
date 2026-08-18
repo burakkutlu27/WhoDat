@@ -17,8 +17,8 @@ export const POST = route(async (request: NextRequest) => {
     message: 'Çok fazla deneme yaptınız. Lütfen birkaç dakika sonra tekrar deneyin.',
   })
 
-  const { roomCode, nickname } = parseBody(joinRoomSchema, await readJsonBody(request))
-  const { roomId, playerId } = await joinRoom(roomCode, nickname)
+  const { roomCode, nickname, deviceId } = parseBody(joinRoomSchema, await readJsonBody(request))
+  const { roomId, playerId } = await joinRoom(roomCode, nickname, deviceId)
 
   const response = jsonOk({ roomId })
   const cookie = sessionCookie({ playerId, roomId, isHost: false })
