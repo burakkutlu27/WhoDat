@@ -43,6 +43,8 @@ export const famousPersonCategorySchema = z.enum([
   'dizi_film_karakterleri',
 ])
 
+export const deviceIdSchema = z.string().trim().min(1).max(100)
+
 export const createRoomSchema = z.object({
   nickname: nicknameSchema,
   gameMode: gameModeSchema.optional(),
@@ -50,6 +52,7 @@ export const createRoomSchema = z.object({
   categoryMode: lobbyCategoryModeSchema.optional(),
   category: famousPersonCategorySchema.optional(),
   phaseCategories: z.array(famousPersonCategorySchema).min(1).max(3).optional(),
+  deviceId: deviceIdSchema.optional(),
 })
 
 export const setRoomModeSchema = z.object({
@@ -69,6 +72,11 @@ export const setRoomCategorySchema = z.object({
 export const joinRoomSchema = z.object({
   roomCode: roomCodeSchema,
   nickname: nicknameSchema,
+  deviceId: deviceIdSchema.optional(),
+})
+
+export const statsQuerySchema = z.object({
+  deviceId: deviceIdSchema,
 })
 
 export const submitNamesSchema = z.object({

@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 
-import type { FamousPersonRow, NameRow, PlayerRow, RoomRow } from '@/lib/database.types'
+import type { FamousPersonRow, GameResultRow, NameRow, PlayerProfileRow, PlayerRow, RoomRow } from '@/lib/database.types'
 
 /**
  * Bellek içi Supabase test ikizi.
@@ -15,6 +15,8 @@ export interface FakeTables {
   players: PlayerRow[]
   names: NameRow[]
   famous_people?: FamousPersonRow[]
+  player_profiles?: PlayerProfileRow[]
+  game_results?: GameResultRow[]
 }
 
 type TableName = keyof FakeTables
@@ -211,12 +213,14 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
 }
 
 export function createSupabaseFake(
-  tables: FakeTables = { rooms: [], players: [], names: [], famous_people: [] },
+  tables: FakeTables = { rooms: [], players: [], names: [], famous_people: [], player_profiles: [], game_results: [] },
 ) {
   if (!tables.famous_people) tables.famous_people = []
   if (!tables.rooms) tables.rooms = []
   if (!tables.players) tables.players = []
   if (!tables.names) tables.names = []
+  if (!tables.player_profiles) tables.player_profiles = []
+  if (!tables.game_results) tables.game_results = []
   return {
     tables,
     client: {
@@ -270,6 +274,7 @@ export function buildPlayer(roomId: string, overrides: Partial<PlayerRow> = {}):
     round_scores: [],
     questions_this_round: 0,
     has_finished_round: false,
+    device_id: null,
     created_at: nextTimestamp(),
     ...overrides,
   }

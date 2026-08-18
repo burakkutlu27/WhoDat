@@ -1,4 +1,4 @@
-# KimBu (v3.4)
+# KimBu (v3.5)
 
 **Ben Kimim? (Who Am I?)** parti ve masa oyununun Next.js ve Supabase ile geliştirilmiş çok oyunculu çevrimiçi sürümü.
 
@@ -10,9 +10,20 @@ Oyuncular 6 haneli oda koduyla aynı lobiye katılır, seçilen oyun moduna ve k
 
 ---
 
-## Öne Çıkan Özellikler (v3.4)
+## Öne Çıkan Özellikler (v3.5)
 
-### Ünlülük Katsayısı & Akıllı İsim Öneri Sistemi (Fame Tier - v3.4)
+### Cihaz Bazlı Liderlik Tablosu & Kalıcı İstatistikler (v3.5)
+- **Hesapsız Kalıcı Kimlik (Seviye 1):** Oyuncuların tarayıcısında `localStorage` üzerinde saklanan kalıcı ve görünmez bir cihaz kimliği (`kimbu_device_id`) oluşturulur; e-posta veya kayıt sürtünmesi olmadan tüm oyun geçmişi bu kimliğe işlenir.
+- **Otomatik Sonuç Kaydı:** Her oyun bittiğinde (`status = finished`), tüm oyuncuların puanı, derecesi (1., 2., 3.), oynadığı mod ve elenme durumu `game_results` tablosuna otomatik olarak kaydedilir.
+- **"İstatistiklerim" Paneli:** Kraft kağıt ve skeç estetiğine uygun interaktif modal:
+  - 🎮 **Toplam Oyun Sayısı**
+  - 🏆 **Toplam Birincilik & Kazanma Oranı (%)**
+  - 🛡️ **Elenmeden Bitirilen Oyunlar**
+  - 🌟 **Kişisel En Yüksek Skor**
+  - ⚡ **Son 10 Oyun Geçmişi (Mod, Derece Rozetleri 🥇/🥈/🥉, Puan ve Tarih)**
+- **Her Yerden Hızlı Erişim:** Navbar'daki kupa butonu, ana sayfa ve oyun sonu skor tablosu ekranından tek tıkla istatistikleri görüntüleme.
+
+### Ünlülük Katsayısı & Akıllı İsim Öneri Sistemi (Fame Tier)
 - **5 Seviyeli Ünlülük Sınıflandırması:** 5.452+ isimlik veri havuzunun tamamı popülerlik ve tanınırlık düzeyine göre etiketlenmiştir:
   - **Tier 1 (Çok Ünlü):** Türkiye ve dünyada neredeyse herkesin bildiği dev ikonlar (Atatürk, Tarkan, Cem Yılmaz, Barış Manço, Recep İvedik, Ronaldo, Messi, Batman vb.).
   - **Tier 2 (Ünlü):** Geniş kitlelerce tanınan popüler sanatçılar, sporcular ve kült karakterler (Hadise, Kenan İmirzalıoğlu, Şener Şen, Naim Süleymanoğlu, Walter White vb.).
@@ -105,7 +116,7 @@ Oda kurulurken veya lobide oda sahibi tarafından 4 farklı oyun modu seçilebil
 - **Frontend:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, motion (Framer Motion), lucide-react
 - **Tipografi:** Google Fonts (Caveat, Nunito, JetBrains Mono)
 - **Backend & Veritabanı:** Supabase (PostgreSQL), Service Role Client, HMAC imzalı çerezler, Supabase Realtime
-- **Test:** Vitest (118 birim, kural ve entegrasyon testi)
+- **Test:** Vitest (123 birim, kural ve entegrasyon testi)
 
 ---
 
@@ -137,6 +148,6 @@ Oda kurulurken veya lobide oda sahibi tarafından 4 farklı oyun modu seçilebil
 - `npm run build`: Production derlemesini alır (Turbopack).
 - `npm run typecheck`: TypeScript tip denetimini çalıştırır.
 - `npm run lint`: ESLint kod kalitesi kontrolünü çalıştırır.
-- `npm test`: Vitest test takımını çalıştırır (118 test).
+- `npm test`: Vitest test takımını çalıştırır (123 test).
 - `node scripts/build-complete-dataset.mjs`: Karakter veri setini derler.
 - `node scripts/assign-fame-tiers.mjs`: Ünlülük katsayısı (fameTier) dağıtımını çalıştırır.

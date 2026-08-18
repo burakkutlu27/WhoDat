@@ -8,7 +8,7 @@ import { supabaseAdmin } from '../supabaseAdmin'
 import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
 import { QUESTION_BANK_SEED } from './questionBankData'
-import type { AutoAssignResult, ClueCardItem, CommunicationMode, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, PublicPlayer, SharedQuestionItem, TextQuestionVote } from './types'
+import type { AutoAssignResult, ClueCardItem, CommunicationMode, DeviceStats, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, PublicPlayer, RecentGameItem, SharedQuestionItem, TextQuestionVote } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -563,11 +563,13 @@ export async function createRoom(
     category?: FamousPersonCategory
     phaseCategories?: FamousPersonCategory[]
     communicationMode?: CommunicationMode
+    deviceId?: string
   },
 ) {
   const admin = supabaseAdmin()
   const totalRounds = gameMode === 'speed' ? DEFAULT_SPEED_ROUNDS : 1
   const communicationMode = categorySettings?.communicationMode || 'voice'
+  const deviceId = categorySettings?.deviceId || null
 
   for (let attempt = 0; attempt < 5; attempt++) {
     const roomCode = generateRoomCode()
@@ -585,7 +587,7 @@ export async function createRoom(
 
     const { data: host, error: hostError } = await admin
       .from('players')
-      .insert({ room_id: room.id, nickname, is_host: true, score: 0 })
+      .insert({ room_id: room.id, nickname, is_host: true, score: 0, device_id: deviceId })
       .select()
       .single()
 
@@ -635,6 +637,160 @@ export async function createRoom(
   }
 
   throw conflict('room_code_exhausted', 'Oda oluşturulamadı, lütfen tekrar deneyin.')
+}
+
+/**
+ * Oyun tamamlandığında odadaki tüm oyuncuların sonuçlarını (Seviye 1 Cihaz Bazlı İstatistikler)
+ * `game_results` tablosuna kaydeder.
+ */
+export async function recordGameResults(roomId: string): Promise<void> {
+  try {
+    const admin = supabaseAdmin()
+    const [room, players] = await Promise.all([loadRoom(roomId), loadPlayers(roomId)])
+    if (!room || players.length === 0) return
+
+    // Oyuncuları skorlarına göre sırala
+    const standings = [...players].sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
+
+    // Sıralamaları (placement) hesapla (aynı skor aynı dereceyi paylaşır)
+    const placements = new Map<string, number>()
+    let currentRank = 1
+    for (let i = 0; i < standings.length; i++) {
+      const p = standings[i]!
+      if (i > 0 && (p.score ?? 0) === (standings[i - 1]?.score ?? 0)) {
+        placements.set(p.id, placements.get(standings[i - 1]!.id) ?? currentRank)
+      } else {
+        currentRank = i + 1
+        placements.set(p.id, currentRank)
+      }
+    }
+
+    const gameMode = getRoomMode(room.id, room.game_mode)
+
+    for (const player of players) {
+      if (!player.device_id) continue
+
+      // Hayatta kalma / elenmeme durumunu belirle
+      let survived = true
+      if (gameMode === 'classic') {
+        survived = getPlayerLives(room.id, player.id) > 0
+      } else if (gameMode === 'persistent') {
+        const pData = playerPersistentStore.get(room.id)?.get(player.id)
+        survived = pData ? pData.nameSolved : (player.score ?? 0) > 0
+      }
+
+      const placement = placements.get(player.id) ?? 1
+
+      // 1. Cihaz profilini bul veya oluştur
+      let profileId: string | null = null
+      const { data: existingProfile } = await admin
+        .from('player_profiles')
+        .select('id')
+        .eq('device_id', player.device_id)
+        .maybeSingle()
+
+      if (existingProfile?.id) {
+        profileId = existingProfile.id
+      } else {
+        const { data: newProfile } = await admin
+          .from('player_profiles')
+          .insert({ device_id: player.device_id })
+          .select('id')
+          .maybeSingle()
+        profileId = newProfile?.id ?? null
+      }
+
+      if (!profileId) continue
+
+      // 2. İdempotency: Aynı oyun ve profil için daha önce kayıt atılmış mı?
+      const { data: existingResult } = await admin
+        .from('game_results')
+        .select('id')
+        .eq('game_room_id', roomId)
+        .eq('player_profile_id', profileId)
+        .maybeSingle()
+
+      if (!existingResult) {
+        await admin.from('game_results').insert({
+          player_profile_id: profileId,
+          game_room_id: roomId,
+          game_mode: gameMode,
+          score: player.score ?? 0,
+          placement,
+          survived,
+          played_at: new Date().toISOString(),
+        })
+      }
+    }
+  } catch (err) {
+    // İstatistik kaydı ana oyun akışını asla kesmemelidir
+    console.error('recordGameResults error:', err)
+  }
+}
+
+/**
+ * Cihaz kimliğine ait istatistik özetini döner.
+ */
+export async function getDeviceStats(deviceId: string): Promise<DeviceStats> {
+  const admin = supabaseAdmin()
+
+  const { data: profile } = await admin
+    .from('player_profiles')
+    .select('id')
+    .eq('device_id', deviceId)
+    .maybeSingle()
+
+  if (!profile?.id) {
+    return {
+      totalGames: 0,
+      totalWins: 0,
+      totalSurvived: 0,
+      winRate: 0,
+      highScore: 0,
+      recentGames: [],
+    }
+  }
+
+  const { data: results, error } = await admin
+    .from('game_results')
+    .select('id, game_mode, score, placement, survived, played_at')
+    .eq('player_profile_id', profile.id)
+    .order('played_at', { ascending: false })
+
+  if (error || !results || results.length === 0) {
+    return {
+      totalGames: 0,
+      totalWins: 0,
+      totalSurvived: 0,
+      winRate: 0,
+      highScore: 0,
+      recentGames: [],
+    }
+  }
+
+  const totalGames = results.length
+  const totalWins = results.filter((r) => r.placement === 1).length
+  const totalSurvived = results.filter((r) => r.survived).length
+  const winRate = totalGames > 0 ? Math.round((totalWins / totalGames) * 100) : 0
+  const highScore = Math.max(...results.map((r) => r.score ?? 0))
+
+  const recentGames: RecentGameItem[] = results.slice(0, 10).map((r) => ({
+    id: r.id,
+    gameMode: r.game_mode,
+    score: r.score,
+    placement: r.placement,
+    survived: r.survived,
+    playedAt: r.played_at,
+  }))
+
+  return {
+    totalGames,
+    totalWins,
+    totalSurvived,
+    winRate,
+    highScore,
+    recentGames,
+  }
 }
 
 /**
@@ -711,7 +867,7 @@ export async function setRoomMode(roomId: string, playerId: string, gameMode: Ga
   return { gameMode: modeData.gameMode, totalRounds: modeData.totalRounds }
 }
 
-export async function joinRoom(roomCode: string, nickname: string) {
+export async function joinRoom(roomCode: string, nickname: string, deviceId?: string) {
   const admin = supabaseAdmin()
 
   const { data: room, error } = await admin
@@ -734,7 +890,7 @@ export async function joinRoom(roomCode: string, nickname: string) {
 
   const { data: player, error: playerError } = await admin
     .from('players')
-    .insert({ room_id: room.id, nickname, is_host: false, score: 0 })
+    .insert({ room_id: room.id, nickname, is_host: false, score: 0, device_id: deviceId || null })
     .select()
     .single()
 
@@ -1448,6 +1604,7 @@ async function transitionToNextPhase(
       .update({ status: 'finished', is_game_active: false, current_identity_id: null })
       .eq('id', room.id)
       .select('id')
+    await recordGameResults(room.id)
     return { claimed: (data?.length ?? 0) > 0, finished: true }
   }
 
@@ -1596,6 +1753,7 @@ async function advanceTurn(
           .update({ status: 'finished', is_game_active: false, current_identity_id: null })
           .eq('id', room.id)
           .select('id')
+        await recordGameResults(room.id)
         return { claimed: (data?.length ?? 0) > 0, finished: true, nextRoundStarted: false }
       }
 
@@ -1679,6 +1837,7 @@ async function advanceTurn(
         .update({ status: 'finished', is_game_active: false, current_identity_id: null })
         .eq('id', room.id)
         .select('id')
+      await recordGameResults(room.id)
       return { claimed: (data?.length ?? 0) > 0, finished: true }
     }
 
@@ -1733,6 +1892,7 @@ async function advanceTurn(
       .eq('id', room.id)
       .eq('game_round', currentRound)
       .select('id')
+    await recordGameResults(room.id)
     return { claimed: (data?.length ?? 0) > 0, finished: true }
   }
 
@@ -2400,6 +2560,7 @@ async function handleSharedTargetGuess(
         status: 'finished',
         is_game_active: false,
       }).eq('id', room.id)
+      await recordGameResults(room.id)
     }
 
     setSharedTargetRoomData(room.id, sharedData)

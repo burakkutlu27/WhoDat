@@ -93,9 +93,76 @@ export type Database = {
           },
         ]
       }
+      game_results: {
+        Row: {
+          game_mode: string
+          game_room_id: string | null
+          id: string
+          placement: number
+          played_at: string | null
+          player_profile_id: string
+          score: number
+          survived: boolean
+        }
+        Insert: {
+          game_mode: string
+          game_room_id?: string | null
+          id?: string
+          placement?: number
+          played_at?: string | null
+          player_profile_id: string
+          score?: number
+          survived?: boolean
+        }
+        Update: {
+          game_mode?: string
+          game_room_id?: string | null
+          id?: string
+          placement?: number
+          played_at?: string | null
+          player_profile_id?: string
+          score?: number
+          survived?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'game_results_player_profile_id_fkey'
+            columns: ['player_profile_id']
+            isOneToOne: false
+            referencedRelation: 'player_profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'game_results_game_room_id_fkey'
+            columns: ['game_room_id']
+            isOneToOne: false
+            referencedRelation: 'rooms'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      player_profiles: {
+        Row: {
+          created_at: string | null
+          device_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string | null
+          device_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string | null
+          device_id?: string
+          id?: string
+        }
+        Relationships: []
+      }
       players: {
         Row: {
           created_at: string
+          device_id: string | null
           has_finished_round: boolean
           id: string
           is_host: boolean | null
@@ -107,6 +174,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          device_id?: string | null
           has_finished_round?: boolean
           id?: string
           is_host?: boolean | null
@@ -118,6 +186,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          device_id?: string | null
           has_finished_round?: boolean
           id?: string
           is_host?: boolean | null
@@ -262,5 +331,7 @@ export type RoomRow = Database['public']['Tables']['rooms']['Row']
 export type PlayerRow = Database['public']['Tables']['players']['Row']
 export type NameRow = Database['public']['Tables']['names']['Row']
 export type FamousPersonRow = Database['public']['Tables']['famous_people']['Row']
+export type PlayerProfileRow = Database['public']['Tables']['player_profiles']['Row']
+export type GameResultRow = Database['public']['Tables']['game_results']['Row']
 
 export type RoomStatus = 'waiting' | 'playing' | 'finished' | 'closed'

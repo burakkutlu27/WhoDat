@@ -7,6 +7,7 @@ import { useState } from 'react'
 
 import { CustomSelect } from '@/components/CustomSelect'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
+import { getDeviceId } from '@/lib/deviceId'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import type { CommunicationMode, FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
 
@@ -42,6 +43,7 @@ export default function CreateRoomPage() {
           categoryMode,
           category: selectedCategory,
           phaseCategories: categoryMode === 'multi_phase' ? phaseCategories : undefined,
+          deviceId: getDeviceId(),
         },
       })
       router.push(`/room/${roomId}`)
@@ -124,12 +126,9 @@ export default function CreateRoomPage() {
                   style={{ borderRadius: '8px 4px 10px 6px' }}
                 >
                   <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center justify-between gap-1">
-                      <span className="flex items-center gap-1.5">
-                        <Target className="h-5 w-5 text-pencil-yellow" />
-                        <span>Klasik</span>
-                      </span>
-                      {gameMode === 'classic' && <span className="text-xs bg-pencil-yellow text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
+                      <Target className="h-5 w-5 text-pencil-yellow" />
+                      <span>Klasik</span>
                     </span>
                     <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
                       3 Can Hakkı. Yanlış tahmin can götürür, hayatta kalan kazanır!
@@ -148,12 +147,9 @@ export default function CreateRoomPage() {
                   style={{ borderRadius: '6px 10px 4px 8px' }}
                 >
                   <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center justify-between gap-1">
-                      <span className="flex items-center gap-1.5">
-                        <Zap className="h-5 w-5 text-pencil-green" />
-                        <span>Hız Modu</span>
-                      </span>
-                      {gameMode === 'speed' && <span className="text-xs bg-pencil-green text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
+                      <Zap className="h-5 w-5 text-pencil-green" />
+                      <span>Hız Modu</span>
                     </span>
                     <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
                       Az Soru, Çok Puan! 3 turda en az soruyla bil, puanları topla!
@@ -172,12 +168,9 @@ export default function CreateRoomPage() {
                   style={{ borderRadius: '10px 6px 8px 4px' }}
                 >
                   <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center justify-between gap-1">
-                      <span className="flex items-center gap-1.5">
-                        <Brain className="h-5 w-5 text-pencil-blue" />
-                        <span>Israrcı</span>
-                      </span>
-                      {gameMode === 'persistent' && <span className="text-xs bg-pencil-blue text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
+                      <Brain className="h-5 w-5 text-pencil-blue" />
+                      <span>Israrcı</span>
                     </span>
                     <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
                       10 Soru Bütçesi & 3 Can. Bütçen bitince zorunlu tahmin!
@@ -196,12 +189,9 @@ export default function CreateRoomPage() {
                   style={{ borderRadius: '8px 10px 6px 8px' }}
                 >
                   <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center justify-between gap-1">
-                      <span className="flex items-center gap-1.5">
-                        <Users className="h-5 w-5 text-pencil-orange" />
-                        <span>Ortak Hedef</span>
-                      </span>
-                      {gameMode === 'shared_target' && <span className="text-xs bg-pencil-orange text-white px-2 py-0.5 rounded-full font-bold">SEÇİLDİ</span>}
+                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
+                      <Users className="h-5 w-5 text-pencil-orange" />
+                      <span>Ortak Hedef</span>
                     </span>
                     <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
                       Tek Gizli Kişi & Hakem! Sırayla soru sor, ilk sen bil!

@@ -196,3 +196,21 @@ export interface AutoAssignResult {
   sharedTargetName?: string
 }
 
+export interface RecentGameItem {
+  id: string
+  gameMode: string
+  score: number
+  placement: number
+  survived: boolean
+  playedAt: string | null
+}
+
+export interface DeviceStats {
+  totalGames: number
+  totalWins: number
+  totalSurvived: number
+  winRate: number
+  highScore: number
+  recentGames: RecentGameItem[]
+}
+

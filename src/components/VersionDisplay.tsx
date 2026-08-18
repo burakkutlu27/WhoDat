@@ -11,7 +11,7 @@ export default function VersionDisplay() {
   const [isVisible, setIsVisible] = useState(false)
 
   const versionInfo: VersionInfo = {
-    version: '3.3.0',
+    version: '3.5.0',
     environment: process.env.NODE_ENV || 'development'
   }
 
@@ -57,7 +57,7 @@ export default function VersionDisplay() {
             </div>
             <div className="divider-sketch my-2" />
             <p className="text-xs text-ink-extra-faded">
-              Tam Metin / Uzaktan Modu, Soru Bankası, 15sn Oylama, Kategori Lobisi ve 4 Oyun Modu Aktif
+              Cihaz Bazlı İstatistikler & Liderlik Tablosu, Akıllı Ünlülük Katsayısı (Tier 1-5), Tam Metin Modu, Soru Bankası, Kategori Lobisi ve 4 Oyun Modu Aktif
             </p>
           </div>
         </div>

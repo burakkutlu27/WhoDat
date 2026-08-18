@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { Suspense, useEffect, useState } from 'react'
 
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
+import { getDeviceId } from '@/lib/deviceId'
 
 function JoinRoomForm() {
   const router = useRouter()
@@ -34,7 +35,7 @@ function JoinRoomForm() {
     try {
       const { roomId } = await apiRequest<{ roomId: string }>('/api/rooms/join', {
         method: 'POST',
-        body: { roomCode: roomCode.trim(), nickname: nickname.trim() },
+        body: { roomCode: roomCode.trim(), nickname: nickname.trim(), deviceId: getDeviceId() },
       })
       router.push(`/room/${roomId}`)
     } catch (caught) {

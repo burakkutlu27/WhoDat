@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
+import { StatsModal } from '@/components/StatsModal'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import { useGameState } from '@/lib/useGameState'
@@ -19,6 +20,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
   const [actionError, setActionError] = useState<string | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [showStats, setShowStats] = useState(false)
 
   const status = state?.room.status
 
@@ -330,6 +332,19 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
           </ol>
         </section>
 
+        {/* Genel İstatistikler Butonu */}
+        <div className="flex justify-center">
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setShowStats(true)}
+            className="group inline-flex items-center gap-2 rounded-xl border-2 border-dashed border-pencil-yellow bg-paper-card px-5 py-2.5 font-display text-lg font-bold text-ink shadow-xs transition-all hover:bg-pencil-yellow hover:text-white"
+          >
+            <Trophy className="h-5 w-5 text-pencil-yellow transition-colors group-hover:text-white" />
+            <span>Genel İstatistiklerimi Gör</span>
+          </motion.button>
+        </div>
+
         {actionError && (
           <div role="alert" className="alert-error">
             {actionError}
@@ -377,6 +392,8 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
           </p>
         )}
       </div>
+
+      <StatsModal isOpen={showStats} onClose={() => setShowStats(false)} />
     </div>
   )
 }
