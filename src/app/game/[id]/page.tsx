@@ -1428,7 +1428,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
           {/* Live Scoreboard & ClueCard Sidebar */}
           <aside className="lg:col-span-1 space-y-6">
             {/* İpucu Kartı (Tam Metin Modu veya Soru Not Defteri) */}
-            <ClueCard clueItems={state.you.clueCard} />
+            <ClueCard
+              clueItems={state.you.clueCard}
+              communicationMode={state.room.communicationMode}
+              roomId={roomId}
+            />
 
             <div className="paper-card-alt p-6">
               <div className="mb-4 flex items-center justify-between">
