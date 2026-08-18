@@ -27,39 +27,46 @@ export interface FamousPersonItem {
   name: string
   category: Exclude<FamousPersonCategory, 'all'>
   fameTier?: number
+  subcategory?: string
 }
 
 export interface FamousPersonSeed {
   name: string
   category: string
   fameTier: number
+  subcategory?: string
 }
 
 export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Novak Djokovic",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "tenisci"
   },
   {
     "name": "Rafael Nadal",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "tenisci"
   },
   {
     "name": "Roger Federer",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "tenisci"
   },
   {
     "name": "Usain Bolt",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "atlet"
   },
   {
     "name": "Mike Tyson",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Muhammed Ali",
@@ -69,42 +76,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Stephen Curry",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Shaquille O'Neal",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "LeBron James",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Kobe Bryant",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Michael Jordan",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Luka Modric",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Robert Lewandowski",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Karim Benzema",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Zlatan Ibrahimovic",
@@ -114,42 +129,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Erling Haaland",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Neymar",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Ronaldo (Nazário)",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Ronaldinho",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "David Beckham",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Zinedine Zidane",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Pelé",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Cristiano Ronaldo",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Dusan Tadic",
@@ -164,57 +187,68 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mauro Icardi",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Toprak Razgatlıoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Kenan Sofuoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Semih Saygıner",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Halil Mutlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Hamza Yerlikaya",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Taha Akgül",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Rıza Kayaalp",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Mete Gazoz",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Zehra Güneş",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Mehmet Okur",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "İlkay Gündoğan",
@@ -224,27 +258,32 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kenan Yıldız",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Kerem Aktürkoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Hakan Çalhanoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Sergen Yalçın",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Rüştü Reçber",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Volkan Demirel",
@@ -254,32 +293,38 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fernando Muslera",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Gheorghe Hagi",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Naim Süleymanoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Hakan Şükür",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Şenol Güneş",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Fatih Terim",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Jackie Chan",
@@ -289,17 +334,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Keanu Reeves",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Will Smith",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Morgan Freeman",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Marilyn Monroe",
@@ -319,77 +367,92 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Johnny Depp",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Angelina Jolie",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Tom Cruise",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Leonardo DiCaprio",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Brad Pitt",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Taylor Swift",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Beyoncé",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Rihanna",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Shakira",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Eminem",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Elvis Presley",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Freddie Mercury",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Madonna",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Michael Jackson",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Kenan Doğulu",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Serdar Ortaç",
@@ -399,42 +462,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gülşen",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Murat Boz",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Hadise",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Yıldız Tilbe",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Beren Saat",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Kıvanç Tatlıtuğ",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Haluk Bilginer",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Beyazıt Öztürk",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Yılmaz Erdoğan",
@@ -444,17 +515,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nejat Uygur",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Levent Kırca",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Metin Akpınar",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Kadir İnanır",
@@ -464,22 +538,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hülya Koçyiğit",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Türkan Şoray",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Tarık Akan",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Münir Özkul",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Halit Akçatepe",
@@ -489,22 +567,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Şener Şen",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Cem Yılmaz",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Kemal Sunal",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Aşık Veysel",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Neşet Ertaş",
@@ -519,52 +601,62 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Kaya",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Zeki Müren",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "İbrahim Tatlıses",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Müslüm Gürses",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Sezen Aksu",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Tarkan",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Kleopatra",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Thomas Edison",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Stephen Hawking",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Charles Darwin",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Sigmund Freud",
@@ -574,37 +666,44 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aristoteles",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Platon",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Sokrates",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Celal Şengör",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "İlber Ortaylı",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Cahit Arf",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Mete Han",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Alparslan",
@@ -614,22 +713,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Selahaddin Eyyubi",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Attila",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Timur",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Cengiz Han",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Prenses Diana",
@@ -639,22 +742,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kraliçe II. Elizabeth",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Che Guevara",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Nelson Mandela",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Mahatma Gandhi",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Joseph Stalin",
@@ -664,12 +771,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Vladimir Lenin",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Abraham Lincoln",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Adolf Hitler",
@@ -679,7 +788,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Napolyon Bonapart",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Jül Sezar",
@@ -689,32 +799,38 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Büyük İskender",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Kristof Kolomb",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "kasif"
   },
   {
     "name": "Nikola Tesla",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Leonardo da Vinci",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "ressam"
   },
   {
     "name": "Isaac Newton",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Piri Reis",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "kasif"
   },
   {
     "name": "Barbaros Hayreddin Paşa",
@@ -724,7 +840,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Yunus Emre",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Mimar Sinan",
@@ -734,42 +851,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mevlana Celaleddin Rumi",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "II. Abdülhamid",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Osman Gazi",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Yavuz Sultan Selim",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Kanuni Sultan Süleyman",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Fatih Sultan Mehmet",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "İsmet İnönü",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Mustafa Kemal Atatürk",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Vito Corleone (Baba / The Godfather)",
@@ -1904,7 +2029,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Köroğlu",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Batman (Bruce Wayne)",
@@ -2769,7 +2895,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Zeki Alasya",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Alev Sezer",
@@ -2784,7 +2911,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sadri Alışık",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Ali Atay",
@@ -2949,7 +3077,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Sunal",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Ali Sururi",
@@ -3019,7 +3148,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alp Korkmaz",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Alp Navruz",
@@ -3049,7 +3179,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alper Kul",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Alper Rende",
@@ -3134,7 +3265,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aras Bulut İynemli",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Arda Aydın",
@@ -3194,7 +3326,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cüneyt Arkın",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Arslan Kacar",
@@ -3234,7 +3367,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ata Demirer",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Ata Saka",
@@ -3714,7 +3848,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Onur Buldu",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Bulut Aras",
@@ -3749,7 +3884,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Özçivit",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Burak Sağyaşar",
@@ -3824,7 +3960,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adile Naşit",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Afra Saraçoğlu",
@@ -3854,7 +3991,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ajda Pekkan",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Akasya Asıltürkmen",
@@ -3874,7 +4012,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Filiz Akın",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Zeynep Aksu",
@@ -4249,7 +4388,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aylin Kontente",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Aylin Tunceli",
@@ -4379,7 +4519,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayşen Gruda",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Ayşen Tekin",
@@ -4609,7 +4750,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bergüzar Korel",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Berna Laçin",
@@ -4814,7 +4956,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Büşra Pekin",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Nihan Büyükağaç",
@@ -4824,7 +4967,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Tuba Büyüküstün",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Cahide Sonku",
@@ -4884,7 +5028,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cansu Dere",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Cansu Tosun",
@@ -5239,7 +5384,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kerem Bürsin",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Cahit Gök",
@@ -5649,7 +5795,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barış Manço",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Batu Akdeniz",
@@ -5694,7 +5841,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cem Karaca",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Cem Kısmet",
@@ -5729,7 +5877,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hayko Cepkin",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Çelik",
@@ -5829,7 +5978,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Şebnem Ferah",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Feridun Düzağaç",
@@ -5869,7 +6019,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gökhan Özoğuz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Gökhan Semiz",
@@ -5919,7 +6070,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Haluk Levent",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Harun Tekin",
@@ -5989,7 +6141,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mabel Matiz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Melis Danişmend",
@@ -6119,7 +6272,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sertab Erener",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Seyhan Karabay",
@@ -6164,7 +6318,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Teoman",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Umut Kaya",
@@ -6274,7 +6429,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceza",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Contra",
@@ -6304,7 +6460,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ezhel",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Fuat Ergin",
@@ -6434,7 +6591,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sagopa Kajmer",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Saian",
@@ -6509,7 +6667,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İlyas Salman",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Oya Başar",
@@ -6554,7 +6713,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sunay Akın",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Hakan Akkaya",
@@ -6739,7 +6899,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceyhun Yılmaz",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Çağıl Özge Özkul",
@@ -6759,7 +6920,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Demet Akalın",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Demet Şener",
@@ -6819,7 +6981,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Doğu Demirkol",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Güzide Duran",
@@ -6839,7 +7002,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ebru Gündeş",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Ebru Karanfilci",
@@ -6934,7 +7098,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Eser Yenenler",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Esra Balamir",
@@ -6949,7 +7114,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Esra Erol",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Eşref Şefik",
@@ -7039,7 +7205,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fatma Girik",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Emre Gönlüşen",
@@ -7134,7 +7301,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Halit Ergenç",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Hande Ataizi",
@@ -7169,7 +7337,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Acun Ilıcalı",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Uğur Işılak",
@@ -7184,7 +7353,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İbrahim Büyükak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "İbrahim Güneş",
@@ -7199,7 +7369,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İclal Aydın",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "İdil Öztamer",
@@ -7254,7 +7425,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kaan Sekban",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Kaan Yakuphan",
@@ -7309,7 +7481,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kenan İmirzalıoğlu",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Kerem Alışık",
@@ -7344,7 +7517,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İsmail Küçükkaya",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Lemi Filozof",
@@ -7474,7 +7648,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Müge Anlı",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Müge Oruçkaptan",
@@ -7494,7 +7669,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nazlı Çelik",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Nazlı Tolga",
@@ -7534,7 +7710,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nevşin Mengü",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Nihan Günay",
@@ -7574,17 +7751,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Oğuzhan Koç",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Okan Bayülgen",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Oktay Kaynarca",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "oyuncu"
   },
   {
     "name": "50 Cent",
@@ -7789,7 +7969,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Woody Allen",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yonetmen"
   },
   {
     "name": "Joaquim de Almeida",
@@ -8219,7 +8400,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Christian Bale",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Eric Balfour",
@@ -10229,7 +10411,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rowan Atkinson",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Richard Attenborough",
@@ -10554,7 +10737,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Charlie Chaplin",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Graham Chapman",
@@ -10664,7 +10848,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sacha Baron Cohen",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Raphaël Coleman",
@@ -11244,7 +11429,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ricky Gervais",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "John Gielgud",
@@ -12824,7 +13010,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Necdet Sezer",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Türkiye cumhurbaşkanı vekili",
@@ -13114,7 +13301,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Marie Curie",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Pierre Curie",
@@ -13189,7 +13377,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Albert Einstein",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Emilio Segrè",
@@ -13364,7 +13553,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Werner Heisenberg",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Hendrik Lorentz",
@@ -13744,7 +13934,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Max Planck",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "David Politzer",
@@ -13849,7 +14040,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Erwin Schrödinger",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Julian Schwinger",
@@ -14114,7 +14306,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aziz Sancar",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Adolf von Baeyer",
@@ -15369,7 +15562,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alexander Fleming",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Werner Forssmann",
@@ -16209,7 +16403,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Albert Camus",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Elias Canetti",
@@ -16224,7 +16419,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Winston Churchill",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Czesław Miłosz",
@@ -16369,7 +16565,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ernest Hemingway",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Henri Bergson",
@@ -16509,7 +16706,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gabriel García Márquez",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "François Mauriac",
@@ -16559,7 +16757,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Orhan Pamuk",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Pär Lagerkvist",
@@ -16639,7 +16838,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jean-Paul Sartre",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Saul Bellow",
@@ -16794,7 +16994,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Michelangelo",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "ressam"
   },
   {
     "name": "Prospero Spani",
@@ -17059,7 +17260,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Johann Wolfgang von Goethe",
     "category": "tarihi_kisiler",
-    "fameTier": 5
+    "fameTier": 5,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Gottfried Leibniz",
@@ -17089,7 +17291,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Georg Wilhelm Friedrich Hegel",
     "category": "tarihi_kisiler",
-    "fameTier": 5
+    "fameTier": 5,
+    "subcategory": "filozof"
   },
   {
     "name": "Heinz Heimsoeth",
@@ -17134,7 +17337,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Immanuel Kant",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Johann Friedrich Herbart",
@@ -17209,7 +17413,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Karl Marx",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Max Beer",
@@ -17289,7 +17494,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arthur Schopenhauer",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Oswald Spengler",
@@ -17414,7 +17620,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "René Descartes",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Denis Diderot",
@@ -17669,7 +17876,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jean-Jacques Rousseau",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Sarah Kofman",
@@ -17704,7 +17912,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Voltaire",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Astronom",
@@ -18589,7 +18798,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Athena",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Avcı Herne",
@@ -21909,7 +22119,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alperen Şengün",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Altan Dinçer",
@@ -22179,7 +22390,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Can Bartu",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Can Kaan Turgut",
@@ -22254,7 +22466,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cedi Osman",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Cem Akdağ",
@@ -22584,7 +22797,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ergin Ataman",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Erhan Yetim",
@@ -22624,7 +22838,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ersan İlyasova",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Orkun Kemal Ertaş",
@@ -22724,7 +22939,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Furkan Korkmaz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Gökbörü Aygar",
@@ -22839,7 +23055,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Harun Erdenay",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Hasan Arat",
@@ -22854,7 +23071,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hidayet Türkoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Hikmet Vardar",
@@ -22904,7 +23122,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İbrahim Kutluay",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "İbrahim Yıldırım",
@@ -23034,7 +23253,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kerem Tunçeri",
     "category": "sporcular",
-    "fameTier": 5
+    "fameTier": 5,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Kristijan Nikolov",
@@ -23379,7 +23599,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cansu Özbay",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Cemre Erol",
@@ -23604,7 +23825,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ebrar Karakurt",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Ebru Ceylan",
@@ -23864,7 +24086,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gizem Örge",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Gizem Türegün",
@@ -23934,7 +24157,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hande Baladın",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Hande Korkut",
@@ -24149,7 +24373,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Melissa Vargas",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Merve Atlıer",
@@ -24254,7 +24479,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Neslihan Demir",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Neşve Büyükbayram",
@@ -24359,12 +24585,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arda Güler",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Arda Turan",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Arif Güney",
@@ -24514,7 +24742,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barış Alper Yılmaz",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Deniz Barış",
@@ -24649,7 +24878,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Yılmaz",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Burhan Atak",
@@ -24869,7 +25099,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mustafa Denizli",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Oktay Derelioğlu",
@@ -24994,7 +25225,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Emre Belözoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Emre Kılınç",
@@ -25229,7 +25461,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ferdi Kadıoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Feridun Buğeker",
@@ -25869,7 +26102,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alex de Souza",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Alex Teixeira",
@@ -26209,7 +26443,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gianluigi Buffon",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Jorge Burruchaga",
@@ -26259,7 +26494,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Iker Casillas",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Héctor Castro",
@@ -26359,7 +26595,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Diego Maradona",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Djalma Santos",
@@ -26514,7 +26751,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Franz Beckenbauer",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Fulvio Collovati",
@@ -26689,7 +26927,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Thierry Henry",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Uli Hoeneß",
@@ -26849,7 +27088,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kaká",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "N'Golo Kanté",
@@ -26909,7 +27149,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lamine Yamal",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Lautaro Martínez",
@@ -26944,7 +27185,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lionel Messi",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Lisandro Martínez",
@@ -27154,7 +27396,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kylian Mbappé",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Mesut Özil",
@@ -27209,7 +27452,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fernando Alonso",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Mario Andretti",
@@ -27224,7 +27468,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayrton Senna",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Jim Clark",
@@ -27319,7 +27564,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lando Norris",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Niki Lauda",
@@ -27329,7 +27575,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lewis Hamilton",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Nigel Mansell",
@@ -27339,7 +27586,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Michael Schumacher",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Nelson Piquet",
@@ -27364,7 +27612,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sebastian Vettel",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "John Surtees",
@@ -27374,7 +27623,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Max Verstappen",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Harry Potter'daki büyülü yaratıklar",
@@ -28034,52 +28284,62 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Namık Kemal",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Mehmet Akif Ersoy",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Ziya Gökalp",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Nazım Hikmet",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Orhan Veli Kanık",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Necip Fazıl Kısakürek",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Yaşar Kemal",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Aziz Nesin",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Oğuz Atay",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Sabahattin Ali",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Halide Edip Adıvar",
@@ -28094,12 +28354,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Peyami Safa",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Ahmet Hamdi Tanpınar",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Cahit Sıtkı Tarancı",
@@ -28109,7 +28371,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Attila İlhan",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Cemal Süreya",
@@ -28139,32 +28402,38 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İbn-i Haldun",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Hacı Bektaş-ı Veli",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Evliya Çelebi",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Osman Hamdi Bey",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "ressam"
   },
   {
     "name": "Ömer Seyfettin",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Tevfik Fikret",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Halit Ziya Uşaklıgil",
@@ -28174,32 +28443,38 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adnan Menderes",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Turgut Özal",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Süleyman Demirel",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Bülent Ecevit",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Necmettin Erbakan",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Alparslan Türkeş",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Deniz Gezmiş",
@@ -28219,17 +28494,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Halil İnalcık",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Bilge Kağan",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Kül Tigin",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Tonyukuk",
@@ -28239,7 +28517,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Konfüçyüs",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Buda (Siddhartha Gautama)",
@@ -28249,17 +28528,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Friedrich Nietzsche",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Louis Pasteur",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Alexander Graham Bell",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Pisagor (Pythagoras)",
@@ -28284,12 +28566,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jeanne d'Arc",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Kraliçe Victoria",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "John F. Kennedy (JFK)",
@@ -28304,7 +28588,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ömer Hayyam",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Farabi (Al-Farabi)",
@@ -28319,7 +28604,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Kuşçu",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Katip Çelebi",
@@ -28334,12 +28620,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Enver Paşa",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Talat Paşa",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Cemal Paşa",
@@ -28349,17 +28637,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kazım Karabekir",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Fevzi Çakmak",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Rauf Orbay",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Ali Fuat Cebesoy",
@@ -28404,22 +28695,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Galileo Galilei",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Johannes Kepler",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Nicolaus Copernicus",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Gregor Mendel",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Dmitri Mendeleyev",
@@ -28444,42 +28739,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Yuri Gagarin",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Neil Armstrong",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Ferdinand Macellan",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Vasco da Gama",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Marco Polo",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "İbni Batuta",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Sun Tzu",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Homeros",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Herodot",
@@ -28499,12 +28802,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Marcus Aurelius",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Semih Kılıçsoy",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Çağlar Söyüncü",
@@ -28529,22 +28834,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nihat Kahveci",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Busenaz Sürmeneli",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Buse Naz Çakıroğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Servet Tazegül",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Şahika Ercümen",
@@ -28554,7 +28863,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dries Mertens",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Lucas Torreira",
@@ -28594,52 +28904,62 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kevin De Bruyne",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Mohamed Salah",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Manuel Neuer",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Giannis Antetokounmpo",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Serena Williams",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "tenisci"
   },
   {
     "name": "Conor McGregor",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "mma_ufc_sporcusu"
   },
   {
     "name": "Khabib Nurmagomedov",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "mma_ufc_sporcusu"
   },
   {
     "name": "Carlos Alcaraz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "tenisci"
   },
   {
     "name": "Jannik Sinner",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "tenisci"
   },
   {
     "name": "Pep Guardiola",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Jose Mourinho",
@@ -28705,5 +29025,3623 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "name": "Talisca",
     "category": "sporcular",
     "fameTier": 2
+  },
+  {
+    "name": "Caravaggio",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Emrah Safa Gürkan",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Cemil Meriç",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Recep Tayyip Erdoğan",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Melih Gökçek",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Francis Ford Coppola",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Stanley Kubrick",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Steven Spielberg",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Celal Bayar",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Tansu Çiller",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Mesut Yılmaz",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Devlet Bahçeli",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Kemal Kılıçdaroğlu",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Ekrem İmamoğlu",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Mansur Yavaş",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Özgür Özel",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Muharrem İnce",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Ümit Özdağ",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Meral Akşener",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Ali Babacan",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Ahmet Davutoğlu",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Selahattin Demirtaş",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Binali Yıldırım",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Deniz Baykal",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Abdullah Gül",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Barack Obama",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Donald Trump",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Joe Biden",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Vladimir Putin",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Emmanuel Macron",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Angela Merkel",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Volodimir Zelenski",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Boris Johnson",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Şi Cinping",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Kim Jong-un",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Justin Trudeau",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Kamala Harris",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Hillary Clinton",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Silvio Berlusconi",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Margaret Thatcher",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Nuri Bilge Ceylan",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Zeki Demirkubuz",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Fatih Akın",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Ferzan Özpetek",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Ertem Eğilmez",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Metin Erksan",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Yılmaz Güney",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Yavuz Turgul",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Reha Erdem",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Semih Kaplanoğlu",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Çağan Irmak",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Ezel Akay",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Onur Ünlü",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Atıf Yılmaz",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Memduh Ün",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Halit Refiğ",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Christopher Nolan",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Quentin Tarantino",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Martin Scorsese",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "James Cameron",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Alfred Hitchcock",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ridley Scott",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "David Fincher",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Tim Burton",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Wes Anderson",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Guillermo del Toro",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Peter Jackson",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Denis Villeneuve",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "George Lucas",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Hayao Miyazaki",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Akira Kurosawa",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Federico Fellini",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Guy Ritchie",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Bong Joon-ho",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Greta Gerwig",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Taika Waititi",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Sergio Leone",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Roman Polanski",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "David Lynch",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Can Yücel",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Rıfat Ilgaz",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Sait Faik Abasıyanık",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Zülfü Livaneli",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Doğan Cüceloğlu",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Üstün Dökmen",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Murat Bardakçı",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Sinan Meydan",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 3
+  },
+  {
+    "name": "Ahmet Ümit",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Elif Şafak",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Ayşe Kulin",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Yuval Noah Harari",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Noam Chomsky",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Slavoj Žižek",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 3
+  },
+  {
+    "name": "Jordan Peterson",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Neil deGrasse Tyson",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Richard Dawkins",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Carl Sagan",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Michio Kaku",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 3
+  },
+  {
+    "name": "Umberto Eco",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Paulo Coelho",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "George R. R. Martin",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "J. K. Rowling",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "J. R. R. Tolkien",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Stephen King",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Dan Brown",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Agatha Christie",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Uğur Dündar",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Mehmet Ali Birand",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Ali Kırca",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Fatih Portakal",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Cüneyt Özdemir",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Fatih Altaylı",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Ahmet Hakan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Reha Muhtar",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Savaş Ay",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Enver Aysever",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Şirin Payzın",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Mirgün Cabas",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Ertuğrul Özkök",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Can Dündar",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Soner Yalçın",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Banu Güven",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Ece Üner",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Buket Aydın",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Zuhal Topal",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Seda Sayan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Erkan Tan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Larry King",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Oprah Winfrey",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "David Letterman",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Jimmy Fallon",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Jimmy Kimmel",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Conan O'Brien",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ellen DeGeneres",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Joe Rogan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Tucker Carlson",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Piers Morgan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Graham Norton",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Tolga Çevik",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Şahan Gökbakar",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ferhan Şensoy",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Hasan Can Kaya",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Feyyaz Yiğit",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Yasemin Sakallıoğlu",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Giray Altınok",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Ersin Korkut",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Jim Carrey",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Robin Williams",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Eddie Murphy",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Kevin Hart",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Dave Chappelle",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Steve Carell",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Adam Sandler",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ben Stiller",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Chris Rock",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Will Ferrell",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Vehbi Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Rahmi Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Ali Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Ömer Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Mustafa Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sakıp Sabancı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Güler Sabancı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Ali Sabancı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Ferit Şahenk",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Hüsnü Özyeğin",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Murat Ülker",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Hamdi Ulukaya",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Nevzat Aydın",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sadettin Saran",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Aydın Doğan",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Eren Bali",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 3
+  },
+  {
+    "name": "Bülent Eczacıbaşı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Ahmet Nazif Zorlu",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Fuat Tosyalı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 3
+  },
+  {
+    "name": "Erol Sabancı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 3
+  },
+  {
+    "name": "Elon Musk",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Bill Gates",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Steve Jobs",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Jeff Bezos",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Mark Zuckerberg",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Warren Buffett",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Bernard Arnault",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Larry Page",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sergey Brin",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sam Altman",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Jensen Huang",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Tim Cook",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sundar Pichai",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Satya Nadella",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 3
+  },
+  {
+    "name": "Richard Branson",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Henry Ford",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "John D. Rockefeller",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Andrew Carnegie",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Walt Disney",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Raffaello Sanzio",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Sandro Botticelli",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Rembrandt",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Vincent van Gogh",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Pablo Picasso",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Claude Monet",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Salvador Dalí",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Johannes Vermeer",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Gustav Klimt",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Edvard Munch",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Frida Kahlo",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Paul Cézanne",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Auguste Renoir",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Diego Velázquez",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Francisco Goya",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Henri Matisse",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Wassily Kandinsky",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Andy Warhol",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Paul Gauguin",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Jan van Eyck",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Titian",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Peter Paul Rubens",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Şeker Ahmet Paşa",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "İbrahim Çallı",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Abidin Dino",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Bedri Rahmi Eyüboğlu",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Fikret Muallâ",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Mihri Müşfik Hanım",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Hoca Ali Rıza",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Michael Faraday",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "James Clerk Maxwell",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Alan Turing",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Niels Bohr",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "İbn-i Sina",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "El-Hârizmî",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "El-Bîrûnî",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "El-Cezeri",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Farabi",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "İbn Rüşd",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Oktay Sinanoğlu",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Arşimet",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Pisagor",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Öklid",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Hipokrat",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "John Locke",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Thomas Hobbes",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Baruch Spinoza",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "David Hume",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Niccolò Machiavelli",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Michel Foucault",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Laozi",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Gazali",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 1
+  },
+  {
+    "name": "Diyojen",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 1
+  },
+  {
+    "name": "Epiktetos",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 3
+  },
+  {
+    "name": "Seneca",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Amerigo Vespucci",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 1
+  },
+  {
+    "name": "James Cook",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Seydi Ali Reis",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Kâtip Çelebi",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Roald Amundsen",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Robert Falcon Scott",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 3
+  },
+  {
+    "name": "Buzz Aldrin",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Jacques Cousteau",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Francis Drake",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Hernán Cortés",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Francisco Pizarro",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "David Livingstone",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 3
+  },
+  {
+    "name": "Edmund Hillary",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Tenzing Norgay",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 3
+  },
+  {
+    "name": "Leif Erikson",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Zheng He",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 3
+  },
+  {
+    "name": "Orhan Gazi",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "I. Murad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Yıldırım Bayezid",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Çelebi Mehmed",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "II. Murad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "II. Selim",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "III. Murad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 3
+  },
+  {
+    "name": "Genç Osman",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "IV. Murad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "IV. Mehmed",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 3
+  },
+  {
+    "name": "III. Ahmed",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "III. Selim",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "II. Mahmud",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Sultan Abdülmecid",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Sultan Abdülaziz",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "V. Mehmed Reşad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Vahdettin",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Sultan Alparslan",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Tuğrul Bey",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Melikşah",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Gazneli Mahmud",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Babür Şah",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Şah İsmail",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Julius Caesar",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Augustus",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Neron",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Caligula",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Büyük Konstantin",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Hannibal Barca",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Ramses II",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Tutankhamun",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Hammurabi",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Kubilay Han",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "George Washington",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Franklin D. Roosevelt",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "John F. Kennedy",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Kraliçe I. Elizabeth",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Kral VIII. Henry",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Büyük Petro",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Büyük Katerina",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Josef Stalin",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Mihail Gorbaçov",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Fidel Castro",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Simón Bolívar",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Şarlman",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "William Shakespeare",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Lev Tolstoy",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Fyodor Dostoyevski",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Anton Çehov",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Maksim Gorki",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Aleksandr Puşkin",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Nikolay Gogol",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Victor Hugo",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Honoré de Balzac",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Alexandre Dumas",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Gustave Flaubert",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Charles Dickens",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Jane Austen",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Virginia Woolf",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "George Orwell",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Franz Kafka",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Dante Alighieri",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Miguel de Cervantes",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Edgar Allan Poe",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Mark Twain",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Fuzûlî",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Bâkî",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Nedîm",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Nef'î",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Şeyh Galip",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Taşlıcalı Yahya",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 3
+  },
+  {
+    "name": "Nâbî",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Karacaoğlan",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Dadaloğlu",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Pir Sultan Abdal",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Yahya Kemal Beyatlı",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Johan Cruyff",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Michel Platini",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Marco van Basten",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "George Best",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Eusebio",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Alfredo Di Stéfano",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ferenc Puskás",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Andrea Pirlo",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Andres Iniesta",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Xavi Hernandez",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Vinicius Junior",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Jude Bellingham",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Harry Kane",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Zlatan Ibrahimović",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Luis Suárez",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Sergio Ramos",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "İlhan Mansız",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Edin Džeko",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Metin Oktay",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Lefter Küçükandonyadis",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Hakkı Yeten",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Süleyman Seba",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "José Mourinho",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Magic Johnson",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Larry Bird",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Kareem Abdul-Jabbar",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Wilt Chamberlain",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Bill Russell",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Tim Duncan",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Kevin Durant",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Luka Dončić",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Nikola Jokić",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Dirk Nowitzki",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Allen Iverson",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Dwyane Wade",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Charles Barkley",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Scottie Pippen",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Dennis Rodman",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Hakeem Olajuwon",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Karl Malone",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "John Stockton",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Steve Nash",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Manu Ginóbili",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Pau Gasol",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Tony Parker",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Victor Wembanyama",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ömer Aşık",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Mirsad Türkcan",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Semih Erden",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Melih Mahmutoğlu",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Shane Larkin",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Vasilije Micić",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Bogdan Bogdanović",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Željko Obradović",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Daniil Medvedev",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Alexander Zverev",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Stefanos Tsitsipas",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Andy Murray",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Pete Sampras",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Andre Agassi",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Boris Becker",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "John McEnroe",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Björn Borg",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Jimmy Connors",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Ivan Lendl",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Venus Williams",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Maria Sharapova",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Steffi Graf",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Martina Navratilova",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Chris Evert",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Monica Seles",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Billie Jean King",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Martina Hingis",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Naomi Osaka",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Iga Świątek",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Aryna Sabalenka",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Coco Gauff",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Marsel İlhan",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Çağla Büyükakçay",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "İpek Şenoğlu",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 3
+  },
+  {
+    "name": "İpek Soylu",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 3
+  },
+  {
+    "name": "Zeynep Sönmez",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Jon Jones",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 1
+  },
+  {
+    "name": "Israel Adesanya",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Georges St-Pierre",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Anderson Silva",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Daniel Cormier",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Francis Ngannou",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Alex Pereira",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Islam Makhachev",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Dustin Poirier",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Justin Gaethje",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Max Holloway",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Alexander Volkanovski",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Charles Oliveira",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Nate Diaz",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Nick Diaz",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 3
+  },
+  {
+    "name": "Ronda Rousey",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 1
+  },
+  {
+    "name": "Amanda Nunes",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Fedor Emelianenko",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Brock Lesnar",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 1
+  },
+  {
+    "name": "Kamaru Usman",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Khamzat Chimaev",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Sean O'Malley",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ilia Topuria",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Carl Lewis",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Jesse Owens",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Mo Farah",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Eliud Kipchoge",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Armand Duplantis",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Noah Lyles",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Tyson Gay",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Asafa Powell",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Yohan Blake",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Justin Gatlin",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Michael Johnson",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Florence Griffith Joyner",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Elaine Thompson-Herah",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Shelly-Ann Fraser-Pryce",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Sha'Carri Richardson",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Yelena Isinbayeva",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Haile Gebrselassie",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Kenenisa Bekele",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Hicham El Guerrouj",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Süreyya Ayhan",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Ramil Guliyev",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Yasmani Copello Escobar",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Eşref Apak",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Ruhi Sarıalp",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 3
+  },
+  {
+    "name": "Nevin Yanıt",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Elvan Abeylegesse",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Ersu Şaşma",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Eda Tuğsuz",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 3
+  },
+  {
+    "name": "Necdet Ayaz",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 3
+  },
+  {
+    "name": "Michael Phelps",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Ian Thorpe",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Caeleb Dressel",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Katie Ledecky",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Mark Spitz",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ryan Lochte",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Alexander Popov",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Sun Yang",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Adam Peaty",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Léon Marchand",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Pieter van den Hoogenband",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ian Crocker",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Grant Hackett",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Nathan Adrian",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Matt Biondi",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Federica Pellegrini",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Katinka Hosszú",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Sarah Sjöström",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Emma McKeon",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Summer McIntosh",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Derya Büyükuncu",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Emre Sakçı",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Merve Tuncel",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Berkay Ömer Öğretir",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Viktoria Zeynep Güneş",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Kuzey Tunçelli",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Nurcan Taylan",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Taner Sağır",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Yaşar Doğu",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Koca Yusuf",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Mahmut Atalay",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Ahmet Ayık",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Nazmi Avluca",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Selçuk Çebi",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Yasemin Adar",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Sinan Şamil Sam",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Muhammad Ali",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Floyd Mayweather Jr.",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Manny Pacquiao",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "George Foreman",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Evander Holyfield",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Lennox Lewis",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Anthony Joshua",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Tyson Fury",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Oleksandr Usyk",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Canelo Álvarez",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Eda Erdem Dündar",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Simge Aköz",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Giovanni Guidetti",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Daniele Santarelli",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Yusuf Dikeç",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Şevval İlayda Tarhan",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Nur Tatar",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Bahri Tanrıkulu",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Hatice Kübra İlgün",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Hakan Reçber",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Merve Dinçel",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Ferhat Arıcan",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "İbrahim Çolak",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Adem Asil",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Charles Leclerc",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Deniz Öncü",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Can Öncü",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 3
+  },
+  {
+    "name": "Ronnie O'Sullivan",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Tayfun Taşdemir",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Tiger Woods",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Magnus Carlsen",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Garry Kasparov",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Anatoli Karpov",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Bobby Fischer",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Hikaru Nakamura",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Yağız Kaan Erdoğmuş",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Mustafa Yılmaz",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 3
+  },
+  {
+    "name": "Emre Can",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 3
+  },
+  {
+    "name": "Vahap Şanal",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 3
+  },
+  {
+    "name": "John Lennon",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Paul McCartney",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Bob Marley",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Adele",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ed Sheeran",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Drake",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "The Weeknd",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Dua Lipa",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Billie Eilish",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Wolfgang Amadeus Mozart",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ludwig van Beethoven",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Frédéric Chopin",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Johann Sebastian Bach",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Antonio Vivaldi",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Nil Karaibrahimgil",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Mustafa Sandal",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Kayahan",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Mirkelam",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Semicenk",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Hande Yener",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Sıla",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Yalın",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Gripin",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Duman",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Mor ve Ötesi",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Manga",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Serenay Sarıkaya",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Hande Erçel",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Engin Akyürek",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Çağatay Ulusoy",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Demet Özdemir",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Cillian Murphy",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Robert De Niro",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Al Pacino",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Tom Hanks",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Scarlett Johansson",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Meryl Streep",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Natalie Portman",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Emma Stone",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Margot Robbie",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Jennifer Aniston",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Ryan Gosling",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Hugh Jackman",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Denzel Washington",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Erdal Beşikçioğlu",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Necati Şaşmaz",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Kenan Çoban",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Gürkan Uygun",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Zafer Ergin",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Şevket Çoruh",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Özgür Ozan",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Uğur Pektaş",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
   }
-]
+];
