@@ -22253,11 +22253,6 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "fameTier": 5
   },
   {
-    "name": "Barış Özcan",
-    "category": "sporcular",
-    "fameTier": 5
-  },
-  {
     "name": "Avram Barokas",
     "category": "sporcular",
     "fameTier": 4

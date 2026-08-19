@@ -379,9 +379,9 @@ export function buildFamousPerson(overrides: Partial<FamousPersonRow> = {}): Fam
 export function buildNameSuggestion(overrides: Partial<NameSuggestionRow> = {}): NameSuggestionRow {
   return {
     id: randomUUID(),
-    name: 'Barış Özcan',
+    name: 'İlber Ortaylı',
     category: 'unluler',
-    notes: 'YouTube içerik üreticisi',
+    notes: 'Tarihçi / Yazar',
     suggested_by: null,
     status: 'pending',
     created_at: nextTimestamp(),

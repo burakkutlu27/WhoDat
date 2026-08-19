@@ -167,5 +167,56 @@ describe('fuzzyMatch', () => {
       expect(fuzzyMatch('Superman', 'Batman (Bruce Wayne)')).toBe(false)
     })
   })
+
+  describe('Romen rakamları, sıra sayıları ve tarihsel isim eşleştirmeleri', () => {
+    it('II. Mahmud hedefini 2. Mahmut, 2. Mahmud, ikinci mahmut, II. Mahmut ile eşleştirir', () => {
+      const target = 'II. Mahmud'
+      expect(fuzzyMatch('2. Mahmut', target)).toBe(true)
+      expect(fuzzyMatch('2. mahmut', target)).toBe(true)
+      expect(fuzzyMatch('2. Mahmud', target)).toBe(true)
+      expect(fuzzyMatch('2 mahmut', target)).toBe(true)
+      expect(fuzzyMatch('2 mahmud', target)).toBe(true)
+      expect(fuzzyMatch('ikinci mahmut', target)).toBe(true)
+      expect(fuzzyMatch('İkinci Mahmut', target)).toBe(true)
+      expect(fuzzyMatch('ii. mahmut', target)).toBe(true)
+      expect(fuzzyMatch('II. Mahmut', target)).toBe(true)
+      expect(fuzzyMatch('II. Mahmud', target)).toBe(true)
+      expect(fuzzyMatch('Mahmut', target)).toBe(true)
+      expect(fuzzyMatch('Mahmud', target)).toBe(true)
+    })
+
+    it('diğer Osmanlı padişahları ve Romen rakamlı isimleri başarıyla eşleştirir', () => {
+      expect(fuzzyMatch('4. Murat', 'IV. Murad')).toBe(true)
+      expect(fuzzyMatch('4. Murad', 'IV. Murad')).toBe(true)
+      expect(fuzzyMatch('Dördüncü Murat', 'IV. Murad')).toBe(true)
+      expect(fuzzyMatch('IV. Murat', 'IV. Murad')).toBe(true)
+
+      expect(fuzzyMatch('3. Selim', 'III. Selim')).toBe(true)
+      expect(fuzzyMatch('Üçüncü Selim', 'III. Selim')).toBe(true)
+
+      expect(fuzzyMatch('2. Mehmet', 'Fatih Sultan Mehmet (II. Mehmed)')).toBe(true)
+      expect(fuzzyMatch('II. Mehmed', 'Fatih Sultan Mehmet (II. Mehmed)')).toBe(true)
+      expect(fuzzyMatch('Fatih', 'Fatih Sultan Mehmet (II. Mehmed)')).toBe(true)
+
+      expect(fuzzyMatch('1. Süleyman', 'Kanuni Sultan Süleyman (I. Süleyman)')).toBe(true)
+      expect(fuzzyMatch('Kanuni', 'Kanuni Sultan Süleyman (I. Süleyman)')).toBe(true)
+
+      expect(fuzzyMatch('2. Abdülhamit', 'II. Abdülhamid')).toBe(true)
+      expect(fuzzyMatch('II. Abdulhamit', 'II. Abdülhamid')).toBe(true)
+      expect(fuzzyMatch('Abdulhamit', 'II. Abdülhamid')).toBe(true)
+
+      expect(fuzzyMatch('8. Henry', 'Henry VIII')).toBe(true)
+      expect(fuzzyMatch('Henry 8', 'Henry VIII')).toBe(true)
+      expect(fuzzyMatch('VIII. Henry', 'Henry VIII')).toBe(true)
+    })
+
+    it('farklı sıra sayılarını veya farklı kişileri reddeder', () => {
+      expect(fuzzyMatch('1. Mahmud', 'II. Mahmud')).toBe(false)
+      expect(fuzzyMatch('I. Mahmud', 'II. Mahmud')).toBe(false)
+      expect(fuzzyMatch('3. Mahmut', 'II. Mahmud')).toBe(false)
+      expect(fuzzyMatch('4. Selim', 'III. Selim')).toBe(false)
+      expect(fuzzyMatch('2. Murat', 'IV. Murad')).toBe(false)
+    })
+  })
 })
 

@@ -184,7 +184,7 @@ export default function SuggestNameModal({
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Örn: Barış Özcan, Polat Alemdar, Luka Doncic..."
+                      placeholder="Örn: Tarkan, Polat Alemdar, Luka Doncic..."
                       maxLength={60}
                       autoFocus
                       required

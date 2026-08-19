@@ -1,8 +1,9 @@
 /**
  * Tahmin eşleştirme. Saf fonksiyonlar — veritabanı ya da ortam bağımlılığı yok.
  *
- * Eşleştirme sunucuda çalışır. Daha önce tarayıcıdaydı, yani doğru cevap istemciye
- * gönderiliyordu ve karşılaştırma istemcinin insafına kalmıştı.
+ * Eşleştirme sunucuda çalışır. Romen rakamları (I, II, III, IV vb.), sıra sayıları
+ * (1., 2., 3., birinci, ikinci vb.) ve Türkçe tarihsel isim varyantları (Mahmud/Mahmut,
+ * Mehmed/Mehmet vb.) otomatik olarak normalleştirilir.
  */
 
 const TURKISH_LOWERCASE: Record<string, string> = {
@@ -17,15 +18,75 @@ const TURKISH_LOWERCASE: Record<string, string> = {
 /** 0.8 => iki karakterlik yazım hatalarına toleranslı, farklı isimleri ayırt edecek kadar sıkı. */
 export const SIMILARITY_THRESHOLD = 0.8
 
-export function normalizeGuess(value: string): string {
+/**
+ * Metin içindeki Romen rakamlarını ve Türkçe sıra sayılarını standart rakamlara dönüştürür.
+ * Örn: "II. Mahmud" -> "2 Mahmud", "İkinci Mahmut" -> "2 Mahmut", "2. Mahmut" -> "2 Mahmut"
+ */
+export function normalizeNumbersAndOrdinals(text: string): string {
+  if (!text) return ''
+
   return (
-    value
-      // Türkçe'de İ/I'nın küçük harf karşılıkları JS'in varsayılanından farklıdır:
-      // 'I'.toLowerCase() 'i' verir ama Türkçe'de 'ı' olmalıdır.
+    text
+      // Türkçe karakterleri temel harflere indirge (önce harf bazında eşleştirebilmek için)
+      .replace(/İ/g, 'i')
+      .replace(/I/g, 'ı')
+      .replace(/[çğıöşüÇĞİÖŞÜ]/g, (char) => TURKISH_LOWERCASE[char.toLowerCase()] ?? char.toLowerCase())
+      // Sıra bildiren kelimeler (Türkçe)
+      .replace(/\b(on\s*alt[ıi]nc[ıi]|on\s*alt[ıi])\b/gi, '16')
+      .replace(/\b(on\s*be[sş]inci|on\s*be[sş])\b/gi, '15')
+      .replace(/\b(on\s*d[oö]rd[uü]nc[uü]|on\s*d[oö]rt)\b/gi, '14')
+      .replace(/\b(on\s*[uü][cç][uü]nc[uü]|on\s*[uü][cç])\b/gi, '13')
+      .replace(/\b(on\s*ikinci|on\s*iki)\b/gi, '12')
+      .replace(/\b(on\s*birinci|on\s*bir)\b/gi, '11')
+      .replace(/\b(onuncu)\b/gi, '10')
+      .replace(/\b(dokuzuncu)\b/gi, '9')
+      .replace(/\b(sekizinci)\b/gi, '8')
+      .replace(/\b(yedinci)\b/gi, '7')
+      .replace(/\b(alt[ıi]nc[ıi])\b/gi, '6')
+      .replace(/\b(be[sş]inci)\b/gi, '5')
+      .replace(/\b(d[oö]rd[uü]nc[uü])\b/gi, '4')
+      .replace(/\b([uü][cç][uü]nc[uü])\b/gi, '3')
+      .replace(/\b(ikinci)\b/gi, '2')
+      .replace(/\b(birinci)\b/gi, '1')
+      // Romen rakamları (kelime sınırları ile)
+      .replace(/\b(xvi)\b\.?/gi, '16')
+      .replace(/\b(xv)\b\.?/gi, '15')
+      .replace(/\b(xiv)\b\.?/gi, '14')
+      .replace(/\b(xiii)\b\.?/gi, '13')
+      .replace(/\b(xii)\b\.?/gi, '12')
+      .replace(/\b(xi)\b\.?/gi, '11')
+      .replace(/\b(ix)\b\.?/gi, '9')
+      .replace(/\b(viii)\b\.?/gi, '8')
+      .replace(/\b(vii)\b\.?/gi, '7')
+      .replace(/\b(vi)\b\.?/gi, '6')
+      .replace(/\b(iv)\b\.?/gi, '4')
+      .replace(/\b(iii)\b\.?/gi, '3')
+      .replace(/\b(ii)\b\.?/gi, '2')
+      .replace(/\b(x)\b\.?/gi, '10')
+      .replace(/\b(v)\b\.?/gi, '5')
+      .replace(/\b(i)\b\./gi, '1')
+      .replace(/\b(i)\b(?=\s+[a-z0-9])/gi, '1')
+      .replace(/(?<=[a-z0-9]\s+)\b(i)\b/gi, '1')
+      // Ekli veya noktalı rakamlar: 2'nci, 2.ci, 2., 2'inci -> 2
+      .replace(/(\d+)['.](inci|nci|uncu|ncu|üncü|ncü|ünci|inci|ci|cu|cü)\b/gi, '$1')
+      .replace(/(\d+)\./g, '$1')
+  )
+}
+
+export function normalizeGuess(value: string): string {
+  if (!value) return ''
+
+  return (
+    normalizeNumbersAndOrdinals(value)
+      // Türkçe'de İ/I'nın küçük harf karşılıkları
       .replace(/İ/g, 'i')
       .replace(/I/g, 'ı')
       .toLowerCase()
       .replace(/[çğıöşü]/g, (char) => TURKISH_LOWERCASE[char] ?? char)
+      // Tarihsel isim sonu d/t yumuşama/sertleşme normalizasyonu (Mahmud -> Mahmut, Mehmed -> Mehmet, Murad -> Murat, Ahmed -> Ahmet vb.)
+      .replace(/(\b\w+)d\b/g, '$1t')
+      .replace(/\bvahdeddin\b/g, 'vahdettin')
+      .replace(/\bnecmeddin\b/g, 'necmettin')
       // Yabancı isimlerdeki aksanları düşür: "Beyoncé" -> "beyonce", "Björk" -> "bjork".
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
@@ -33,13 +94,16 @@ export function normalizeGuess(value: string): string {
   )
 }
 
+function extractDigits(str: string): string {
+  return str.replace(/\D/g, '')
+}
+
 /**
  * Bir isimden (hedef veya tahmin) eşleştirme için olası varyantları çıkarır.
- * Özellikle parantezli kurgusal karakterler (örn: "Walter White (Heisenberg)",
- * "Vito Corleone (Baba / The Godfather)", "Batman (Bruce Wayne)") için:
- *  - Parantezsiz ana isim ("Walter White", "Vito Corleone")
- *  - Parantez içindeki takma adlar/açıklamalar ("Heisenberg", "Baba", "The Godfather")
- *  - Varsa ayrılmış alt isimler ("Godfather")
+ * Özellikle:
+ *  - Parantezli kurgusal ve tarihsel karakterler (örn: "Walter White (Heisenberg)", "Fatih Sultan Mehmet (II. Mehmed)")
+ *  - Romen rakamlı / sıra sayılı isimler (örn: "II. Mahmud" -> "2. Mahmud", "2. Mahmut", "İkinci Mahmut", "Mahmud", "Mahmut")
+ *  - Parantez içindeki takma adlar/açıklamalar
  *  - Tam orijinal ifade
  * varyantlarını döndürür.
  */
@@ -106,7 +170,57 @@ export function extractMatchCandidates(text: string): string[] {
     }
   }
 
-  // 5. Normalizasyon ve filtreleme: normalize edilmiş hali boş olmayan ve min 2 karakter olanları al
+  // 5. Tarihsel unvan ve sıfatları tek başına ekle (örn: "Fatih Sultan Mehmet" -> "Fatih", "Kanuni Sultan Süleyman" -> "Kanuni")
+  const historicalTitles = ['fatih', 'kanuni', 'yavuz', 'muhtesem', 'yildirim', 'genc', 'avci', 'celebi']
+  for (const cand of Array.from(rawCandidates)) {
+    const firstWord = cand.split(/\s+/)[0]?.trim()
+    if (firstWord && historicalTitles.includes(firstWord.toLowerCase())) {
+      rawCandidates.add(firstWord)
+    }
+  }
+
+  // 6. Romen rakamı / Sayı içeren isimlerde dönüştürülmüş varyantları üret
+  const numberExpandedList = Array.from(rawCandidates)
+  for (const cand of numberExpandedList) {
+    // Rakamla dönüştürülmüş varyant (örn: "2. Mahmud", "2 Mahmut")
+    const withDigits = normalizeNumbersAndOrdinals(cand)
+    if (withDigits && withDigits !== cand) {
+      rawCandidates.add(withDigits)
+    }
+
+    // Rakam sonda ise başa al (örn: "Henry 8" -> "8. Henry", "Henry VIII" -> "8. Henry")
+    const suffixNumMatch = cand.match(/^(.+?)\s+([0-9]+|(?:xvi|xv|xiv|xiii|xii|xi|x|ix|viii|vii|vi|v|iv|iii|ii|i))$/i)
+    if (suffixNumMatch) {
+      const namePart = suffixNumMatch[1]?.trim()
+      const numPart = suffixNumMatch[2]?.trim()
+      if (namePart && numPart) {
+        rawCandidates.add(`${numPart}. ${namePart}`)
+        rawCandidates.add(`${numPart} ${namePart}`)
+      }
+    }
+
+    // Rakam başta ise sona al (örn: "8. Henry" -> "Henry 8")
+    const prefixNumMatch = cand.match(/^([0-9]+|(?:xvi|xv|xiv|xiii|xii|xi|x|ix|viii|vii|vi|v|iv|iii|ii|i))[\s.]+(.+)$/i)
+    if (prefixNumMatch) {
+      const numPart = prefixNumMatch[1]?.trim()
+      const namePart = prefixNumMatch[2]?.trim()
+      if (namePart && numPart) {
+        rawCandidates.add(`${namePart} ${numPart}`)
+      }
+    }
+
+    // D/T son harf alternatifleri (Mahmud -> Mahmut, Mehmed -> Mehmet vb.)
+    if (/\bd\b|\w+d\b/i.test(cand)) {
+      const withT = cand.replace(/(\b\w+)d\b/gi, '$1t')
+      rawCandidates.add(withT)
+    }
+    if (/\bt\b|\w+t\b/i.test(cand)) {
+      const withD = cand.replace(/(\b\w+)t\b/gi, '$1d')
+      rawCandidates.add(withD)
+    }
+  }
+
+  // 7. Normalizasyon ve filtreleme: normalize edilmiş hali boş olmayan ve min 2 karakter olanları al
   const seenNorm = new Set<string>()
   const result: string[] = []
 
@@ -170,10 +284,17 @@ export function fuzzyMatch(
   for (const g of guessCandidates) {
     const normG = normalizeGuess(g)
     if (!normG) continue
+    const digitsG = extractDigits(normG)
 
     for (const c of correctCandidates) {
       const normC = normalizeGuess(c)
       if (!normC) continue
+      const digitsC = extractDigits(normC)
+
+      // Eğer her iki tarafta da sayı/sıra sayısı belirtilmişse ve sayılar uyuşmuyorsa (örn: 1 vs 2), asla eşleşme!
+      if (digitsG.length > 0 && digitsC.length > 0 && digitsG !== digitsC) {
+        continue
+      }
 
       if (normG === normC) return true
       if (similarity(normG, normC) >= threshold) return true
@@ -182,4 +303,3 @@ export function fuzzyMatch(
 
   return false
 }
-
