@@ -7,6 +7,8 @@ import {
   createSupabaseFake,
 } from '@/test/supabaseFake'
 
+import { filterByDifficulty } from './rules'
+
 let fake: ReturnType<typeof createSupabaseFake>
 
 vi.mock('@/lib/supabaseAdmin', () => ({
@@ -17,6 +19,7 @@ const {
   autoAssignNames,
   getFamousPeople,
   getSharedTargetRoomData,
+  setRoomDifficulty,
   setRoomMode,
 } = await import('./engine')
 
@@ -177,4 +180,84 @@ describe('Famous People & Auto-Assign Engine', () => {
       expect(sharedData.targetName).toBe(result.sharedTargetName)
     })
   })
+
+  describe('filterByDifficulty (08a-zorluk-seviyesi-BASIT.md)', () => {
+    const samplePeople = [
+      { id: '1', name: 'Tier 1 Person', category: 'unluler', fameTier: 1 },
+      { id: '2', name: 'Tier 2 Person', category: 'unluler', fameTier: 2 },
+      { id: '3', name: 'Tier 3 Person', category: 'unluler', fameTier: 3 },
+      { id: '4', name: 'Tier 4 Person', category: 'unluler', fameTier: 4 },
+      { id: '5', name: 'Tier 5 Person', category: 'unluler', fameTier: 5 },
+    ]
+
+    it('kolay zorlukta yalnızca fameTier <= 2 olan isimleri döndürür', () => {
+      const filtered = filterByDifficulty(samplePeople, 'kolay')
+      expect(filtered.length).toBe(2)
+      expect(filtered.every((p) => (p.fameTier ?? 4) <= 2)).toBe(true)
+    })
+
+    it('orta zorlukta yalnızca fameTier <= 3 olan isimleri döndürür (varsayılan)', () => {
+      const filtered = filterByDifficulty(samplePeople, 'orta')
+      expect(filtered.length).toBe(3)
+      expect(filtered.every((p) => (p.fameTier ?? 4) <= 3)).toBe(true)
+
+      const defaultFiltered = filterByDifficulty(samplePeople)
+      expect(defaultFiltered.length).toBe(3)
+    })
+
+    it('zor seviyede tüm isimleri (fameTier 1-5) filtrelemeden döndürür', () => {
+      const filtered = filterByDifficulty(samplePeople, 'zor')
+      expect(filtered.length).toBe(5)
+      expect(filtered.map((p) => p.id)).toEqual(['1', '2', '3', '4', '5'])
+    })
+  })
+
+  describe('getFamousPeople with difficulty parameter', () => {
+    it('difficulty: kolay parametresiyle sorgulandığında en fazla Tier 2 isimler döner', async () => {
+      fake.tables.famous_people = []
+      const results = await getFamousPeople({ difficulty: 'kolay', limit: 20, random: true })
+      expect(results.length).toBeGreaterThan(0)
+      expect(results.every((r) => (r.fameTier ?? 4) <= 2)).toBe(true)
+    })
+
+    it('difficulty: orta parametresiyle sorgulandığında en fazla Tier 3 isimler döner', async () => {
+      fake.tables.famous_people = []
+      const results = await getFamousPeople({ difficulty: 'orta', limit: 20, random: true })
+      expect(results.length).toBeGreaterThan(0)
+      expect(results.every((r) => (r.fameTier ?? 4) <= 3)).toBe(true)
+    })
+
+    it('difficulty: zor parametresiyle sorgulandığında tüm tier gruplarından isimler gelebilir', async () => {
+      fake.tables.famous_people = []
+      const results = await getFamousPeople({ difficulty: 'zor', limit: 50, random: true })
+      expect(results.length).toBeGreaterThan(0)
+    })
+  })
+
+  describe('autoAssignNames with room difficulty', () => {
+    it('odanın zorluk seviyesi kolay ise yalnızca Tier 1 veya 2 isimler atanır', async () => {
+      fake.tables.famous_people = []
+      const room = buildRoom({ status: 'waiting', game_mode: 'classic' })
+      const host = buildPlayer(room.id, { nickname: 'Host', is_host: true })
+      const guest = buildPlayer(room.id, { nickname: 'Guest' })
+      fake.tables.rooms = [room]
+      fake.tables.players = [host, guest]
+
+      setRoomDifficulty(room.id, 'kolay')
+
+      const result = await autoAssignNames(room.id, host.id, 'all')
+      expect(result.assignedCount).toBe(6)
+
+      const { FAMOUS_PEOPLE_SEED } = await import('./famousPeopleData')
+      for (const assigned of fake.tables.names) {
+        const seed = FAMOUS_PEOPLE_SEED.find(
+          (s) => s.name.toLocaleLowerCase('tr') === assigned.name_text.toLocaleLowerCase('tr')
+        )
+        if (seed) {
+          expect(seed.fameTier).toBeLessThanOrEqual(2)
+        }
+      }
+    })
+  })
 })
+

@@ -1,6 +1,6 @@
 'use client'
 
-import { BarChart2, Check, Flame, HelpCircle, Info, Loader2, ShieldCheck, Trophy, X, Zap } from 'lucide-react'
+import { BarChart2, Flame, HelpCircle, Info, Loader2, ShieldCheck, Trophy, X, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -90,7 +90,7 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
             {/* Close button */}
             <button
               onClick={onClose}
-              className="absolute right-4 top-4 rounded-xl border border-paper-border bg-paper-card p-2 text-ink-faded transition-all hover:rotate-90 hover:border-pencil-red hover:text-pencil-red"
+              className="absolute right-4 top-4 rounded-sketch border border-paper-border bg-paper-card p-2 text-ink-faded transition-all hover:rotate-90 hover:border-pencil-red hover:text-pencil-red"
               aria-label="Kapat"
             >
               <X className="h-5 w-5" />
@@ -101,7 +101,7 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
               <motion.div
                 animate={{ rotate: [-3, 3, -3] }}
                 transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-                className="mb-2 inline-block rounded-2xl border-2 border-paper-border bg-paper-card p-3 text-pencil-yellow shadow-md"
+                className="mb-2 inline-block rounded-sketch-lg border-2 border-paper-border bg-paper-card p-3 text-pencil-yellow shadow-md"
               >
                 <Trophy className="h-9 w-9" />
               </motion.div>
@@ -137,8 +137,7 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   {/* Toplam Oyun */}
                   <div
-                    className="flex flex-col items-center justify-center border-2 border-dashed border-pencil-blue bg-paper-card p-4 text-center shadow-xs"
-                    style={{ borderRadius: '10px 4px 12px 6px' }}
+                    className="flex flex-col items-center justify-center border-2 border-dashed border-pencil-blue bg-paper-card p-4 text-center shadow-xs rounded-sketch-md"
                   >
                     <span className="font-display text-sm font-bold text-pencil-blue flex items-center gap-1">
                       <BarChart2 className="h-4 w-4" />
@@ -151,8 +150,7 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
 
                   {/* Toplam Birincilik & Kazanma Oranı */}
                   <div
-                    className="flex flex-col items-center justify-center border-2 border-solid border-pencil-yellow bg-paper-card p-4 text-center shadow-xs"
-                    style={{ borderRadius: '6px 12px 4px 10px' }}
+                    className="flex flex-col items-center justify-center border-2 border-solid border-pencil-yellow bg-paper-card p-4 text-center shadow-xs rounded-sketch-md"
                   >
                     <span className="font-display text-sm font-bold text-pencil-yellow flex items-center gap-1">
                       <Trophy className="h-4 w-4" />
@@ -172,8 +170,7 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
 
                   {/* Elenmeden Bitirme */}
                   <div
-                    className="flex flex-col items-center justify-center border-2 border-dashed border-pencil-green bg-paper-card p-4 text-center shadow-xs"
-                    style={{ borderRadius: '12px 6px 10px 4px' }}
+                    className="flex flex-col items-center justify-center border-2 border-dashed border-pencil-green bg-paper-card p-4 text-center shadow-xs rounded-sketch-md"
                   >
                     <span className="font-display text-sm font-bold text-pencil-green flex items-center gap-1">
                       <ShieldCheck className="h-4 w-4" />
@@ -188,8 +185,7 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
                 {/* En Yüksek Skor Şeridi */}
                 {stats.totalGames > 0 && (
                   <div
-                    className="flex items-center justify-between border-2 border-pencil-purple bg-paper-card px-5 py-3 shadow-xs"
-                    style={{ borderRadius: '8px 12px 6px 10px' }}
+                    className="flex items-center justify-between border-2 border-pencil-purple bg-paper-card px-5 py-3 shadow-xs rounded-sketch-md"
                   >
                     <div className="flex items-center gap-2">
                       <Flame className="h-5 w-5 text-pencil-purple animate-pulse" />
@@ -229,13 +225,12 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
                         return (
                           <div
                             key={game.id || index}
-                            className="flex items-center justify-between border border-dashed border-paper-border bg-paper-card p-3 text-sm transition-all hover:bg-paper-card-alt"
-                            style={{ borderRadius: '8px' }}
+                            className="flex items-center justify-between border border-dashed border-paper-border bg-paper-card p-3 text-sm transition-all hover:bg-paper-card-alt rounded-sketch"
                           >
                             <div className="flex items-center gap-3">
                               {/* Sıralama Rozeti */}
                               <div
-                                className={`flex h-8 w-8 items-center justify-center rounded-lg font-display font-bold text-sm ${
+                                className={`flex h-8 w-8 items-center justify-center rounded-sketch font-display font-bold text-sm ${
                                   game.placement === 1
                                     ? 'bg-pencil-yellow text-white'
                                     : game.placement === 2
@@ -249,27 +244,24 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
                               </div>
 
                               <div>
-                                <div className="flex items-center gap-2">
-                                  <span className="font-display text-base font-bold text-ink">
-                                    {modeInfo.icon} {modeInfo.label}
-                                  </span>
-                                  {game.survived && (
-                                    <span className="text-xs text-pencil-green font-bold flex items-center gap-0.5">
-                                      <Check className="h-3 w-3" /> Hayatta
-                                    </span>
-                                  )}
-                                </div>
-                                {formattedDate && (
-                                  <span className="text-xs text-ink-extra-faded font-mono">
-                                    {formattedDate}
-                                  </span>
-                                )}
+                                <span className="font-display text-base font-bold text-ink flex items-center gap-1.5">
+                                  <span>{modeInfo.icon}</span>
+                                  <span>{modeInfo.label}</span>
+                                </span>
+                                <span className="text-xs text-ink-extra-faded font-mono block">
+                                  {formattedDate}
+                                </span>
                               </div>
                             </div>
 
-                            <span className="font-display text-xl font-bold text-ink">
-                              {game.score} <span className="text-xs font-sans text-ink-faded">P</span>
-                            </span>
+                            <div className="text-right">
+                              <span className="font-display text-lg font-bold text-pencil-blue block">
+                                {game.score} Puan
+                              </span>
+                              <span className="text-xs font-sans text-ink-faded">
+                                {game.survived ? 'Hayatta 🏁' : 'Elendi 💀'}
+                              </span>
+                            </div>
                           </div>
                         )
                       })}
@@ -278,8 +270,7 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
                 ) : (
                   /* Henüz oyun oynanmamışsa Empty State */
                   <div
-                    className="sticky-note sticky-note-yellow p-6 text-center tilt-1 shadow-md"
-                    style={{ borderRadius: '10px' }}
+                    className="sticky-note sticky-note-yellow p-6 text-center tilt-1 shadow-md rounded-sketch-lg"
                   >
                     <HelpCircle className="mx-auto mb-2 h-8 w-8 text-pencil-yellow" />
                     <h4 className="font-display text-2xl font-bold text-ink">
@@ -293,7 +284,7 @@ export function StatsModal({ isOpen, onClose }: StatsModalProps) {
                 )}
 
                 {/* Footer Bilgilendirme Notu */}
-                <div className="flex items-center gap-2 rounded-xl bg-paper-card-alt border border-paper-border p-3 text-xs text-ink-faded">
+                <div className="flex items-center gap-2 rounded-sketch-md bg-paper-card-alt border border-paper-border p-3 text-xs text-ink-faded">
                   <Info className="h-4 w-4 shrink-0 text-pencil-blue" />
                   <span>
                     İstatistikleriniz bu cihaza (tarayıcıya) özeldir. Tarayıcı verilerinizi temizlemediğiniz sürece geçmişiniz saklanır.

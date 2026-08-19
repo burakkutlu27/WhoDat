@@ -9,17 +9,17 @@ export type FamousPersonCategory =
 export interface CategoryInfo {
   id: FamousPersonCategory
   label: string
-  icon: string
+  icon?: string
   color: string
 }
 
 export const CATEGORIES: CategoryInfo[] = [
-  { id: 'all', label: 'Tümü / Karışık', icon: '🎲', color: 'pencil-yellow' },
-  { id: 'unluler', label: 'Ünlüler', icon: '🎭', color: 'pencil-red' },
-  { id: 'tarihi_kisiler', label: 'Tarihi Kişiler', icon: '🏛️', color: 'pencil-blue' },
-  { id: 'cizgi_karakterler', label: 'Kurgusal & Çizgi', icon: '🎨', color: 'pencil-purple' },
-  { id: 'sporcular', label: 'Sporcular', icon: '⚽', color: 'pencil-green' },
-  { id: 'dizi_film_karakterleri', label: 'Dizi & Film', icon: '🎬', color: 'pencil-orange' },
+  { id: 'all', label: 'Tümü / Karışık', color: 'pencil-yellow' },
+  { id: 'unluler', label: 'Ünlüler', color: 'pencil-red' },
+  { id: 'tarihi_kisiler', label: 'Tarihi Kişiler', color: 'pencil-blue' },
+  { id: 'cizgi_karakterler', label: 'Kurgusal & Çizgi', color: 'pencil-purple' },
+  { id: 'sporcular', label: 'Sporcular', color: 'pencil-green' },
+  { id: 'dizi_film_karakterleri', label: 'Dizi & Film', color: 'pencil-orange' },
 ]
 
 export interface FamousPersonItem {
@@ -27,39 +27,46 @@ export interface FamousPersonItem {
   name: string
   category: Exclude<FamousPersonCategory, 'all'>
   fameTier?: number
+  subcategory?: string
 }
 
 export interface FamousPersonSeed {
   name: string
   category: string
   fameTier: number
+  subcategory?: string
 }
 
 export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Novak Djokovic",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "tenisci"
   },
   {
     "name": "Rafael Nadal",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "tenisci"
   },
   {
     "name": "Roger Federer",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "tenisci"
   },
   {
     "name": "Usain Bolt",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "atlet"
   },
   {
     "name": "Mike Tyson",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Muhammed Ali",
@@ -69,42 +76,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Stephen Curry",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Shaquille O'Neal",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "LeBron James",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Kobe Bryant",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Michael Jordan",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Luka Modric",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Robert Lewandowski",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Karim Benzema",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Zlatan Ibrahimovic",
@@ -114,42 +129,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Erling Haaland",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Neymar",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Ronaldo (Nazário)",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Ronaldinho",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "David Beckham",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Zinedine Zidane",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Pelé",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Cristiano Ronaldo",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Dusan Tadic",
@@ -164,57 +187,68 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mauro Icardi",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Toprak Razgatlıoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Kenan Sofuoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Semih Saygıner",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Halil Mutlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Hamza Yerlikaya",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Taha Akgül",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Rıza Kayaalp",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Mete Gazoz",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Zehra Güneş",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Mehmet Okur",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "İlkay Gündoğan",
@@ -224,27 +258,32 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kenan Yıldız",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Kerem Aktürkoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Hakan Çalhanoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Sergen Yalçın",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Rüştü Reçber",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Volkan Demirel",
@@ -254,32 +293,38 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fernando Muslera",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Gheorghe Hagi",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Naim Süleymanoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Hakan Şükür",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Şenol Güneş",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Fatih Terim",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Jackie Chan",
@@ -289,17 +334,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Keanu Reeves",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Will Smith",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Morgan Freeman",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Marilyn Monroe",
@@ -319,77 +367,92 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Johnny Depp",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Angelina Jolie",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Tom Cruise",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Leonardo DiCaprio",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Brad Pitt",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Taylor Swift",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Beyoncé",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Rihanna",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Shakira",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Eminem",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Elvis Presley",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Freddie Mercury",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Madonna",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Michael Jackson",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Kenan Doğulu",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Serdar Ortaç",
@@ -399,42 +462,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gülşen",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Murat Boz",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Hadise",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Yıldız Tilbe",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Beren Saat",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Kıvanç Tatlıtuğ",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Haluk Bilginer",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Beyazıt Öztürk",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Yılmaz Erdoğan",
@@ -444,17 +515,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nejat Uygur",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Levent Kırca",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Metin Akpınar",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Kadir İnanır",
@@ -464,22 +538,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hülya Koçyiğit",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Türkan Şoray",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Tarık Akan",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Münir Özkul",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Halit Akçatepe",
@@ -489,22 +567,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Şener Şen",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Cem Yılmaz",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Kemal Sunal",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Aşık Veysel",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Neşet Ertaş",
@@ -519,52 +601,62 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Kaya",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Zeki Müren",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "İbrahim Tatlıses",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Müslüm Gürses",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Sezen Aksu",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Tarkan",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Kleopatra",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Thomas Edison",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Stephen Hawking",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Charles Darwin",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Sigmund Freud",
@@ -574,37 +666,44 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aristoteles",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Platon",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Sokrates",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Celal Şengör",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "İlber Ortaylı",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Cahit Arf",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Mete Han",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Alparslan",
@@ -614,22 +713,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Selahaddin Eyyubi",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Attila",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Timur",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Cengiz Han",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Prenses Diana",
@@ -639,22 +742,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kraliçe II. Elizabeth",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Che Guevara",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Nelson Mandela",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Mahatma Gandhi",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Joseph Stalin",
@@ -664,12 +771,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Vladimir Lenin",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Abraham Lincoln",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Adolf Hitler",
@@ -679,7 +788,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Napolyon Bonapart",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Jül Sezar",
@@ -689,32 +799,38 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Büyük İskender",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Kristof Kolomb",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "kasif"
   },
   {
     "name": "Nikola Tesla",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Leonardo da Vinci",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "ressam"
   },
   {
     "name": "Isaac Newton",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Piri Reis",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "kasif"
   },
   {
     "name": "Barbaros Hayreddin Paşa",
@@ -724,7 +840,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Yunus Emre",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Mimar Sinan",
@@ -734,42 +851,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mevlana Celaleddin Rumi",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "II. Abdülhamid",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Osman Gazi",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Yavuz Sultan Selim",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Kanuni Sultan Süleyman",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Fatih Sultan Mehmet",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "İsmet İnönü",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Mustafa Kemal Atatürk",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Vito Corleone (Baba / The Godfather)",
@@ -1904,7 +2029,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Köroğlu",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Batman (Bruce Wayne)",
@@ -2769,7 +2895,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Zeki Alasya",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Alev Sezer",
@@ -2784,7 +2911,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sadri Alışık",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Ali Atay",
@@ -2949,7 +3077,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Sunal",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Ali Sururi",
@@ -3019,7 +3148,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alp Korkmaz",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Alp Navruz",
@@ -3049,7 +3179,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alper Kul",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Alper Rende",
@@ -3134,7 +3265,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aras Bulut İynemli",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Arda Aydın",
@@ -3194,7 +3326,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cüneyt Arkın",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Arslan Kacar",
@@ -3234,7 +3367,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ata Demirer",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Ata Saka",
@@ -3714,7 +3848,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Onur Buldu",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Bulut Aras",
@@ -3749,7 +3884,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Özçivit",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Burak Sağyaşar",
@@ -3824,7 +3960,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adile Naşit",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Afra Saraçoğlu",
@@ -3854,7 +3991,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ajda Pekkan",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Akasya Asıltürkmen",
@@ -3874,7 +4012,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Filiz Akın",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Zeynep Aksu",
@@ -4249,7 +4388,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aylin Kontente",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Aylin Tunceli",
@@ -4379,7 +4519,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayşen Gruda",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Ayşen Tekin",
@@ -4609,7 +4750,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Bergüzar Korel",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Berna Laçin",
@@ -4814,7 +4956,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Büşra Pekin",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Nihan Büyükağaç",
@@ -4824,7 +4967,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Tuba Büyüküstün",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Cahide Sonku",
@@ -4884,7 +5028,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cansu Dere",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Cansu Tosun",
@@ -5239,7 +5384,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kerem Bürsin",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Cahit Gök",
@@ -5649,7 +5795,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barış Manço",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Batu Akdeniz",
@@ -5694,7 +5841,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cem Karaca",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Cem Kısmet",
@@ -5729,7 +5877,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hayko Cepkin",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Çelik",
@@ -5829,7 +5978,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Şebnem Ferah",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Feridun Düzağaç",
@@ -5869,7 +6019,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gökhan Özoğuz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Gökhan Semiz",
@@ -5919,7 +6070,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Haluk Levent",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Harun Tekin",
@@ -5989,7 +6141,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mabel Matiz",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Melis Danişmend",
@@ -6119,7 +6272,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sertab Erener",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Seyhan Karabay",
@@ -6164,7 +6318,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Teoman",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Umut Kaya",
@@ -6274,7 +6429,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceza",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Contra",
@@ -6304,7 +6460,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ezhel",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Fuat Ergin",
@@ -6434,7 +6591,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sagopa Kajmer",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Saian",
@@ -6509,7 +6667,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İlyas Salman",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Oya Başar",
@@ -6554,7 +6713,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sunay Akın",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Hakan Akkaya",
@@ -6739,7 +6899,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ceyhun Yılmaz",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Çağıl Özge Özkul",
@@ -6759,7 +6920,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Demet Akalın",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Demet Şener",
@@ -6819,7 +6981,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Doğu Demirkol",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Güzide Duran",
@@ -6839,7 +7002,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ebru Gündeş",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Ebru Karanfilci",
@@ -6934,7 +7098,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Eser Yenenler",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Esra Balamir",
@@ -6949,7 +7114,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Esra Erol",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Eşref Şefik",
@@ -7039,7 +7205,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fatma Girik",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Emre Gönlüşen",
@@ -7134,7 +7301,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Halit Ergenç",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Hande Ataizi",
@@ -7169,7 +7337,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Acun Ilıcalı",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Uğur Işılak",
@@ -7184,7 +7353,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İbrahim Büyükak",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "İbrahim Güneş",
@@ -7199,7 +7369,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İclal Aydın",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "İdil Öztamer",
@@ -7254,7 +7425,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kaan Sekban",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Kaan Yakuphan",
@@ -7309,7 +7481,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kenan İmirzalıoğlu",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Kerem Alışık",
@@ -7344,7 +7517,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İsmail Küçükkaya",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Lemi Filozof",
@@ -7474,7 +7648,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Müge Anlı",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Müge Oruçkaptan",
@@ -7494,7 +7669,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nazlı Çelik",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Nazlı Tolga",
@@ -7534,7 +7710,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nevşin Mengü",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Nihan Günay",
@@ -7574,17 +7751,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Oğuzhan Koç",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "komedyen"
   },
   {
     "name": "Okan Bayülgen",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "gazeteci_sunucu"
   },
   {
     "name": "Oktay Kaynarca",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "oyuncu"
   },
   {
     "name": "50 Cent",
@@ -7789,7 +7969,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Woody Allen",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yonetmen"
   },
   {
     "name": "Joaquim de Almeida",
@@ -8219,7 +8400,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Christian Bale",
     "category": "unluler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "oyuncu"
   },
   {
     "name": "Eric Balfour",
@@ -10229,7 +10411,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Rowan Atkinson",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Richard Attenborough",
@@ -10554,7 +10737,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Charlie Chaplin",
     "category": "unluler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "komedyen"
   },
   {
     "name": "Graham Chapman",
@@ -10664,7 +10848,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sacha Baron Cohen",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "Raphaël Coleman",
@@ -11244,7 +11429,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ricky Gervais",
     "category": "unluler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "komedyen"
   },
   {
     "name": "John Gielgud",
@@ -12824,7 +13010,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ahmet Necdet Sezer",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Türkiye cumhurbaşkanı vekili",
@@ -13114,7 +13301,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Marie Curie",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Pierre Curie",
@@ -13189,7 +13377,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Albert Einstein",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Emilio Segrè",
@@ -13364,7 +13553,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Werner Heisenberg",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Hendrik Lorentz",
@@ -13744,7 +13934,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Max Planck",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "David Politzer",
@@ -13849,7 +14040,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Erwin Schrödinger",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Julian Schwinger",
@@ -14114,7 +14306,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Aziz Sancar",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Adolf von Baeyer",
@@ -15369,7 +15562,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alexander Fleming",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Werner Forssmann",
@@ -16209,7 +16403,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Albert Camus",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Elias Canetti",
@@ -16224,7 +16419,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Winston Churchill",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Czesław Miłosz",
@@ -16369,7 +16565,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ernest Hemingway",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Henri Bergson",
@@ -16509,7 +16706,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gabriel García Márquez",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "François Mauriac",
@@ -16559,7 +16757,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Orhan Pamuk",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Pär Lagerkvist",
@@ -16639,7 +16838,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jean-Paul Sartre",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Saul Bellow",
@@ -16794,7 +16994,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Michelangelo",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "ressam"
   },
   {
     "name": "Prospero Spani",
@@ -17059,7 +17260,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Johann Wolfgang von Goethe",
     "category": "tarihi_kisiler",
-    "fameTier": 5
+    "fameTier": 5,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Gottfried Leibniz",
@@ -17089,7 +17291,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Georg Wilhelm Friedrich Hegel",
     "category": "tarihi_kisiler",
-    "fameTier": 5
+    "fameTier": 5,
+    "subcategory": "filozof"
   },
   {
     "name": "Heinz Heimsoeth",
@@ -17134,7 +17337,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Immanuel Kant",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Johann Friedrich Herbart",
@@ -17209,7 +17413,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Karl Marx",
     "category": "tarihi_kisiler",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "filozof"
   },
   {
     "name": "Max Beer",
@@ -17289,7 +17494,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arthur Schopenhauer",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Oswald Spengler",
@@ -17414,7 +17620,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "René Descartes",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Denis Diderot",
@@ -17669,7 +17876,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jean-Jacques Rousseau",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Sarah Kofman",
@@ -17704,7 +17912,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Voltaire",
     "category": "tarihi_kisiler",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "filozof"
   },
   {
     "name": "Astronom",
@@ -18589,7 +18798,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Athena",
     "category": "cizgi_karakterler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "muzisyen"
   },
   {
     "name": "Avcı Herne",
@@ -21909,7 +22119,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alperen Şengün",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Altan Dinçer",
@@ -22179,7 +22390,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Can Bartu",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Can Kaan Turgut",
@@ -22254,7 +22466,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cedi Osman",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Cem Akdağ",
@@ -22584,7 +22797,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ergin Ataman",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Erhan Yetim",
@@ -22624,7 +22838,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ersan İlyasova",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Orkun Kemal Ertaş",
@@ -22724,7 +22939,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Furkan Korkmaz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Gökbörü Aygar",
@@ -22839,7 +23055,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Harun Erdenay",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Hasan Arat",
@@ -22854,7 +23071,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hidayet Türkoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Hikmet Vardar",
@@ -22904,7 +23122,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İbrahim Kutluay",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "İbrahim Yıldırım",
@@ -23034,7 +23253,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kerem Tunçeri",
     "category": "sporcular",
-    "fameTier": 5
+    "fameTier": 5,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Kristijan Nikolov",
@@ -23379,7 +23599,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Cansu Özbay",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Cemre Erol",
@@ -23604,7 +23825,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ebrar Karakurt",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Ebru Ceylan",
@@ -23864,7 +24086,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gizem Örge",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Gizem Türegün",
@@ -23934,7 +24157,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Hande Baladın",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Hande Korkut",
@@ -24149,7 +24373,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Melissa Vargas",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Merve Atlıer",
@@ -24254,7 +24479,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Neslihan Demir",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Neşve Büyükbayram",
@@ -24359,12 +24585,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Arda Güler",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Arda Turan",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Arif Güney",
@@ -24514,7 +24742,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Barış Alper Yılmaz",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Deniz Barış",
@@ -24649,7 +24878,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Burak Yılmaz",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Burhan Atak",
@@ -24869,7 +25099,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Mustafa Denizli",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Oktay Derelioğlu",
@@ -24994,7 +25225,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Emre Belözoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Emre Kılınç",
@@ -25229,7 +25461,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ferdi Kadıoğlu",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Feridun Buğeker",
@@ -25869,7 +26102,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Alex de Souza",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Alex Teixeira",
@@ -26209,7 +26443,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Gianluigi Buffon",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Jorge Burruchaga",
@@ -26259,7 +26494,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Iker Casillas",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Héctor Castro",
@@ -26359,7 +26595,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Diego Maradona",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Djalma Santos",
@@ -26514,7 +26751,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Franz Beckenbauer",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Fulvio Collovati",
@@ -26689,7 +26927,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Thierry Henry",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Uli Hoeneß",
@@ -26849,7 +27088,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kaká",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "N'Golo Kanté",
@@ -26909,7 +27149,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lamine Yamal",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Lautaro Martínez",
@@ -26944,7 +27185,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lionel Messi",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Lisandro Martínez",
@@ -27154,7 +27396,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kylian Mbappé",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Mesut Özil",
@@ -27209,7 +27452,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Fernando Alonso",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Mario Andretti",
@@ -27224,7 +27468,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ayrton Senna",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Jim Clark",
@@ -27319,7 +27564,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lando Norris",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Niki Lauda",
@@ -27329,7 +27575,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Lewis Hamilton",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Nigel Mansell",
@@ -27339,7 +27586,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Michael Schumacher",
     "category": "sporcular",
-    "fameTier": 1
+    "fameTier": 1,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Nelson Piquet",
@@ -27364,7 +27612,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Sebastian Vettel",
     "category": "sporcular",
-    "fameTier": 4
+    "fameTier": 4,
+    "subcategory": "diger_spor"
   },
   {
     "name": "John Surtees",
@@ -27374,7 +27623,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Max Verstappen",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Harry Potter'daki büyülü yaratıklar",
@@ -28034,52 +28284,62 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Namık Kemal",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Mehmet Akif Ersoy",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Ziya Gökalp",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Nazım Hikmet",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Orhan Veli Kanık",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Necip Fazıl Kısakürek",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Yaşar Kemal",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Aziz Nesin",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Oğuz Atay",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Sabahattin Ali",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Halide Edip Adıvar",
@@ -28094,12 +28354,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Peyami Safa",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Ahmet Hamdi Tanpınar",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Cahit Sıtkı Tarancı",
@@ -28109,7 +28371,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Attila İlhan",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Cemal Süreya",
@@ -28139,32 +28402,38 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "İbn-i Haldun",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Hacı Bektaş-ı Veli",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Evliya Çelebi",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Osman Hamdi Bey",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "ressam"
   },
   {
     "name": "Ömer Seyfettin",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Tevfik Fikret",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Halit Ziya Uşaklıgil",
@@ -28174,32 +28443,38 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Adnan Menderes",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Turgut Özal",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Süleyman Demirel",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Bülent Ecevit",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Necmettin Erbakan",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Alparslan Türkeş",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "siyasetci"
   },
   {
     "name": "Deniz Gezmiş",
@@ -28219,17 +28494,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Halil İnalcık",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "akademisyen_yazar"
   },
   {
     "name": "Bilge Kağan",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Kül Tigin",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Tonyukuk",
@@ -28239,7 +28517,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Konfüçyüs",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Buda (Siddhartha Gautama)",
@@ -28249,17 +28528,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Friedrich Nietzsche",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Louis Pasteur",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Alexander Graham Bell",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Pisagor (Pythagoras)",
@@ -28284,12 +28566,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Jeanne d'Arc",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "Kraliçe Victoria",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
   },
   {
     "name": "John F. Kennedy (JFK)",
@@ -28304,7 +28588,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ömer Hayyam",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Farabi (Al-Farabi)",
@@ -28319,7 +28604,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Ali Kuşçu",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Katip Çelebi",
@@ -28334,12 +28620,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Enver Paşa",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Talat Paşa",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Cemal Paşa",
@@ -28349,17 +28637,20 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kazım Karabekir",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Fevzi Çakmak",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Rauf Orbay",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "osmanli_turk_lideri"
   },
   {
     "name": "Ali Fuat Cebesoy",
@@ -28404,22 +28695,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Galileo Galilei",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Johannes Kepler",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Nicolaus Copernicus",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Gregor Mendel",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
   },
   {
     "name": "Dmitri Mendeleyev",
@@ -28444,42 +28739,50 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Yuri Gagarin",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Neil Armstrong",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Ferdinand Macellan",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Vasco da Gama",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Marco Polo",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "İbni Batuta",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "kasif"
   },
   {
     "name": "Sun Tzu",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Homeros",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "yazar_sair"
   },
   {
     "name": "Herodot",
@@ -28499,12 +28802,14 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Marcus Aurelius",
     "category": "tarihi_kisiler",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "filozof"
   },
   {
     "name": "Semih Kılıçsoy",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Çağlar Söyüncü",
@@ -28529,22 +28834,26 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Nihat Kahveci",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Busenaz Sürmeneli",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Buse Naz Çakıroğlu",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Servet Tazegül",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "diger_spor"
   },
   {
     "name": "Şahika Ercümen",
@@ -28554,7 +28863,8 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Dries Mertens",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Lucas Torreira",
@@ -28594,52 +28904,62 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
     "name": "Kevin De Bruyne",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Mohamed Salah",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Manuel Neuer",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Giannis Antetokounmpo",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
   },
   {
     "name": "Serena Williams",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "tenisci"
   },
   {
     "name": "Conor McGregor",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "mma_ufc_sporcusu"
   },
   {
     "name": "Khabib Nurmagomedov",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "mma_ufc_sporcusu"
   },
   {
     "name": "Carlos Alcaraz",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "tenisci"
   },
   {
     "name": "Jannik Sinner",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "tenisci"
   },
   {
     "name": "Pep Guardiola",
     "category": "sporcular",
-    "fameTier": 2
+    "fameTier": 2,
+    "subcategory": "futbolcu"
   },
   {
     "name": "Jose Mourinho",
@@ -28705,5 +29025,10307 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "name": "Talisca",
     "category": "sporcular",
     "fameTier": 2
+  },
+  {
+    "name": "Caravaggio",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Emrah Safa Gürkan",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Cemil Meriç",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Recep Tayyip Erdoğan",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Melih Gökçek",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Francis Ford Coppola",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Stanley Kubrick",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Steven Spielberg",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Celal Bayar",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Tansu Çiller",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Mesut Yılmaz",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Devlet Bahçeli",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Kemal Kılıçdaroğlu",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Ekrem İmamoğlu",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Mansur Yavaş",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Özgür Özel",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Muharrem İnce",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Ümit Özdağ",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Meral Akşener",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Ali Babacan",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Ahmet Davutoğlu",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Selahattin Demirtaş",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Binali Yıldırım",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Deniz Baykal",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Abdullah Gül",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Barack Obama",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Donald Trump",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Joe Biden",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Vladimir Putin",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Emmanuel Macron",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Angela Merkel",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Volodimir Zelenski",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Boris Johnson",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Şi Cinping",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Kim Jong-un",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 1
+  },
+  {
+    "name": "Justin Trudeau",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Kamala Harris",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Hillary Clinton",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Silvio Berlusconi",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Margaret Thatcher",
+    "category": "unluler",
+    "subcategory": "siyasetci",
+    "fameTier": 2
+  },
+  {
+    "name": "Nuri Bilge Ceylan",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Zeki Demirkubuz",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Fatih Akın",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Ferzan Özpetek",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Ertem Eğilmez",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Metin Erksan",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Yılmaz Güney",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Yavuz Turgul",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Reha Erdem",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Semih Kaplanoğlu",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Çağan Irmak",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Ezel Akay",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Onur Ünlü",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Atıf Yılmaz",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Memduh Ün",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Halit Refiğ",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Christopher Nolan",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Quentin Tarantino",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Martin Scorsese",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "James Cameron",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Alfred Hitchcock",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ridley Scott",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "David Fincher",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Tim Burton",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Wes Anderson",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Guillermo del Toro",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Peter Jackson",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Denis Villeneuve",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "George Lucas",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Hayao Miyazaki",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Akira Kurosawa",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Federico Fellini",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Guy Ritchie",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Bong Joon-ho",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Greta Gerwig",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Taika Waititi",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 3
+  },
+  {
+    "name": "Sergio Leone",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Roman Polanski",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "David Lynch",
+    "category": "unluler",
+    "subcategory": "yonetmen",
+    "fameTier": 2
+  },
+  {
+    "name": "Can Yücel",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Rıfat Ilgaz",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Sait Faik Abasıyanık",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Zülfü Livaneli",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Doğan Cüceloğlu",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Üstün Dökmen",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Murat Bardakçı",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Sinan Meydan",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 3
+  },
+  {
+    "name": "Ahmet Ümit",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Elif Şafak",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Ayşe Kulin",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Yuval Noah Harari",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Noam Chomsky",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Slavoj Žižek",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 3
+  },
+  {
+    "name": "Jordan Peterson",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Neil deGrasse Tyson",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Richard Dawkins",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Carl Sagan",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Michio Kaku",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 3
+  },
+  {
+    "name": "Umberto Eco",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Paulo Coelho",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "George R. R. Martin",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "J. K. Rowling",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "J. R. R. Tolkien",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Stephen King",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Dan Brown",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 2
+  },
+  {
+    "name": "Agatha Christie",
+    "category": "unluler",
+    "subcategory": "akademisyen_yazar",
+    "fameTier": 1
+  },
+  {
+    "name": "Uğur Dündar",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Mehmet Ali Birand",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Ali Kırca",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Fatih Portakal",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Cüneyt Özdemir",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Fatih Altaylı",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Ahmet Hakan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Reha Muhtar",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Savaş Ay",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Enver Aysever",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Şirin Payzın",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Mirgün Cabas",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Ertuğrul Özkök",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Can Dündar",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Soner Yalçın",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Banu Güven",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Ece Üner",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Buket Aydın",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Zuhal Topal",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Seda Sayan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Erkan Tan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Larry King",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Oprah Winfrey",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 1
+  },
+  {
+    "name": "David Letterman",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Jimmy Fallon",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Jimmy Kimmel",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Conan O'Brien",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ellen DeGeneres",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Joe Rogan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Tucker Carlson",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Piers Morgan",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Graham Norton",
+    "category": "unluler",
+    "subcategory": "gazeteci_sunucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Tolga Çevik",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Şahan Gökbakar",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ferhan Şensoy",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Hasan Can Kaya",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Feyyaz Yiğit",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Yasemin Sakallıoğlu",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Giray Altınok",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Ersin Korkut",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Jim Carrey",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Robin Williams",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Eddie Murphy",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Kevin Hart",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Dave Chappelle",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Steve Carell",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Adam Sandler",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ben Stiller",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Chris Rock",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Will Ferrell",
+    "category": "unluler",
+    "subcategory": "komedyen",
+    "fameTier": 2
+  },
+  {
+    "name": "Vehbi Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Rahmi Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Ali Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Ömer Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Mustafa Koç",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sakıp Sabancı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Güler Sabancı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Ali Sabancı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Ferit Şahenk",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Hüsnü Özyeğin",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Murat Ülker",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Hamdi Ulukaya",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Nevzat Aydın",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sadettin Saran",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Aydın Doğan",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Eren Bali",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 3
+  },
+  {
+    "name": "Bülent Eczacıbaşı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Ahmet Nazif Zorlu",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Fuat Tosyalı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 3
+  },
+  {
+    "name": "Erol Sabancı",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 3
+  },
+  {
+    "name": "Elon Musk",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Bill Gates",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Steve Jobs",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Jeff Bezos",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Mark Zuckerberg",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Warren Buffett",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Bernard Arnault",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Larry Page",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sergey Brin",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sam Altman",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Jensen Huang",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Tim Cook",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Sundar Pichai",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Satya Nadella",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 3
+  },
+  {
+    "name": "Richard Branson",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Henry Ford",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "John D. Rockefeller",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Andrew Carnegie",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Walt Disney",
+    "category": "unluler",
+    "subcategory": "is_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Raffaello Sanzio",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Sandro Botticelli",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Rembrandt",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Vincent van Gogh",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Pablo Picasso",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Claude Monet",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Salvador Dalí",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Johannes Vermeer",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Gustav Klimt",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Edvard Munch",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Frida Kahlo",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 1
+  },
+  {
+    "name": "Paul Cézanne",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Auguste Renoir",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Diego Velázquez",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Francisco Goya",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Henri Matisse",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Wassily Kandinsky",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Andy Warhol",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Paul Gauguin",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Jan van Eyck",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Titian",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Peter Paul Rubens",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Şeker Ahmet Paşa",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "İbrahim Çallı",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Abidin Dino",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Bedri Rahmi Eyüboğlu",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 2
+  },
+  {
+    "name": "Fikret Muallâ",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Mihri Müşfik Hanım",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Hoca Ali Rıza",
+    "category": "tarihi_kisiler",
+    "subcategory": "ressam",
+    "fameTier": 3
+  },
+  {
+    "name": "Michael Faraday",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "James Clerk Maxwell",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Alan Turing",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Niels Bohr",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "İbn-i Sina",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "El-Hârizmî",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "El-Bîrûnî",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "El-Cezeri",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Farabi",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "İbn Rüşd",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Oktay Sinanoğlu",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Arşimet",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Pisagor",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "Öklid",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 2
+  },
+  {
+    "name": "Hipokrat",
+    "category": "tarihi_kisiler",
+    "subcategory": "bilim_insani",
+    "fameTier": 1
+  },
+  {
+    "name": "John Locke",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Thomas Hobbes",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Baruch Spinoza",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "David Hume",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Niccolò Machiavelli",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Michel Foucault",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Laozi",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Gazali",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 1
+  },
+  {
+    "name": "Diyojen",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 1
+  },
+  {
+    "name": "Epiktetos",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 3
+  },
+  {
+    "name": "Seneca",
+    "category": "tarihi_kisiler",
+    "subcategory": "filozof",
+    "fameTier": 2
+  },
+  {
+    "name": "Amerigo Vespucci",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 1
+  },
+  {
+    "name": "James Cook",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Seydi Ali Reis",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Kâtip Çelebi",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Roald Amundsen",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Robert Falcon Scott",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 3
+  },
+  {
+    "name": "Buzz Aldrin",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Jacques Cousteau",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Francis Drake",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Hernán Cortés",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Francisco Pizarro",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "David Livingstone",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 3
+  },
+  {
+    "name": "Edmund Hillary",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Tenzing Norgay",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 3
+  },
+  {
+    "name": "Leif Erikson",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 2
+  },
+  {
+    "name": "Zheng He",
+    "category": "tarihi_kisiler",
+    "subcategory": "kasif",
+    "fameTier": 3
+  },
+  {
+    "name": "Orhan Gazi",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "I. Murad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Yıldırım Bayezid",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Çelebi Mehmed",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "II. Murad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "II. Selim",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "III. Murad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 3
+  },
+  {
+    "name": "Genç Osman",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "IV. Murad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "IV. Mehmed",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 3
+  },
+  {
+    "name": "III. Ahmed",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "III. Selim",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "II. Mahmud",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Sultan Abdülmecid",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Sultan Abdülaziz",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "V. Mehmed Reşad",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Vahdettin",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Sultan Alparslan",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Tuğrul Bey",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Melikşah",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Gazneli Mahmud",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Babür Şah",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Şah İsmail",
+    "category": "tarihi_kisiler",
+    "subcategory": "osmanli_turk_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Julius Caesar",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Augustus",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Neron",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Caligula",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Büyük Konstantin",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Hannibal Barca",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Ramses II",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Tutankhamun",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Hammurabi",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Kubilay Han",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "George Washington",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Franklin D. Roosevelt",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "John F. Kennedy",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Kraliçe I. Elizabeth",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Kral VIII. Henry",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Büyük Petro",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Büyük Katerina",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Josef Stalin",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Mihail Gorbaçov",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Fidel Castro",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 1
+  },
+  {
+    "name": "Simón Bolívar",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "Şarlman",
+    "category": "tarihi_kisiler",
+    "subcategory": "dunya_lideri",
+    "fameTier": 2
+  },
+  {
+    "name": "William Shakespeare",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Lev Tolstoy",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Fyodor Dostoyevski",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Anton Çehov",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Maksim Gorki",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Aleksandr Puşkin",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Nikolay Gogol",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Victor Hugo",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Honoré de Balzac",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Alexandre Dumas",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Gustave Flaubert",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Charles Dickens",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Jane Austen",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Virginia Woolf",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "George Orwell",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Franz Kafka",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Dante Alighieri",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Miguel de Cervantes",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Edgar Allan Poe",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Mark Twain",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Fuzûlî",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Bâkî",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Nedîm",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Nef'î",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Şeyh Galip",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Taşlıcalı Yahya",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 3
+  },
+  {
+    "name": "Nâbî",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Karacaoğlan",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Dadaloğlu",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 2
+  },
+  {
+    "name": "Pir Sultan Abdal",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Yahya Kemal Beyatlı",
+    "category": "tarihi_kisiler",
+    "subcategory": "yazar_sair",
+    "fameTier": 1
+  },
+  {
+    "name": "Johan Cruyff",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Michel Platini",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Marco van Basten",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "George Best",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Eusebio",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Alfredo Di Stéfano",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ferenc Puskás",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Andrea Pirlo",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Andres Iniesta",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Xavi Hernandez",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Vinicius Junior",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Jude Bellingham",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Harry Kane",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Zlatan Ibrahimović",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Luis Suárez",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Sergio Ramos",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "İlhan Mansız",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Edin Džeko",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Metin Oktay",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Lefter Küçükandonyadis",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Hakkı Yeten",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Süleyman Seba",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "José Mourinho",
+    "category": "sporcular",
+    "subcategory": "futbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Magic Johnson",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Larry Bird",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Kareem Abdul-Jabbar",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Wilt Chamberlain",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Bill Russell",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Tim Duncan",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Kevin Durant",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Luka Dončić",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Nikola Jokić",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Dirk Nowitzki",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Allen Iverson",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Dwyane Wade",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Charles Barkley",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Scottie Pippen",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Dennis Rodman",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Hakeem Olajuwon",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Karl Malone",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "John Stockton",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Steve Nash",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Manu Ginóbili",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Pau Gasol",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Tony Parker",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Victor Wembanyama",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ömer Aşık",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Mirsad Türkcan",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Semih Erden",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Melih Mahmutoğlu",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Shane Larkin",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Vasilije Micić",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Bogdan Bogdanović",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 2
+  },
+  {
+    "name": "Željko Obradović",
+    "category": "sporcular",
+    "subcategory": "basketbolcu",
+    "fameTier": 1
+  },
+  {
+    "name": "Daniil Medvedev",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Alexander Zverev",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Stefanos Tsitsipas",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Andy Murray",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Pete Sampras",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Andre Agassi",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Boris Becker",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "John McEnroe",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Björn Borg",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Jimmy Connors",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Ivan Lendl",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Venus Williams",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Maria Sharapova",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Steffi Graf",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 1
+  },
+  {
+    "name": "Martina Navratilova",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Chris Evert",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Monica Seles",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Billie Jean King",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Martina Hingis",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Naomi Osaka",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Iga Świątek",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Aryna Sabalenka",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Coco Gauff",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Marsel İlhan",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Çağla Büyükakçay",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "İpek Şenoğlu",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 3
+  },
+  {
+    "name": "İpek Soylu",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 3
+  },
+  {
+    "name": "Zeynep Sönmez",
+    "category": "sporcular",
+    "subcategory": "tenisci",
+    "fameTier": 2
+  },
+  {
+    "name": "Jon Jones",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 1
+  },
+  {
+    "name": "Israel Adesanya",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Georges St-Pierre",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Anderson Silva",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Daniel Cormier",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Francis Ngannou",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Alex Pereira",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Islam Makhachev",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Dustin Poirier",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Justin Gaethje",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Max Holloway",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Alexander Volkanovski",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Charles Oliveira",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Nate Diaz",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Nick Diaz",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 3
+  },
+  {
+    "name": "Ronda Rousey",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 1
+  },
+  {
+    "name": "Amanda Nunes",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Fedor Emelianenko",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Brock Lesnar",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 1
+  },
+  {
+    "name": "Kamaru Usman",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Khamzat Chimaev",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Sean O'Malley",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ilia Topuria",
+    "category": "sporcular",
+    "subcategory": "mma_ufc_sporcusu",
+    "fameTier": 2
+  },
+  {
+    "name": "Carl Lewis",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Jesse Owens",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Mo Farah",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Eliud Kipchoge",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Armand Duplantis",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Noah Lyles",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Tyson Gay",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Asafa Powell",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Yohan Blake",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Justin Gatlin",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Michael Johnson",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Florence Griffith Joyner",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Elaine Thompson-Herah",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Shelly-Ann Fraser-Pryce",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Sha'Carri Richardson",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Yelena Isinbayeva",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Haile Gebrselassie",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Kenenisa Bekele",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Hicham El Guerrouj",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Süreyya Ayhan",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Ramil Guliyev",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Yasmani Copello Escobar",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Eşref Apak",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Ruhi Sarıalp",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 3
+  },
+  {
+    "name": "Nevin Yanıt",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Elvan Abeylegesse",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 1
+  },
+  {
+    "name": "Ersu Şaşma",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 2
+  },
+  {
+    "name": "Eda Tuğsuz",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 3
+  },
+  {
+    "name": "Necdet Ayaz",
+    "category": "sporcular",
+    "subcategory": "atlet",
+    "fameTier": 3
+  },
+  {
+    "name": "Michael Phelps",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Ian Thorpe",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Caeleb Dressel",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Katie Ledecky",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Mark Spitz",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ryan Lochte",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Alexander Popov",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Sun Yang",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Adam Peaty",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Léon Marchand",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Pieter van den Hoogenband",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Ian Crocker",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Grant Hackett",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Nathan Adrian",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Matt Biondi",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 3
+  },
+  {
+    "name": "Federica Pellegrini",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Katinka Hosszú",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Sarah Sjöström",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Emma McKeon",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Summer McIntosh",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Derya Büyükuncu",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Emre Sakçı",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 1
+  },
+  {
+    "name": "Merve Tuncel",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Berkay Ömer Öğretir",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Viktoria Zeynep Güneş",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Kuzey Tunçelli",
+    "category": "sporcular",
+    "subcategory": "yuzucu",
+    "fameTier": 2
+  },
+  {
+    "name": "Nurcan Taylan",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Taner Sağır",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Yaşar Doğu",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Koca Yusuf",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Mahmut Atalay",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Ahmet Ayık",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Nazmi Avluca",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Selçuk Çebi",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Yasemin Adar",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Sinan Şamil Sam",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Muhammad Ali",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Floyd Mayweather Jr.",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Manny Pacquiao",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "George Foreman",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Evander Holyfield",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Lennox Lewis",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Anthony Joshua",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Tyson Fury",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Oleksandr Usyk",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Canelo Álvarez",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Eda Erdem Dündar",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Simge Aköz",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Giovanni Guidetti",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Daniele Santarelli",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Yusuf Dikeç",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Şevval İlayda Tarhan",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Nur Tatar",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Bahri Tanrıkulu",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Hatice Kübra İlgün",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Hakan Reçber",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Merve Dinçel",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Ferhat Arıcan",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "İbrahim Çolak",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Adem Asil",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Charles Leclerc",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Deniz Öncü",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Can Öncü",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 3
+  },
+  {
+    "name": "Ronnie O'Sullivan",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Tayfun Taşdemir",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Tiger Woods",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Magnus Carlsen",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Garry Kasparov",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Anatoli Karpov",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Bobby Fischer",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 1
+  },
+  {
+    "name": "Hikaru Nakamura",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Yağız Kaan Erdoğmuş",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 2
+  },
+  {
+    "name": "Mustafa Yılmaz",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 3
+  },
+  {
+    "name": "Emre Can",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 3
+  },
+  {
+    "name": "Vahap Şanal",
+    "category": "sporcular",
+    "subcategory": "diger_spor",
+    "fameTier": 3
+  },
+  {
+    "name": "John Lennon",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Paul McCartney",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Bob Marley",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Adele",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ed Sheeran",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Drake",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "The Weeknd",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Dua Lipa",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Billie Eilish",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Wolfgang Amadeus Mozart",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Ludwig van Beethoven",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Frédéric Chopin",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Johann Sebastian Bach",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Antonio Vivaldi",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Nil Karaibrahimgil",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Mustafa Sandal",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Kayahan",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Mirkelam",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Semicenk",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Hande Yener",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Sıla",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Yalın",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Gripin",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Duman",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Mor ve Ötesi",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Manga",
+    "category": "unluler",
+    "subcategory": "muzisyen",
+    "fameTier": 1
+  },
+  {
+    "name": "Serenay Sarıkaya",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Hande Erçel",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Engin Akyürek",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Çağatay Ulusoy",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Demet Özdemir",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Cillian Murphy",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Robert De Niro",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Al Pacino",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Tom Hanks",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Scarlett Johansson",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Meryl Streep",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Natalie Portman",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Emma Stone",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Margot Robbie",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Jennifer Aniston",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Ryan Gosling",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Hugh Jackman",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Denzel Washington",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Erdal Beşikçioğlu",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Necati Şaşmaz",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Kenan Çoban",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Gürkan Uygun",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Zafer Ergin",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Şevket Çoruh",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Özgür Ozan",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Uğur Pektaş",
+    "category": "unluler",
+    "subcategory": "oyuncu",
+    "fameTier": 1
+  },
+  {
+    "name": "Enes Batur",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ruhi Çenet",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Orkun Işıtmak",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Berkcan Güven (BEGE)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Kafalar (Bilal Hancı, Atakan Özyurt, Fatih Yasin)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Bilal Hancı",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Atakan Özyurt",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Fatih Yasin",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Meryem Can",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Fırat Sobutay (Oha Diyorum)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Melih Abuaf (Mediakraft)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ersin Yekin",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Doğan Kabak",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ekin Kollama",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Mendebur Lemur",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Mesut Çevik",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Hakkı Alkan (ShiftDelete)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Halil Söyletmez",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ayhan Tarakcı",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Tuna Tavus",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ağır Mimar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Dora Özsoy (Stratera)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Hugola",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Kaanflix",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Porçay",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Tolunay Ören",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "MuratAbiGF (Murat Engin Ekin)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "NDNG Baturay Anar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "SeseGel (Hasan Mustan)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Uras Benlioğlu",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Oğuzhan Uğur (BaBaLa TV)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Cem Korkmaz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Burak Oyunda (Burak Şahin)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Easter GamersTv (Mete Özbey)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Pintipanda (Tuna Akşen)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Gereksiz Oda (Emrecan Önal)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Mami Emen",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Emre Durmuş (Yol Günlükleri)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Fatih Can Aytan",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Gülbence (Gülben Ergen)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Tugay Gök",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Efe Aydal",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Diamond Tema",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Deniz Bodur",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Gözler Anlatır (Sarp Levendoğlu)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Evrim Ağacı (Çağrı Mert Bakırcı)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Bebar Bilim",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Hikayesi Ne (Murat Şen)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "FluTV (İlker Canikligil)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Yusuf Kayaalp",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "DFT Tarih",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Neo Toprak",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "MrBeast (Jimmy Donaldson)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "PewDiePie (Felix Kjellberg)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Markiplier (Mark Fischbach)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "DanTDM (Daniel Middleton)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Jacksepticeye (Sean McLoughlin)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Smosh (Ian Hecox & Anthony Padilla)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Logan Paul",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Jake Paul",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "KSI (Olajide Olatunji)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "IShowSpeed (Darren Watkins Jr.)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Casey Neistat",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Marques Brownlee (MKBHD)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Veritasium (Derek Muller)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Vsauce (Michael Stevens)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "David Dobrik",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Dude Perfect",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Liza Koshy",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Emma Chamberlain",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "James Charles",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Jeffree Star",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "NigaHiga (Ryan Higa)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ray William Johnson",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "LazarBeam (Lannan Eacott)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "SSundee (Ian Stapleton)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ninja (Tyler Blevins)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Technoblade",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Dream (Clay)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "TommyInnit (Thomas Simons)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Daily Dose Of Internet",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Colin and Samir",
+    "category": "unluler",
+    "fameTier": 4,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Danla Bilic",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Duygu Özaslan",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Şeyma Subaşı",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Rachel Araz Kiresepi",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Sude Alkış",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Cansu Akın",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Ala Tokel",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Meriç Küçük (Maritsa)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Damla Altun",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Polen Emre",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kerimcan Durmaz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Selin Ciğerci",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Dilan Polat",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Engin Polat",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Eylül Öztürk",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Reynmen (Yusuf Aktaş)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "CZN Burak (Burak Özdemir)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Nusret Gökçe (Salt Bae)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Gökhan Çınar (Katarsis)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Chiara Ferragni",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kylie Jenner",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kim Kardashian",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kendall Jenner",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Khloe Kardashian",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kourtney Kardashian",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Dan Bilzerian",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Huda Kattan (Huda Beauty)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Gianluca Vacchi",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Sommer Ray",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Lele Pons",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Negin Mirsalehi",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Camila Coelho",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Khaby Lame",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Charli D'Amelio",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Bella Poarch",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Addison Rae",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Zach King",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Dixie D'Amelio",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Spencer X (Spencer Polanco)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Michael Le (JustMaiko)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Jason Derulo (TikTok)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Loren Gray",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Cemre Solmaz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Cellat36 (Özgür Deniz Cellat)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Yaren Alaca",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Buse Korkmaz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Berke Juan",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Kürşat Juan",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Merve Yalçın",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Ayda Sadık (Aydas)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Ece Ronay",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Semiraminta (Yeliz Korkmaz)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Doğanay Oğuz",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Barış Dadada (Barış Resmi)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Çılgın Dondurmacı (Mehmet Dinç)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Ares Özdemir",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Pelin Yar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Elraenn (Tuğkan Gönültaş)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "wtcN (Ferit Karakaya)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Kendine Müzisyen (Kemal Can Parlak)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Jahrein (Ahmet Sonuç)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Pqueen (Pelin Baynazoğlu)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Unlost (Cantuğ Özsoy)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Mithrain (Cem Karakoç)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Videoyun (Batu Bozkan)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Zade (Şükrü Şentürk)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Toqtir (Sedat Sakarya)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Grimnax (Alp Saraç)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Miafitz (Gözde Demiral)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Annadeniz (Anna Deniz Şenocak)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Levo (Levent Balım)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Rip (Fatih Soytekin)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Hype (Çağrı Ergün)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "RRaenee (Doğukan Adal)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Adal (Doğukan Adal)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Eray Özkenar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Limon Tayfa",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Thaldrin (Berke Demir)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "HolyThoth (Cenk Erdur)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Closer (Can Çelik)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "cNed (Mehmet Yağız İpek)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "XANTARES (İsmailcan Dörtkardeş)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "woxic (Özgür Eker)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Kai Cenat",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "xQc (Félix Lengyel)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Shroud (Michael Grzesiek)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Ibai (Ibai Llanos)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "AuronPlay (Raúl Álvarez Genes)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Rubius (Rubén Doblas)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Pokimane (Imane Anys)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Amouranth (Kaitlyn Siragusa)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Tfue (Turner Tenney)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "TimTheTatman (Timothy Betar)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Dr Disrespect (Guy Beahm)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Asmongold (Zack)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "HasanAbi (Hasan Piker)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Disguised Toast (Jeremy Wang)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Valkyrae (Rachell Hofstetter)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Ludwig Ahgren",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Summit1g (Jaryd Lazar)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Sodapoppin (Chance Morris)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Mizkif (Matthew Rinaudo)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Fatih Erbakan",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Mustafa Sarıgül",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Süleyman Soylu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Hakan Fidan",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Mehmet Şimşek",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Fahrettin Koca",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Ziya Selçuk",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Berat Albayrak",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Erdal İnönü",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Kadir Topbaş",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Murat Kurum",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Turgut Altınok",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Tunç Soyer",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Cemil Tugay",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Olaf Scholz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Rishi Sunak",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Keir Starmer",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Narendra Modi",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Binyamin Netanyahu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Kral III. Charles",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Javier Milei",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Viktor Orban",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Giorgia Meloni",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "İlham Aliyev",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Kasım Cömert Tokayev",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Şavkat Mirziyoyev",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Lula da Silva",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Jair Bolsonaro",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Hilary Clinton",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Bill Clinton",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "George W. Bush",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Emin Alper",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Onur Saylak",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Serdar Akar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Yılmaz Atadeniz",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Lütfi Akad",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Kartal Tibet",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Osman Sınav",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Hilal Saral",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Uluç Bayraktar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Alfonso Cuaron",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Alejandro G. Inarritu",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Ingmar Bergman",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Andrey Tarkovski",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Jean-Luc Godard",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "François Truffaut",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Pedro Almodovar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Lars von Trier",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Coen Kardeşler (Joel ve Ethan Coen)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Fikret Mualla",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Avni Arbaş",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Nuri İyem",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Fahir Aksoy",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Salvador Dali",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Rembrandt van Rijn",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Paul Cezanne",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Edgar Degas",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Pierre-Auguste Renoir",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Hieronymus Bosch",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Albrecht Dürer",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Diego Velazquez",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Jackson Pollock",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Rene Magritte",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Jean-Michel Basquiat",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Banksy",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Feza Gürsey",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Behram Kurşunoğlu",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Daron Acemoğlu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
+  },
+  {
+    "name": "Uğur Şahin",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Özlem Türeci",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Gazi Yaşargil",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Mehmet Öz",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Ali Erdemir",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Canan Dağdeviren",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "J. Robert Oppenheimer",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Jane Goodall",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Ada Lovelace",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Rosalind Franklin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Uluğ Bey",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Biruni (El-Biruni)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Cezeri (El-Cezeri)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "İbn-i Heysem",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Rene Descartes",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "Niccolo Machiavelli",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "Lao Tzu",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "Epikür (Epikuros)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "G. W. F. Hegel",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "Jüstinyen (I. Justinianus)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Korkunç İvan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Hulagu Han",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Harun Reşid",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Tutankamon (Firavun)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "II. Ramses (Büyük Ramses)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Aslan Yürekli Richard",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Kral XIV. Louis (Güneş Kral)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Otto von Bismarck",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Harry S. Truman",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Thomas Jefferson",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Theodore Roosevelt",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Mao Zedong",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Nikita Kruşçev",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Charles de Gaulle",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Sebastian Szymanski",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Cengiz Ünder",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Orkun Kökçü",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Mert Günok",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Rodri (Rodrigo Hernandez)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Thibaut Courtois",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Gerard Pique",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Paolo Maldini",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Wayne Rooney",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Luis Suarez",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Gareth Bale",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Eden Hazard",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Samuel Eto'o",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Radamel Falcao",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Nicolas Anelka",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Roberto Carlos",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Guti Hernandez",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Jurgen Klopp",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Okan Buruk",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "İsmail Kartal",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ersun Yanal",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Rıza Çalımbay",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Şota Arveladze",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Tuncay Şanlı",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Halil Altıntop",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Nuri Şahin",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Sabri Sarıoğlu",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ozan Tufan",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Mehmet Topal",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Semih Şentürk",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Bülent Korkmaz",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Suat Kaya",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ümit Özat",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ümit Davala",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Hasan Şaş",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Alpay Özalan",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ogün Temizkanoğlu",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Tanju Çolak",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ali Şen",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Aziz Yıldırım",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Dursun Özbek",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Ertuğrul Doğan",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Ahmet Nur Çebi",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Fikret Orman",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Ünal Aysal",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Adnan Polat",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Faruk Süren",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Ömer Onan",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Sinan Güler",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Scottie Wilbekin",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Zeljko Obradovic",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Bogdan Bogdanovic",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Vasilije Micic",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Luka Doncic",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Nikola Jokic",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "James Harden",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Kyrie Irving",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Russell Westbrook",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Anthony Davis",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Jayson Tatum",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Jimmy Butler",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Joel Embiid",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Damian Lillard",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Kawhi Leonard",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Chris Paul",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Marc Gasol",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Kevin Garnett",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Tracy McGrady",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Vince Carter",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Andrey Rublev",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Holger Rune",
+    "category": "sporcular",
+    "fameTier": 3,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Casper Ruud",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Stan Wawrinka",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Dominic Thiem",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Nick Kyrgios",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Iga Swiatek",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Elena Rybakina",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Ons Jabeur",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Simona Halep",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Ashleigh Barty",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Caroline Wozniacki",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Ana Ivanovic",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Yankı Erel",
+    "category": "sporcular",
+    "fameTier": 3,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Stipe Miocic",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "mma_ufc_sporcusu"
+  },
+  {
+    "name": "Gökhan Saki",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Badr Hari",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Rico Verhoeven",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Deontay Wilder",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Canelo Alvarez",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Hatice Akbaş",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Esra Yıldız Kahraman",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Mahmut Demir",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Tijana Boskovic",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Paola Egonu",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Gabriela Guimaraes (Gabi)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Yasmani Copello",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "atlet"
+  },
+  {
+    "name": "Necati Er",
+    "category": "sporcular",
+    "fameTier": 3,
+    "subcategory": "atlet"
+  },
+  {
+    "name": "Leon Marchand",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "yuzucu"
+  },
+  {
+    "name": "Carlos Sainz Jr.",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "George Russell",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Sergio Perez (Checo)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Kimi Raikkonen",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Valentino Rossi",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Marc Marquez",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Cem Bölükbaşı",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Larry Ellison",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Nazım Salur (Getir)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Sidar Şahin (Peak Games)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Selçuk Bayraktar",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Haluk Bayraktar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Yıldırım Mayruk",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Cemil İpekçi",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Rıfat Özbek",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Dilek Hanif",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Cengiz Abazoğlu",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Nur Yerlitaş",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Barbaros Şansal",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Raşit Bağzıbağlı",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Giorgio Armani",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Coco Chanel",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Gianni Versace",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Donatella Versace",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Karl Lagerfeld",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Yves Saint Laurent",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Christian Dior",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Ralph Lauren",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Calvin Klein",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Guccio Gucci",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Miuccia Prada",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Tommy Hilfiger",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Alexander McQueen",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Tom Ford",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Vera Wang",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Mehmet Yalçınkaya (Şef)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Somer Sivrioğlu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Danilo Zanna",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Arda Türkmen",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Refika Birgül",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Vedat Milor",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Hazer Amani",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Maksut Aşkar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Fatih Tutak",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Ömür Akkor",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Yunus Emre Akkor",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Sahrap Soysal",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Oktay Aymelek (Oktay Usta)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Gordon Ramsay",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Jamie Oliver",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Wolfgang Puck",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Alain Ducasse",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Guy Fieri",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Massimo Bottura",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Heston Blumenthal",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Marco Pierre White",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Anthony Bourdain",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Buddy Valastro (Cake Boss)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Nilay Örnek (Nasıl Olunur)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "podcast_yapimcisi"
+  },
+  {
+    "name": "Candaş Tolga Işık",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "İsmail Saymaz",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Murat Yetkin",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Ruşen Çakır (Medyascope)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Lex Fridman",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "podcast_yapimcisi"
+  },
+  {
+    "name": "Andrew Huberman",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "podcast_yapimcisi"
+  },
+  {
+    "name": "Tim Ferriss",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "podcast_yapimcisi"
+  },
+  {
+    "name": "Defne Samyeli",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Seda Öğretir",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Selçuk Tepeli",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Hıncal Uluç",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Halit Kıvanç",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Orhan Boran",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Erkan Yolaç",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Tarık Tarcan",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Zahir Kardeşler (Erman Toroğlu & Şansal Büyüka)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Erman Toroğlu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Şansal Büyüka",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Sinan Engin",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Rasim Ozan Kütahyalı",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Stephen Colbert",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "James Corden",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Kıvanç Kılınç",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Ahmet Kürşat Öçalan",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Baturay Özdemir",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Deniz Göktaş",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Efe Tunçer",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Özgün Bayraktar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Alpay Erdem",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Yavuz Seçkin",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "İsmail Baki Tuncer",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Sefa Doğanay",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Jerry Seinfeld",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Louis C.K.",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "George Carlin",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "I. Bayezid (Yıldırım Bayezid)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "I. Mehmed (Çelebi Mehmed)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "III. Mehmed",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "I. Ahmed (Sultanahmet)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "II. Osman (Genç Osman)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "I. Mahmud",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "V. Murad",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "VI. Mehmed (Vahdettin)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "Abdülmecid Efendi (Son Halife)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "Çandarlı Halil Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Pargalı İbrahim Paşa (Makbul/Maktul)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Rüstem Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Sokollu Mehmed Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Kuyucu Murad Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Köprülü Mehmed Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Köprülü Fazıl Ahmed Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Merzifonlu Kara Mustafa Paşa (Viyana Kuşatması)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Nevşehirli Damat İbrahim Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Cezayirli Gazi Hasan Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Alemdar Mustafa Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Mustafa Reşid Paşa (Tanzimat)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Ali Paşa (Mehmed Emin Ali Paşa)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Fuat Paşa (Keçecizade Fuat Paşa)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Mithat Paşa (Kanun-i Esasi)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Ahmet Cevdet Paşa (Mecelle)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Oruç Reis (Barbaros Kardeşler)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Turgut Reis",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Kılıç Ali Paşa (Uluç Ali Reis)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Refet Bele",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Şükrü Saracoğlu",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Hasan Saka",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Hasan Ali Yücel (Köy Enstitüleri)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "İsmail Hakkı Tonguç",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Afet İnan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Vecihi Hürkuş",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Nuri Demirağ",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Nuri Killigil",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Auguste Rodin (Düşünen Adam)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Donatello",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Gian Lorenzo Bernini",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Antonio Canova",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Alberto Giacometti",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Constantin Brancusi",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Henry Moore",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Ali Hadi Bara",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "İlhan Koman",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Kuzgun Acar",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Frederic Chopin",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Pyotr Ilyich Tchaikovsky",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Johannes Brahms",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Franz Schubert",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Giuseppe Verdi",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Richard Wagner",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Claude Debussy",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Sergei Rachmaninoff",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Franz Liszt",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Johann Strauss II (Mavi Tuna)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Giacomo Puccini",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Igor Stravinsky",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Ahmet Adnan Saygun (Türk Beşleri)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Ulvi Cemal Erkin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Cemal Reşit Rey (Lüküs Hayat)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Hasan Ferid Alnar",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Necil Kazım Akses",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Dede Efendi (Hammamizade)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Itri (Buhurizade Mustafa Itri)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Tamburi Cemil Bey",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Hacı Arif Bey",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Sadettin Kaynak",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Münir Nurettin Selçuk",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Marie Antoinette",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Çar II. Nikolay (Son Rus Çarı)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Anastasia Romanov (Prenses Anastasia)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Kral VI. George (Zoraki Kral)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Prens Philip (Edinburgh Dükü)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Prens William",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Kate Middleton (Galler Prensesi)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Prens Harry",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Meghan Markle",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Hürrem Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Kösem Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Safiye Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Nurbanu Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Mihrimah Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Turhan Hatice Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Hatice Turhan Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Bezmiâlem Valide Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Pertevniyal Valide Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Valentina Tereşkova (Uzaya Çıkan İlk Kadın)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kasif"
+  },
+  {
+    "name": "Alper Gezeravcı (İlk Türk Astronot)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kasif"
+  },
+  {
+    "name": "Tuva Cihangir Atasever",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "kasif"
+  },
+  {
+    "name": "Bahar Toksoy Guidetti",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Karch Kiraly",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Giba (Gilberto Godoy)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Wilfredo Leon",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Earvin N'Gapeth",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Ekaterina Gamova",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Jordan Larson",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Kim Yeon-koung",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Zhu Ting",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Arina Fedorovtseva",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Maja Ognjenovic",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Gazanfer Bilge",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Celal Atik",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Kel Aliço",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Kurtdereli Mehmet",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Adalı Halil",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Aleksandr Karelin (Rus Ayısı)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Lasha Talakhadze",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Hossein Rezazadeh",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Pyrros Dimas",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Ali Gürbüz (Kırkpınar Başpehlivanı)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "İsmail Balaban (Survivor / Başpehlivan)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Orhan Okulu",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Recep Kara",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Yusuf Can Zeybek",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Cemal Kamacı",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Joe Frazier",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Sugar Ray Leonard",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Sugar Ray Robinson",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Rocky Marciano",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Jack Dempsey",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Wladimir Klitschko",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Vitali Klitschko",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Gennady Golovkin (GGG)",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Vasiliy Lomachenko",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Roy Jones Jr.",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Jake LaMotta (Kızgın Boğa)",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Sonny Liston",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Simone Biles",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Nadia Comaneci (İlk 10 Tam Puan)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Kohei Uchimura",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Vitaly Scherbo",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Ahmet Önder",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Göksu Üçtaş Şanlı",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Jack Nicklaus",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "golf"
+  },
+  {
+    "name": "Arnold Palmer",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "golf"
+  },
+  {
+    "name": "Rory McIlroy",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "golf"
+  },
+  {
+    "name": "Phil Mickelson",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "golf"
+  },
+  {
+    "name": "Akın (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Mert (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Basri Amca (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Sevim (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Hale (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Canan (Kral Şakir)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Remzi (Kral Şakir)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Kadriye (Kral Şakir)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Mirket (Kral Şakir)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Şila (Pepee)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Bebee (Pepee)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Niloya",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Tospik (Niloya)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Murat (Niloya)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Kara Vezir (Keloğlan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Balkız (Keloğlan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Uzun (Keloğlan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Huysuz (Keloğlan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Müge (Canım Kardeşim)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Mine (Canım Kardeşim)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Mıncır (Canım Kardeşim)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Köstebekgiller (Boyo, Süslü, Kösteban)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Emiray",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "İbi (İbi ve Tosi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Kare Takımı (Kuti, Aypa, Rupi, Enda)",
+    "category": "cizgi_karakterler",
+    "fameTier": 3,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Ege ile Gaga",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Elif ve Arkadaşları",
+    "category": "cizgi_karakterler",
+    "fameTier": 3,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Maysa ve Bulut",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Kaptan Pengu ve Arkadaşları",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Jessie (Oyuncak Hikayesi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Çekici Mater (Arabalar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Dory (Kayıp Balık Dory)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Timon ve Pumbaa (Hakuna Matata)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Elsa (Karlar Ülkesi / Frozen)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Anna (Frozen)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Olaf (Kardan Adam Olaf)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Sully (James P. Sullivan / Sevimli Canavarlar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Mike Wazowski (Sevimli Canavarlar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Wall-E",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "EVE (Wall-E)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Remy (Aşçı Fare / Ratatouille)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Linguini (Ratatouille)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Carl Fredricksen (Yukarı Bak / Up)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Russell (Yukarı Bak / Up)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Bay İnanılmaz (Bob Parr)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Lastik Kız (Helen Parr / Elastigirl)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Mulan",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Mushu (Mulan Ejderhası)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Pocahontas",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Belle (Güzel ve Çirkin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Canavar (Güzel ve Çirkin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Ariel (Küçük Deniz Kızı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Moana",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Maui (Moana)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Stitch (Lilo ve Stitch)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Lilo Pelekai",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Malefiz (Maleficent)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Cruella de Vil (101 Dalmaçyalı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Jafar (Aladdin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Ursula (Küçük Deniz Kızı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Megara (Meg / Herkül)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Bambi",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Dumbo",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Kuzco (Şaşkın İmparator)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Kronk (Şaşkın İmparator)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Yzma",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Joy (Neşe / Ters Yüz / Inside Out)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Sadness (Üzüntü / Inside Out)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Bing Bong (Inside Out)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Miguel Rivera (Coco)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Hector Rivera (Coco)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Mama Coco",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Son Goku (Dragon Ball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Piccolo (Dragon Ball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Itachi Uchiha",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Madara Uchiha",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Jiraiya (Naruto)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Tsunade",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Orochimaru",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Sanji (One Piece)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Nami (One Piece)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Trafalgar Law",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Portgas D. Ace",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Mikasa Ackerman",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Armin Arlert",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Erwin Smith",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "L (L Lawliet / Death Note)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Ryuk (Ölüm Meleği / Shinigami)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Misa Amane",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Saitama (Kel Pelerinli / One Punch Man)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Genos (One Punch Man)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Tanjiro Kamado (Demon Slayer)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Nezuko Kamado",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Zenitsu Agatsuma",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Inosuke Hashibira",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Kyojuro Rengoku",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Satoru Gojo (Jujutsu Kaisen)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Yuji Itadori",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Megumi Fushiguro",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Ryomen Sukuna",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Edward Elric (Fullmetal Alchemist)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Alphonse Elric",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Roy Mustang",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Tuxedo Mask (Mamoru Chiba)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Misty (Pokemon)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Brock (Pokemon)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Roket Takımı (Jessie, James, Meowth)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Charizard (Pokemon)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Mewtwo (Pokemon)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Yugi Muto (Yu-Gi-Oh!)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Seto Kaiba",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Guts (Berserk)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Griffith (Berserk)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Totoro (Komşum Totoro / Studio Ghibli)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Chihiro (Ruhların Kaçışı / Spirited Away)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Haku (Spirited Away)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Kaonashi (Yüzsüz / No-Face)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Howl (Yürüyen Şato)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Prenses Mononoke (San)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Road Runner (Bip Bip)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Wile E. Coyote (Çakal)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Marvin the Martian (Marslı Marvin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Speedy Gonzales",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Shaggy Rogers (Scooby-Doo)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Fred Jones (Scooby-Doo)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Daphne Blake (Scooby-Doo)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Vilma Çakmaktaş (Wilma Flintstone)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Beti Moloztaş (Betty Rubble)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dino (Çakmaktaşlar Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "George Jetson (Jetgiller)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Jane Jetson",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Astro (Jetgiller Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Rosie (Robot Hizmetçi Rosie)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Averell Dalton",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "William ve Jack Dalton",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Düldül (Jolly Jumper)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Rintintin (Rantanplan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gözlüklü Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Güçlü Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Uykucu Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Sakar Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Tembel Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Azman (Gargamel'in Kedisi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Pembe Panter (The Pink Panther)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Müfettiş Clouseau",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Casper (Sevimli Hayalet)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Odie (Garfield Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Jon Arbuckle (Garfield Sahibi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Snoopy (Peanuts)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Charlie Brown",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Woodstock (Snoopy Kuşu)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Tigger (Kaplan Tigger)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Piglet (Domuzcuk)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Eeyore (Eşek Eeyore)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Pluto (Mickey'nin Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Vakıf Dede (Scrooge McDuck / Varyemez Amca)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Cin Fikri, Can Fikri, Canan (Huey, Dewey, Louie / Can, Cin, Cem)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Woody Woodpecker (Ağaçkakan Woody)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Müfettiş Gadget (Inspector Gadget)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Penny (Müfettiş Gadget)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Brain (Gadget Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Doktor Pençe (Dr. Claw)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "He-Man (Gölgelerin Gücü Adına)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "İskeletor (Skeletor / He-Man)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Korkak Kaplan (Battle Cat / Cringer)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "She-Ra (Prenses Gücü)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Voltran (Beş Aslan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ninja Kaplumbağalar (Leonardo, Raphael, Donatello, Michelangelo)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Usta Splinter (Ninja Kaplumbağalar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Shredder (Ninja Kaplumbağalar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "April O'Neil",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Krang (Beyin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Bebop ve Rocksteady",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Chen (Cedric'in Aşkı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Christian (Cedric'in Rakibi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Büyükbaba (Cedric)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Calimero (Haksızlık Bu Ama)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Peter (Heidi'nin Arkadaşı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Clara (Heidi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Alp Dede (Heidi'nin Büyükbabası)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Tsubasa Ozora (Kaptan Tsubasa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Genzo Wakabayashi (Kaleci Wakabayashi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Taro Misaki (Altın İkili)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ken Wakashimazu (Karateci Kaleci)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Beyblade Takımı (Tyson Granger / Takao Kinomiya, Kai Hiwatari, Ray Kon, Max Tate)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Tyson Granger (Beyblade)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Kai Hiwatari (Dranzer / Beyblade)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ray Kon (Driger / Beyblade)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Max Tate (Draciel / Beyblade)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gwen Tennyson (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Büyükbaba Max (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dört Kol (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ateş Topu (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Şimşek Hız (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Elmas Kafa (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Vilgax (Ben 10 Düşmanı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Aku (Samurai Jack Düşmanı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dexter (Dexter'ın Laboratuvarı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dee Dee (Dexter)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Mandark (Dexter'ın Rakibi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Mojo Jojo (Powerpuff Girls Düşmanı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Profesör Utonium",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Courage the Cowardly Dog (Cesur Korkak Köpek)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Muriel Bagge (Cesur Sahibi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Eustace Bagge (Aptal Köpek)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ed, Edd ve Eddy",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gumball Watterson (Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Darwin Watterson (Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Anais Watterson (Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Nicole Watterson (Anne / Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Richard Watterson (Baba / Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Finn the Human (Adventure Time)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Jake the Dog (Adventure Time)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Buz Kralı (Ice King / Simon Petrikov)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Prenses Ciklet (Princess Bubblegum)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Marceline (Vampir Kraliçesi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Benson (Sakız Makinesi Müdür)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Skips (Ölümsüz Goril)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Pops (Lolipop Adam)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Kas Adam (Muscle Man)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Çak beşlik Hayalet (Hi-Five Ghost)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Phineas Flynn (Phineas ve Ferb)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ferb Fletcher",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ajan P (Ornitorenk Perry)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dr. Heinz Doofenshmirtz",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Candace Flynn",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gravity Falls (Dipper Pines, Mabel Pines, Grunkle Stan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Mabel Pines (Esrarengiz Kasaba)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Harika Amca Stan (Grunkle Stan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Bill Cipher (Üçgen İblis)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Soos Ramirez",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Wendy Corduroy",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Squidward Dokunaç (Squidward Tentacles)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Sandy Cheeks (Sincap Sandy)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gary (SüngerBob Salyangozu)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Marge Simpson",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Bart Simpson",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Lisa Simpson",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Maggie Simpson",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Mr. Burns (Montgomery Burns / Simpsons)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Ned Flanders (Simpsons)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Moe Szyslak",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Peter Griffin (Family Guy)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Lois Griffin",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Stewie Griffin (Family Guy)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Brian Griffin (Konuşan Köpek)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Meg Griffin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Chris Griffin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Glenn Quagmire (Giggity)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Rick Sanchez (Rick and Morty)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Morty Smith (Rick and Morty)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Summer Smith",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Beth Smith",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Jerry Smith",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Mr. Meeseeks (Look at me!)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Birdperson (Rick and Morty)",
+    "category": "cizgi_karakterler",
+    "fameTier": 3,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "BoJack Horseman",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Princess Carolyn (BoJack Horseman)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Diane Nguyen (BoJack)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Mr. Peanutbutter",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Todd Chavez",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Stan Marsh (South Park)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Kyle Broflovski",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Kenny McCormick (They killed Kenny!)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Randy Marsh (Lorde / Tegridy Farms)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Butters Stotch (Professor Chaos)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Philip J. Fry (Fry / Futurama)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Turanga Leela",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Profesör Farnsworth (Good news, everyone!)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Dr. Zoidberg",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Ilgaz Kaya (Savcı Ilgaz / Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ceylin Erguvan (Avukat Ceylin / Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Yekta Tilmen (Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Eren Duman (Komiser Eren / Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Pars Seçkin (Başsavcı Pars / Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Pembe Ünal (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Doğa Korkmaz (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Fatih Ünal (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Alev Arslan (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Kıvılcım Arslan (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ömer Ünal (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Nursema Ünal (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Seyran Şanlı (Yalı Çapkını)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ferit Korhan (Yalı Çapkını)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Halis Ağa (Halis Korhan / Yalı Çapkını)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Kazım Şanlı (Kazım Ağa / Yalı Çapkını)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "İfakat Korhan",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Süleyman (Halit Ergenç / Muhteşem Yüzyıl)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Pargalı İbrahim (Okan Yalabık / Muhteşem Yüzyıl)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Mahidevran Sultan (Nur Fettahoğlu)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Malkoçoğlu Bali Bey (Burak Özçivit)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Kemal Soydere (Kara Sevda)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Nihan Sezin (Kara Sevda)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Emir Kozcuoğlu (Kaan Urgancıoğlu / Kara Sevda)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Züleyha Altun (Bir Zamanlar Çukurova)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Demir Yaman (Bir Zamanlar Çukurova)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Yılmaz Akkaya (Bir Zamanlar Çukurova)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Fekeli (Ali Rahmet Fekeli / Kerem Alışık)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Hünkar Yaman (Vahide Perçin)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Meryem (Kuvvetli Bir Alkış)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Peri (Bir Başkadır)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ruhi (Bir Başkadır)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Gülseren Budayıcıoğlu Karakterleri",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Gülben Derenoğlu (Masumlar Apartmanı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Safiye Derenoğlu (Ezgi Mola / Masumlar Apartmanı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Han Derenoğlu (Birkan Sokullu)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "İnci Özdemir (Farah Zeynep Abdullah)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ali Rıza Bey (Yaprak Dökümü)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Hayriye Hanım (Ağzımızın Tadı Kaçmasın)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ferhunde Güven (Deniz Çakır / Yaprak Dökümü)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Oğuz Güven (Tolga Karel / Yaprak Dökümü)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Leyla Tekin (Gökçe Bahadır)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Necla Tekin (Fahriye Evcen)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şevket Tekin (Caner Kurtaran)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Fikret Tekin (Bennu Yıldırımlar)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Sedef (Seda Demir)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Sıla Gencer (Cansu Dere / Sıla)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Boran Ağa (Mehmet Akif Alakurt / Sıla)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ali Kaptan (Erkan Petekkaya / Öyle Bir Geçer Zaman ki)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Cemile Akarsu (Ayça Bingöl)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Caroline (Wilma Elles / Öyle Bir Geçer Zaman ki)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Mete Akarsu (Aras Bulut İynemli)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Osman Akarsu (Küçük Osman / Emir Berke Zincidi)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Berrin Akarsu",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Aylin Akarsu (Farah Zeynep Abdullah)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Soner Talaşoğlu (Mete Horozoğlu)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ahmet Taşer (Tolga Güleç)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Prens Süleyman (Muhteşem Yüzyıl)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şehzade Mustafa (Mehmet Günsür)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şehzade Bayezid (Aras Bulut İynemli)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şehzade Selim (Engin Öztürk)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şehzade Cihangir (Tolga Sarıtaş)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Sümbül Ağa (Selim Bayraktar)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Gül Ağa (Engin Günaydın)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Meryem Uzerli (Hürrem)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ertuğrul Bey (Engin Altan Düzyatan / Diriliş Ertuğrul)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Halime Hatun (Esra Bilgiç)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Turgut Alp (Cengiz Coşkun)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Bamsı Beyrek (Nurettin Sönmez)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Doğan Alp",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Osman Bey (Burak Özçivit / Kuruluş Osman)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Bala Hatun (Özge Törer)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Malhun Hatun (Yıldız Çağrı Atiksoy)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şeyh Edebali (Kuruluş Osman)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Deli Emin (Vizontele / Yılmaz Erdoğan)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Başkan Nazmi (Vizontele / Altan Erkekli)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Fikri (Vizontele / Cem Yılmaz)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Sıti Ana (Vizontele / Demet Akbağ)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Baran (Eşkıya / Şener Şen)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Cumali (Eşkıya / Uğur Yücel)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Keje (Eşkıya / Şermin Hürmeriç)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Mahmut (Eşkıya / Berke Hürmeriç)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Muhsin Bey (Şener Şen)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Ali Nazik (Muhsin Bey / Uğur Yücel)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Ferman (Av Mevsimi / Şener Şen)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "İdris (Av Mevsimi / Cem Yılmaz / Deli İdris)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Hasan (Av Mevsimi / Okan Yalabık)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Malkoçoğlu (Cüneyt Arkın)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Kara Murat (Fatih'in Fedaisi / Cüneyt Arkın)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Kurt (Tarkan'ın Kurdu)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Ahtapot (Tarkan Viking Kanı Dev Ahtapot)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Hain Kostok (Tarkan Düşmanı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Gülümser (Selvi Boylum Al Yazmalım / Türkan Şoray / Asya)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "İlyas (Selvi Boylum Al Yazmalım / Kadir İnanır)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Cemşit (Selvi Boylum Al Yazmalım / Ahmet Mekin / Sevgi Emektir)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Tatar Ramazan (Kadir İnanır / Ben Bu Oyunu Bozarım)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Komiser Şekip (Pardon / Ferhan Şensoy)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "İbrahim (Pardon / Ferhan Şensoy)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Muzo (Pardon / Rasim Öztekin)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Kudret (Kardeş Payı / Ahmet Kural)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Tülay (Düğün Dernek)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Tüpçü Fikret (Düğün Dernek / Ahmet Kural)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Çetin (Düğün Dernek / Murat Cemcir)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Muallim Saffet (Düğün Dernek / Barış Yıldız)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Gürkan (Çalgı Çengi)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Salih (Çalgı Çengi)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Şahin Göz (Hawkeye / Clint Barton)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Kara Panter (Black Panther / T'Challa / Chadwick Boseman)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Kaptan Marvel (Carol Danvers)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Wanda Maximoff (Kızıl Cadı / Scarlet Witch)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Vision (Marvel)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Profesör X (Charles Xavier)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Magneto (Erik Lehnsherr)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Star-Lord (Peter Quill / Galaksinin Koruyucuları)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Gamora",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Drax the Destroyer",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Rocket Raccoon (Roket)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Groot (I am Groot)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Bane (The Dark Knight Rises / Tom Hardy)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Penguen (The Penguin / Oswald Cobblepot)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Bulmacacı (The Riddler / Edward Nygma)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "İki Yüz (Two-Face / Harvey Dent)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Catwoman (Kedi Kadın / Selina Kyle)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Alfred Pennyworth (Batman'in Uşağı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Komiser James Gordon (Jim Gordon)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Pennywise (O / It / Palyaço)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Freddy Krueger (Elm Sokağında Kabus)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Jason Voorhees (13. Cuma)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Michael Myers (Cadılar Bayramı / Halloween)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Chucky (Katil Bebek Chucky)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Testere (Jigsaw / John Kramer / Saw)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Ghostface (Çığlık / Scream)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Norman Bates (Sapık / Psycho)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Jack Torrance (Cinnet / The Shining / Jack Nicholson)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Edward Scissorhands (Makas Eller / Johnny Depp)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Willy Wonka (Charlie'nin Çikolata Fabrikası)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Sweeney Todd (Johnny Depp)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Mad Max (Max Rockatansky)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Furiosa (Mad Max)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Katniss Everdeen (Açlık Oyunları / Jennifer Lawrence)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Peeta Mellark (Açlık Oyunları)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Gale Hawthorne",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Haymitch Abernathy (Woody Harrelson)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Bella Swan (Alacakaranlık / Twilight)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Edward Cullen (Robert Pattinson / Alacakaranlık)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Jacob Black (Kurt Adam Jacob)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Dom Toretto (Hızlı ve Öfkeli / Vin Diesel / Aile)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Letty Ortiz (Michelle Rodriguez)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Luke Hobbs (Dwayne Johnson / The Rock)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Deckard Shaw (Jason Statham)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Ethan Hunt (Görevimiz Tehlike / Tom Cruise)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Jason Bourne (Matt Damon)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Oppenheimer (Cillian Murphy / Film)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Barbie (Margot Robbie / Film)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Ken (Ryan Gosling / Barbie)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Rachel Green (Jennifer Aniston / Friends)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Monica Geller (Courteney Cox / Friends)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Phoebe Buffay (Lisa Kudrow / Smelly Cat)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Joey Tribbiani (Matt LeBlanc / How you doin'?)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Chandler Bing (Matthew Perry / Friends)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Ross Geller (David Schwimmer / We were on a break!)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Tony Soprano (The Sopranos / James Gandolfini)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Carmela Soprano (Edie Falco)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Christopher Moltisanti (Michael Imperioli)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Paulie Walnuts",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Silvio Dante",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Ted Mosby (How I Met Your Mother / Josh Radnor)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Barney Stinson (Neil Patrick Harris / Legen-wait for it-dary!)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Robin Scherbatsky (Cobie Smulders / Robin Sparkles)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Marshall Eriksen (Jason Segel)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Lily Aldrin (Alyson Hannigan)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Tracy McConnell (The Mother)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Michael Scott (The Office / Steve Carell / That's what she said)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Dwight Schrute (The Office / Rainn Wilson)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jim Halpert (The Office / John Krasinski)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Pam Beesly (The Office / Jenna Fischer)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Ryan Howard (The Office)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Stanley Hudson (Pretzel Day)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Kevin Malone (The Office)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Andy Bernard (Nard Dog)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Creed Bratton (The Office)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Sheldon Cooper (The Big Bang Theory / Jim Parsons / Bazinga!)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Leonard Hofstadter (Johnny Galecki)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Howard Wolowitz (Simon Helberg)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Rajesh Koothrappali (Kunal Nayyar)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Amy Farrah Fowler (Mayim Bialik)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Bernadette Rostenkowski",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "John Watson (Martin Freeman / Sherlock Dizi)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jim Moriarty (Andrew Scott / Did you miss me?)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jim Hopper (Stranger Things / David Harbour)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Joyce Byers (Winona Ryder / Stranger Things)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Mike Wheeler (Stranger Things)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Dustin Henderson (Stranger Things / Gaten Matarazzo)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Lucas Sinclair",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Will Byers",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Steve Harrington (Joe Keery / King Steve)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Nancy Wheeler",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jonathan Byers",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Robin Buckley (Maya Hawke)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Max Mayfield (Sadie Sink)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Eddie Munson (Joseph Quinn / Master of Puppets)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Vecna (Henry Creel / 001)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Denver (Jaime Lorente / O meşhur gülüş)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Helsinki (Darko Peric)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Moskova (Paco Tous)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Oslo (Roberto Garcia)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Müfettiş Raquel Murillo (Lizbon / Itziar Ituno)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Alicia Sierra (Najwa Nimri)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Arturito (Arturo Roman / Enrique Arce)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Palermo (Rodrigo de la Serna)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Bogota (Hovik Keuchkerian)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Marsilya (Luka Peros)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Starlight (Annie January / The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Hughie Campbell (Jack Quaid / The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "A-Train (The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "The Deep (Chace Crawford / The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Black Noir",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Queen Maeve (Dominique McElligott)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Soldier Boy (Jensen Ackles / The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Geralt of Rivia (The Witcher / Henry Cavill)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jaskier (Dandelion / Toss a Coin to Your Witcher)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Daemon Targaryen (House of the Dragon / Matt Smith)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Rhaenyra Targaryen (Emma D'Arcy / Milly Alcock)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Alicent Hightower (Olivia Cooke / Emily Carey)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Viserys Targaryen (Kral Viserys / Paddy Considine)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Aemond Targaryen (Tek Gözlü Aemond / Ewan Mitchell)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Otto Hightower (Rhys Ifans)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
   }
-]
+];

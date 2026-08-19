@@ -1,21 +1,23 @@
 'use client'
 
-import { ArrowLeft, Brain, Check, FileText, Layers, Loader2, MessageSquare, Mic, Pencil, Target, User, Users, Zap } from 'lucide-react'
-import { motion } from 'motion/react'
+import { ArrowLeft, Brain, Check, Feather, Flame, Gauge, Layers, Loader2, MessageSquare, Mic, Pencil, Target, User, Users, Zap } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { CategoryIcon } from '@/components/CategoryIcon'
 import { CustomSelect } from '@/components/CustomSelect'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { getDeviceId } from '@/lib/deviceId'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
-import type { CommunicationMode, FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
+import type { CommunicationMode, DifficultyLevel, FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
 
 export default function CreateRoomPage() {
   const router = useRouter()
   const [nickname, setNickname] = useState('')
   const [gameMode, setGameMode] = useState<GameMode>('classic')
   const [communicationMode, setCommunicationMode] = useState<CommunicationMode>('voice')
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>('orta')
   const [categoryMode, setCategoryMode] = useState<LobbyCategoryMode>('single')
   const [selectedCategory, setSelectedCategory] = useState<FamousPersonCategory>('all')
   const [phaseCategories, setPhaseCategories] = useState<FamousPersonCategory[]>([
@@ -40,6 +42,7 @@ export default function CreateRoomPage() {
           nickname: nickname.trim(),
           gameMode,
           communicationMode,
+          difficulty,
           categoryMode,
           category: selectedCategory,
           phaseCategories: categoryMode === 'multi_phase' ? phaseCategories : undefined,
@@ -67,9 +70,6 @@ export default function CreateRoomPage() {
           className="paper-card-lg p-6 sm:p-8"
         >
           <div className="mb-6 text-center">
-            <div className="mb-3 inline-block rounded-xl border border-paper-border bg-paper-card p-2.5 text-pencil-red shadow-sm">
-              <FileText className="h-8 w-8" />
-            </div>
             <h1 className="font-display text-4xl font-bold text-ink sm:text-5xl">
               Yeni Oda Oluştur
             </h1>
@@ -111,93 +111,111 @@ export default function CreateRoomPage() {
 
             {/* Oyun Modu Seçimi */}
             <div>
-              <label className="mb-2 block font-display text-2xl font-bold text-ink">
-                Oyun Modu
+              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Target className="h-5 w-5 text-pencil-yellow" />
+                  <span>Oyun Modu</span>
+                </span>
+                <span className="text-sm font-sans font-semibold text-ink-faded">
+                  {gameMode === 'classic'
+                    ? 'Klasik (3 Can)'
+                    : gameMode === 'speed'
+                      ? 'Hız Modu (3 Tur)'
+                      : gameMode === 'persistent'
+                        ? 'Israrcı (10 Soru)'
+                        : 'Ortak Hedef (Hakem)'}
+                </span>
               </label>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                <button
-                  type="button"
-                  onClick={() => setGameMode('classic')}
-                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
-                    gameMode === 'classic'
-                      ? 'sticky-note sticky-note-yellow scale-[1.02] shadow-md border-pencil-yellow ring-2 ring-pencil-yellow'
-                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
-                  }`}
-                  style={{ borderRadius: '8px 4px 10px 6px' }}
-                >
-                  <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
-                      <Target className="h-5 w-5 text-pencil-yellow" />
-                      <span>Klasik</span>
-                    </span>
-                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
-                      3 Can Hakkı. Yanlış tahmin can götürür, hayatta kalan kazanır!
-                    </span>
-                  </div>
-                </button>
+                {[
+                  {
+                    id: 'classic' as const,
+                    title: 'Klasik',
+                    desc: '3 Can Hakkı. Yanlış tahmin can götürür, hayatta kalan kazanır!',
+                    icon: Target,
+                    color: 'var(--pencil-yellow)',
+                    borderClass: 'border-pencil-yellow',
+                    bgClass: 'bg-pencil-yellow/10',
+                    badgeBg: 'bg-pencil-yellow',
+                  },
+                  {
+                    id: 'speed' as const,
+                    title: 'Hız Modu',
+                    desc: 'Az Soru, Çok Puan! 3 turda en az soruyla bil, puanları topla!',
+                    icon: Zap,
+                    color: 'var(--pencil-green)',
+                    borderClass: 'border-pencil-green',
+                    bgClass: 'bg-pencil-green/10',
+                    badgeBg: 'bg-pencil-green',
+                  },
+                  {
+                    id: 'persistent' as const,
+                    title: 'Israrcı',
+                    desc: '10 Soru Bütçesi & 3 Can. Bütçen bitince zorunlu tahmin!',
+                    icon: Brain,
+                    color: 'var(--pencil-blue)',
+                    borderClass: 'border-pencil-blue',
+                    bgClass: 'bg-pencil-blue/10',
+                    badgeBg: 'bg-pencil-blue',
+                  },
+                  {
+                    id: 'shared_target' as const,
+                    title: 'Ortak Hedef',
+                    desc: 'Tek Gizli Kişi & Hakem! Sırayla soru sor, ilk sen bil!',
+                    icon: Users,
+                    color: 'var(--pencil-orange)',
+                    borderClass: 'border-pencil-orange',
+                    bgClass: 'bg-pencil-orange/10',
+                    badgeBg: 'bg-pencil-orange',
+                  },
+                ].map((item) => {
+                  const isSelected = gameMode === item.id
+                  const Icon = item.icon
+                  return (
+                    <motion.button
+                      key={item.id}
+                      type="button"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98, y: 1 }}
+                      onClick={() => setGameMode(item.id)}
+                      className={`relative p-3.5 sm:p-4 text-left transition-colors duration-200 border-2 rounded-sketch-md flex flex-col justify-between ${
+                        isSelected
+                          ? 'border-transparent font-bold text-ink bg-paper-card'
+                          : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
+                      }`}
+                    >
+                      {/* ÜSTTEN KAYAN AKTİF ÇERÇEVE & GÖLGE KATMANI (Z-20 ile üstten süzülür) */}
+                      {isSelected && (
+                        <motion.div
+                          layoutId="gameModeSelectedHighlight"
+                          className={`pointer-events-none absolute -inset-0.5 rounded-sketch-md border-2 ${item.borderClass} ${item.bgClass} shadow-md z-20`}
+                          transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                        />
+                      )}
 
-                <button
-                  type="button"
-                  onClick={() => setGameMode('speed')}
-                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
-                    gameMode === 'speed'
-                      ? 'sticky-note sticky-note-green scale-[1.02] shadow-md border-pencil-green ring-2 ring-pencil-green'
-                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
-                  }`}
-                  style={{ borderRadius: '6px 10px 4px 8px' }}
-                >
-                  <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
-                      <Zap className="h-5 w-5 text-pencil-green" />
-                      <span>Hız Modu</span>
-                    </span>
-                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
-                      Az Soru, Çok Puan! 3 turda en az soruyla bil, puanları topla!
-                    </span>
-                  </div>
-                </button>
+                      <div className="relative z-10 space-y-1.5 pr-6">
+                        <span className="font-display text-lg sm:text-xl font-bold text-ink flex items-center gap-1.5">
+                          <Icon className="h-5 w-5 shrink-0" style={{ color: item.color }} />
+                          <span>{item.title}</span>
+                        </span>
+                        <span className="block text-xs sm:text-sm text-ink-faded font-sans font-normal leading-relaxed">
+                          {item.desc}
+                        </span>
+                      </div>
 
-                <button
-                  type="button"
-                  onClick={() => setGameMode('persistent')}
-                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
-                    gameMode === 'persistent'
-                      ? 'sticky-note sticky-note-blue scale-[1.02] shadow-md border-pencil-blue ring-2 ring-pencil-blue'
-                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
-                  }`}
-                  style={{ borderRadius: '10px 6px 8px 4px' }}
-                >
-                  <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
-                      <Brain className="h-5 w-5 text-pencil-blue" />
-                      <span>Israrcı</span>
-                    </span>
-                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
-                      10 Soru Bütçesi & 3 Can. Bütçen bitince zorunlu tahmin!
-                    </span>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setGameMode('shared_target')}
-                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
-                    gameMode === 'shared_target'
-                      ? 'sticky-note sticky-note-orange scale-[1.02] shadow-md border-pencil-orange ring-2 ring-pencil-orange'
-                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
-                  }`}
-                  style={{ borderRadius: '8px 10px 6px 8px' }}
-                >
-                  <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
-                      <Users className="h-5 w-5 text-pencil-orange" />
-                      <span>Ortak Hedef</span>
-                    </span>
-                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
-                      Tek Gizli Kişi & Hakem! Sırayla soru sor, ilk sen bil!
-                    </span>
-                  </div>
-                </button>
+                      {/* ÜSTTEN KAYAN ONAY ROZETİ (Z-30) */}
+                      {isSelected && (
+                        <motion.span
+                          layoutId="gameModeCheck"
+                          className={`absolute top-2.5 right-2.5 h-5 w-5 rounded-full ${item.badgeBg} text-white flex items-center justify-center shadow-md z-30`}
+                          transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                        >
+                          <Check className="h-3.5 w-3.5" />
+                        </motion.span>
+                      )}
+                    </motion.button>
+                  )
+                })}
               </div>
             </div>
 
@@ -214,55 +232,74 @@ export default function CreateRoomPage() {
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => setCommunicationMode('voice')}
-                  className={`p-4 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
-                    communicationMode === 'voice'
-                      ? 'border-pencil-yellow bg-pencil-yellow/10 shadow-xs font-bold text-ink ring-2 ring-pencil-yellow/30'
-                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                  }`}
-                >
-                  <div className="space-y-1.5">
-                    <span className="font-display text-xl font-bold flex items-center gap-2 text-ink">
-                      <Mic className="h-5 w-5 text-pencil-yellow" />
-                      <span>Sesli İletişim (Klasik)</span>
-                    </span>
-                    <span className="block text-sm text-ink-faded font-sans font-normal leading-relaxed">
-                      Sorular ve cevaplar Discord veya sesli ortamda konuşulur.
-                    </span>
-                  </div>
-                  {communicationMode === 'voice' && (
-                    <span className="h-6 w-6 rounded-full bg-pencil-yellow text-white flex items-center justify-center text-sm shrink-0 ml-2">
-                      <Check className="h-4 w-4" />
-                    </span>
-                  )}
-                </button>
+                {[
+                  {
+                    id: 'voice' as const,
+                    title: 'Sesli İletişim (Klasik)',
+                    desc: 'Sorular ve cevaplar Discord veya sesli ortamda konuşulur.',
+                    icon: Mic,
+                    color: 'var(--pencil-yellow)',
+                    borderClass: 'border-pencil-yellow',
+                    bgClass: 'bg-pencil-yellow/10',
+                    badgeBg: 'bg-pencil-yellow',
+                  },
+                  {
+                    id: 'text' as const,
+                    title: 'Tam Metin / Uzaktan',
+                    desc: 'Sesli konuşma gerekmez! Hazır soru bankası, 15sn Evet/Hayır oylaması ve not defteri.',
+                    icon: MessageSquare,
+                    color: 'var(--pencil-green)',
+                    borderClass: 'border-pencil-green',
+                    bgClass: 'bg-pencil-green/10',
+                    badgeBg: 'bg-pencil-green',
+                  },
+                ].map((item) => {
+                  const isSelected = communicationMode === item.id
+                  const Icon = item.icon
+                  return (
+                    <motion.button
+                      key={item.id}
+                      type="button"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98, y: 1 }}
+                      onClick={() => setCommunicationMode(item.id)}
+                      className={`relative p-4 text-left transition-colors duration-200 border-2 rounded-sketch-md flex items-center justify-between ${
+                        isSelected
+                          ? 'border-transparent font-bold text-ink bg-paper-card'
+                          : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
+                      }`}
+                    >
+                      {/* ÜSTTEN KAYAN AKTİF ÇERÇEVE & GÖLGE KATMANI */}
+                      {isSelected && (
+                        <motion.div
+                          layoutId="commModeSelectedHighlight"
+                          className={`pointer-events-none absolute -inset-0.5 rounded-sketch-md border-2 ${item.borderClass} ${item.bgClass} shadow-md z-20`}
+                          transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                        />
+                      )}
 
-                <button
-                  type="button"
-                  onClick={() => setCommunicationMode('text')}
-                  className={`p-4 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
-                    communicationMode === 'text'
-                      ? 'border-pencil-green bg-pencil-green/10 shadow-xs font-bold text-ink ring-2 ring-pencil-green/30'
-                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                  }`}
-                >
-                  <div className="space-y-1.5">
-                    <span className="font-display text-xl font-bold flex items-center gap-2 text-ink">
-                      <MessageSquare className="h-5 w-5 text-pencil-green" />
-                      <span>Tam Metin / Uzaktan</span>
-                    </span>
-                    <span className="block text-sm text-ink-faded font-sans font-normal leading-relaxed">
-                      Sesli konuşma gerekmez! Hazır soru bankası, 15sn Evet/Hayır oylaması ve not defteri.
-                    </span>
-                  </div>
-                  {communicationMode === 'text' && (
-                    <span className="h-6 w-6 rounded-full bg-pencil-green text-white flex items-center justify-center text-sm shrink-0 ml-2">
-                      <Check className="h-4 w-4" />
-                    </span>
-                  )}
-                </button>
+                      <div className="relative z-10 space-y-1.5 pr-8">
+                        <span className="font-display text-xl font-bold flex items-center gap-2 text-ink">
+                          <Icon className="h-5 w-5" style={{ color: item.color }} />
+                          <span>{item.title}</span>
+                        </span>
+                        <span className="block text-sm text-ink-faded font-sans font-normal leading-relaxed">
+                          {item.desc}
+                        </span>
+                      </div>
+
+                      {isSelected && (
+                        <motion.span
+                          layoutId="commModeCheck"
+                          className={`absolute top-3.5 right-3.5 h-6 w-6 rounded-full ${item.badgeBg} text-white flex items-center justify-center text-sm shadow-md z-30`}
+                          transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                        >
+                          <Check className="h-4 w-4" />
+                        </motion.span>
+                      )}
+                    </motion.button>
+                  )
+                })}
               </div>
             </div>
 
@@ -280,134 +317,266 @@ export default function CreateRoomPage() {
 
               {/* Kategori Modu Seçimi: Tek vs 3 Fazlı */}
               <div className="grid grid-cols-2 gap-3 mb-4">
-                <button
-                  type="button"
-                  onClick={() => setCategoryMode('single')}
-                  className={`p-3.5 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
-                    categoryMode === 'single'
-                      ? 'border-pencil-blue bg-pencil-blue/5 shadow-xs font-bold text-ink'
-                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                  }`}
-                >
-                  <div>
-                    <span className="font-display text-xl font-bold flex items-center gap-1.5">
-                      <Target className="h-5 w-5 text-pencil-blue" />
-                      <span>Tek Kategori</span>
-                    </span>
-                    <span className="mt-1 block text-sm font-sans text-ink-faded font-normal">
-                      Tüm oyun tek kategoriden
-                    </span>
-                  </div>
-                  {categoryMode === 'single' && (
-                    <span className="h-6 w-6 rounded-full bg-pencil-blue text-white flex items-center justify-center text-sm shrink-0 ml-2">
-                      <Check className="h-4 w-4" />
-                    </span>
-                  )}
-                </button>
+                {[
+                  {
+                    id: 'single' as const,
+                    title: 'Tek Kategori',
+                    desc: 'Tüm oyun tek kategoriden',
+                    icon: Target,
+                    color: 'var(--pencil-blue)',
+                    borderClass: 'border-pencil-blue',
+                    bgClass: 'bg-pencil-blue/5',
+                    badgeBg: 'bg-pencil-blue',
+                  },
+                  {
+                    id: 'multi_phase' as const,
+                    title: '3 Fazlı Karışık',
+                    desc: '3 turda 3 farklı kategori',
+                    icon: Layers,
+                    color: 'var(--pencil-purple)',
+                    borderClass: 'border-pencil-purple',
+                    bgClass: 'bg-pencil-purple/5',
+                    badgeBg: 'bg-pencil-purple',
+                  },
+                ].map((item) => {
+                  const isSelected = categoryMode === item.id
+                  const Icon = item.icon
+                  return (
+                    <motion.button
+                      key={item.id}
+                      type="button"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98, y: 1 }}
+                      onClick={() => setCategoryMode(item.id)}
+                      className={`relative p-3.5 text-left transition-colors duration-200 border-2 rounded-sketch-md flex items-center justify-between ${
+                        isSelected
+                          ? 'border-transparent font-bold text-ink bg-paper-card'
+                          : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
+                      }`}
+                    >
+                      {isSelected && (
+                        <motion.div
+                          layoutId="catModeSelectedHighlight"
+                          className={`pointer-events-none absolute -inset-0.5 rounded-sketch-md border-2 ${item.borderClass} ${item.bgClass} shadow-md z-20`}
+                          transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                        />
+                      )}
 
-                <button
-                  type="button"
-                  onClick={() => setCategoryMode('multi_phase')}
-                  className={`p-3.5 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
-                    categoryMode === 'multi_phase'
-                      ? 'border-pencil-purple bg-pencil-purple/5 shadow-xs font-bold text-ink'
-                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                  }`}
-                >
-                  <div>
-                    <span className="font-display text-xl font-bold flex items-center gap-1.5">
-                      <Layers className="h-5 w-5 text-pencil-purple" />
-                      <span>3 Fazlı Karışık</span>
-                    </span>
-                    <span className="mt-1 block text-sm font-sans text-ink-faded font-normal">
-                      3 turda 3 farklı kategori
-                    </span>
-                  </div>
-                  {categoryMode === 'multi_phase' && (
-                    <span className="h-6 w-6 rounded-full bg-pencil-purple text-white flex items-center justify-center text-sm shrink-0 ml-2">
-                      <Check className="h-4 w-4" />
-                    </span>
-                  )}
-                </button>
+                      <div className="relative z-10 pr-7">
+                        <span className="font-display text-xl font-bold flex items-center gap-1.5">
+                          <Icon className="h-5 w-5" style={{ color: item.color }} />
+                          <span>{item.title}</span>
+                        </span>
+                        <span className="mt-1 block text-sm font-sans text-ink-faded font-normal">
+                          {item.desc}
+                        </span>
+                      </div>
+
+                      {isSelected && (
+                        <motion.span
+                          layoutId="catModeCheck"
+                          className={`absolute top-3 right-3 h-6 w-6 rounded-full ${item.badgeBg} text-white flex items-center justify-center text-sm shadow-md z-30`}
+                          transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                        >
+                          <Check className="h-4 w-4" />
+                        </motion.span>
+                      )}
+                    </motion.button>
+                  )
+                })}
               </div>
 
-              {/* Tek Kategori İçin Kategori Çipleri */}
-              {categoryMode === 'single' ? (
-                <div className="p-4 rounded-xl border border-paper-border bg-paper-card-alt space-y-2.5">
-                  <span className="text-sm font-display text-base font-bold text-ink block">
-                    Oynanacak Kategoriyi Seçin:
-                  </span>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                    {CATEGORIES.map((cat) => {
-                      const isSelected = selectedCategory === cat.id
-                      return (
-                        <button
-                          key={cat.id}
-                          type="button"
-                          onClick={() => setSelectedCategory(cat.id)}
-                          className={`px-3.5 py-2.5 text-sm font-sans font-bold rounded-lg border transition-all flex items-center gap-2 ${
-                            isSelected
-                              ? 'bg-pencil-blue/15 text-ink shadow-xs border-pencil-blue ring-2 ring-pencil-blue/40'
-                              : 'border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
-                          }`}
-                        >
-                          <span className="text-lg">{cat.icon}</span>
-                          <span className="truncate">{cat.label}</span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              ) : (
-                /* 3 Fazlı Mod İçin 3 Aşama Seçimi */
-                <div className="p-4 rounded-xl border border-paper-border bg-paper-card-alt space-y-3">
-                  <div className="flex items-center justify-between">
+              {/* Tek Kategori İçin Kategori Çipleri vs 3 Faz Seçimi (AnimatePresence) */}
+              <AnimatePresence mode="wait">
+                {categoryMode === 'single' ? (
+                  <motion.div
+                    key="single-cat-panel"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
+                    className="p-4 rounded-sketch-md border border-paper-border bg-paper-card-alt space-y-2.5"
+                  >
                     <span className="text-sm font-display text-base font-bold text-ink block">
-                      3 Faz İçin Sıralı Kategoriler:
+                      Oynanacak Kategoriyi Seçin:
                     </span>
-                    <span className="text-xs text-pencil-purple font-sans font-bold">
-                      Fazlar arası can & puan korunur
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {[0, 1, 2].map((idx) => {
-                      const currentVal = phaseCategories[idx] || 'all'
-                      return (
-                        <div
-                          key={idx}
-                          className="p-3 bg-paper-card rounded-lg border border-dashed border-paper-border space-y-1.5"
-                        >
-                          <div className="flex items-center justify-between text-sm font-sans font-bold text-ink">
-                            <span className="flex items-center gap-1.5">
-                              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-pencil-purple/20 text-pencil-purple text-xs font-bold">
-                                {idx + 1}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                      {CATEGORIES.map((cat) => {
+                        const isSelected = selectedCategory === cat.id
+                        return (
+                          <motion.button
+                            key={cat.id}
+                            type="button"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            onClick={() => setSelectedCategory(cat.id)}
+                            className={`relative px-3.5 py-2.5 text-sm font-sans font-bold rounded-sketch border transition-colors flex items-center gap-2 ${
+                              isSelected
+                                ? 'border-pencil-blue text-ink shadow-sm font-bold bg-paper-card'
+                                : 'border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
+                            }`}
+                          >
+                            {isSelected && (
+                              <motion.div
+                                layoutId="activeCategoryChipHighlight"
+                                className="pointer-events-none absolute -inset-0.5 bg-pencil-blue/15 border border-pencil-blue rounded-sketch shadow-sm z-10"
+                                transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                              />
+                            )}
+                            <CategoryIcon category={cat.id} className="relative z-20 h-4 w-4 shrink-0 text-pencil-blue" />
+                            <span className="relative z-20 truncate">{cat.label}</span>
+                          </motion.button>
+                        )
+                      })}
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="multi-phase-panel"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
+                    className="p-4 rounded-sketch-md border border-paper-border bg-paper-card-alt space-y-3"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-display text-base font-bold text-ink block">
+                        3 Faz İçin Sıralı Kategoriler:
+                      </span>
+                      <span className="text-xs text-pencil-purple font-sans font-bold">
+                        Fazlar arası can & puan korunur
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {[0, 1, 2].map((idx) => {
+                        const currentVal = phaseCategories[idx] || 'all'
+                        return (
+                          <div
+                            key={idx}
+                            className="p-3 bg-paper-card rounded-sketch border border-dashed border-paper-border space-y-1.5"
+                          >
+                            <div className="flex items-center justify-between text-sm font-sans font-bold text-ink">
+                              <span className="flex items-center gap-1.5">
+                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-pencil-purple/20 text-pencil-purple text-xs font-bold">
+                                  {idx + 1}
+                                </span>
+                                <span>Faz {idx + 1}</span>
                               </span>
-                              <span>Faz {idx + 1}</span>
-                            </span>
+                            </div>
+                            <CustomSelect
+                              value={currentVal}
+                              onChange={(val) => {
+                                const next = [...phaseCategories]
+                                next[idx] = val as FamousPersonCategory
+                                setPhaseCategories(next)
+                              }}
+                              options={CATEGORIES.filter((c) => c.id !== 'all').map((c) => ({
+                                value: c.id,
+                                label: c.label,
+                                icon: <CategoryIcon category={c.id} className="h-4 w-4" />,
+                              }))}
+                              className="w-full"
+                            />
                           </div>
-                          <CustomSelect
-                            value={currentVal}
-                            onChange={(val) => {
-                              const next = [...phaseCategories]
-                              next[idx] = val as FamousPersonCategory
-                              setPhaseCategories(next)
-                            }}
-                            options={CATEGORIES.filter((c) => c.id !== 'all').map((c) => ({
-                              value: c.id,
-                              label: c.label,
-                              icon: c.icon,
-                            }))}
-                            className="w-full"
-                          />
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              )}
+                        )
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
+            {/* Zorluk Seviyesi Seçimi */}
+            <div>
+              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Gauge className="h-5 w-5 text-pencil-orange" />
+                  <span>Zorluk Seviyesi</span>
+                </span>
+                <span className="text-sm font-sans font-semibold text-ink-faded">
+                  {difficulty === 'kolay' ? 'Kolay (Tier 1-2)' : difficulty === 'orta' ? 'Orta (Tier 1-3)' : 'Zor (Tüm Havuz)'}
+                </span>
+              </label>
 
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  {
+                    id: 'kolay' as const,
+                    title: 'Kolay',
+                    tier: 'Tier 1-2',
+                    desc: 'En popüler ve herkesin bildiği isimler. Rahat ve eğlenceli.',
+                    icon: Feather,
+                    color: 'var(--pencil-green)',
+                    borderClass: 'border-pencil-green',
+                    bgClass: 'bg-pencil-green/10',
+                    badgeBg: 'bg-pencil-green/20 text-pencil-green',
+                  },
+                  {
+                    id: 'orta' as const,
+                    title: 'Orta',
+                    tier: 'Tier 1-3',
+                    desc: 'Popüler ve bilinen isimler. Standart oyun deneyimi.',
+                    icon: Zap,
+                    color: 'var(--pencil-yellow)',
+                    borderClass: 'border-pencil-yellow',
+                    bgClass: 'bg-pencil-yellow/10',
+                    badgeBg: 'bg-pencil-yellow/20 text-pencil-yellow',
+                  },
+                  {
+                    id: 'zor' as const,
+                    title: 'Zor',
+                    tier: 'Tier 1-5',
+                    desc: 'Tüm havuz! Niş ve detaylı karakterler dahil.',
+                    icon: Flame,
+                    color: 'var(--pencil-red)',
+                    borderClass: 'border-pencil-red',
+                    bgClass: 'bg-pencil-red/10',
+                    badgeBg: 'bg-pencil-red/20 text-pencil-red',
+                  },
+                ].map((item) => {
+                  const isSelected = difficulty === item.id
+                  const Icon = item.icon
+                  return (
+                    <motion.button
+                      key={item.id}
+                      type="button"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98, y: 1 }}
+                      onClick={() => setDifficulty(item.id)}
+                      className={`relative flex flex-col justify-between text-left p-3.5 transition-colors duration-200 border-2 rounded-sketch-md ${
+                        isSelected
+                          ? 'border-transparent text-ink shadow-sm font-bold bg-paper-card'
+                          : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
+                      }`}
+                    >
+                      {/* ÜSTTEN KAYAN ÇERÇEVE */}
+                      {isSelected && (
+                        <motion.div
+                          layoutId="diffModeSelectedHighlight"
+                          className={`pointer-events-none absolute -inset-0.5 rounded-sketch-md border-2 ${item.borderClass} ${item.bgClass} shadow-md z-20`}
+                          transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                        />
+                      )}
+
+                      <div className="relative z-10 space-y-1 w-full">
+                        <div className="flex items-center justify-between">
+                          <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
+                            <Icon className="h-4 w-4" style={{ color: item.color }} />
+                            <span>{item.title}</span>
+                          </span>
+                          <span className={`text-xs font-sans font-bold px-2 py-0.5 rounded-full ${item.badgeBg}`}>
+                            {item.tier}
+                          </span>
+                        </div>
+                        <span className="block text-xs font-normal text-ink-faded font-sans leading-relaxed">
+                          {item.desc}
+                        </span>
+                      </div>
+                    </motion.button>
+                  )
+                })}
+              </div>
+            </div>
 
             {error && (
               <motion.div

@@ -41,6 +41,36 @@ export type Database = {
         }
         Relationships: []
       }
+      name_suggestions: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          category: string
+          notes: string | null
+          suggested_by: string | null
+          status: 'pending' | 'approved' | 'rejected'
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          category: string
+          notes?: string | null
+          suggested_by?: string | null
+          status?: 'pending' | 'approved' | 'rejected'
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          category?: string
+          notes?: string | null
+          suggested_by?: string | null
+          status?: 'pending' | 'approved' | 'rejected'
+        }
+        Relationships: []
+      }
       names: {
         Row: {
           assigned_to: string | null
@@ -254,6 +284,7 @@ export type Database = {
           status: string | null
           total_phases: number | null
           total_rounds: number | null
+          updated_at: string | null
         }
         Insert: {
           category_mode?: string | null
@@ -272,6 +303,7 @@ export type Database = {
           status?: string | null
           total_phases?: number | null
           total_rounds?: number | null
+          updated_at?: string | null
         }
         Update: {
           category_mode?: string | null
@@ -290,6 +322,7 @@ export type Database = {
           status?: string | null
           total_phases?: number | null
           total_rounds?: number | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -317,6 +350,10 @@ export type Database = {
         Args: { p_player_id: string; p_delta: number }
         Returns: number
       }
+      close_expired_rooms: {
+        Args: { p_inactivity_minutes?: number }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
@@ -331,6 +368,7 @@ export type RoomRow = Database['public']['Tables']['rooms']['Row']
 export type PlayerRow = Database['public']['Tables']['players']['Row']
 export type NameRow = Database['public']['Tables']['names']['Row']
 export type FamousPersonRow = Database['public']['Tables']['famous_people']['Row']
+export type NameSuggestionRow = Database['public']['Tables']['name_suggestions']['Row']
 export type PlayerProfileRow = Database['public']['Tables']['player_profiles']['Row']
 export type GameResultRow = Database['public']['Tables']['game_results']['Row']
 

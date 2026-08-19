@@ -33,9 +33,11 @@ const {
   setRoomMode,
   setRoomTarget,
   startGame,
+  startNextPhaseByHost,
   startNextSharedTargetRound,
   submitNames,
   submitTextVote,
+  setPlayerPhaseReady,
 } = await import('./engine')
 
 
@@ -263,46 +265,47 @@ describe('submitNames', () => {
     return { room, host, guest, tables }
   }
 
-  it('isimleri kaydeder', async () => {
+  it('3 ismi eksiksiz kaydeder', async () => {
     const { room, host, tables } = lobby()
     fake = createSupabaseFake(tables)
 
-    const result = await submitNames(room.id, host.id, ['Kemal Sunal', 'Türkan Şoray'])
+    const result = await submitNames(room.id, host.id, ['Kemal Sunal', 'Türkan Şoray', 'Şener Şen'])
 
-    expect(result.accepted).toHaveLength(2)
+    expect(result.accepted).toHaveLength(3)
     expect(result.duplicates).toHaveLength(0)
-    expect(tables.names).toHaveLength(2)
+    expect(tables.names).toHaveLength(3)
+  })
+
+  it('3 isimden az girildiğinde hata fırlatır', async () => {
+    const { room, host, tables } = lobby()
+    fake = createSupabaseFake(tables)
+
+    await expect(submitNames(room.id, host.id, ['Kemal Sunal', 'Türkan Şoray'])).rejects.toMatchObject({
+      code: 'missing_names',
+    })
   })
 
   it('çakışan isim yüzünden gönderimi tamamen kaybetmez', async () => {
-    // Eski davranış: döngü ilk çakışmada kırılıyor, oyuncu kalıcı olarak kilitleniyordu.
     const { room, host, guest, tables } = lobby()
     tables.names.push(buildName(room.id, host.id, { name_text: 'Kemal Sunal' }))
     fake = createSupabaseFake(tables)
 
-    const result = await submitNames(room.id, guest.id, ['Kemal Sunal', 'Türkan Şoray'])
+    const result = await submitNames(room.id, guest.id, ['Kemal Sunal', 'Türkan Şoray', 'Şener Şen'])
 
-    expect(result.accepted).toEqual(['Türkan Şoray'])
+    expect(result.accepted).toEqual(['Türkan Şoray', 'Şener Şen'])
     expect(result.duplicates).toEqual(['Kemal Sunal'])
   })
 
   it('hepsi çakışıyorsa nedenini bildirir', async () => {
     const { room, host, guest, tables } = lobby()
     tables.names.push(buildName(room.id, host.id, { name_text: 'Kemal Sunal' }))
+    tables.names.push(buildName(room.id, host.id, { name_text: 'Türkan Şoray' }))
+    tables.names.push(buildName(room.id, host.id, { name_text: 'Şener Şen' }))
     fake = createSupabaseFake(tables)
 
-    await expect(submitNames(room.id, guest.id, ['Kemal Sunal'])).rejects.toMatchObject({
+    await expect(submitNames(room.id, guest.id, ['Kemal Sunal', 'Türkan Şoray', 'Şener Şen'])).rejects.toMatchObject({
       code: 'all_names_taken',
     })
-  })
-
-  it('aynı istekteki tekrarları ayıklar', async () => {
-    const { room, host, tables } = lobby()
-    fake = createSupabaseFake(tables)
-
-    const result = await submitNames(room.id, host.id, ['Kemal Sunal', 'kemal sunal'])
-
-    expect(result.accepted).toHaveLength(1)
   })
 
   it('gönderilmiş isimleri tekrar göndererek düzenlemeye izin verir', async () => {
@@ -310,13 +313,13 @@ describe('submitNames', () => {
     fake = createSupabaseFake(tables)
 
     // İlk gönderim
-    await submitNames(room.id, host.id, ['Kemal Sunal', 'Türkan Şoray'])
-    expect(tables.names.map((n) => n.name_text)).toEqual(['Kemal Sunal', 'Türkan Şoray'])
+    await submitNames(room.id, host.id, ['Kemal Sunal', 'Türkan Şoray', 'Şener Şen'])
+    expect(tables.names.map((n) => n.name_text)).toEqual(['Kemal Sunal', 'Türkan Şoray', 'Şener Şen'])
 
     // Düzenleme / güncelleme gönderimi
-    const editResult = await submitNames(room.id, host.id, ['Barış Manço', 'Cem Karaca'])
-    expect(editResult.accepted).toEqual(['Barış Manço', 'Cem Karaca'])
-    expect(tables.names.map((n) => n.name_text)).toEqual(['Barış Manço', 'Cem Karaca'])
+    const editResult = await submitNames(room.id, host.id, ['Barış Manço', 'Cem Karaca', 'Neşet Ertaş'])
+    expect(editResult.accepted).toEqual(['Barış Manço', 'Cem Karaca', 'Neşet Ertaş'])
+    expect(tables.names.map((n) => n.name_text)).toEqual(['Barış Manço', 'Cem Karaca', 'Neşet Ertaş'])
   })
 
   it('oyun başladıktan sonra isim eklenemez', async () => {
@@ -324,15 +327,17 @@ describe('submitNames', () => {
     tables.rooms[0]!.status = 'playing'
     fake = createSupabaseFake(tables)
 
-    await expect(submitNames(room.id, host.id, ['Kemal Sunal'])).rejects.toMatchObject({
+    await expect(submitNames(room.id, host.id, ['Kemal Sunal', 'Türkan Şoray', 'Şener Şen'])).rejects.toMatchObject({
       code: 'game_already_started',
     })
   })
 })
 
 describe('leaveRoom', () => {
-  it('host ayrılınca kalan oyunculardan birini host yapar', async () => {
+  it('aktif 2 kişilik maçta biri ayrılınca maçı sonlandırır, kalanı host ve galip yapar', async () => {
     const { room, host, guest, tables } = playingRoom()
+    host.device_id = 'dev-host'
+    guest.device_id = 'dev-guest'
     fake = createSupabaseFake(tables)
 
     await leaveRoom(room.id, host.id)
@@ -340,6 +345,16 @@ describe('leaveRoom', () => {
     expect(tables.players).toHaveLength(1)
     expect(tables.players[0]!.id).toBe(guest.id)
     expect(tables.players[0]!.is_host).toBe(true)
+    expect(tables.rooms[0]!.status).toBe('finished')
+    expect(tables.rooms[0]!.is_game_active).toBe(false)
+
+    // İstatistik kayıtları kontrolü
+    const results = tables.game_results || []
+    expect(results).toHaveLength(2)
+    const hostResult = results.find((r) => r.placement === 2)
+    const guestResult = results.find((r) => r.placement === 1)
+    expect(hostResult?.survived).toBe(false)
+    expect(guestResult?.survived).toBe(true)
   })
 
   it('son oyuncu da ayrılınca odayı kapatır', async () => {
@@ -831,7 +846,7 @@ describe('Kategoriye Özel Lobi & 3 Fazlı Karışık Lobi', () => {
     expect(fake.tables.names.filter((n) => n.room_id === roomId)).toHaveLength(6)
   })
 
-  it('3 fazlı modda Faz 1 bitince Faz 2 başlar, yeni isimler atanır, can ve puanlar korunur', async () => {
+  it('3 fazlı modda Faz 1 bitince faz arası bekleme başlar ve host/hazır ile Faz 2 başlar', async () => {
     fake = createSupabaseFake()
     const phaseCategories = ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'] as const
     const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic', {
@@ -841,8 +856,9 @@ describe('Kategoriye Özel Lobi & 3 Fazlı Karışık Lobi', () => {
     const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
     fake.tables.players.push(guest)
 
-    // Faz 1 için isim ata
-    await autoAssignNames(roomId, hostId)
+    // Faz 1 için isim ata (2 oyuncu * 1 isim = 2 isim)
+    const assignRes = await autoAssignNames(roomId, hostId)
+    expect(assignRes.assignedCount).toBe(2)
     await startGame(roomId, hostId)
 
     const state = await getGameState(roomId, hostId)
@@ -857,20 +873,65 @@ describe('Kategoriye Özel Lobi & 3 Fazlı Karışık Lobi', () => {
       const activeIdentityId = fake.tables.rooms[0]!.current_identity_id!
       const activeNameRow = fake.tables.names.find((n) => n.id === activeIdentityId)!
       lastGuessResult = await makeGuess(roomId, activePlayerId, activeNameRow.name_text)
+      const current = await getGameState(roomId, hostId)
+      if (current.room.phaseIntermission) break
     }
 
-    // Faz 1 bitti, Faz 2'ye geçiş tetiklendi!
-    expect(lastGuessResult!.phaseChanged).toBe(true)
-    expect(lastGuessResult!.newPhase).toBe(2)
-    expect(lastGuessResult!.newCategory).toBe('cizgi_karakterler')
-    expect(lastGuessResult!.finished).toBe(false)
+    // Faz 1 bitti, Faz arası bekleme aktif!
+    const intermissionState = await getGameState(roomId, hostId)
+    expect(intermissionState.room.phaseIntermission).toBeTruthy()
+    expect(intermissionState.room.phaseIntermission!.completedPhase).toBe(1)
+    expect(intermissionState.room.phaseIntermission!.nextPhase).toBe(2)
+
+    // Host sonraki faza geçer
+    const startRes = await startNextPhaseByHost(roomId, hostId)
+    expect(startRes.nextPhaseStarted).toBe(true)
 
     // Yeni oyun durumu kontrolü: Faz 2 aktif, can ve puanlar korundu!
     const phase2State = await getGameState(roomId, hostId)
     expect(phase2State.room.currentPhase).toBe(2)
     expect(phase2State.room.activeCategory).toBe('cizgi_karakterler')
     expect(phase2State.room.status).toBe('playing')
+    expect(phase2State.room.phaseIntermission).toBeNull()
     expect(phase2State.players.find((p) => p.id === hostId)?.score).toBeGreaterThan(0)
+  })
+
+  it('3 fazlı modda tüm oyuncular hazır olunca otomatik yeni faz başlar', async () => {
+    fake = createSupabaseFake()
+    const phaseCategories = ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'] as const
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic', {
+      categoryMode: 'multi_phase',
+      phaseCategories: [...phaseCategories],
+    })
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    fake.tables.players.push(guest)
+
+    await autoAssignNames(roomId, hostId)
+    await startGame(roomId, hostId)
+
+    // Faz 1'i bitir
+    while (true) {
+      const activePlayerId = fake.tables.rooms[0]!.current_player_id!
+      const activeIdentityId = fake.tables.rooms[0]!.current_identity_id!
+      const activeNameRow = fake.tables.names.find((n) => n.id === activeIdentityId)!
+      await makeGuess(roomId, activePlayerId, activeNameRow.name_text)
+      const current = await getGameState(roomId, hostId)
+      if (current.room.phaseIntermission) break
+    }
+
+    // 1. Oyuncu hazır der
+    const res1 = await setPlayerPhaseReady(roomId, hostId)
+    expect(res1.allReady).toBe(false)
+    expect(res1.nextPhaseStarted).toBe(false)
+
+    // 2. Oyuncu da hazır der -> Herkes hazır olunca otomatik Faz 2 başlar!
+    const res2 = await setPlayerPhaseReady(roomId, guest.id)
+    expect(res2.allReady).toBe(true)
+    expect(res2.nextPhaseStarted).toBe(true)
+
+    const state = await getGameState(roomId, hostId)
+    expect(state.room.currentPhase).toBe(2)
+    expect(state.room.phaseIntermission).toBeNull()
   })
 
   it('3 faz tamamlandığında oyun biter (finished)', async () => {
@@ -893,9 +954,10 @@ describe('Kategoriye Özel Lobi & 3 Fazlı Karışık Lobi', () => {
       const idId = fake.tables.rooms[0]!.current_identity_id!
       const name = fake.tables.names.find((n) => n.id === idId)!
       res = await makeGuess(roomId, pId, name.name_text)
+      const cur = await getGameState(roomId, hostId)
+      if (cur.room.phaseIntermission) break
     }
-    expect(res!.phaseChanged).toBe(true)
-    expect(res!.newPhase).toBe(2)
+    await startNextPhaseByHost(roomId, hostId)
 
     // Faz 2 -> Faz 3
     res = null
@@ -904,9 +966,10 @@ describe('Kategoriye Özel Lobi & 3 Fazlı Karışık Lobi', () => {
       const idId = fake.tables.rooms[0]!.current_identity_id!
       const name = fake.tables.names.find((n) => n.id === idId)!
       res = await makeGuess(roomId, pId, name.name_text)
+      const cur = await getGameState(roomId, hostId)
+      if (cur.room.phaseIntermission) break
     }
-    expect(res!.phaseChanged).toBe(true)
-    expect(res!.newPhase).toBe(3)
+    await startNextPhaseByHost(roomId, hostId)
 
     // Faz 3 -> Oyun Bitişi
     res = null
@@ -915,8 +978,9 @@ describe('Kategoriye Özel Lobi & 3 Fazlı Karışık Lobi', () => {
       const idId = fake.tables.rooms[0]!.current_identity_id!
       const name = fake.tables.names.find((n) => n.id === idId)!
       res = await makeGuess(roomId, pId, name.name_text)
+      const cur = await getGameState(roomId, hostId)
+      if (cur.room.status === 'finished') break
     }
-    expect(res!.finished).toBe(true)
 
     const finalState = await getGameState(roomId, hostId)
     expect(finalState.room.status).toBe('finished')
@@ -1000,7 +1064,7 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     expect(vote1.hasVoted).toBe(true)
     expect(vote1.isResolved).toBe(false)
 
-    // 2. Oyuncu Hayır verir -> Tüm uygun oyuncular oy verdiği için otomatik sonuçlanır
+    // 2. Oyuncu Hayır verir -> Çoğunluk Evet olmadığı için otomatik sonuçlanır ve sıra devreder
     const vote2 = await submitTextVote(roomId, otherPlayers[1]!, askRes.voteId, false)
     expect(vote2.hasVoted).toBe(true)
     expect(vote2.isResolved).toBe(true)
@@ -1008,6 +1072,7 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     expect(vote2.clueCardItem?.yesCount).toBe(1)
     expect(vote2.clueCardItem?.noCount).toBe(1)
     expect(vote2.clueCardItem?.majority).toBe('tie')
+    expect(vote2.turnPassed).toBe(true)
 
     // Askerin İpucu Kartına otomatik eklenmiştir
     const askerStateAfter = await getGameState(roomId, currentAskerId)
@@ -1017,6 +1082,37 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     )
     expect(askerStateAfter.you.clueCard?.[0]?.yesCount).toBe(1)
     expect(askerStateAfter.you.clueCard?.[0]?.noCount).toBe(1)
+  })
+
+  it('Tam Metin modunda Evet çoğunluğu gelirse sıra soru soranda kalır', async () => {
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic', {
+      communicationMode: 'text',
+    })
+    const guest1 = buildPlayer(roomId, { nickname: 'Guest1', is_host: false })
+    const guest2 = buildPlayer(roomId, { nickname: 'Guest2', is_host: false })
+    fake.tables.players.push(guest1, guest2)
+
+    await autoAssignNames(roomId, hostId)
+    await startGame(roomId, hostId)
+
+    const state = await getGameState(roomId, hostId)
+    const askerId = state.room.currentPlayerId!
+    const otherPlayers = [hostId, guest1.id, guest2.id].filter((id) => id !== askerId)
+
+    const askRes = await askTextQuestion(roomId, askerId, { questionText: 'Ben bir bilim insanı mıyım?' })
+
+    // İki oyuncu da Evet verir
+    await submitTextVote(roomId, otherPlayers[0]!, askRes.voteId, true)
+    const voteRes = await submitTextVote(roomId, otherPlayers[1]!, askRes.voteId, true)
+
+    expect(voteRes.isResolved).toBe(true)
+    expect(voteRes.clueCardItem?.majority).toBe('yes')
+    expect(voteRes.turnPassed).toBe(false)
+
+    // Sıra hâlâ askerId'dedir
+    const stateAfter = await getGameState(roomId, askerId)
+    expect(stateAfter.room.currentPlayerId).toBe(askerId)
+    expect(stateAfter.you.isYourTurn).toBe(true)
   })
 
   it('Israrcı Modda Tam Metin soru sorulduğunda soru bütçesi azalır', async () => {

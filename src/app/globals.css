@@ -275,6 +275,44 @@
     font-weight: 500;
   }
 
+  /* Not Defteri Textarea */
+  .paper-textarea {
+    width: 100%;
+    background-color: rgba(255, 253, 247, 0.85);
+    border: 2px solid rgba(232, 168, 56, 0.35);
+    border-radius: 18px !important;
+    padding: 0.875rem 1.125rem;
+    color: var(--ink);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    transition: border-color 0.2s ease;
+    outline: none !important;
+    box-shadow: none !important;
+    resize: none;
+  }
+  .paper-textarea:focus,
+  .paper-textarea:focus-visible {
+    border-color: var(--pencil-yellow) !important;
+    border-radius: 18px !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  .paper-textarea::placeholder {
+    color: var(--ink-extra-faded);
+    font-style: italic;
+  }
+  .dark .paper-textarea {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-color: rgba(232, 168, 56, 0.35);
+  }
+  .dark .paper-textarea:focus,
+  .dark .paper-textarea:focus-visible {
+    border-color: var(--pencil-yellow) !important;
+    border-radius: 18px !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
   /* ── Etiket (Tag / Badge) ── */
   .tag {
     display: inline-flex;
@@ -344,6 +382,15 @@
 }
 
 @layer utilities {
+  /* Asimetrik Kağıt / Sketch Köşe Sınıfları */
+  .rounded-sketch-xs { border-radius: 4px 2px 5px 3px; }
+  .rounded-sketch-sm { border-radius: 6px 3px 8px 4px; }
+  .rounded-sketch { border-radius: 8px 4px 10px 6px; }
+  .rounded-sketch-alt { border-radius: 4px 8px 6px 10px; }
+  .rounded-sketch-md { border-radius: 10px 5px 12px 6px; }
+  .rounded-sketch-lg { border-radius: 14px 6px 16px 8px; }
+  .rounded-sketch-xl { border-radius: 18px 8px 20px 10px; }
+
   /* Elle çizilmiş altı çizili efekt */
   .underline-sketch {
     text-decoration: none;

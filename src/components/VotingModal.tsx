@@ -1,9 +1,11 @@
 'use client'
 
-import { Check, Clock, Loader2, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { Check, Clock, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 
+import { InkStamp } from '@/components/animations/InkStamp'
+import { PencilLoader } from '@/components/animations/PencilLoader'
 import type { TextQuestionVote } from '@/lib/game/types'
 
 interface VotingModalProps {
@@ -34,7 +36,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
       initial={{ opacity: 0, scale: 0.95, y: -10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-2xl shadow-xl space-y-4 text-center relative overflow-hidden"
+      className="paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-sketch-xl shadow-xl space-y-4 text-center relative overflow-hidden"
     >
       {/* Top Countdown Bar */}
       <div className="absolute top-0 left-0 right-0 h-2 bg-paper-border">
@@ -68,15 +70,15 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
           <h3 className="font-display text-3xl sm:text-4xl font-bold text-ink">
             &ldquo;{vote.questionText}&rdquo;
           </h3>
-          <div className="p-3.5 rounded-xl bg-paper-card border border-dashed border-paper-border inline-flex items-center gap-2 text-base font-sans text-ink-faded">
-            <Loader2 className="h-5 w-5 animate-spin text-pencil-orange" />
+          <div className="p-3.5 rounded-sketch-md bg-paper-card border border-dashed border-paper-border inline-flex items-center gap-3 text-base font-sans text-ink-faded">
+            <PencilLoader size={24} color="var(--pencil-orange)" />
             <span>
               Arkadaşlarınızın oyları toplanıyor... ({vote.yesCount + vote.noCount} / {vote.totalEligible} oy verildi)
             </span>
           </div>
         </div>
       ) : (
-        /* Responder Screen: Vote Yes / No */
+        /* Responder Screen: Vote Yes / No with InkStamp effects */
         <div className="py-2 space-y-4">
           <div>
             <span className="font-display text-base font-bold text-pencil-blue block">
@@ -88,35 +90,37 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
           </div>
 
           {vote.hasVoted ? (
-            <div className="p-4 rounded-xl bg-pencil-green/10 border border-pencil-green/30 text-pencil-green font-display text-lg font-bold flex items-center justify-center gap-2">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="p-4 rounded-sketch-md bg-pencil-green/10 border border-pencil-green/30 text-pencil-green font-display text-lg font-bold flex items-center justify-center gap-2 shadow-xs"
+            >
               <Check className="h-6 w-6" />
               <span>
-                Oyunuz {vote.myAnswer ? 'EVET' : 'HAYIR'} olarak iletildi! Diğer oyuncular bekleniyor...
+                Oyunuz {vote.myAnswer ? 'EVET' : 'HAYIR'} olarak mühürlendi! Diğer oyuncular bekleniyor...
               </span>
-            </div>
+            </motion.div>
           ) : (
             <div className="grid grid-cols-2 gap-4 pt-1">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => void onVote(true)}
+              <InkStamp
+                color="green"
                 disabled={isBusy}
-                className="btn-pencil-green py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                onClick={() => void onVote(true)}
+                className="btn-pencil-green w-full py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
               >
                 <ThumbsUp className="h-6 w-6" />
                 <span>EVET</span>
-              </motion.button>
+              </InkStamp>
 
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => void onVote(false)}
+              <InkStamp
+                color="red"
                 disabled={isBusy}
-                className="btn-pencil-red py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                onClick={() => void onVote(false)}
+                className="btn-pencil-red w-full py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
               >
                 <ThumbsDown className="h-6 w-6" />
                 <span>HAYIR</span>
-              </motion.button>
+              </InkStamp>
             </div>
           )}
         </div>
@@ -124,3 +128,4 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
     </motion.div>
   )
 }
+

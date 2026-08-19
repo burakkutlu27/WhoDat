@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from 'motion/react'
 import { useEffect, useState } from 'react'
 
 import { apiRequest } from '@/lib/apiClient'
+import { CategoryIcon } from '@/components/CategoryIcon'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
-import type { FamousPerson, FamousPersonCategory } from '@/lib/game/types'
+import type { DifficultyLevel, FamousPerson, FamousPersonCategory } from '@/lib/game/types'
 
 interface NameSuggestionsProps {
   onSelectName: (name: string) => void
@@ -15,6 +16,7 @@ interface NameSuggestionsProps {
   disabled?: boolean
   selectedNames?: string[]
   categoryFilter?: FamousPersonCategory
+  difficultyFilter?: DifficultyLevel
 }
 
 const ROTATION_CLASSES = [
@@ -41,6 +43,7 @@ export default function NameSuggestions({
   disabled = false,
   selectedNames = [],
   categoryFilter,
+  difficultyFilter,
 }: NameSuggestionsProps) {
   const isLockedCategory = Boolean(categoryFilter && categoryFilter !== 'all')
   const [selectedCategory, setSelectedCategory] = useState<FamousPersonCategory | null>(null)
@@ -55,8 +58,9 @@ export default function NameSuggestions({
       setIsLoading(true)
       try {
         const catParam = activeCategory !== 'all' ? `&category=${activeCategory}` : ''
+        const diffParam = difficultyFilter ? `&difficulty=${difficultyFilter}` : ''
         const res = await apiRequest<{ data: FamousPerson[] }>(
-          `/api/famous-people?random=true&limit=8${catParam}`,
+          `/api/famous-people?random=true&limit=8${catParam}${diffParam}`,
         )
         if (!ignore) {
           setSuggestions(res.data || [])
@@ -75,14 +79,15 @@ export default function NameSuggestions({
     return () => {
       ignore = true
     }
-  }, [activeCategory])
+  }, [activeCategory, difficultyFilter])
 
   const handleRefresh = async () => {
     setIsLoading(true)
     try {
       const catParam = activeCategory !== 'all' ? `&category=${activeCategory}` : ''
+      const diffParam = difficultyFilter ? `&difficulty=${difficultyFilter}` : ''
       const res = await apiRequest<{ data: FamousPerson[] }>(
-        `/api/famous-people?random=true&limit=8${catParam}`,
+        `/api/famous-people?random=true&limit=8${catParam}${diffParam}`,
       )
       setSuggestions(res.data || [])
     } catch {
@@ -103,8 +108,9 @@ export default function NameSuggestions({
     setIsFillingAll(true)
     try {
       const catParam = activeCategory !== 'all' ? `&category=${activeCategory}` : ''
+      const diffParam = difficultyFilter ? `&difficulty=${difficultyFilter}` : ''
       const res = await apiRequest<{ data: FamousPerson[] }>(
-        `/api/famous-people?random=true&limit=${Math.max(emptySlotsCount + 4, 10)}${catParam}`,
+        `/api/famous-people?random=true&limit=${Math.max(emptySlotsCount + 4, 10)}${catParam}${diffParam}`,
       )
       const freshNames = (res.data || [])
         .map((p) => p.name)
@@ -120,7 +126,7 @@ export default function NameSuggestions({
   }
 
   return (
-    <div className="mt-4 rounded-xl border-2 border-dashed border-paper-border bg-paper-card-alt p-4 sm:p-5">
+    <div className="mt-4 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card-alt p-4 sm:p-5">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2">
@@ -133,7 +139,7 @@ export default function NameSuggestions({
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <button
             type="button"
             disabled={isLoading || disabled}
@@ -167,8 +173,8 @@ export default function NameSuggestions({
       {/* Category Filter Chips / Locked Badge */}
       {isLockedCategory ? (
         <div className="flex items-center gap-2 mb-3">
-          <span className="tag border-pencil-purple text-pencil-purple font-bold text-sm flex items-center gap-1">
-            <span>{CATEGORIES.find((c) => c.id === categoryFilter)?.icon}</span>
+          <span className="tag border-pencil-purple text-pencil-purple font-bold text-sm flex items-center gap-1.5">
+            <CategoryIcon category={categoryFilter} className="h-4 w-4" />
             <span>{CATEGORIES.find((c) => c.id === categoryFilter)?.label || categoryFilter} Kategorisi</span>
           </span>
           <span className="text-xs text-ink-faded font-sans">
@@ -185,13 +191,13 @@ export default function NameSuggestions({
                 type="button"
                 disabled={disabled}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-sans font-bold rounded-lg transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all ${
                   isActive
                     ? 'bg-ink text-paper-card shadow-xs ring-1 ring-ink'
                     : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
                 }`}
               >
-                <span>{cat.icon}</span>
+                <CategoryIcon category={cat.id} className="h-4 w-4 shrink-0" />
                 <span>{cat.label}</span>
               </button>
             )
@@ -232,12 +238,11 @@ export default function NameSuggestions({
                     type="button"
                     disabled={disabled || isAlreadySelected}
                     onClick={() => handleCardClick(person)}
-                    className={`group relative flex items-center gap-1.5 rounded-lg border-2 border-dashed px-3.5 py-2 font-display text-base font-bold transition-all shadow-2xs ${rotClass} ${
+                    className={`group relative flex items-center gap-1.5 rounded-sketch border-2 border-dashed px-3.5 py-2 font-display text-base font-bold transition-all shadow-2xs ${rotClass} ${
                       isAlreadySelected
                         ? 'opacity-40 line-through border-paper-border text-ink-faded cursor-not-allowed bg-paper-card'
                         : `${colorClasses} cursor-pointer`
                     }`}
-                    style={{ borderRadius: '8px 10px 6px 12px' }}
                   >
                     <span>+ {person.name}</span>
                     <Plus className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />

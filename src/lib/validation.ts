@@ -32,6 +32,8 @@ export const gameModeSchema = z.enum(['classic', 'speed', 'persistent', 'shared_
 
 export const communicationModeSchema = z.enum(['voice', 'text'])
 
+export const difficultySchema = z.enum(['kolay', 'orta', 'zor'])
+
 export const lobbyCategoryModeSchema = z.enum(['single', 'multi_phase'])
 
 export const famousPersonCategorySchema = z.enum([
@@ -49,6 +51,7 @@ export const createRoomSchema = z.object({
   nickname: nicknameSchema,
   gameMode: gameModeSchema.optional(),
   communicationMode: communicationModeSchema.optional(),
+  difficulty: difficultySchema.optional(),
   categoryMode: lobbyCategoryModeSchema.optional(),
   category: famousPersonCategorySchema.optional(),
   phaseCategories: z.array(famousPersonCategorySchema).min(1).max(3).optional(),
@@ -82,7 +85,7 @@ export const statsQuerySchema = z.object({
 export const submitNamesSchema = z.object({
   names: z
     .array(nameTextSchema)
-    .min(1, 'En az bir isim girmelisiniz.')
+    .min(3, 'Lütfen 3 ismi de eksiksiz doldurun.')
     .max(3, 'En fazla 3 isim gönderebilirsiniz.'),
 })
 
@@ -130,6 +133,7 @@ export const submitTextVoteSchema = z.object({
 export const famousPeopleQuerySchema = z.object({
   q: z.string().trim().max(60).optional(),
   category: famousPersonCategorySchema.optional(),
+  difficulty: difficultySchema.optional(),
   random: z
     .union([z.boolean(), z.enum(['true', 'false', '1', '0'])])
     .optional()
@@ -140,6 +144,29 @@ export const famousPeopleQuerySchema = z.object({
 
 export const autoAssignSchema = z.object({
   category: famousPersonCategorySchema.optional(),
+})
+
+export const suggestNameSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, 'İsim en az 2 karakter olmalıdır.')
+    .max(60, 'İsim en fazla 60 karakter olabilir.'),
+  category: z.enum([
+    'unluler',
+    'tarihi_kisiler',
+    'cizgi_karakterler',
+    'sporcular',
+    'dizi_film_karakterleri',
+  ], {
+    message: 'Lütfen geçerli bir kategori seçin.',
+  }),
+  notes: z
+    .string()
+    .trim()
+    .max(200, 'Not en fazla 200 karakter olabilir.')
+    .optional(),
+  suggestedBy: z.string().trim().max(50).optional(),
 })
 
 

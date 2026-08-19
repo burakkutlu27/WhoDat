@@ -1,9 +1,6 @@
 import type { RoomStatus } from '../database.types'
 
 /**
-import type { RoomStatus } from '../database.types'
-
-/**
  * Sunucu ile istemci arasındaki sözleşme.
  *
  * Ayrı bir dosyada duruyor çünkü engine.ts `server-only` işaretli; istemci bileşenleri
@@ -13,6 +10,8 @@ import type { RoomStatus } from '../database.types'
 export type GameMode = 'classic' | 'speed' | 'persistent' | 'shared_target'
 
 export type CommunicationMode = 'voice' | 'text'
+
+export type DifficultyLevel = 'kolay' | 'orta' | 'zor'
 
 export type LobbyCategoryMode = 'single' | 'multi_phase'
 
@@ -94,6 +93,16 @@ export interface PublicPlayer {
   hasGuessCooldown?: boolean
 }
 
+export interface PhaseIntermissionState {
+  completedPhase: number
+  nextPhase: number
+  nextCategory: FamousPersonCategory
+  readyPlayerIds: string[]
+  isReady: boolean
+  totalPlayers: number
+  readyCount: number
+}
+
 export interface GameState {
   room: {
     id: string
@@ -105,6 +114,8 @@ export interface GameState {
     communicationMode: CommunicationMode
     isGameActive: boolean
     currentPlayerId: string | null
+    /** Zorluk Seviyesi (Kolay / Orta / Zor) */
+    difficulty?: DifficultyLevel
     /** Kategori Lobisi Alanları */
     categoryMode?: LobbyCategoryMode
     selectedCategory?: FamousPersonCategory
@@ -112,6 +123,8 @@ export interface GameState {
     currentPhase?: number
     totalPhases?: number
     activeCategory?: FamousPersonCategory
+    /** 3 Fazlı Mod: Faz Arası Bekleme / Hazır Olma Durumu */
+    phaseIntermission?: PhaseIntermissionState | null
     /** Israrcı Mod: oyuncu başına toplam soru bütçesi */
     questionBudgetPerPlayer?: number
     /** Ortak Hedef Modu: Hedef isim (SADECE host'a veya hedef açıklandığında gönderilir) */
@@ -212,5 +225,22 @@ export interface DeviceStats {
   winRate: number
   highScore: number
   recentGames: RecentGameItem[]
+}
+
+export interface NameSuggestion {
+  id: string
+  name: string
+  category: FamousPersonCategory
+  notes?: string | null
+  suggestedBy?: string | null
+  status: 'pending' | 'approved' | 'rejected'
+  createdAt: string
+}
+
+export interface SuggestNamePayload {
+  name: string
+  category: Exclude<FamousPersonCategory, 'all'>
+  notes?: string
+  suggestedBy?: string
 }
 

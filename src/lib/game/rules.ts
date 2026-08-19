@@ -1,3 +1,5 @@
+import type { DifficultyLevel, FamousPerson } from './types'
+
 /**
  * Oyun kuralları. Saf fonksiyonlar — veritabanı bağımlılığı yok, hepsi test edilebilir.
  * Rastgelelik dışarıdan enjekte edilir ki testler deterministik olabilsin.
@@ -195,5 +197,20 @@ export function selectNextSharedTargetAsker<T extends PlayerLike>(
   }
 
   return { nextPlayer: validCandidates[0] ?? null, consumedPenalties }
+}
+
+/**
+ * Zorluk Seviyesine Göre Ünlüleri Filtreler (08a-zorluk-seviyesi-BASIT.md):
+ * - kolay: fameTier <= 2 (Tier 1 veya 2)
+ * - orta: fameTier <= 3 (Tier 1, 2 veya 3)
+ * - zor: tüm isimler (Tier 1..5, filtre yok)
+ */
+export function filterByDifficulty(
+  people: FamousPerson[],
+  difficulty: DifficultyLevel = 'orta',
+): FamousPerson[] {
+  if (difficulty === 'kolay') return people.filter((p) => (p.fameTier ?? 4) <= 2)
+  if (difficulty === 'orta') return people.filter((p) => (p.fameTier ?? 4) <= 3)
+  return people // 'zor' -> filtre yok, hepsi
 }
 

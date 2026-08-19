@@ -1,17 +1,19 @@
 'use client'
 
-import { Brain, Check, CheckCircle2, Clock, Copy, Crown, Dices, Layers, Loader2, LogOut, MessageSquare, Mic, Pencil, Play, Send, Shuffle, Target, Users, Zap } from 'lucide-react'
-import { motion } from 'motion/react'
+import { Brain, Check, CheckCircle2, ChevronDown, ChevronUp, Clock, Copy, Crown, Dices, Gauge, Layers, Loader2, LogOut, MessageSquare, Mic, Pencil, Play, Send, Settings2, Shuffle, Target, Users, Zap } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
+import { CopiedPostIt } from '@/components/animations'
+import { CategoryIcon } from '@/components/CategoryIcon'
 import { CustomSelect } from '@/components/CustomSelect'
-import FamousPersonAutocompleteInput from '@/components/FamousPersonAutocompleteInput'
+import { FamousPersonAutocompleteInput } from '@/components/FamousPersonAutocompleteInput'
 import NameSuggestions from '@/components/NameSuggestions'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
-import type { AutoAssignResult, FamousPersonCategory, SubmitNamesResult } from '@/lib/game/types'
+import type { AutoAssignResult, FamousPerson, FamousPersonCategory, SubmitNamesResult } from '@/lib/game/types'
 import { useGameState } from '@/lib/useGameState'
 
 const NAME_SLOTS = 3
@@ -28,6 +30,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isStarting, setIsStarting] = useState(false)
   const [isAutoAssigning, setIsAutoAssigning] = useState(false)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [selectedAutoCategory, setSelectedAutoCategory] = useState<FamousPersonCategory | null>(null)
   const roomCategoryDefault: FamousPersonCategory = state?.room
     ? state.room.categoryMode === 'multi_phase'
@@ -146,8 +149,8 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
   const handleSubmitNames = async () => {
     const filled = names.map((name) => name.trim()).filter(Boolean)
-    if (filled.length === 0) {
-      setActionError('En az bir isim girmelisiniz.')
+    if (filled.length < NAME_SLOTS) {
+      setActionError(`Lütfen ${NAME_SLOTS} ismi de eksiksiz doldurun.`)
       return
     }
 
@@ -261,24 +264,22 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
           {/* Status Pills / Tags Row */}
           <div className="flex flex-wrap items-center gap-2.5">
-            <button
-              type="button"
-              onClick={() => void handleCopyCode()}
-              className="group relative inline-flex items-center gap-2 border-2 border-dashed border-pencil-red bg-paper-card px-3.5 py-1 font-mono text-base font-bold tracking-widest text-pencil-red transition-all hover:bg-pencil-red hover:text-white"
-              style={{ borderRadius: '6px 10px 4px 12px' }}
-            >
-              <span>{state.room.roomCode}</span>
-              {copied ? (
-                <Check className="h-4 w-4 text-pencil-green" />
-              ) : (
-                <Copy className="h-4 w-4 opacity-60 group-hover:opacity-100" />
-              )}
-              {copied && (
-                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded bg-ink px-2.5 py-1 font-sans text-xs font-semibold text-paper-card shadow-md">
-                  Kopyalandı!
-                </span>
-              )}
-            </button>
+            <div className="relative inline-block">
+              <button
+                type="button"
+                onClick={() => void handleCopyCode()}
+                className="group relative inline-flex items-center gap-2 border-2 border-dashed border-pencil-red bg-paper-card px-3.5 py-1 font-mono text-base font-bold tracking-widest text-pencil-red transition-all hover:bg-pencil-red hover:text-white active:scale-95"
+                style={{ borderRadius: '6px 10px 4px 12px' }}
+              >
+                <span>{state.room.roomCode}</span>
+                {copied ? (
+                  <Check className="h-4 w-4 text-pencil-green" />
+                ) : (
+                  <Copy className="h-4 w-4 opacity-60 group-hover:opacity-100" />
+                )}
+              </button>
+              <CopiedPostIt show={copied} />
+            </div>
             <span className="tag">
               <Users className="h-3.5 w-3.5 text-pencil-blue" />
               {state.players.length} Oyuncu
@@ -304,11 +305,36 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     ? 'Ortak Hedef (3 Tur)'
                     : 'Klasik Mod (3 Can)'}
             </span>
-            <span className="tag border-pencil-purple text-pencil-purple font-bold">
-              <Layers className="h-3.5 w-3.5 mr-1 inline" />
-              {state.room.categoryMode === 'multi_phase'
-                ? `3 Faz (${(state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler']).map(c => CATEGORIES.find(cat => cat.id === c)?.icon || '').join(' → ')})`
-                : `${CATEGORIES.find(c => c.id === (state.room.selectedCategory || 'all'))?.icon || ''} ${CATEGORIES.find(c => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}`}
+            <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1">
+              <Layers className="h-3.5 w-3.5" />
+              {state.room.categoryMode === 'multi_phase' ? (
+                <span>
+                  3 Faz (
+                  {(state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'])
+                    .map((c) => CATEGORIES.find((cat) => cat.id === c)?.label || c)
+                    .join(' → ')}
+                  )
+                </span>
+              ) : (
+                <span className="flex items-center gap-1">
+                  <CategoryIcon category={state.room.selectedCategory || 'all'} className="h-3.5 w-3.5" />
+                  <span>{CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}</span>
+                </span>
+              )}
+            </span>
+            <span className={`tag ${
+              state.room.difficulty === 'kolay'
+                ? 'border-pencil-green text-pencil-green font-bold'
+                : state.room.difficulty === 'zor'
+                  ? 'border-pencil-red text-pencil-red font-bold'
+                  : 'border-pencil-yellow text-pencil-yellow font-bold'
+            }`}>
+              <Gauge className="h-3.5 w-3.5 mr-1 inline" />
+              {state.room.difficulty === 'kolay'
+                ? 'Zorluk: Kolay (Tier 1-2)'
+                : state.room.difficulty === 'zor'
+                  ? 'Zorluk: Zor (Tüm Havuz)'
+                  : 'Zorluk: Orta (Tier 1-3)'}
             </span>
             <span className={`tag ${
               state.room.communicationMode === 'text'
@@ -332,255 +358,310 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 Canlı bağlantı zayıf
               </span>
             )}
+
+            {/* Host Ayarları Düzenle / Daralt Butonu */}
+            {state.you.isHost && (
+              <button
+                type="button"
+                onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+                className={`tag cursor-pointer transition-all flex items-center gap-1.5 font-bold ${
+                  isSettingsOpen
+                    ? 'border-pencil-yellow bg-pencil-yellow text-white shadow-xs'
+                    : 'border-dashed border-ink-faded/60 text-ink-faded hover:text-ink hover:border-ink'
+                }`}
+              >
+                <Settings2 className="h-3.5 w-3.5" />
+                <span>{isSettingsOpen ? 'Ayarları Kapat' : 'Ayarları Düzenle'}</span>
+                {isSettingsOpen ? (
+                  <ChevronUp className="h-3 w-3" />
+                ) : (
+                  <ChevronDown className="h-3 w-3" />
+                )}
+              </button>
+            )}
           </div>
 
-          {/* Host Game Mode & Category & Auto-Assign Controls in Lobby */}
+          {/* Host Game Mode & Category Settings (Daraltılabilir / Collapsible) */}
           {state.you.isHost && (
-            <div className="mt-4 pt-4 border-t border-paper-border space-y-3.5">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className="font-display text-base font-bold text-ink-faded">
-                  Oyun Modu:
-                </span>
-                <div className="flex gap-2 flex-wrap">
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (state.room.gameMode === 'classic') return
-                      await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'classic' } })
-                      await refresh()
-                    }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                      state.room.gameMode === 'classic'
-                        ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
-                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                    }`}
-                  >
-                    <Target className="h-4 w-4" />
-                    <span>Klasik (Can)</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (state.room.gameMode === 'speed') return
-                      await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'speed' } })
-                      await refresh()
-                    }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                      state.room.gameMode === 'speed'
-                        ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
-                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                    }`}
-                  >
-                    <Zap className="h-4 w-4" />
-                    <span>Hız Modu (Puan)</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (state.room.gameMode === 'persistent') return
-                      await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'persistent' } })
-                      await refresh()
-                    }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                      state.room.gameMode === 'persistent'
-                        ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
-                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                    }`}
-                  >
-                    <Brain className="h-4 w-4" />
-                    <span>Israrcı (Bütçe)</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (state.room.gameMode === 'shared_target') return
-                      await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'shared_target' } })
-                      await refresh()
-                    }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                      state.room.gameMode === 'shared_target'
-                        ? 'bg-pencil-orange text-white shadow-sm ring-1 ring-pencil-orange'
-                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                    }`}
-                  >
-                    <Users className="h-4 w-4" />
-                    <span>Ortak Hedef (Hakem)</span>
-                  </button>
-                </div>
-              </div>
+            <AnimatePresence>
+              {isSettingsOpen && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.25, ease: 'easeInOut' }}
+                  className="overflow-hidden space-y-3.5 pt-4 border-t border-paper-border"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <span className="font-display text-base font-bold text-ink-faded">
+                      Oyun Modu:
+                    </span>
+                    <div className="flex gap-2 flex-wrap">
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (state.room.gameMode === 'classic') return
+                          await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'classic' } })
+                          await refresh()
+                        }}
+                        className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
+                          state.room.gameMode === 'classic'
+                            ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        <Target className="h-4 w-4" />
+                        <span>Klasik (Can)</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (state.room.gameMode === 'speed') return
+                          await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'speed' } })
+                          await refresh()
+                        }}
+                        className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
+                          state.room.gameMode === 'speed'
+                            ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        <Zap className="h-4 w-4" />
+                        <span>Hız Modu (Puan)</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (state.room.gameMode === 'persistent') return
+                          await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'persistent' } })
+                          await refresh()
+                        }}
+                        className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
+                          state.room.gameMode === 'persistent'
+                            ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        <Brain className="h-4 w-4" />
+                        <span>Israrcı (Bütçe)</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (state.room.gameMode === 'shared_target') return
+                          await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'shared_target' } })
+                          await refresh()
+                        }}
+                        className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
+                          state.room.gameMode === 'shared_target'
+                            ? 'bg-pencil-orange text-white shadow-sm ring-1 ring-pencil-orange'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        <Users className="h-4 w-4" />
+                        <span>Ortak Hedef (Hakem)</span>
+                      </button>
+                    </div>
+                  </div>
 
-              {/* İletişim Tarzı Değiştirme */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-dashed border-paper-border">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4 text-pencil-green" />
-                  <span className="font-display text-base font-bold text-ink-faded">
-                    İletişim Tarzı:
-                  </span>
-                </div>
-                <div className="flex gap-2 flex-wrap items-center">
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (state.room.communicationMode === 'voice') return
-                      await apiRequest(`/api/rooms/${roomId}/communication`, { method: 'PATCH', body: { communicationMode: 'voice' } })
-                      await refresh()
-                    }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                      state.room.communicationMode !== 'text'
-                        ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
-                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                    }`}
-                  >
-                    <Mic className="h-4 w-4" />
-                    <span>Sesli (Klasik)</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (state.room.communicationMode === 'text') return
-                      await apiRequest(`/api/rooms/${roomId}/communication`, { method: 'PATCH', body: { communicationMode: 'text' } })
-                      await refresh()
-                    }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                      state.room.communicationMode === 'text'
-                        ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
-                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                    }`}
-                  >
-                    <MessageSquare className="h-4 w-4" />
-                    <span>Tam Metin (15sn Oylama)</span>
-                  </button>
-                </div>
-              </div>
+                  {/* İletişim Tarzı Değiştirme */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-dashed border-paper-border">
+                    <div className="flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4 text-pencil-green" />
+                      <span className="font-display text-base font-bold text-ink-faded">
+                        İletişim Tarzı:
+                      </span>
+                    </div>
+                    <div className="flex gap-2 flex-wrap items-center">
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (state.room.communicationMode === 'voice') return
+                          await apiRequest(`/api/rooms/${roomId}/communication`, { method: 'PATCH', body: { communicationMode: 'voice' } })
+                          await refresh()
+                        }}
+                        className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
+                          state.room.communicationMode !== 'text'
+                            ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        <Mic className="h-4 w-4" />
+                        <span>Sesli (Klasik)</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (state.room.communicationMode === 'text') return
+                          await apiRequest(`/api/rooms/${roomId}/communication`, { method: 'PATCH', body: { communicationMode: 'text' } })
+                          await refresh()
+                        }}
+                        className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
+                          state.room.communicationMode === 'text'
+                            ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        <MessageSquare className="h-4 w-4" />
+                        <span>Tam Metin (15sn Oylama)</span>
+                      </button>
+                    </div>
+                  </div>
 
-              {/* Kategori Havuzu Değiştirme */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-dashed border-paper-border">
-                <div className="flex items-center gap-2">
-                  <Layers className="h-4 w-4 text-pencil-purple" />
-                  <span className="font-display text-base font-bold text-ink-faded">
-                    Kategori Havuzu:
-                  </span>
-                </div>
-                <div className="flex gap-2 flex-wrap items-center">
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (state.room.categoryMode === 'single') return
-                      await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'single' } })
-                      await refresh()
-                    }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                      state.room.categoryMode !== 'multi_phase'
-                        ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
-                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                    }`}
-                  >
-                    <Target className="h-4 w-4" />
-                    <span>Tek Kategori</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (state.room.categoryMode === 'multi_phase') return
-                      await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'multi_phase' } })
-                      await refresh()
-                    }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
-                      state.room.categoryMode === 'multi_phase'
-                        ? 'bg-pencil-purple text-white shadow-sm ring-1 ring-pencil-purple'
-                        : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
-                    }`}
-                  >
-                    <Layers className="h-4 w-4" />
-                    <span>3 Fazlı Karışık</span>
-                  </button>
-                </div>
-              </div>
+                  {/* Kategori Havuzu Değiştirme */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-dashed border-paper-border">
+                    <div className="flex items-center gap-2">
+                      <Layers className="h-4 w-4 text-pencil-purple" />
+                      <span className="font-display text-base font-bold text-ink-faded">
+                        Kategori Havuzu:
+                      </span>
+                    </div>
+                    <div className="flex gap-2 flex-wrap items-center">
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (state.room.categoryMode === 'single') return
+                          await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'single' } })
+                          await refresh()
+                        }}
+                        className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
+                          state.room.categoryMode !== 'multi_phase'
+                            ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        <Target className="h-4 w-4" />
+                        <span>Tek Kategori</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (state.room.categoryMode === 'multi_phase') return
+                          await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'multi_phase' } })
+                          await refresh()
+                        }}
+                        className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
+                          state.room.categoryMode === 'multi_phase'
+                            ? 'bg-pencil-purple text-white shadow-sm ring-1 ring-pencil-purple'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        <Layers className="h-4 w-4" />
+                        <span>3 Fazlı Karışık</span>
+                      </button>
+                    </div>
+                  </div>
 
-              {state.room.categoryMode !== 'multi_phase' ? (
-                <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-paper-card-alt border border-paper-border">
-                  <span className="font-display text-base font-bold text-ink">Kategori:</span>
-                  <CustomSelect
-                    value={state.room.selectedCategory || 'all'}
-                    onChange={async (val) => {
-                      const newCat = val as FamousPersonCategory
-                      setSelectedAutoCategory(newCat)
-                      await apiRequest(`/api/rooms/${roomId}/category`, {
-                        method: 'PATCH',
-                        body: { category: newCat },
-                      })
-                      await refresh()
-                    }}
-                    options={CATEGORIES.map((c) => ({
-                      value: c.id,
-                      label: c.label,
-                      icon: c.icon,
-                    }))}
-                    className="min-w-[180px]"
-                  />
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3 rounded-xl bg-paper-card-alt border border-paper-border">
-                  {[0, 1, 2].map((idx) => {
-                    const phases = state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler']
-                    const currentVal = phases[idx] || 'all'
-                    return (
-                      <div key={idx} className="flex flex-col gap-1.5 bg-paper-card p-2.5 rounded-lg border border-dashed border-paper-border">
-                        <span className="text-xs font-sans font-bold text-ink flex items-center gap-1.5">
-                          <span className="h-5 w-5 rounded-full bg-pencil-purple/20 text-pencil-purple flex items-center justify-center text-xs font-bold">
-                            {idx + 1}
-                          </span>
-                          <span>Faz {idx + 1} Kategorisi:</span>
-                        </span>
-                        <CustomSelect
-                          value={currentVal}
-                          onChange={async (val) => {
-                            const next = [...phases]
-                            next[idx] = val as FamousPersonCategory
-                            await apiRequest(`/api/rooms/${roomId}/category`, {
-                              method: 'PATCH',
-                              body: { phaseCategories: next },
-                            })
-                            await refresh()
-                          }}
-                          options={CATEGORIES.filter((c) => c.id !== 'all').map((c) => ({
-                            value: c.id,
-                            label: c.label,
-                            icon: c.icon,
-                          }))}
-                          size="sm"
-                          className="w-full"
-                        />
-                      </div>
-                    )
-                  })}
-                </div>
+                  {state.room.categoryMode !== 'multi_phase' ? (
+                    <div className="flex items-center justify-between gap-3 p-3 rounded-sketch-md bg-paper-card-alt border border-paper-border">
+                      <span className="font-display text-base font-bold text-ink">Kategori:</span>
+                      <CustomSelect
+                        value={state.room.selectedCategory || 'all'}
+                        onChange={async (val) => {
+                          const newCat = val as FamousPersonCategory
+                          setSelectedAutoCategory(newCat)
+                          await apiRequest(`/api/rooms/${roomId}/category`, {
+                            method: 'PATCH',
+                            body: { category: newCat },
+                          })
+                          await refresh()
+                        }}
+                        options={CATEGORIES.map((c) => ({
+                          value: c.id,
+                          label: c.label,
+                          icon: <CategoryIcon category={c.id} className="h-4 w-4" />,
+                        }))}
+                        className="min-w-[180px]"
+                      />
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3 rounded-sketch-md bg-paper-card-alt border border-paper-border">
+                      {[0, 1, 2].map((idx) => {
+                        const phases = state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler']
+                        const currentVal = phases[idx] || 'all'
+                        return (
+                          <div key={idx} className="flex flex-col gap-1.5 bg-paper-card p-2.5 rounded-sketch border border-dashed border-paper-border">
+                            <span className="text-xs font-sans font-bold text-ink flex items-center gap-1.5">
+                              <span className="h-5 w-5 rounded-full bg-pencil-purple/20 text-pencil-purple flex items-center justify-center text-xs font-bold">
+                                {idx + 1}
+                              </span>
+                              <span>Faz {idx + 1} Kategorisi:</span>
+                            </span>
+                            <CustomSelect
+                              value={currentVal}
+                              onChange={async (val) => {
+                                const next = [...phases]
+                                next[idx] = val as FamousPersonCategory
+                                await apiRequest(`/api/rooms/${roomId}/category`, {
+                                  method: 'PATCH',
+                                  body: { phaseCategories: next },
+                                })
+                                await refresh()
+                              }}
+                              options={CATEGORIES.filter((c) => c.id !== 'all').map((c) => ({
+                                value: c.id,
+                                label: c.label,
+                                icon: <CategoryIcon category={c.id} className="h-4 w-4" />,
+                              }))}
+                              size="sm"
+                              className="w-full"
+                            />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </motion.div>
               )}
+            </AnimatePresence>
+          )}
 
-              {/* Host Hızlı Başlat / Sistem Otomatik Atasın */}
-              <div className="rounded-xl border border-dashed border-paper-border bg-paper-card-alt p-3.5 flex flex-wrap items-center justify-between gap-3">
+          {/* Host Hızlı Başlat / Sistem Otomatik Atasın (Her zaman açık & erişilebilir) */}
+          {state.you.isHost && (
+            <div className="mt-4 pt-3.5 border-t border-paper-border">
+              <div className="rounded-sketch-md border border-dashed border-paper-border bg-paper-card-alt p-3.5 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
                   <Shuffle className="h-5 w-5 text-pencil-yellow shrink-0" />
-                  <span className="font-display text-base font-bold text-ink">
-                    Hızlı Başlat (Sistem Atasın):
-                  </span>
-                  <CustomSelect
-                    value={autoCategory}
-                    onChange={(val) => setSelectedAutoCategory(val as FamousPersonCategory)}
-                    options={CATEGORIES.map((c) => ({
-                      value: c.id,
-                      label: c.label,
-                      icon: c.icon,
-                    }))}
-                    size="sm"
-                    className="min-w-[170px]"
-                  />
+                  {state.room.categoryMode === 'multi_phase' ? (
+                    <div className="flex flex-col">
+                      <span className="font-display text-base font-bold text-ink flex items-center gap-1.5">
+                        <span>Hızlı Başlat (Seçilen Faz Kategorileri)</span>
+                        <span className="tag text-xs border-pencil-purple text-pencil-purple">3 Faz</span>
+                      </span>
+                      <span className="text-xs text-ink-faded font-sans">
+                        1. Faz: <strong>{CATEGORIES.find((c) => c.id === (state.room.phaseCategories?.[0] || 'sporcular'))?.label}</strong> (her fazda otomatik dağıtılır)
+                      </span>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="font-display text-base font-bold text-ink">
+                        Hızlı Başlat (Sistem Atasın):
+                      </span>
+                      <CustomSelect
+                        value={autoCategory}
+                        onChange={(val) => setSelectedAutoCategory(val as FamousPersonCategory)}
+                        options={CATEGORIES.map((c) => ({
+                          value: c.id,
+                          label: c.label,
+                          icon: <CategoryIcon category={c.id} className="h-4 w-4" />,
+                        }))}
+                        size="sm"
+                        className="min-w-[170px]"
+                      />
+                    </>
+                  )}
                 </div>
 
                 <button
                   type="button"
                   disabled={isAutoAssigning}
-                  onClick={() => void handleAutoAssign(autoCategory)}
+                  onClick={() =>
+                    void handleAutoAssign(
+                      state.room.categoryMode === 'multi_phase'
+                        ? (state.room.phaseCategories?.[0] || 'all')
+                        : autoCategory,
+                    )
+                  }
                   className="btn-pencil-yellow flex items-center gap-1.5 px-3.5 py-2 text-sm font-sans font-bold transition-all shadow-xs"
                 >
                   {isAutoAssigning ? (
@@ -635,14 +716,15 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     <FamousPersonAutocompleteInput
                       id="target-input"
                       value={targetNameInput}
-                      onChange={(val) => setTargetNameInput(val)}
-                      onSelect={(person) => {
+                      onChange={(val: string) => setTargetNameInput(val)}
+                      onSelect={(person: FamousPerson) => {
                         setTargetNameInput(person.name)
                         void handleSaveTarget(person.name)
                       }}
                       placeholder="Örn: Albert Einstein, Kemal Sunal, Tarkan..."
                       disabled={isSavingTarget}
                       maxLength={60}
+                      difficultyFilter={state.room.difficulty}
                     />
                     <button
                       type="button"
@@ -662,6 +744,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     void handleSaveTarget(name)
                   }}
                   disabled={isSavingTarget}
+                  difficultyFilter={state.room.difficulty}
                   selectedNames={targetNameInput ? [targetNameInput] : []}
                 />
 
@@ -727,58 +810,85 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               </p>
 
               {state.room.categoryMode === 'multi_phase' ? (
-                <div className="mb-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-pencil-purple/10 border border-pencil-purple/30 text-pencil-purple text-sm font-display font-bold">
+                <div className="mb-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-sketch bg-pencil-purple/10 border border-pencil-purple/30 text-pencil-purple text-sm font-display font-bold">
                   <Layers className="h-4 w-4" />
                   <span>
-                    1. Faz İsim Havuzu (Kategori:{' '}
-                    {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.icon}{' '}
-                    {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.label || state.room.activeCategory})
+                    3 Fazlı Mod: Her kutuya ilgili fazın kategorisine uygun 1 isim yazın.
                   </span>
                 </div>
               ) : state.room.selectedCategory && state.room.selectedCategory !== 'all' ? (
-                <div className="mb-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-pencil-blue/10 border border-pencil-blue/30 text-pencil-blue text-sm font-display font-bold">
-                  <span>
-                    Seçili Kategori:{' '}
-                    {CATEGORIES.find((c) => c.id === state.room.selectedCategory)?.icon}{' '}
-                    {CATEGORIES.find((c) => c.id === state.room.selectedCategory)?.label}
+                <div className="mb-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-sketch bg-pencil-blue/10 border border-pencil-blue/30 text-pencil-blue text-sm font-display font-bold">
+                  <span className="flex items-center gap-1.5">
+                    <span>Seçili Kategori:</span>
+                    <CategoryIcon category={state.room.selectedCategory} className="h-4 w-4" />
+                    <span>{CATEGORIES.find((c) => c.id === state.room.selectedCategory)?.label}</span>
                   </span>
                 </div>
               ) : null}
 
               <div className="space-y-4">
-                {names.map((name, index) => (
-                  <div key={index}>
-                    <label
-                      htmlFor={`name-${index}`}
-                      className="mb-1.5 block font-display text-2xl font-bold text-ink"
-                    >
-                      İsim {index + 1}
-                    </label>
-                    <FamousPersonAutocompleteInput
-                      id={`name-${index}`}
-                      value={name}
-                      maxLength={60}
-                      disabled={isSubmitting}
-                      placeholder={`Örn: ${index === 0 ? 'Albert Einstein' : index === 1 ? 'Sherlock Holmes' : 'Tarkan'}`}
-                      categoryFilter={state.room.activeCategory || 'all'}
-                      onChange={(val) => {
-                        const next = [...names]
-                        next[index] = val
-                        setNames(next)
-                      }}
-                      onSelect={(person) => {
-                        const next = [...names]
-                        next[index] = person.name
-                        setNames(next)
-                      }}
-                    />
-                  </div>
-                ))}
+                {names.map((name, index) => {
+                  const isMulti = state.room.categoryMode === 'multi_phase'
+                  const phaseCat = isMulti
+                    ? (state.room.phaseCategories?.[index] || 'all')
+                    : (state.room.selectedCategory || 'all')
+                  const phaseCategoryLabel = CATEGORIES.find((c) => c.id === phaseCat)?.label || phaseCat
+
+                  return (
+                    <div key={index}>
+                      <label
+                        htmlFor={`name-${index}`}
+                        className="mb-1.5 flex flex-wrap items-center justify-between gap-1 font-display text-2xl font-bold text-ink"
+                      >
+                        <span className="flex items-center gap-2">
+                          {isMulti && (
+                            <span className="h-6 w-6 rounded-full bg-pencil-purple/20 text-pencil-purple text-xs font-bold flex items-center justify-center font-sans">
+                              {index + 1}
+                            </span>
+                          )}
+                          <span>
+                            {isMulti ? `${index + 1}. Faz İsmi:` : `İsim ${index + 1}`}
+                          </span>
+                        </span>
+                        {isMulti && (
+                          <span className="tag text-xs border-pencil-purple text-pencil-purple flex items-center gap-1 font-sans font-bold">
+                            <CategoryIcon category={phaseCat} className="h-3.5 w-3.5" />
+                            <span>{phaseCategoryLabel}</span>
+                          </span>
+                        )}
+                      </label>
+                      <FamousPersonAutocompleteInput
+                        id={`name-${index}`}
+                        value={name}
+                        maxLength={60}
+                        disabled={isSubmitting}
+                        placeholder={
+                          isMulti
+                            ? `${index + 1}. Faz (${phaseCategoryLabel}) için bir isim girin...`
+                            : `Örn: ${index === 0 ? 'Albert Einstein' : index === 1 ? 'Sherlock Holmes' : 'Tarkan'}`
+                        }
+                        categoryFilter={phaseCat}
+                        difficultyFilter={state.room.difficulty}
+                        onChange={(val: string) => {
+                          const next = [...names]
+                          next[index] = val
+                          setNames(next)
+                        }}
+                        onSelect={(person: FamousPerson) => {
+                          const next = [...names]
+                          next[index] = person.name
+                          setNames(next)
+                        }}
+                      />
+                    </div>
+                  )
+                })}
               </div>
 
               {/* Fikir mi lazım? Öneri Kartları */}
               <NameSuggestions
                 categoryFilter={state.room.activeCategory || 'all'}
+                difficultyFilter={state.room.difficulty}
                 onSelectName={handleSelectSuggestion}
                 onFillAllEmpty={handleFillAllEmpty}
                 emptySlotsCount={names.filter((n) => !n.trim()).length}
@@ -797,7 +907,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   whileHover={{ scale: 1.01, rotate: -0.5 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => void handleSubmitNames()}
-                  disabled={isSubmitting || names.every((name) => !name.trim())}
+                  disabled={isSubmitting || names.some((name) => !name.trim())}
                   className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-4 font-display text-2xl font-bold"
                 >
                   {isSubmitting ? (
@@ -807,7 +917,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     </>
                   ) : (
                     <>
-                      <span>{isEditingNames ? 'İsimleri Güncelle' : 'İsimleri Gönder'}</span>
+                      <span>{isEditingNames ? 'İsimleri Güncelle' : 'İsimleri Gönder (3 İsim)'}</span>
                       <Send className="h-5 w-5" />
                     </>
                   )}

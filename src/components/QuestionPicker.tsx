@@ -57,7 +57,7 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
           {/* Header */}
           <div className="flex items-center justify-between border-b border-paper-border pb-4">
             <div className="flex items-center gap-2.5">
-              <div className="rounded-lg bg-pencil-blue/15 p-2 text-pencil-blue">
+              <div className="rounded-sketch bg-pencil-blue/15 p-2 text-pencil-blue">
                 <HelpCircle className="h-6 w-6" />
               </div>
               <div>
@@ -72,7 +72,7 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
             <button
               onClick={onClose}
               disabled={isBusy}
-              className="rounded-lg p-1.5 text-ink-faded hover:bg-paper-card-alt hover:text-ink transition-colors"
+              className="rounded-sketch p-1.5 text-ink-faded hover:bg-paper-card-alt hover:text-ink transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
@@ -106,7 +106,7 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
                   <button
                     key={t.id}
                     onClick={() => setSelectedTag(t.id)}
-                    className={`px-3 py-1.5 rounded-lg font-sans font-bold transition-all border text-xs sm:text-sm flex items-center ${
+                    className={`px-3 py-1.5 rounded-sketch font-sans font-bold transition-all border text-xs sm:text-sm flex items-center ${
                       selectedTag === t.id
                         ? 'bg-pencil-blue text-white border-pencil-blue shadow-xs'
                         : 'border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
@@ -127,7 +127,7 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
                       whileTap={{ scale: 0.99 }}
                       onClick={() => handlePickQuestion(q)}
                       disabled={isBusy}
-                      className="w-full text-left p-3.5 bg-paper-card hover:bg-paper-card-alt border-2 border-paper-border hover:border-pencil-blue rounded-xl transition-all shadow-2xs hover:shadow-xs flex items-center justify-between gap-3 group"
+                      className="w-full text-left p-3.5 bg-paper-card hover:bg-paper-card-alt border-2 border-paper-border hover:border-pencil-blue rounded-sketch-md transition-all shadow-2xs hover:shadow-xs flex items-center justify-between gap-3 group"
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-pencil-blue/10 text-pencil-blue font-bold text-xs font-mono">

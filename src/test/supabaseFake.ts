@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 
-import type { FamousPersonRow, GameResultRow, NameRow, PlayerProfileRow, PlayerRow, RoomRow } from '@/lib/database.types'
+import type { FamousPersonRow, GameResultRow, NameRow, NameSuggestionRow, PlayerProfileRow, PlayerRow, RoomRow } from '@/lib/database.types'
 
 /**
  * Bellek içi Supabase test ikizi.
@@ -15,6 +15,7 @@ export interface FakeTables {
   players: PlayerRow[]
   names: NameRow[]
   famous_people?: FamousPersonRow[]
+  name_suggestions?: NameSuggestionRow[]
   player_profiles?: PlayerProfileRow[]
   game_results?: GameResultRow[]
 }
@@ -30,7 +31,7 @@ interface Result<T> {
 class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
   private operation: 'select' | 'insert' | 'update' | 'upsert' | 'delete' = 'select'
   private payload: Row[] = []
-  private filters: Array<[string, unknown, 'eq' | 'ilike']> = []
+  private filters: Array<[string, unknown, 'eq' | 'neq' | 'ilike' | 'lt' | 'lte' | 'gt' | 'gte']> = []
   private sorts: Array<{ column: string; ascending: boolean }> = []
   private limitCount?: number
   private wantsRows = false
@@ -85,6 +86,31 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
     return this
   }
 
+  neq(column: string, value: unknown) {
+    this.filters.push([column, value, 'neq'])
+    return this
+  }
+
+  lt(column: string, value: unknown) {
+    this.filters.push([column, value, 'lt'])
+    return this
+  }
+
+  lte(column: string, value: unknown) {
+    this.filters.push([column, value, 'lte'])
+    return this
+  }
+
+  gt(column: string, value: unknown) {
+    this.filters.push([column, value, 'gt'])
+    return this
+  }
+
+  gte(column: string, value: unknown) {
+    this.filters.push([column, value, 'gte'])
+    return this
+  }
+
   ilike(column: string, pattern: string) {
     this.filters.push([column, pattern, 'ilike'])
     return this
@@ -116,6 +142,21 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
         const strVal = String(row[column] ?? '').toLocaleLowerCase('tr')
         const pattern = String(value ?? '').replace(/%/g, '').toLocaleLowerCase('tr')
         return strVal.includes(pattern)
+      }
+      if (op === 'neq') {
+        return row[column] !== value
+      }
+      if (op === 'lt') {
+        return (row[column] as number | string) < (value as number | string)
+      }
+      if (op === 'lte') {
+        return (row[column] as number | string) <= (value as number | string)
+      }
+      if (op === 'gt') {
+        return (row[column] as number | string) > (value as number | string)
+      }
+      if (op === 'gte') {
+        return (row[column] as number | string) >= (value as number | string)
       }
       return row[column] === value
     })
@@ -150,6 +191,9 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
 
         for (const incoming of this.payload) {
           const record: Row = { id: (incoming.id as string) ?? randomUUID(), ...incoming }
+          if (this.table === 'rooms' && !record.updated_at) {
+            record.updated_at = (record.created_at as string) ?? new Date().toISOString()
+          }
           const existingIndex = this.rows.findIndex((row) =>
             conflictColumns.every((column) => row[column] === record[column]),
           )
@@ -160,6 +204,9 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
             }
             // ON CONFLICT DO NOTHING: satır güncellenmez ve döndürülmez.
             if (this.ignoreDuplicates) continue
+            if (this.table === 'rooms' && !record.updated_at) {
+              record.updated_at = new Date().toISOString()
+            }
             this.rows[existingIndex] = { ...this.rows[existingIndex], ...record }
             affected.push(this.rows[existingIndex]!)
           } else {
@@ -173,7 +220,11 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
       case 'update':
         for (const row of this.rows) {
           if (!this.matches(row)) continue
-          Object.assign(row, this.payload[0])
+          const patch = { ...this.payload[0] }
+          if (this.table === 'rooms' && !patch.updated_at) {
+            patch.updated_at = new Date().toISOString()
+          }
+          Object.assign(row, patch)
           affected.push(row)
         }
         break
@@ -227,11 +278,27 @@ export function createSupabaseFake(
       from(table: TableName) {
         return new QueryBuilder(tables, table)
       },
-      rpc(name: string, args: Record<string, unknown>) {
+      rpc(name: string, args: Record<string, unknown> = {}) {
         if (name === 'increment_player_score') {
           const player = tables.players.find((candidate) => candidate.id === args.p_player_id)
           if (player) player.score = (player.score ?? 0) + (args.p_delta as number)
           return Promise.resolve({ data: player?.score ?? null, error: null })
+        }
+        if (name === 'close_expired_rooms') {
+          const minutes = (args.p_inactivity_minutes as number) ?? 60
+          const cutoff = new Date(Date.now() - minutes * 60 * 1000).toISOString()
+          let count = 0
+          for (const room of tables.rooms) {
+            if (room.status !== 'closed') {
+              const lastActive = room.updated_at ?? room.created_at ?? ''
+              if (lastActive < cutoff) {
+                room.status = 'closed'
+                room.is_game_active = false
+                count++
+              }
+            }
+          }
+          return Promise.resolve({ data: count, error: null })
         }
         return Promise.resolve({ data: null, error: { message: `bilinmeyen fonksiyon: ${name}` } })
       },
@@ -240,12 +307,14 @@ export function createSupabaseFake(
 }
 
 let counter = 0
-const nextTimestamp = () => new Date(Date.UTC(2026, 0, 1, 0, 0, counter++)).toISOString()
+const nextTimestamp = () => new Date(Date.now() - 1000 + counter++ * 10).toISOString()
 
 export function buildRoom(overrides: Partial<RoomRow> = {}): RoomRow {
+  const ts = nextTimestamp()
   return {
     id: randomUUID(),
-    created_at: nextTimestamp(),
+    created_at: ts,
+    updated_at: ts,
     room_code: 'ABCDEF',
     status: 'waiting',
     current_player_id: null,
@@ -302,6 +371,19 @@ export function buildFamousPerson(overrides: Partial<FamousPersonRow> = {}): Fam
     id: randomUUID(),
     name: 'Barış Manço',
     category: 'unluler',
+    created_at: nextTimestamp(),
+    ...overrides,
+  }
+}
+
+export function buildNameSuggestion(overrides: Partial<NameSuggestionRow> = {}): NameSuggestionRow {
+  return {
+    id: randomUUID(),
+    name: 'Barış Özcan',
+    category: 'unluler',
+    notes: 'YouTube içerik üreticisi',
+    suggested_by: null,
+    status: 'pending',
     created_at: nextTimestamp(),
     ...overrides,
   }
