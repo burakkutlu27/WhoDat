@@ -294,13 +294,13 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             </span>
           </div>
 
-          {/* 2. OYUN BİLGİLERİ: Tek satırda temiz rozetler */}
-          <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap sm:flex-nowrap overflow-x-auto py-2 px-3 bg-paper-card-alt/60 rounded-sketch border border-paper-border/60">
-            <span className="tag text-xs sm:text-sm shrink-0">
+          {/* 2. OYUN BİLGİLERİ: Sade ve temiz rozetler */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+            <span className="tag text-xs sm:text-sm">
               <Users className="h-3.5 w-3.5 text-pencil-blue" />
               {state.players.length} Oyuncu
             </span>
-            <span className={`tag text-xs sm:text-sm shrink-0 ${
+            <span className={`tag text-xs sm:text-sm ${
               state.room.gameMode === 'speed'
                 ? 'border-pencil-green text-pencil-green font-bold'
                 : state.room.gameMode === 'persistent'
@@ -321,7 +321,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     ? 'Ortak Hedef (3 Tur)'
                     : 'Klasik Mod (3 Can)'}
             </span>
-            <span className="tag text-xs sm:text-sm shrink-0 border-pencil-purple text-pencil-purple font-bold flex items-center gap-1">
+            <span className="tag text-xs sm:text-sm border-pencil-purple text-pencil-purple font-bold flex items-center gap-1">
               <Layers className="h-3.5 w-3.5" />
               {state.room.categoryMode === 'multi_phase' ? (
                 <span>
@@ -338,7 +338,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 </span>
               )}
             </span>
-            <span className={`tag text-xs sm:text-sm shrink-0 ${
+            <span className={`tag text-xs sm:text-sm ${
               state.room.difficulty === 'kolay'
                 ? 'border-pencil-green text-pencil-green font-bold'
                 : state.room.difficulty === 'zor'
@@ -347,12 +347,12 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             }`}>
               <Gauge className="h-3.5 w-3.5 mr-1 inline" />
               {state.room.difficulty === 'kolay'
-                ? 'Zorluk: Kolay (Tier 1-2)'
+                ? 'Zorluk: Kolay'
                 : state.room.difficulty === 'zor'
-                  ? 'Zorluk: Zor (Tüm Havuz)'
-                  : 'Zorluk: Orta (Tier 1-3)'}
+                  ? 'Zorluk: Zor'
+                  : 'Zorluk: Orta'}
             </span>
-            <span className={`tag text-xs sm:text-sm shrink-0 ${
+            <span className={`tag text-xs sm:text-sm ${
               state.room.communicationMode === 'text'
                 ? 'border-pencil-green text-pencil-green font-bold'
                 : 'border-pencil-yellow text-pencil-yellow font-bold'
@@ -370,7 +370,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               )}
             </span>
             {degraded && (
-              <span className="tag text-xs sm:text-sm shrink-0 border-pencil-orange text-pencil-orange">
+              <span className="tag text-xs sm:text-sm border-pencil-orange text-pencil-orange">
                 Canlı bağlantı zayıf
               </span>
             )}

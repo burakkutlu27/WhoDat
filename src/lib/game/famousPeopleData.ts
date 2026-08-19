@@ -39,6 +39,12 @@ export interface FamousPersonSeed {
 
 export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
   {
+    "name": "Erlik",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber_yayinci"
+  },
+  {
     "name": "Novak Djokovic",
     "category": "sporcular",
     "fameTier": 1,
