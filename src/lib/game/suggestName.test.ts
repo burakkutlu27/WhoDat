@@ -24,14 +24,14 @@ describe('Community Name Suggestions', () => {
   describe('suggestNameSchema validation', () => {
     it('geçerli bir öneriyi başarıyla doğrular', () => {
       const valid = {
-        name: 'Barış Özcan',
+        name: 'İlber Ortaylı',
         category: 'unluler',
-        notes: 'YouTube yayıncısı',
+        notes: 'Tarihçi / Yazar',
       }
       const parsed = suggestNameSchema.parse(valid)
-      expect(parsed.name).toBe('Barış Özcan')
+      expect(parsed.name).toBe('İlber Ortaylı')
       expect(parsed.category).toBe('unluler')
-      expect(parsed.notes).toBe('YouTube yayıncısı')
+      expect(parsed.notes).toBe('Tarihçi / Yazar')
     })
 
     it('2 karakterden kısa isimleri reddeder', () => {

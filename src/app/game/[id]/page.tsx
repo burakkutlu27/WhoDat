@@ -423,6 +423,25 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     }
   }
 
+  const handlePassName = async () => {
+    if (isBusy) return
+    setIsBusy(true)
+    try {
+      const result = await apiRequest<{ message: string }>(`/api/rooms/${roomId}/pass-name`, { method: 'POST' })
+      setGuess('')
+      setFeedback({ tone: 'success', text: result.message })
+      await refresh()
+    } catch (caught) {
+      setFeedback({
+        tone: 'error',
+        text: caught instanceof ApiClientError ? caught.message : 'İsim pas geçilemedi.',
+      })
+      await refresh()
+    } finally {
+      setIsBusy(false)
+    }
+  }
+
   const handleConfirmLeave = async () => {
     setIsLeaving(true)
     try {
@@ -1299,7 +1318,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             ? (state.you.questionBudgetRemaining ?? 10) > 0
                               ? 'Sorunu sesli sorup "Soru Sordum" butonuna basabilir veya doğrudan tahmin yapabilirsin!'
                               : 'Soru bütçen bitti! Elindeki bilgilerle tahmin yapmak zorundasın.'
-                            : 'Arkadaşlarına evet/hayır soruları sor. Emin olduğunda tahminini yaz!'
+                            : 'Sorunu sor ("Soru Sordum"), tahmin et ("Tahmin Et") veya ismi değiştir ("İsmi Pas Geç")!'
                         : 'Sana sorulan sorulara dürüstçe yalnızca evet veya hayır deyin.'}
                     </p>
 
@@ -1434,22 +1453,35 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         )}
                       </div>
                     ) : (
-                      <div className="mt-4 flex items-center justify-center gap-2">
-                        <span className="font-display text-base font-bold text-ink-faded">
-                          {state.you.isYourTurn ? 'Kalan Canınız:' : `${currentPlayer?.nickname ?? 'Oyuncu'} Kalan Canı:`}
-                        </span>
-                        <div className="flex items-center gap-1.5">
-                          {Array.from({ length: maxLives }).map((_, index) => {
-                            const displayLives = state.you.isYourTurn ? myLives : activePlayerLives
-                            const isFilled = index < displayLives
-                            return (
-                              <TornPaperHeart
-                                key={index}
-                                isFilled={isFilled}
-                                size={24}
-                              />
-                            )
-                          })}
+                      <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                        {/* Deneme Hakkı */}
+                        <div className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm">
+                          <span className="font-display text-sm font-bold text-ink-faded">
+                            {state.you.isYourTurn ? 'Bu İsim İçin Deneme:' : `${currentPlayer?.nickname ?? 'Oyuncu'} Deneme:`}
+                          </span>
+                          <div className="flex items-center gap-1">
+                            {Array.from({ length: maxLives }).map((_, index) => {
+                              const displayLives = state.you.isYourTurn ? myLives : activePlayerLives
+                              const isFilled = index < displayLives
+                              return (
+                                <TornPaperHeart
+                                  key={index}
+                                  isFilled={isFilled}
+                                  size={20}
+                                />
+                              )
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Pas Geçme Hakkı */}
+                        <div className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm">
+                          <span className="font-display text-sm font-bold text-ink-faded">
+                            {state.you.isYourTurn ? 'Kalan Pas Hakkın:' : `${currentPlayer?.nickname ?? 'Oyuncu'} Pas Hakkı:`}
+                          </span>
+                          <span className="font-display text-base font-bold text-pencil-orange">
+                            {state.you.isYourTurn ? (state.you.passRightsRemaining ?? 3) : (currentPlayer?.passRightsRemaining ?? 3)} / 3
+                          </span>
                         </div>
                       </div>
                     )}
@@ -1469,7 +1501,17 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
                   {/* Action Form or Secret Card */}
                   {state.you.isYourTurn ? (
-                    isSpeed || myLives > 0 ? (
+                    state.you.nameSolved ? (
+                      <div className="mx-auto max-w-md p-6 text-center rounded-sketch-lg bg-pencil-green/10 border-2 border-pencil-green space-y-3">
+                        <div className="flex justify-center text-pencil-green">
+                          <CheckCircle2 className="h-12 w-12" />
+                        </div>
+                        <h3 className="font-display text-2xl font-bold text-ink">Tüm İsimlerinizi Tamamladınız! 🎉</h3>
+                        <p className="text-sm text-ink-faded font-sans">
+                          Tebrikler! Diğer oyuncuların tahminlerini tamamlaması bekleniyor.
+                        </p>
+                      </div>
+                    ) : isSpeed || myLives > 0 ? (
                       <div className="mx-auto max-w-md space-y-4">
                         {/* Tam Metin Modu: Soru Bankasından Soru Seç Butonu */}
                         {state.room.communicationMode === 'text' && (!state.room.activeVote || state.room.activeVote.status === 'closed') && (
@@ -1510,13 +1552,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             />
                           </div>
 
-                          <div className="flex flex-col gap-3 sm:flex-row">
+                          <div className="flex flex-col gap-2.5 sm:flex-row">
                             <motion.button
                               type="submit"
                               whileHover={{ scale: 1.03, rotate: -0.5 }}
                               whileTap={{ scale: 0.97 }}
                               disabled={isBusy || !guess.trim()}
-                              className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-4 font-display text-2xl font-bold shadow-md"
+                              className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-xl font-bold shadow-md"
                             >
                               {isBusy ? (
                                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -1528,7 +1570,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               )}
                             </motion.button>
                             
-                            {/* Israrcı Modda Bütçe 0 ise "Soru Sordum" butonu kalkar (Kural A: Zorunlu Tahmin) */}
+                            {/* Soru Sorma / Sırayı Devretme Butonu */}
                             {(!isPersistent || (state.you.questionBudgetRemaining ?? 10) > 0) && (
                               <motion.button
                                 type="button"
@@ -1536,10 +1578,40 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => void handlePass()}
                                 disabled={isBusy}
-                                className="btn-outline flex items-center justify-center gap-2 px-6 py-4 font-display text-lg font-bold"
+                                className="btn-outline flex items-center justify-center gap-2 px-5 py-3.5 font-display text-base font-bold"
                               >
                                 <SkipForward className="h-5 w-5" />
-                                <span>{isSpeed || isPersistent ? (state.room.communicationMode === 'text' ? 'Sırayı Devret' : 'Cevap Hayır (Sırayı Devret)') : (state.room.communicationMode === 'text' ? 'Pas Geç' : 'Cevap Hayır (Pas Geç)')}</span>
+                                <span>
+                                  {!isSpeed && !isPersistent
+                                    ? 'Soru Sordum'
+                                    : state.room.communicationMode === 'text'
+                                      ? 'Sırayı Devret'
+                                      : 'Cevap Hayır (Sırayı Devret)'}
+                                </span>
+                              </motion.button>
+                            )}
+
+                            {/* Klasik Modda 3. Seçenek: İsmi Pas Geç (Maksimum 3 hak) */}
+                            {!isSpeed && !isPersistent && (
+                              <motion.button
+                                type="button"
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => void handlePassName()}
+                                disabled={isBusy || (state.you.passRightsRemaining ?? 3) <= 0}
+                                className={`btn-outline flex items-center justify-center gap-1.5 px-4 py-3.5 font-display text-base font-bold border-dashed ${
+                                  (state.you.passRightsRemaining ?? 3) <= 0
+                                    ? 'opacity-40 cursor-not-allowed border-ink-faded text-ink-faded'
+                                    : 'text-pencil-orange hover:border-pencil-orange hover:bg-pencil-orange/10'
+                                }`}
+                                title={
+                                  (state.you.passRightsRemaining ?? 3) <= 0
+                                    ? 'İsmi pas geçme hakkınız (3/3) doldu'
+                                    : 'Can kaybı olmadan mevcut ismi bırakıp yeni bir isim alırsınız (Toplam 3 hak)'
+                                }
+                              >
+                                <SkipForward className="h-4 w-4 text-pencil-orange" />
+                                <span>İsmi Pas Geç ({state.you.passRightsRemaining ?? 3}/3)</span>
                               </motion.button>
                             )}
                           </div>

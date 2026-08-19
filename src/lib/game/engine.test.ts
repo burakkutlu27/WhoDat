@@ -22,12 +22,19 @@ const {
   assignNamesForRound,
   autoAssignNames,
   createRoom,
+  getClassicRetiredNames,
   getGameState,
+  getPlayerLives,
+  getPlayerPassRights,
   getRoomMode,
+  giveUp,
   leaveRoom,
   makeGuess,
   passTurn,
   setCommunicationMode,
+  setPlayerLives,
+  setPlayerPassRights,
+  setPlayerRoundNameId,
   setPlayerSpeedData,
   setRoomCategory,
   setRoomMode,
@@ -43,9 +50,9 @@ const {
 
 /** İki oyunculu, oyun başlamış bir oda kurar. */
 function playingRoom() {
-  const room = buildRoom({ status: 'playing', is_game_active: true, game_round: 1 })
-  const host = buildPlayer(room.id, { nickname: 'Host', is_host: true })
-  const guest = buildPlayer(room.id, { nickname: 'Misafir' })
+  const room = buildRoom({ status: 'playing', is_game_active: true, game_round: 1, game_mode: 'classic' })
+  const host = buildPlayer(room.id, { nickname: 'Host', is_host: true, score: 0 })
+  const guest = buildPlayer(room.id, { nickname: 'Misafir', score: 0 })
 
   const hostName = buildName(room.id, host.id, { name_text: 'Kemal Sunal' })
   const guestName = buildName(room.id, guest.id, { name_text: 'Türkan Şoray' })
@@ -53,7 +60,14 @@ function playingRoom() {
   // Sıra host'ta; host, misafirin yazdığı ismi bulmaya çalışıyor.
   room.current_player_id = host.id
   room.current_identity_id = guestName.id
-  guestName.used_in_round = 1
+
+  getClassicRetiredNames(room.id).clear()
+  setPlayerRoundNameId(room.id, host.id, guestName.id)
+  setPlayerRoundNameId(room.id, guest.id, hostName.id)
+  setPlayerLives(room.id, host.id, 3)
+  setPlayerLives(room.id, guest.id, 3)
+  setPlayerPassRights(room.id, host.id, 3)
+  setPlayerPassRights(room.id, guest.id, 3)
 
   const tables: FakeTables = { rooms: [room], players: [host, guest], names: [hostName, guestName] }
   return { room, host, guest, hostName, guestName, tables }
@@ -91,7 +105,7 @@ describe('getGameState', () => {
   })
 })
 
-describe('makeGuess', () => {
+describe('makeGuess (Klasik Mod)', () => {
   beforeEach(() => {
     fake = createSupabaseFake(playingRoom().tables)
   })
@@ -106,27 +120,70 @@ describe('makeGuess', () => {
     })
   })
 
-  it('yanlış tahminde puanı değiştirmez, 1 can düşer ve sırayı devreder', async () => {
-    const { room, host, guest, tables } = playingRoom()
+  it('yanlış tahminde puanı değiştirmez, deneme hakkını 1 azaltır (3 -> 2), aynı isim kalır ve sırayı devreder', async () => {
+    const { room, host, guest, guestName, tables } = playingRoom()
     fake = createSupabaseFake(tables)
 
     const result = await makeGuess(room.id, host.id, 'Cem Yılmaz')
 
     expect(result.correct).toBe(false)
+    expect(result.livesLeft).toBe(2)
+    expect(getPlayerLives(room.id, host.id)).toBe(2)
     expect(tables.rooms[0]!.current_player_id).toBe(guest.id)
     expect(tables.players.find((player) => player.id === host.id)!.score).toBe(0)
+
+    // Misafir sırasını savsın (passTurn)
+    await passTurn(room.id, guest.id)
+
+    // Sıra tekrar host'a geldiğinde aynı isimle devam etmeli
+    expect(tables.rooms[0]!.current_player_id).toBe(host.id)
+    expect(tables.rooms[0]!.current_identity_id).toBe(guestName.id)
   })
 
-  it('doğru tahminde 10 puan verir ve sırayı devreder', async () => {
+  it('3 yanlış tahmin yapıldığında yeni isim atanır, deneme hakkı 3\'e resetlenir ve sıra geçer', async () => {
     const { room, host, guest, tables } = playingRoom()
+    // Ekstra isim ekleyelim ki yeni isim seçilebilsin
+    const extraName = buildName(room.id, guest.id, { name_text: 'Halit Akçatepe' })
+    tables.names.push(extraName)
+    fake = createSupabaseFake(tables)
+
+    // 1. yanlış tahmin -> Hak 2
+    const r1 = await makeGuess(room.id, host.id, 'Yanlış 1')
+    expect(r1.livesLeft).toBe(2)
+    expect(getPlayerLives(room.id, host.id)).toBe(2)
+
+    // Misafir pas geçsin
+    await passTurn(room.id, guest.id)
+
+    // 2. yanlış tahmin -> Hak 1
+    const r2 = await makeGuess(room.id, host.id, 'Yanlış 2')
+    expect(r2.livesLeft).toBe(1)
+    expect(getPlayerLives(room.id, host.id)).toBe(1)
+
+    // Misafir pas geçsin
+    await passTurn(room.id, guest.id)
+
+    // 3. yanlış tahmin -> Hak bitti, yeni isim atandı, hak 3'e resetlendi
+    const r3 = await makeGuess(room.id, host.id, 'Yanlış 3')
+    expect(r3.correct).toBe(false)
+    expect(r3.livesLeft).toBe(3)
+    expect(getPlayerLives(room.id, host.id)).toBe(3)
+    expect(r3.message).toContain('3 deneme hakkınız bitti')
+  })
+
+  it('doğru tahminde 10 puan verir, bilinen ismi emekliye ayırır ve havuzdan yeni isim atar', async () => {
+    const { room, host, guest, tables } = playingRoom()
+    const extraName = buildName(room.id, guest.id, { name_text: 'Halit Akçatepe' })
+    tables.names.push(extraName)
     fake = createSupabaseFake(tables)
 
     const result = await makeGuess(room.id, host.id, 'Türkan Şoray')
 
     expect(result.correct).toBe(true)
+    expect(result.pointsEarned).toBe(10)
     expect(tables.players.find((player) => player.id === host.id)!.score).toBe(10)
     expect(tables.rooms[0]!.current_player_id).toBe(guest.id)
-    expect(tables.rooms[0]!.game_round).toBe(2)
+    expect(result.finished).toBe(false)
   })
 
   it('küçük yazım hatasını doğru sayar', async () => {
@@ -137,52 +194,86 @@ describe('makeGuess', () => {
     expect(result.correct).toBe(true)
   })
 
-  it('aynı turu iki kez tamamlayarak çift puan almayı engeller', async () => {
-    const { room, host, tables } = playingRoom()
-    fake = createSupabaseFake(tables)
-
-    // İki istek de "sıra bende" durumunu okuduktan sonra yazmaya çalışıyor.
-    const [first, second] = await Promise.allSettled([
-      makeGuess(room.id, host.id, 'Türkan Şoray'),
-      makeGuess(room.id, host.id, 'Türkan Şoray'),
-    ])
-
-    const fulfilled = [first, second].filter((outcome) => outcome.status === 'fulfilled')
-    expect(fulfilled).toHaveLength(1)
-    expect(tables.players.find((player) => player.id === host.id)!.score).toBe(10)
-  })
-
-  it('son isim de bulunduğunda oyunu bitirir', async () => {
+  it('tüm havuzdaki isimler tamamlandığında oyunu bitirir', async () => {
     const { room, host, guest, tables } = playingRoom()
-    // Host'un yazdığı ismi de kullanılmış işaretle: sırada isim kalmasın.
-    tables.names.find((name) => name.submitted_by === host.id)!.used_in_round = 1
     fake = createSupabaseFake(tables)
 
-    const result = await makeGuess(room.id, host.id, 'Türkan Şoray')
+    // Host bildi
+    const r1 = await makeGuess(room.id, host.id, 'Türkan Şoray')
+    expect(r1.correct).toBe(true)
+    expect(r1.finished).toBe(false)
 
-    expect(result.finished).toBe(true)
+    // Misafir de bildi -> Oyun bitti
+    const r2 = await makeGuess(room.id, guest.id, 'Kemal Sunal')
+    expect(r2.correct).toBe(true)
+    expect(r2.finished).toBe(true)
     expect(tables.rooms[0]!.status).toBe('finished')
     expect(tables.rooms[0]!.is_game_active).toBe(false)
-    expect(guest.id).toBeTruthy()
   })
 })
 
-describe('passTurn', () => {
-  it('yalnızca sırası olan oyuncu pas geçebilir', async () => {
+describe('passTurn (Klasik Mod)', () => {
+  it('yalnızca sırası olan oyuncu pas geçebilir/soru sorabilir', async () => {
     const { room, guest, tables } = playingRoom()
     fake = createSupabaseFake(tables)
 
     await expect(passTurn(room.id, guest.id)).rejects.toMatchObject({ code: 'not_your_turn' })
   })
 
-  it('pas geçen oyuncuya puan vermez', async () => {
-    const { room, host, guest, tables } = playingRoom()
+  it('soru sorma (passTurn) isim ve can hakkını değiştirmez, sadece sırayı devreder', async () => {
+    const { room, host, guest, guestName, tables } = playingRoom()
     fake = createSupabaseFake(tables)
 
-    await passTurn(room.id, host.id)
+    const res = await passTurn(room.id, host.id)
 
+    expect(res.message).toContain('Sorunuz iletildi')
+    expect(getPlayerLives(room.id, host.id)).toBe(3)
     expect(tables.players.find((player) => player.id === host.id)!.score).toBe(0)
     expect(tables.rooms[0]!.current_player_id).toBe(guest.id)
+
+    // Misafir de soru sorsun
+    await passTurn(room.id, guest.id)
+
+    // Sıra tekrar host'a geldiğinde host'un ismi ve canı aynı kalmalı
+    expect(tables.rooms[0]!.current_player_id).toBe(host.id)
+    expect(tables.rooms[0]!.current_identity_id).toBe(guestName.id)
+    expect(getPlayerLives(room.id, host.id)).toBe(3)
+  })
+})
+
+describe('giveUp (Klasik Mod — İsmi Pas Geç)', () => {
+  it('yalnızca sırası olan oyuncu ismi pas geçebilir', async () => {
+    const { room, guest, tables } = playingRoom()
+    fake = createSupabaseFake(tables)
+
+    await expect(giveUp(room.id, guest.id)).rejects.toMatchObject({ code: 'not_your_turn' })
+  })
+
+  it('ismi pas geçme can kaybı olmadan yeni isim atar, pas hakkını 1 azaltır, canı 3\'e resetler ve sırayı devreder', async () => {
+    const { room, host, guest, tables } = playingRoom()
+    const extraName = buildName(room.id, guest.id, { name_text: 'Halit Akçatepe' })
+    tables.names.push(extraName)
+    fake = createSupabaseFake(tables)
+
+    // Host 1 can kaybetmiş olsun (kalan can: 2)
+    setPlayerLives(room.id, host.id, 2)
+
+    const res = await giveUp(room.id, host.id)
+
+    expect(res.livesLeft).toBe(3)
+    expect(res.passRightsLeft).toBe(2)
+    expect(getPlayerPassRights(room.id, host.id)).toBe(2)
+    expect(getPlayerLives(room.id, host.id)).toBe(3)
+    expect(res.message).toContain('İsmi pas geçtiniz')
+    expect(tables.rooms[0]!.current_player_id).toBe(guest.id)
+  })
+
+  it('3 pas hakkı dolduğunda tekrar pas geçmeyi engeller', async () => {
+    const { room, host, tables } = playingRoom()
+    fake = createSupabaseFake(tables)
+
+    setPlayerPassRights(room.id, host.id, 0)
+    await expect(giveUp(room.id, host.id)).rejects.toMatchObject({ code: 'no_pass_rights' })
   })
 })
 

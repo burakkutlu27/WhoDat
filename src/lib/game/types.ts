@@ -81,7 +81,9 @@ export interface PublicPlayer {
   estimatedPoints?: number
   /** Israrcı Mod: kalan soru bütçesi (10'dan geri sayım) */
   questionBudgetRemaining?: number
-  /** Israrcı Mod: oyuncu bu ismi çözdü mü */
+  /** Klasik Mod: kalan isim pas geçme hakkı (3'ten geri sayım) */
+  passRightsRemaining?: number
+  /** Israrcı & Klasik Mod: oyuncu bu ismi çözdü mü */
   nameSolved?: boolean
   /** Israrcı Mod: bu moddaki kazanılan puan */
   persistentScore?: number
@@ -153,6 +155,8 @@ export interface GameState {
     estimatedPoints?: number
     /** Israrcı Mod: kalan soru bütçesi */
     questionBudgetRemaining?: number
+    /** Klasik Mod: kalan isim pas geçme hakkı */
+    passRightsRemaining?: number
     /** Israrcı Mod: isim çözüldü mü */
     nameSolved?: boolean
     /** Israrcı Mod: bu moddaki kazanılan puan */

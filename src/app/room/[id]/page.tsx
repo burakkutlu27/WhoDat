@@ -390,7 +390,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.25, ease: 'easeInOut' }}
-                  className="overflow-hidden space-y-3.5 pt-4 border-t border-paper-border"
+                  className="space-y-3.5 pt-4 border-t border-paper-border"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <span className="font-display text-base font-bold text-ink-faded">
@@ -571,6 +571,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                           label: c.label,
                           icon: <CategoryIcon category={c.id} className="h-4 w-4" />,
                         }))}
+                        align="right"
                         className="min-w-[180px]"
                       />
                     </div>
