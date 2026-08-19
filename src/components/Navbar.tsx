@@ -1,15 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { Trophy } from 'lucide-react'
+import { Lightbulb, Trophy } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 
 import { StatsModal } from './StatsModal'
+import SuggestNameModal from './SuggestNameModal'
 import ThemeSwitcher from './ThemeSwitcher'
 
 export default function Navbar() {
   const [showStats, setShowStats] = useState(false)
+  const [showSuggest, setShowSuggest] = useState(false)
 
   return (
     <>
@@ -38,12 +40,23 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <motion.button
+              whileHover={{ scale: 1.05, rotate: 1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowSuggest(true)}
+              className="group flex items-center gap-1.5 rounded-xl border border-dashed border-paper-border bg-paper-card px-2.5 sm:px-3 py-1.5 font-display text-sm sm:text-base font-bold text-ink-faded shadow-2xs transition-all hover:border-pencil-yellow hover:text-pencil-yellow"
+              title="Havuza Yeni İsim Öner"
+            >
+              <Lightbulb className="h-4 w-4 text-pencil-yellow" />
+              <span className="hidden sm:inline">İsim Öner</span>
+            </motion.button>
+
             <motion.button
               whileHover={{ scale: 1.05, rotate: -1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowStats(true)}
-              className="group flex items-center gap-1.5 rounded-xl border-2 border-dashed border-pencil-yellow bg-paper-card px-3 py-1.5 font-display text-base font-bold text-ink shadow-xs transition-all hover:bg-pencil-yellow hover:text-white"
+              className="group flex items-center gap-1.5 rounded-xl border-2 border-dashed border-pencil-yellow bg-paper-card px-2.5 sm:px-3 py-1.5 font-display text-sm sm:text-base font-bold text-ink shadow-xs transition-all hover:bg-pencil-yellow hover:text-white"
               title="İstatistiklerimi Gör"
             >
               <Trophy className="h-4 w-4 text-pencil-yellow transition-colors group-hover:text-white" />
@@ -56,6 +69,7 @@ export default function Navbar() {
       </nav>
 
       <StatsModal isOpen={showStats} onClose={() => setShowStats(false)} />
+      <SuggestNameModal isOpen={showSuggest} onClose={() => setShowSuggest(false)} />
     </>
   )
 }

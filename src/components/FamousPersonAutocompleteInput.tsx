@@ -1,12 +1,14 @@
 'use client'
 
-import { Loader2, Search } from 'lucide-react'
-import { motion, AnimatePresence } from 'motion/react'
+import { Lightbulb, Loader2, Plus, Search } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 
 import { apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import type { FamousPerson, FamousPersonCategory } from '@/lib/game/types'
+
+import SuggestNameModal from './SuggestNameModal'
 
 interface AutocompleteInputProps {
   id?: string
@@ -37,6 +39,7 @@ export default function FamousPersonAutocompleteInput({
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
+  const [isSuggestModalOpen, setIsSuggestModalOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   // Click outside listener to close dropdown
@@ -67,13 +70,13 @@ export default function FamousPersonAutocompleteInput({
         )
         if (isMounted) {
           setResults(res.data || [])
-          setIsOpen((res.data || []).length > 0)
+          setIsOpen(true)
           setHighlightedIndex(-1)
         }
       } catch {
         if (isMounted) {
           setResults([])
-          setIsOpen(false)
+          setIsOpen(true)
         }
       } finally {
         if (isMounted) {
@@ -112,6 +115,9 @@ export default function FamousPersonAutocompleteInput({
     }
   }
 
+  const trimmedVal = value.trim()
+  const showNoResults = isOpen && !isLoading && trimmedVal.length >= 2 && results.length === 0
+
   return (
     <div ref={containerRef} className="relative w-full">
       <div className="relative">
@@ -131,7 +137,7 @@ export default function FamousPersonAutocompleteInput({
             }
           }}
           onFocus={() => {
-            if (results.length > 0 && value.trim().length >= 2) {
+            if (value.trim().length >= 2) {
               setIsOpen(true)
             }
           }}
@@ -147,47 +153,105 @@ export default function FamousPersonAutocompleteInput({
         </div>
       </div>
 
-      {/* Dropdown Suggestions */}
+      {/* Dropdown Suggestions & Name Suggestion Action */}
       <AnimatePresence>
-        {isOpen && results.length > 0 && (
-          <motion.ul
+        {isOpen && trimmedVal.length >= 2 && (
+          <motion.div
             initial={{ opacity: 0, y: -5, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -5, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-xl border-2 border-paper-border bg-paper-card py-1.5 shadow-lg"
+            className="absolute left-0 right-0 z-50 mt-1 max-h-72 overflow-auto rounded-xl border-2 border-paper-border bg-paper-card py-1.5 shadow-xl"
             style={{ borderRadius: '10px 6px 12px 8px' }}
           >
-            {results.map((person, index) => {
-              const catInfo = CATEGORIES.find((c) => c.id === person.category)
-              const isSelected = index === highlightedIndex
-              return (
-                <li
-                  key={person.id || person.name}
-                  onClick={() => handleSelect(person)}
-                  onMouseEnter={() => setHighlightedIndex(index)}
-                  className={`flex cursor-pointer items-center justify-between px-3.5 py-2.5 transition-colors ${
-                    isSelected
-                      ? 'bg-paper-card-alt text-pencil-red font-bold'
-                      : 'text-ink hover:bg-paper-card-alt'
-                  }`}
-                >
-                  <span className="font-display text-xl font-bold">{person.name}</span>
-                  {catInfo && (
-                    <span
-                      className="inline-flex items-center gap-1 rounded-md border border-dashed border-paper-border bg-paper-card px-2.5 py-1 font-sans text-xs font-semibold text-ink-faded"
-                      style={{ borderRadius: '6px 4px 6px 4px' }}
-                    >
-                      <span>{catInfo.icon}</span>
-                      <span>{catInfo.label}</span>
+            {results.length > 0 ? (
+              <>
+                <ul className="divide-y divide-dashed divide-paper-border/60">
+                  {results.map((person, index) => {
+                    const catInfo = CATEGORIES.find((c) => c.id === person.category)
+                    const isSelected = index === highlightedIndex
+                    return (
+                      <li
+                        key={person.id || person.name}
+                        onClick={() => handleSelect(person)}
+                        onMouseEnter={() => setHighlightedIndex(index)}
+                        className={`flex cursor-pointer items-center justify-between px-3.5 py-2.5 transition-colors ${
+                          isSelected
+                            ? 'bg-paper-card-alt text-pencil-red font-bold'
+                            : 'text-ink hover:bg-paper-card-alt'
+                        }`}
+                      >
+                        <span className="font-display text-xl font-bold">{person.name}</span>
+                        {catInfo && (
+                          <span
+                            className="inline-flex items-center gap-1 rounded-md border border-dashed border-paper-border bg-paper-card px-2.5 py-1 font-sans text-xs font-semibold text-ink-faded"
+                            style={{ borderRadius: '6px 4px 6px 4px' }}
+                          >
+                            <span>{catInfo.icon}</span>
+                            <span>{catInfo.label}</span>
+                          </span>
+                        )}
+                      </li>
+                    )
+                  })}
+                </ul>
+
+                {/* Listenin Altında İsim Öner Seçeneği */}
+                <div className="border-t-2 border-dashed border-paper-border mt-1 p-2 bg-paper-card-alt/50">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsOpen(false)
+                      setIsSuggestModalOpen(true)
+                    }}
+                    className="flex w-full items-center justify-between gap-2 px-3 py-2 text-xs font-display font-bold text-ink-faded hover:text-pencil-yellow transition-colors rounded-lg hover:bg-paper-card"
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <Lightbulb className="h-4 w-4 text-pencil-yellow" />
+                      <span>Aradığın ismi bulamadın mı?</span>
                     </span>
-                  )}
-                </li>
-              )
-            })}
-          </motion.ul>
+                    <span className="underline-sketch text-pencil-yellow font-bold flex items-center gap-1">
+                      <Plus className="h-3.5 w-3.5" />
+                      <span>Havuza Yeni İsim Öner</span>
+                    </span>
+                  </button>
+                </div>
+              </>
+            ) : showNoResults ? (
+              /* Arama Sonucu Yokken Çıkan Özel Öneri Kartı */
+              <div className="p-4 text-center space-y-3">
+                <div className="text-sm font-sans text-ink-faded">
+                  Veritabanımızda <strong>&ldquo;{trimmedVal}&rdquo;</strong> ile eşleşen isim bulunamadı.
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsOpen(false)
+                    setIsSuggestModalOpen(true)
+                  }}
+                  className="btn-pencil-yellow inline-flex items-center gap-2 px-4 py-2 text-sm font-display font-bold shadow-sm"
+                >
+                  <Lightbulb className="h-4 w-4" />
+                  <span>&ldquo;{trimmedVal}&rdquo; İsmini Havuza Öner!</span>
+                </button>
+              </div>
+            ) : null}
+          </motion.div>
         )}
       </AnimatePresence>
+
+      {/* İsim Öneri Modalı */}
+      <SuggestNameModal
+        isOpen={isSuggestModalOpen}
+        onClose={() => setIsSuggestModalOpen(false)}
+        initialName={trimmedVal}
+        initialCategory={categoryFilter}
+        onSuccess={(suggestedName) => {
+          onChange(suggestedName)
+          setIsOpen(false)
+          setResults([])
+        }}
+      />
     </div>
   )
 }

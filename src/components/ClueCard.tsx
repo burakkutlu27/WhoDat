@@ -32,6 +32,7 @@ export function ClueCard({
   const clearTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true)
     if (typeof window !== 'undefined') {
       try {

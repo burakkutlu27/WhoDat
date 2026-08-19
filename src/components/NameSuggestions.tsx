@@ -1,12 +1,14 @@
 'use client'
 
-import { Lightbulb, Loader2, Plus, RefreshCw, Shuffle } from 'lucide-react'
+import { Lightbulb, Loader2, Plus, RefreshCw, Shuffle, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useEffect, useState } from 'react'
 
 import { apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import type { FamousPerson, FamousPersonCategory } from '@/lib/game/types'
+
+import SuggestNameModal from './SuggestNameModal'
 
 interface NameSuggestionsProps {
   onSelectName: (name: string) => void
@@ -48,6 +50,7 @@ export default function NameSuggestions({
   const [suggestions, setSuggestions] = useState<FamousPerson[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isFillingAll, setIsFillingAll] = useState(false)
+  const [isSuggestModalOpen, setIsSuggestModalOpen] = useState(false)
 
   useEffect(() => {
     let ignore = false
@@ -133,7 +136,18 @@ export default function NameSuggestions({
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            disabled={disabled}
+            onClick={() => setIsSuggestModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-sans font-bold text-pencil-yellow border border-dashed border-pencil-yellow/50 bg-pencil-yellow/10 rounded-lg hover:bg-pencil-yellow/20 transition-all"
+            title="Veritabanında olmayan yeni bir isim öner"
+          >
+            <Sparkles className="h-4 w-4" />
+            <span>İsim Öner</span>
+          </button>
+
           <button
             type="button"
             disabled={isLoading || disabled}
@@ -248,6 +262,16 @@ export default function NameSuggestions({
           </motion.div>
         )}
       </div>
+
+      {/* İsim Öneri Modalı */}
+      <SuggestNameModal
+        isOpen={isSuggestModalOpen}
+        onClose={() => setIsSuggestModalOpen(false)}
+        initialCategory={activeCategory}
+        onSuccess={(suggestedName) => {
+          onSelectName(suggestedName)
+        }}
+      />
     </div>
   )
 }

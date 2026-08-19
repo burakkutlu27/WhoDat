@@ -214,3 +214,20 @@ export interface DeviceStats {
   recentGames: RecentGameItem[]
 }
 
+export interface NameSuggestion {
+  id: string
+  name: string
+  category: FamousPersonCategory
+  notes?: string | null
+  suggestedBy?: string | null
+  status: 'pending' | 'approved' | 'rejected'
+  createdAt: string
+}
+
+export interface SuggestNamePayload {
+  name: string
+  category: Exclude<FamousPersonCategory, 'all'>
+  notes?: string
+  suggestedBy?: string
+}
+

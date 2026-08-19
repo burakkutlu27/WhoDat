@@ -2,12 +2,11 @@
  * Kesin İsim Eşleşmeli ve Sıfır False-Positive Fame Tier Dağıtım Motoru
  */
 
-import { readFileSync, writeFileSync, existsSync, unlinkSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { resolve, join } from 'node:path'
 
 const PROJECT_ROOT = resolve('.')
 const DATA_FILE = join(PROJECT_ROOT, 'src/lib/game/famousPeopleData.ts')
-const PROGRESS_FILE = join(PROJECT_ROOT, 'fame-tier-progress.json')
 
 function normalizeName(str) {
   return str

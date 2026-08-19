@@ -6,11 +6,13 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { StatsModal } from '@/components/StatsModal'
+import SuggestNameModal from '@/components/SuggestNameModal'
 
 export default function Home() {
   const router = useRouter()
   const [quickCode, setQuickCode] = useState('')
   const [showStats, setShowStats] = useState(false)
+  const [showSuggest, setShowSuggest] = useState(false)
 
   const handleJoinWithCode = (e: React.FormEvent) => {
     e.preventDefault()
@@ -147,10 +149,19 @@ export default function Home() {
 
       {/* Örnek Gizli Oyuncu İsimleri — Post-it'ler */}
       <div className="mt-12">
-        <h3 className="mb-4 font-display text-2xl font-bold text-ink-faded flex items-center gap-2">
-          <Pin className="h-5 w-5 text-pencil-red" />
-          <span>Örnek Gizli Oyuncu İsimleri</span>
-        </h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-display text-2xl font-bold text-ink-faded flex items-center gap-2">
+            <Pin className="h-5 w-5 text-pencil-red" />
+            <span>Örnek Gizli Oyuncu İsimleri</span>
+          </h3>
+          <button
+            type="button"
+            onClick={() => setShowSuggest(true)}
+            className="flex items-center gap-1.5 text-sm font-display font-bold text-pencil-yellow hover:underline-sketch transition-all"
+          >
+            <span>+ İsim Öner</span>
+          </button>
+        </div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
 
           <motion.div
@@ -194,6 +205,7 @@ export default function Home() {
     </main>
 
     <StatsModal isOpen={showStats} onClose={() => setShowStats(false)} />
+    <SuggestNameModal isOpen={showSuggest} onClose={() => setShowSuggest(false)} />
   </>
 )
 

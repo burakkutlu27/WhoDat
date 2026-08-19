@@ -32643,5 +32643,6689 @@ export const FAMOUS_PEOPLE_SEED: FamousPersonSeed[] = [
     "category": "unluler",
     "subcategory": "oyuncu",
     "fameTier": 1
+  },
+  {
+    "name": "Enes Batur",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ruhi Çenet",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Orkun Işıtmak",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Berkcan Güven (BEGE)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Kafalar (Bilal Hancı, Atakan Özyurt, Fatih Yasin)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Bilal Hancı",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Atakan Özyurt",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Fatih Yasin",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Meryem Can",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Fırat Sobutay (Oha Diyorum)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Melih Abuaf (Mediakraft)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ersin Yekin",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Doğan Kabak",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ekin Kollama",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Mendebur Lemur",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Mesut Çevik",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Hakkı Alkan (ShiftDelete)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Halil Söyletmez",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ayhan Tarakcı",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Tuna Tavus",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ağır Mimar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Dora Özsoy (Stratera)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Hugola",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Kaanflix",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Porçay",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Tolunay Ören",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "MuratAbiGF (Murat Engin Ekin)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "NDNG Baturay Anar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "SeseGel (Hasan Mustan)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Uras Benlioğlu",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Oğuzhan Uğur (BaBaLa TV)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Cem Korkmaz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Burak Oyunda (Burak Şahin)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Easter GamersTv (Mete Özbey)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Pintipanda (Tuna Akşen)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Gereksiz Oda (Emrecan Önal)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Mami Emen",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Emre Durmuş (Yol Günlükleri)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Fatih Can Aytan",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Gülbence (Gülben Ergen)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Tugay Gök",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Efe Aydal",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Diamond Tema",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Deniz Bodur",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Gözler Anlatır (Sarp Levendoğlu)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Evrim Ağacı (Çağrı Mert Bakırcı)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Bebar Bilim",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Hikayesi Ne (Murat Şen)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "FluTV (İlker Canikligil)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Yusuf Kayaalp",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "DFT Tarih",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Neo Toprak",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "MrBeast (Jimmy Donaldson)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "PewDiePie (Felix Kjellberg)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Markiplier (Mark Fischbach)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "DanTDM (Daniel Middleton)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Jacksepticeye (Sean McLoughlin)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Smosh (Ian Hecox & Anthony Padilla)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Logan Paul",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Jake Paul",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "KSI (Olajide Olatunji)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "IShowSpeed (Darren Watkins Jr.)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Casey Neistat",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Marques Brownlee (MKBHD)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Veritasium (Derek Muller)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Vsauce (Michael Stevens)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "David Dobrik",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Dude Perfect",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Liza Koshy",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Emma Chamberlain",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "James Charles",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Jeffree Star",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "NigaHiga (Ryan Higa)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ray William Johnson",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "LazarBeam (Lannan Eacott)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "SSundee (Ian Stapleton)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Ninja (Tyler Blevins)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Technoblade",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Dream (Clay)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "TommyInnit (Thomas Simons)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Daily Dose Of Internet",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Colin and Samir",
+    "category": "unluler",
+    "fameTier": 4,
+    "subcategory": "youtuber"
+  },
+  {
+    "name": "Danla Bilic",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Duygu Özaslan",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Şeyma Subaşı",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Rachel Araz Kiresepi",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Sude Alkış",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Cansu Akın",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Ala Tokel",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Meriç Küçük (Maritsa)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Damla Altun",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Polen Emre",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kerimcan Durmaz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Selin Ciğerci",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Dilan Polat",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Engin Polat",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Eylül Öztürk",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Reynmen (Yusuf Aktaş)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "CZN Burak (Burak Özdemir)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Nusret Gökçe (Salt Bae)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Gökhan Çınar (Katarsis)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Chiara Ferragni",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kylie Jenner",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kim Kardashian",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kendall Jenner",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Khloe Kardashian",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Kourtney Kardashian",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Dan Bilzerian",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Huda Kattan (Huda Beauty)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Gianluca Vacchi",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Sommer Ray",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Lele Pons",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Negin Mirsalehi",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Camila Coelho",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "instagram_fenomeni"
+  },
+  {
+    "name": "Khaby Lame",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Charli D'Amelio",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Bella Poarch",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Addison Rae",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Zach King",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Dixie D'Amelio",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Spencer X (Spencer Polanco)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Michael Le (JustMaiko)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Jason Derulo (TikTok)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Loren Gray",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Cemre Solmaz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Cellat36 (Özgür Deniz Cellat)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Yaren Alaca",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Buse Korkmaz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Berke Juan",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Kürşat Juan",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Merve Yalçın",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Ayda Sadık (Aydas)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Ece Ronay",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Semiraminta (Yeliz Korkmaz)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Doğanay Oğuz",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Barış Dadada (Barış Resmi)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Çılgın Dondurmacı (Mehmet Dinç)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Ares Özdemir",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Pelin Yar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "tiktoker"
+  },
+  {
+    "name": "Elraenn (Tuğkan Gönültaş)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "wtcN (Ferit Karakaya)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Kendine Müzisyen (Kemal Can Parlak)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Jahrein (Ahmet Sonuç)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Pqueen (Pelin Baynazoğlu)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Unlost (Cantuğ Özsoy)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Mithrain (Cem Karakoç)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Videoyun (Batu Bozkan)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Zade (Şükrü Şentürk)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Toqtir (Sedat Sakarya)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Grimnax (Alp Saraç)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Miafitz (Gözde Demiral)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Annadeniz (Anna Deniz Şenocak)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Levo (Levent Balım)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Rip (Fatih Soytekin)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Hype (Çağrı Ergün)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "RRaenee (Doğukan Adal)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Adal (Doğukan Adal)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Eray Özkenar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Limon Tayfa",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Thaldrin (Berke Demir)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "HolyThoth (Cenk Erdur)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Closer (Can Çelik)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "cNed (Mehmet Yağız İpek)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "XANTARES (İsmailcan Dörtkardeş)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "woxic (Özgür Eker)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Kai Cenat",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "xQc (Félix Lengyel)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Shroud (Michael Grzesiek)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Ibai (Ibai Llanos)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "AuronPlay (Raúl Álvarez Genes)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Rubius (Rubén Doblas)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Pokimane (Imane Anys)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Amouranth (Kaitlyn Siragusa)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Tfue (Turner Tenney)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "TimTheTatman (Timothy Betar)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Dr Disrespect (Guy Beahm)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Asmongold (Zack)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "HasanAbi (Hasan Piker)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Disguised Toast (Jeremy Wang)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Valkyrae (Rachell Hofstetter)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Ludwig Ahgren",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Summit1g (Jaryd Lazar)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Sodapoppin (Chance Morris)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Mizkif (Matthew Rinaudo)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "twitch_yayincisi"
+  },
+  {
+    "name": "Fatih Erbakan",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Mustafa Sarıgül",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Süleyman Soylu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Hakan Fidan",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Mehmet Şimşek",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Fahrettin Koca",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Ziya Selçuk",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Berat Albayrak",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Erdal İnönü",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Kadir Topbaş",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Murat Kurum",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Turgut Altınok",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Tunç Soyer",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Cemil Tugay",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Olaf Scholz",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Rishi Sunak",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Keir Starmer",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Narendra Modi",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Binyamin Netanyahu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Kral III. Charles",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Javier Milei",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Viktor Orban",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Giorgia Meloni",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "İlham Aliyev",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Kasım Cömert Tokayev",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Şavkat Mirziyoyev",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Lula da Silva",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Jair Bolsonaro",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Hilary Clinton",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Bill Clinton",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "George W. Bush",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "siyasetci"
+  },
+  {
+    "name": "Emin Alper",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Onur Saylak",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Serdar Akar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Yılmaz Atadeniz",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Lütfi Akad",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Kartal Tibet",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Osman Sınav",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Hilal Saral",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Uluç Bayraktar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Alfonso Cuaron",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Alejandro G. Inarritu",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Ingmar Bergman",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Andrey Tarkovski",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Jean-Luc Godard",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "François Truffaut",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Pedro Almodovar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Lars von Trier",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Coen Kardeşler (Joel ve Ethan Coen)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "yonetmen"
+  },
+  {
+    "name": "Fikret Mualla",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Avni Arbaş",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Nuri İyem",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Fahir Aksoy",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Salvador Dali",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Rembrandt van Rijn",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Paul Cezanne",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Edgar Degas",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Pierre-Auguste Renoir",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Hieronymus Bosch",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Albrecht Dürer",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Diego Velazquez",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Jackson Pollock",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Rene Magritte",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Jean-Michel Basquiat",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Banksy",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "ressam"
+  },
+  {
+    "name": "Feza Gürsey",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Behram Kurşunoğlu",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Daron Acemoğlu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "akademisyen_yazar"
+  },
+  {
+    "name": "Uğur Şahin",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Özlem Türeci",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Gazi Yaşargil",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Mehmet Öz",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Ali Erdemir",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Canan Dağdeviren",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "J. Robert Oppenheimer",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Jane Goodall",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Ada Lovelace",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Rosalind Franklin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Uluğ Bey",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Biruni (El-Biruni)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Cezeri (El-Cezeri)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "İbn-i Heysem",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "bilim_insani"
+  },
+  {
+    "name": "Rene Descartes",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "Niccolo Machiavelli",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "Lao Tzu",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "Epikür (Epikuros)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "G. W. F. Hegel",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "filozof"
+  },
+  {
+    "name": "Jüstinyen (I. Justinianus)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Korkunç İvan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Hulagu Han",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Harun Reşid",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Tutankamon (Firavun)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "II. Ramses (Büyük Ramses)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Aslan Yürekli Richard",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Kral XIV. Louis (Güneş Kral)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Otto von Bismarck",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Harry S. Truman",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Thomas Jefferson",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Theodore Roosevelt",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Mao Zedong",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Nikita Kruşçev",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Charles de Gaulle",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "dunya_lideri"
+  },
+  {
+    "name": "Sebastian Szymanski",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Cengiz Ünder",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Orkun Kökçü",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Mert Günok",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Rodri (Rodrigo Hernandez)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Thibaut Courtois",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Gerard Pique",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Paolo Maldini",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Wayne Rooney",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Luis Suarez",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Gareth Bale",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Eden Hazard",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Samuel Eto'o",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Radamel Falcao",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Nicolas Anelka",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Roberto Carlos",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Guti Hernandez",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Jurgen Klopp",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Okan Buruk",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "İsmail Kartal",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ersun Yanal",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Rıza Çalımbay",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Şota Arveladze",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Tuncay Şanlı",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Halil Altıntop",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Nuri Şahin",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Sabri Sarıoğlu",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ozan Tufan",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Mehmet Topal",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Semih Şentürk",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Bülent Korkmaz",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Suat Kaya",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ümit Özat",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ümit Davala",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Hasan Şaş",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Alpay Özalan",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ogün Temizkanoğlu",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Tanju Çolak",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "futbolcu"
+  },
+  {
+    "name": "Ali Şen",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Aziz Yıldırım",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Dursun Özbek",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Ertuğrul Doğan",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Ahmet Nur Çebi",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Fikret Orman",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Ünal Aysal",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Adnan Polat",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Faruk Süren",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Ömer Onan",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Sinan Güler",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Scottie Wilbekin",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Zeljko Obradovic",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Bogdan Bogdanovic",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Vasilije Micic",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Luka Doncic",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Nikola Jokic",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "James Harden",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Kyrie Irving",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Russell Westbrook",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Anthony Davis",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Jayson Tatum",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Jimmy Butler",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Joel Embiid",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Damian Lillard",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Kawhi Leonard",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Chris Paul",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Marc Gasol",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Kevin Garnett",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Tracy McGrady",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Vince Carter",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "basketbolcu"
+  },
+  {
+    "name": "Andrey Rublev",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Holger Rune",
+    "category": "sporcular",
+    "fameTier": 3,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Casper Ruud",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Stan Wawrinka",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Dominic Thiem",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Nick Kyrgios",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Iga Swiatek",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Elena Rybakina",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Ons Jabeur",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Simona Halep",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Ashleigh Barty",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Caroline Wozniacki",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Ana Ivanovic",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Yankı Erel",
+    "category": "sporcular",
+    "fameTier": 3,
+    "subcategory": "tenisci"
+  },
+  {
+    "name": "Stipe Miocic",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "mma_ufc_sporcusu"
+  },
+  {
+    "name": "Gökhan Saki",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Badr Hari",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Rico Verhoeven",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Deontay Wilder",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Canelo Alvarez",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Hatice Akbaş",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Esra Yıldız Kahraman",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Mahmut Demir",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Tijana Boskovic",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Paola Egonu",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Gabriela Guimaraes (Gabi)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Yasmani Copello",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "atlet"
+  },
+  {
+    "name": "Necati Er",
+    "category": "sporcular",
+    "fameTier": 3,
+    "subcategory": "atlet"
+  },
+  {
+    "name": "Leon Marchand",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "yuzucu"
+  },
+  {
+    "name": "Carlos Sainz Jr.",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "George Russell",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Sergio Perez (Checo)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Kimi Raikkonen",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Valentino Rossi",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Marc Marquez",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Cem Bölükbaşı",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "diger_spor"
+  },
+  {
+    "name": "Larry Ellison",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Nazım Salur (Getir)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Sidar Şahin (Peak Games)",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Selçuk Bayraktar",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Haluk Bayraktar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "is_insani"
+  },
+  {
+    "name": "Yıldırım Mayruk",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Cemil İpekçi",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Rıfat Özbek",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Dilek Hanif",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Cengiz Abazoğlu",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Nur Yerlitaş",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Barbaros Şansal",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Raşit Bağzıbağlı",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Giorgio Armani",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Coco Chanel",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Gianni Versace",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Donatella Versace",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Karl Lagerfeld",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Yves Saint Laurent",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Christian Dior",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Ralph Lauren",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Calvin Klein",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Guccio Gucci",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Miuccia Prada",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Tommy Hilfiger",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Alexander McQueen",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Tom Ford",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Vera Wang",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "moda_tasarimci"
+  },
+  {
+    "name": "Mehmet Yalçınkaya (Şef)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Somer Sivrioğlu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Danilo Zanna",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Arda Türkmen",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Refika Birgül",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Vedat Milor",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Hazer Amani",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Maksut Aşkar",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Fatih Tutak",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Ömür Akkor",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Yunus Emre Akkor",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Sahrap Soysal",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Oktay Aymelek (Oktay Usta)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Gordon Ramsay",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Jamie Oliver",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Wolfgang Puck",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Alain Ducasse",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Guy Fieri",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Massimo Bottura",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Heston Blumenthal",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Marco Pierre White",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Anthony Bourdain",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Buddy Valastro (Cake Boss)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "sef_asci"
+  },
+  {
+    "name": "Nilay Örnek (Nasıl Olunur)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "podcast_yapimcisi"
+  },
+  {
+    "name": "Candaş Tolga Işık",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "İsmail Saymaz",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Murat Yetkin",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Ruşen Çakır (Medyascope)",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Lex Fridman",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "podcast_yapimcisi"
+  },
+  {
+    "name": "Andrew Huberman",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "podcast_yapimcisi"
+  },
+  {
+    "name": "Tim Ferriss",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "podcast_yapimcisi"
+  },
+  {
+    "name": "Defne Samyeli",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Seda Öğretir",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Selçuk Tepeli",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Hıncal Uluç",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Halit Kıvanç",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Orhan Boran",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Erkan Yolaç",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Tarık Tarcan",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Zahir Kardeşler (Erman Toroğlu & Şansal Büyüka)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Erman Toroğlu",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Şansal Büyüka",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Sinan Engin",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Rasim Ozan Kütahyalı",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Stephen Colbert",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "James Corden",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "gazeteci_sunucu"
+  },
+  {
+    "name": "Kıvanç Kılınç",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Ahmet Kürşat Öçalan",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Baturay Özdemir",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Deniz Göktaş",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Efe Tunçer",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Özgün Bayraktar",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Alpay Erdem",
+    "category": "unluler",
+    "fameTier": 3,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Yavuz Seçkin",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "İsmail Baki Tuncer",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Sefa Doğanay",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Jerry Seinfeld",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "Louis C.K.",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "George Carlin",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "komedyen"
+  },
+  {
+    "name": "I. Bayezid (Yıldırım Bayezid)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "I. Mehmed (Çelebi Mehmed)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "III. Mehmed",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "I. Ahmed (Sultanahmet)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "II. Osman (Genç Osman)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "I. Mahmud",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "V. Murad",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "VI. Mehmed (Vahdettin)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "Abdülmecid Efendi (Son Halife)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_padisahlari"
+  },
+  {
+    "name": "Çandarlı Halil Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Pargalı İbrahim Paşa (Makbul/Maktul)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Rüstem Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Sokollu Mehmed Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Kuyucu Murad Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Köprülü Mehmed Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Köprülü Fazıl Ahmed Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Merzifonlu Kara Mustafa Paşa (Viyana Kuşatması)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Nevşehirli Damat İbrahim Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Cezayirli Gazi Hasan Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Alemdar Mustafa Paşa",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Mustafa Reşid Paşa (Tanzimat)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Ali Paşa (Mehmed Emin Ali Paşa)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Fuat Paşa (Keçecizade Fuat Paşa)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Mithat Paşa (Kanun-i Esasi)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Ahmet Cevdet Paşa (Mecelle)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Oruç Reis (Barbaros Kardeşler)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Turgut Reis",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Kılıç Ali Paşa (Uluç Ali Reis)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "osmanli_devlet_adamlari"
+  },
+  {
+    "name": "Refet Bele",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Şükrü Saracoğlu",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Hasan Saka",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Hasan Ali Yücel (Köy Enstitüleri)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "İsmail Hakkı Tonguç",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Afet İnan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Vecihi Hürkuş",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Nuri Demirağ",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Nuri Killigil",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "cumhuriyet_donemi_liderleri"
+  },
+  {
+    "name": "Auguste Rodin (Düşünen Adam)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Donatello",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Gian Lorenzo Bernini",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Antonio Canova",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Alberto Giacometti",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Constantin Brancusi",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Henry Moore",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Ali Hadi Bara",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "İlhan Koman",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Kuzgun Acar",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "heykeltiras"
+  },
+  {
+    "name": "Frederic Chopin",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Pyotr Ilyich Tchaikovsky",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Johannes Brahms",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Franz Schubert",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Giuseppe Verdi",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Richard Wagner",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Claude Debussy",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Sergei Rachmaninoff",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Franz Liszt",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Johann Strauss II (Mavi Tuna)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Giacomo Puccini",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Igor Stravinsky",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Ahmet Adnan Saygun (Türk Beşleri)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Ulvi Cemal Erkin",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Cemal Reşit Rey (Lüküs Hayat)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Hasan Ferid Alnar",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Necil Kazım Akses",
+    "category": "tarihi_kisiler",
+    "fameTier": 3,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Dede Efendi (Hammamizade)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Itri (Buhurizade Mustafa Itri)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Tamburi Cemil Bey",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Hacı Arif Bey",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Sadettin Kaynak",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Münir Nurettin Selçuk",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "besteci"
+  },
+  {
+    "name": "Marie Antoinette",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Çar II. Nikolay (Son Rus Çarı)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Anastasia Romanov (Prenses Anastasia)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Kral VI. George (Zoraki Kral)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Prens Philip (Edinburgh Dükü)",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Prens William",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Kate Middleton (Galler Prensesi)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Prens Harry",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Meghan Markle",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Hürrem Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Kösem Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Safiye Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Nurbanu Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Mihrimah Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Turhan Hatice Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Hatice Turhan Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Bezmiâlem Valide Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Pertevniyal Valide Sultan",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kraliyet_ailesi"
+  },
+  {
+    "name": "Valentina Tereşkova (Uzaya Çıkan İlk Kadın)",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "kasif"
+  },
+  {
+    "name": "Alper Gezeravcı (İlk Türk Astronot)",
+    "category": "unluler",
+    "fameTier": 1,
+    "subcategory": "kasif"
+  },
+  {
+    "name": "Tuva Cihangir Atasever",
+    "category": "unluler",
+    "fameTier": 2,
+    "subcategory": "kasif"
+  },
+  {
+    "name": "Bahar Toksoy Guidetti",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Karch Kiraly",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Giba (Gilberto Godoy)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Wilfredo Leon",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Earvin N'Gapeth",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Ekaterina Gamova",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Jordan Larson",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Kim Yeon-koung",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Zhu Ting",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Arina Fedorovtseva",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Maja Ognjenovic",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "voleybolcu"
+  },
+  {
+    "name": "Gazanfer Bilge",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Celal Atik",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Kel Aliço",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Kurtdereli Mehmet",
+    "category": "tarihi_kisiler",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Adalı Halil",
+    "category": "tarihi_kisiler",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Aleksandr Karelin (Rus Ayısı)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Lasha Talakhadze",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Hossein Rezazadeh",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Pyrros Dimas",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Ali Gürbüz (Kırkpınar Başpehlivanı)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "İsmail Balaban (Survivor / Başpehlivan)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Orhan Okulu",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Recep Kara",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Yusuf Can Zeybek",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "guresci_halterci"
+  },
+  {
+    "name": "Cemal Kamacı",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Joe Frazier",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Sugar Ray Leonard",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Sugar Ray Robinson",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Rocky Marciano",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Jack Dempsey",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Wladimir Klitschko",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Vitali Klitschko",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Gennady Golovkin (GGG)",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Vasiliy Lomachenko",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Roy Jones Jr.",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Jake LaMotta (Kızgın Boğa)",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Sonny Liston",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "boksor"
+  },
+  {
+    "name": "Simone Biles",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Nadia Comaneci (İlk 10 Tam Puan)",
+    "category": "sporcular",
+    "fameTier": 1,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Kohei Uchimura",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Vitaly Scherbo",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Ahmet Önder",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Göksu Üçtaş Şanlı",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "jimnastikci"
+  },
+  {
+    "name": "Jack Nicklaus",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "golf"
+  },
+  {
+    "name": "Arnold Palmer",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "golf"
+  },
+  {
+    "name": "Rory McIlroy",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "golf"
+  },
+  {
+    "name": "Phil Mickelson",
+    "category": "sporcular",
+    "fameTier": 2,
+    "subcategory": "golf"
+  },
+  {
+    "name": "Akın (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Mert (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Basri Amca (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Sevim (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Hale (Rafadan Tayfa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Canan (Kral Şakir)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Remzi (Kral Şakir)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Kadriye (Kral Şakir)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Mirket (Kral Şakir)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Şila (Pepee)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Bebee (Pepee)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Niloya",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Tospik (Niloya)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Murat (Niloya)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Kara Vezir (Keloğlan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Balkız (Keloğlan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Uzun (Keloğlan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Huysuz (Keloğlan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Müge (Canım Kardeşim)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Mine (Canım Kardeşim)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Mıncır (Canım Kardeşim)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Köstebekgiller (Boyo, Süslü, Kösteban)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Emiray",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "İbi (İbi ve Tosi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Kare Takımı (Kuti, Aypa, Rupi, Enda)",
+    "category": "cizgi_karakterler",
+    "fameTier": 3,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Ege ile Gaga",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Elif ve Arkadaşları",
+    "category": "cizgi_karakterler",
+    "fameTier": 3,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Maysa ve Bulut",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Kaptan Pengu ve Arkadaşları",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "turk_cizgi_karakterleri"
+  },
+  {
+    "name": "Jessie (Oyuncak Hikayesi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Çekici Mater (Arabalar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Dory (Kayıp Balık Dory)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Timon ve Pumbaa (Hakuna Matata)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Elsa (Karlar Ülkesi / Frozen)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Anna (Frozen)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Olaf (Kardan Adam Olaf)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Sully (James P. Sullivan / Sevimli Canavarlar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Mike Wazowski (Sevimli Canavarlar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Wall-E",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "EVE (Wall-E)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Remy (Aşçı Fare / Ratatouille)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Linguini (Ratatouille)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Carl Fredricksen (Yukarı Bak / Up)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Russell (Yukarı Bak / Up)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Bay İnanılmaz (Bob Parr)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Lastik Kız (Helen Parr / Elastigirl)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Mulan",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Mushu (Mulan Ejderhası)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Pocahontas",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Belle (Güzel ve Çirkin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Canavar (Güzel ve Çirkin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Ariel (Küçük Deniz Kızı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Moana",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Maui (Moana)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Stitch (Lilo ve Stitch)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Lilo Pelekai",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Malefiz (Maleficent)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Cruella de Vil (101 Dalmaçyalı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Jafar (Aladdin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Ursula (Küçük Deniz Kızı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Megara (Meg / Herkül)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Bambi",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Dumbo",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Kuzco (Şaşkın İmparator)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Kronk (Şaşkın İmparator)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Yzma",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Joy (Neşe / Ters Yüz / Inside Out)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Sadness (Üzüntü / Inside Out)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Bing Bong (Inside Out)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Miguel Rivera (Coco)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Hector Rivera (Coco)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Mama Coco",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "disney_pixar_karakterleri"
+  },
+  {
+    "name": "Son Goku (Dragon Ball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Piccolo (Dragon Ball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Itachi Uchiha",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Madara Uchiha",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Jiraiya (Naruto)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Tsunade",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Orochimaru",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Sanji (One Piece)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Nami (One Piece)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Trafalgar Law",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Portgas D. Ace",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Mikasa Ackerman",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Armin Arlert",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Erwin Smith",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "L (L Lawliet / Death Note)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Ryuk (Ölüm Meleği / Shinigami)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Misa Amane",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Saitama (Kel Pelerinli / One Punch Man)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Genos (One Punch Man)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Tanjiro Kamado (Demon Slayer)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Nezuko Kamado",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Zenitsu Agatsuma",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Inosuke Hashibira",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Kyojuro Rengoku",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Satoru Gojo (Jujutsu Kaisen)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Yuji Itadori",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Megumi Fushiguro",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Ryomen Sukuna",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Edward Elric (Fullmetal Alchemist)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Alphonse Elric",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Roy Mustang",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Tuxedo Mask (Mamoru Chiba)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Misty (Pokemon)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Brock (Pokemon)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Roket Takımı (Jessie, James, Meowth)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Charizard (Pokemon)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Mewtwo (Pokemon)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Yugi Muto (Yu-Gi-Oh!)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Seto Kaiba",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Guts (Berserk)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Griffith (Berserk)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Totoro (Komşum Totoro / Studio Ghibli)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Chihiro (Ruhların Kaçışı / Spirited Away)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Haku (Spirited Away)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Kaonashi (Yüzsüz / No-Face)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Howl (Yürüyen Şato)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Prenses Mononoke (San)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "anime_karakterleri"
+  },
+  {
+    "name": "Road Runner (Bip Bip)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Wile E. Coyote (Çakal)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Marvin the Martian (Marslı Marvin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Speedy Gonzales",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Shaggy Rogers (Scooby-Doo)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Fred Jones (Scooby-Doo)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Daphne Blake (Scooby-Doo)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Vilma Çakmaktaş (Wilma Flintstone)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Beti Moloztaş (Betty Rubble)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dino (Çakmaktaşlar Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "George Jetson (Jetgiller)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Jane Jetson",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Astro (Jetgiller Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Rosie (Robot Hizmetçi Rosie)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Averell Dalton",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "William ve Jack Dalton",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Düldül (Jolly Jumper)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Rintintin (Rantanplan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gözlüklü Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Güçlü Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Uykucu Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Sakar Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Tembel Şirin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Azman (Gargamel'in Kedisi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Pembe Panter (The Pink Panther)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Müfettiş Clouseau",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Casper (Sevimli Hayalet)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Odie (Garfield Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Jon Arbuckle (Garfield Sahibi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Snoopy (Peanuts)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Charlie Brown",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Woodstock (Snoopy Kuşu)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Tigger (Kaplan Tigger)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Piglet (Domuzcuk)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Eeyore (Eşek Eeyore)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Pluto (Mickey'nin Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Vakıf Dede (Scrooge McDuck / Varyemez Amca)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Cin Fikri, Can Fikri, Canan (Huey, Dewey, Louie / Can, Cin, Cem)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Woody Woodpecker (Ağaçkakan Woody)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Müfettiş Gadget (Inspector Gadget)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Penny (Müfettiş Gadget)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Brain (Gadget Köpeği)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Doktor Pençe (Dr. Claw)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "He-Man (Gölgelerin Gücü Adına)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "İskeletor (Skeletor / He-Man)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Korkak Kaplan (Battle Cat / Cringer)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "She-Ra (Prenses Gücü)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Voltran (Beş Aslan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ninja Kaplumbağalar (Leonardo, Raphael, Donatello, Michelangelo)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Usta Splinter (Ninja Kaplumbağalar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Shredder (Ninja Kaplumbağalar)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "April O'Neil",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Krang (Beyin)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Bebop ve Rocksteady",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Chen (Cedric'in Aşkı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Christian (Cedric'in Rakibi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Büyükbaba (Cedric)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Calimero (Haksızlık Bu Ama)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Peter (Heidi'nin Arkadaşı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Clara (Heidi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Alp Dede (Heidi'nin Büyükbabası)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Tsubasa Ozora (Kaptan Tsubasa)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Genzo Wakabayashi (Kaleci Wakabayashi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Taro Misaki (Altın İkili)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ken Wakashimazu (Karateci Kaleci)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Beyblade Takımı (Tyson Granger / Takao Kinomiya, Kai Hiwatari, Ray Kon, Max Tate)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Tyson Granger (Beyblade)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Kai Hiwatari (Dranzer / Beyblade)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ray Kon (Driger / Beyblade)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Max Tate (Draciel / Beyblade)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gwen Tennyson (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Büyükbaba Max (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dört Kol (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ateş Topu (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Şimşek Hız (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Elmas Kafa (Ben 10)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Vilgax (Ben 10 Düşmanı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Aku (Samurai Jack Düşmanı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dexter (Dexter'ın Laboratuvarı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dee Dee (Dexter)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Mandark (Dexter'ın Rakibi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Mojo Jojo (Powerpuff Girls Düşmanı)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Profesör Utonium",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Courage the Cowardly Dog (Cesur Korkak Köpek)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Muriel Bagge (Cesur Sahibi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Eustace Bagge (Aptal Köpek)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ed, Edd ve Eddy",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gumball Watterson (Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Darwin Watterson (Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Anais Watterson (Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Nicole Watterson (Anne / Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Richard Watterson (Baba / Gumball)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Finn the Human (Adventure Time)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Jake the Dog (Adventure Time)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Buz Kralı (Ice King / Simon Petrikov)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Prenses Ciklet (Princess Bubblegum)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Marceline (Vampir Kraliçesi)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Benson (Sakız Makinesi Müdür)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Skips (Ölümsüz Goril)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Pops (Lolipop Adam)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Kas Adam (Muscle Man)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Çak beşlik Hayalet (Hi-Five Ghost)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Phineas Flynn (Phineas ve Ferb)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ferb Fletcher",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Ajan P (Ornitorenk Perry)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Dr. Heinz Doofenshmirtz",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Candace Flynn",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gravity Falls (Dipper Pines, Mabel Pines, Grunkle Stan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Mabel Pines (Esrarengiz Kasaba)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Harika Amca Stan (Grunkle Stan)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Bill Cipher (Üçgen İblis)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Soos Ramirez",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Wendy Corduroy",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Squidward Dokunaç (Squidward Tentacles)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Sandy Cheeks (Sincap Sandy)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Gary (SüngerBob Salyangozu)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "klasik_cizgi_film_karakterleri"
+  },
+  {
+    "name": "Marge Simpson",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Bart Simpson",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Lisa Simpson",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Maggie Simpson",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Mr. Burns (Montgomery Burns / Simpsons)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Ned Flanders (Simpsons)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Moe Szyslak",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Peter Griffin (Family Guy)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Lois Griffin",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Stewie Griffin (Family Guy)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Brian Griffin (Konuşan Köpek)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Meg Griffin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Chris Griffin",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Glenn Quagmire (Giggity)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Rick Sanchez (Rick and Morty)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Morty Smith (Rick and Morty)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Summer Smith",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Beth Smith",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Jerry Smith",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Mr. Meeseeks (Look at me!)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Birdperson (Rick and Morty)",
+    "category": "cizgi_karakterler",
+    "fameTier": 3,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "BoJack Horseman",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Princess Carolyn (BoJack Horseman)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Diane Nguyen (BoJack)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Mr. Peanutbutter",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Todd Chavez",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Stan Marsh (South Park)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Kyle Broflovski",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Kenny McCormick (They killed Kenny!)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Randy Marsh (Lorde / Tegridy Farms)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Butters Stotch (Professor Chaos)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Philip J. Fry (Fry / Futurama)",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Turanga Leela",
+    "category": "cizgi_karakterler",
+    "fameTier": 1,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Profesör Farnsworth (Good news, everyone!)",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Dr. Zoidberg",
+    "category": "cizgi_karakterler",
+    "fameTier": 2,
+    "subcategory": "modern_cizgi_dizi_karakterleri"
+  },
+  {
+    "name": "Ilgaz Kaya (Savcı Ilgaz / Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ceylin Erguvan (Avukat Ceylin / Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Yekta Tilmen (Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Eren Duman (Komiser Eren / Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Pars Seçkin (Başsavcı Pars / Yargı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Pembe Ünal (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Doğa Korkmaz (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Fatih Ünal (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Alev Arslan (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Kıvılcım Arslan (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ömer Ünal (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Nursema Ünal (Kızılcık Şerbeti)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Seyran Şanlı (Yalı Çapkını)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ferit Korhan (Yalı Çapkını)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Halis Ağa (Halis Korhan / Yalı Çapkını)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Kazım Şanlı (Kazım Ağa / Yalı Çapkını)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "İfakat Korhan",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Süleyman (Halit Ergenç / Muhteşem Yüzyıl)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Pargalı İbrahim (Okan Yalabık / Muhteşem Yüzyıl)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Mahidevran Sultan (Nur Fettahoğlu)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Malkoçoğlu Bali Bey (Burak Özçivit)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Kemal Soydere (Kara Sevda)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Nihan Sezin (Kara Sevda)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Emir Kozcuoğlu (Kaan Urgancıoğlu / Kara Sevda)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Züleyha Altun (Bir Zamanlar Çukurova)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Demir Yaman (Bir Zamanlar Çukurova)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Yılmaz Akkaya (Bir Zamanlar Çukurova)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Fekeli (Ali Rahmet Fekeli / Kerem Alışık)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Hünkar Yaman (Vahide Perçin)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Meryem (Kuvvetli Bir Alkış)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Peri (Bir Başkadır)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ruhi (Bir Başkadır)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Gülseren Budayıcıoğlu Karakterleri",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Gülben Derenoğlu (Masumlar Apartmanı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Safiye Derenoğlu (Ezgi Mola / Masumlar Apartmanı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Han Derenoğlu (Birkan Sokullu)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "İnci Özdemir (Farah Zeynep Abdullah)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ali Rıza Bey (Yaprak Dökümü)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Hayriye Hanım (Ağzımızın Tadı Kaçmasın)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ferhunde Güven (Deniz Çakır / Yaprak Dökümü)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Oğuz Güven (Tolga Karel / Yaprak Dökümü)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Leyla Tekin (Gökçe Bahadır)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Necla Tekin (Fahriye Evcen)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şevket Tekin (Caner Kurtaran)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Fikret Tekin (Bennu Yıldırımlar)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Sedef (Seda Demir)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Sıla Gencer (Cansu Dere / Sıla)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Boran Ağa (Mehmet Akif Alakurt / Sıla)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ali Kaptan (Erkan Petekkaya / Öyle Bir Geçer Zaman ki)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Cemile Akarsu (Ayça Bingöl)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Caroline (Wilma Elles / Öyle Bir Geçer Zaman ki)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Mete Akarsu (Aras Bulut İynemli)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Osman Akarsu (Küçük Osman / Emir Berke Zincidi)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Berrin Akarsu",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Aylin Akarsu (Farah Zeynep Abdullah)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Soner Talaşoğlu (Mete Horozoğlu)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ahmet Taşer (Tolga Güleç)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Prens Süleyman (Muhteşem Yüzyıl)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şehzade Mustafa (Mehmet Günsür)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şehzade Bayezid (Aras Bulut İynemli)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şehzade Selim (Engin Öztürk)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şehzade Cihangir (Tolga Sarıtaş)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Sümbül Ağa (Selim Bayraktar)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Gül Ağa (Engin Günaydın)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Meryem Uzerli (Hürrem)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Ertuğrul Bey (Engin Altan Düzyatan / Diriliş Ertuğrul)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Halime Hatun (Esra Bilgiç)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Turgut Alp (Cengiz Coşkun)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Bamsı Beyrek (Nurettin Sönmez)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Doğan Alp",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Osman Bey (Burak Özçivit / Kuruluş Osman)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Bala Hatun (Özge Törer)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Malhun Hatun (Yıldız Çağrı Atiksoy)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Şeyh Edebali (Kuruluş Osman)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_dizi_karakterleri"
+  },
+  {
+    "name": "Deli Emin (Vizontele / Yılmaz Erdoğan)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Başkan Nazmi (Vizontele / Altan Erkekli)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Fikri (Vizontele / Cem Yılmaz)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Sıti Ana (Vizontele / Demet Akbağ)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Baran (Eşkıya / Şener Şen)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Cumali (Eşkıya / Uğur Yücel)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Keje (Eşkıya / Şermin Hürmeriç)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Mahmut (Eşkıya / Berke Hürmeriç)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Muhsin Bey (Şener Şen)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Ali Nazik (Muhsin Bey / Uğur Yücel)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Ferman (Av Mevsimi / Şener Şen)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "İdris (Av Mevsimi / Cem Yılmaz / Deli İdris)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Hasan (Av Mevsimi / Okan Yalabık)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Malkoçoğlu (Cüneyt Arkın)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Kara Murat (Fatih'in Fedaisi / Cüneyt Arkın)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Kurt (Tarkan'ın Kurdu)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Ahtapot (Tarkan Viking Kanı Dev Ahtapot)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Hain Kostok (Tarkan Düşmanı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Gülümser (Selvi Boylum Al Yazmalım / Türkan Şoray / Asya)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "İlyas (Selvi Boylum Al Yazmalım / Kadir İnanır)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Cemşit (Selvi Boylum Al Yazmalım / Ahmet Mekin / Sevgi Emektir)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Tatar Ramazan (Kadir İnanır / Ben Bu Oyunu Bozarım)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Komiser Şekip (Pardon / Ferhan Şensoy)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "İbrahim (Pardon / Ferhan Şensoy)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Muzo (Pardon / Rasim Öztekin)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Kudret (Kardeş Payı / Ahmet Kural)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Tülay (Düğün Dernek)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Tüpçü Fikret (Düğün Dernek / Ahmet Kural)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Çetin (Düğün Dernek / Murat Cemcir)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Muallim Saffet (Düğün Dernek / Barış Yıldız)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Gürkan (Çalgı Çengi)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Salih (Çalgı Çengi)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "turk_film_karakterleri"
+  },
+  {
+    "name": "Şahin Göz (Hawkeye / Clint Barton)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Kara Panter (Black Panther / T'Challa / Chadwick Boseman)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Kaptan Marvel (Carol Danvers)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Wanda Maximoff (Kızıl Cadı / Scarlet Witch)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Vision (Marvel)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Profesör X (Charles Xavier)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Magneto (Erik Lehnsherr)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Star-Lord (Peter Quill / Galaksinin Koruyucuları)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Gamora",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Drax the Destroyer",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Rocket Raccoon (Roket)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Groot (I am Groot)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Bane (The Dark Knight Rises / Tom Hardy)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Penguen (The Penguin / Oswald Cobblepot)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Bulmacacı (The Riddler / Edward Nygma)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "İki Yüz (Two-Face / Harvey Dent)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Catwoman (Kedi Kadın / Selina Kyle)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Alfred Pennyworth (Batman'in Uşağı)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Komiser James Gordon (Jim Gordon)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Pennywise (O / It / Palyaço)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Freddy Krueger (Elm Sokağında Kabus)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Jason Voorhees (13. Cuma)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Michael Myers (Cadılar Bayramı / Halloween)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Chucky (Katil Bebek Chucky)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Testere (Jigsaw / John Kramer / Saw)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Ghostface (Çığlık / Scream)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Norman Bates (Sapık / Psycho)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Jack Torrance (Cinnet / The Shining / Jack Nicholson)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Edward Scissorhands (Makas Eller / Johnny Depp)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Willy Wonka (Charlie'nin Çikolata Fabrikası)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Sweeney Todd (Johnny Depp)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Mad Max (Max Rockatansky)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Furiosa (Mad Max)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Katniss Everdeen (Açlık Oyunları / Jennifer Lawrence)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Peeta Mellark (Açlık Oyunları)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Gale Hawthorne",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Haymitch Abernathy (Woody Harrelson)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Bella Swan (Alacakaranlık / Twilight)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Edward Cullen (Robert Pattinson / Alacakaranlık)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Jacob Black (Kurt Adam Jacob)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Dom Toretto (Hızlı ve Öfkeli / Vin Diesel / Aile)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Letty Ortiz (Michelle Rodriguez)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Luke Hobbs (Dwayne Johnson / The Rock)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Deckard Shaw (Jason Statham)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Ethan Hunt (Görevimiz Tehlike / Tom Cruise)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Jason Bourne (Matt Damon)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Oppenheimer (Cillian Murphy / Film)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Barbie (Margot Robbie / Film)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Ken (Ryan Gosling / Barbie)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_film_karakterleri"
+  },
+  {
+    "name": "Rachel Green (Jennifer Aniston / Friends)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Monica Geller (Courteney Cox / Friends)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Phoebe Buffay (Lisa Kudrow / Smelly Cat)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Joey Tribbiani (Matt LeBlanc / How you doin'?)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Chandler Bing (Matthew Perry / Friends)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Ross Geller (David Schwimmer / We were on a break!)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Tony Soprano (The Sopranos / James Gandolfini)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Carmela Soprano (Edie Falco)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Christopher Moltisanti (Michael Imperioli)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Paulie Walnuts",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Silvio Dante",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Ted Mosby (How I Met Your Mother / Josh Radnor)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Barney Stinson (Neil Patrick Harris / Legen-wait for it-dary!)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Robin Scherbatsky (Cobie Smulders / Robin Sparkles)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Marshall Eriksen (Jason Segel)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Lily Aldrin (Alyson Hannigan)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Tracy McConnell (The Mother)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Michael Scott (The Office / Steve Carell / That's what she said)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Dwight Schrute (The Office / Rainn Wilson)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jim Halpert (The Office / John Krasinski)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Pam Beesly (The Office / Jenna Fischer)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Ryan Howard (The Office)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Stanley Hudson (Pretzel Day)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Kevin Malone (The Office)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Andy Bernard (Nard Dog)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Creed Bratton (The Office)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Sheldon Cooper (The Big Bang Theory / Jim Parsons / Bazinga!)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Leonard Hofstadter (Johnny Galecki)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Howard Wolowitz (Simon Helberg)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Rajesh Koothrappali (Kunal Nayyar)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Amy Farrah Fowler (Mayim Bialik)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Bernadette Rostenkowski",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "John Watson (Martin Freeman / Sherlock Dizi)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jim Moriarty (Andrew Scott / Did you miss me?)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jim Hopper (Stranger Things / David Harbour)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Joyce Byers (Winona Ryder / Stranger Things)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Mike Wheeler (Stranger Things)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Dustin Henderson (Stranger Things / Gaten Matarazzo)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Lucas Sinclair",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Will Byers",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Steve Harrington (Joe Keery / King Steve)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Nancy Wheeler",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jonathan Byers",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Robin Buckley (Maya Hawke)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Max Mayfield (Sadie Sink)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Eddie Munson (Joseph Quinn / Master of Puppets)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Vecna (Henry Creel / 001)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Denver (Jaime Lorente / O meşhur gülüş)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Helsinki (Darko Peric)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Moskova (Paco Tous)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Oslo (Roberto Garcia)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 3,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Müfettiş Raquel Murillo (Lizbon / Itziar Ituno)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Alicia Sierra (Najwa Nimri)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Arturito (Arturo Roman / Enrique Arce)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Palermo (Rodrigo de la Serna)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Bogota (Hovik Keuchkerian)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Marsilya (Luka Peros)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Starlight (Annie January / The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Hughie Campbell (Jack Quaid / The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "A-Train (The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "The Deep (Chace Crawford / The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Black Noir",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Queen Maeve (Dominique McElligott)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Soldier Boy (Jensen Ackles / The Boys)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Geralt of Rivia (The Witcher / Henry Cavill)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Jaskier (Dandelion / Toss a Coin to Your Witcher)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Daemon Targaryen (House of the Dragon / Matt Smith)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Rhaenyra Targaryen (Emma D'Arcy / Milly Alcock)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Alicent Hightower (Olivia Cooke / Emily Carey)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Viserys Targaryen (Kral Viserys / Paddy Considine)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Aemond Targaryen (Tek Gözlü Aemond / Ewan Mitchell)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 1,
+    "subcategory": "dunya_dizi_karakterleri"
+  },
+  {
+    "name": "Otto Hightower (Rhys Ifans)",
+    "category": "dizi_film_karakterleri",
+    "fameTier": 2,
+    "subcategory": "dunya_dizi_karakterleri"
   }
 ];

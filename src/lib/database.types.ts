@@ -41,6 +41,36 @@ export type Database = {
         }
         Relationships: []
       }
+      name_suggestions: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          category: string
+          notes: string | null
+          suggested_by: string | null
+          status: 'pending' | 'approved' | 'rejected'
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          category: string
+          notes?: string | null
+          suggested_by?: string | null
+          status?: 'pending' | 'approved' | 'rejected'
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          category?: string
+          notes?: string | null
+          suggested_by?: string | null
+          status?: 'pending' | 'approved' | 'rejected'
+        }
+        Relationships: []
+      }
       names: {
         Row: {
           assigned_to: string | null
@@ -331,6 +361,7 @@ export type RoomRow = Database['public']['Tables']['rooms']['Row']
 export type PlayerRow = Database['public']['Tables']['players']['Row']
 export type NameRow = Database['public']['Tables']['names']['Row']
 export type FamousPersonRow = Database['public']['Tables']['famous_people']['Row']
+export type NameSuggestionRow = Database['public']['Tables']['name_suggestions']['Row']
 export type PlayerProfileRow = Database['public']['Tables']['player_profiles']['Row']
 export type GameResultRow = Database['public']['Tables']['game_results']['Row']
 

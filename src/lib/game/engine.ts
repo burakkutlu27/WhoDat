@@ -8,7 +8,7 @@ import { supabaseAdmin } from '../supabaseAdmin'
 import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
 import { QUESTION_BANK_SEED } from './questionBankData'
-import type { AutoAssignResult, ClueCardItem, CommunicationMode, DeviceStats, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, PublicPlayer, RecentGameItem, SharedQuestionItem, TextQuestionVote } from './types'
+import type { AutoAssignResult, ClueCardItem, CommunicationMode, DeviceStats, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -1278,6 +1278,51 @@ export async function getFamousPeople(options: {
   }
 
   return results.slice(0, limit)
+}
+
+export async function suggestFamousPerson(payload: SuggestNamePayload): Promise<NameSuggestion> {
+  const admin = supabaseAdmin()
+  const cleanName = payload.name.trim()
+  const cleanNotes = payload.notes?.trim() || null
+  const category = payload.category
+
+  try {
+    const { data, error } = await admin
+      .from('name_suggestions')
+      .insert({
+        name: cleanName,
+        category,
+        notes: cleanNotes,
+        suggested_by: payload.suggestedBy?.trim() || null,
+        status: 'pending',
+      })
+      .select('id, name, category, notes, suggested_by, status, created_at')
+      .single()
+
+    if (!error && data) {
+      return {
+        id: data.id,
+        name: data.name,
+        category: data.category as FamousPersonCategory,
+        notes: data.notes,
+        suggestedBy: data.suggested_by,
+        status: data.status as 'pending' | 'approved' | 'rejected',
+        createdAt: data.created_at,
+      }
+    }
+  } catch {
+    // DB tablosu veya bağlantı hatası durumunda dahi kullanıcı akışını kesintiye uğratmaz
+  }
+
+  return {
+    id: randomUUID(),
+    name: cleanName,
+    category,
+    notes: cleanNotes,
+    suggestedBy: payload.suggestedBy?.trim() || null,
+    status: 'pending',
+    createdAt: new Date().toISOString(),
+  }
 }
 
 export async function autoAssignNames(

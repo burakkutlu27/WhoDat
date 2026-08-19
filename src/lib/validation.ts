@@ -142,6 +142,29 @@ export const autoAssignSchema = z.object({
   category: famousPersonCategorySchema.optional(),
 })
 
+export const suggestNameSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, 'İsim en az 2 karakter olmalıdır.')
+    .max(60, 'İsim en fazla 60 karakter olabilir.'),
+  category: z.enum([
+    'unluler',
+    'tarihi_kisiler',
+    'cizgi_karakterler',
+    'sporcular',
+    'dizi_film_karakterleri',
+  ], {
+    message: 'Lütfen geçerli bir kategori seçin.',
+  }),
+  notes: z
+    .string()
+    .trim()
+    .max(200, 'Not en fazla 200 karakter olabilir.')
+    .optional(),
+  suggestedBy: z.string().trim().max(50).optional(),
+})
+
 
 export function parseBody<Schema extends z.ZodType>(schema: Schema, data: unknown): z.infer<Schema> {
   const result = schema.safeParse(data)

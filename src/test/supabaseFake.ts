@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 
-import type { FamousPersonRow, GameResultRow, NameRow, PlayerProfileRow, PlayerRow, RoomRow } from '@/lib/database.types'
+import type { FamousPersonRow, GameResultRow, NameRow, NameSuggestionRow, PlayerProfileRow, PlayerRow, RoomRow } from '@/lib/database.types'
 
 /**
  * Bellek içi Supabase test ikizi.
@@ -15,6 +15,7 @@ export interface FakeTables {
   players: PlayerRow[]
   names: NameRow[]
   famous_people?: FamousPersonRow[]
+  name_suggestions?: NameSuggestionRow[]
   player_profiles?: PlayerProfileRow[]
   game_results?: GameResultRow[]
 }
@@ -302,6 +303,19 @@ export function buildFamousPerson(overrides: Partial<FamousPersonRow> = {}): Fam
     id: randomUUID(),
     name: 'Barış Manço',
     category: 'unluler',
+    created_at: nextTimestamp(),
+    ...overrides,
+  }
+}
+
+export function buildNameSuggestion(overrides: Partial<NameSuggestionRow> = {}): NameSuggestionRow {
+  return {
+    id: randomUUID(),
+    name: 'Barış Özcan',
+    category: 'unluler',
+    notes: 'YouTube içerik üreticisi',
+    suggested_by: null,
+    status: 'pending',
     created_at: nextTimestamp(),
     ...overrides,
   }
