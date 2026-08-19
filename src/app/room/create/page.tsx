@@ -494,7 +494,7 @@ export default function CreateRoomPage() {
                   <span>Zorluk Seviyesi</span>
                 </span>
                 <span className="text-sm font-sans font-semibold text-ink-faded">
-                  {difficulty === 'kolay' ? 'Kolay (Tier 1-2)' : difficulty === 'orta' ? 'Orta (Tier 1-3)' : 'Zor (Tüm Havuz)'}
+                  {difficulty === 'kolay' ? 'Kolay' : difficulty === 'orta' ? 'Orta' : 'Zor'}
                 </span>
               </label>
 
