@@ -239,7 +239,7 @@ export function assignNewClassicName(
 
   if (pool.length === 0) {
     // Havuzda bu oyuncu için isim kalmadı
-    setPlayerRoundNameId(roomId, player.id, '')
+    setPlayerRoundNameId(roomId, player.id, null)
     setPlayerClassicSolved(roomId, player.id, true)
     return null
   }
@@ -577,16 +577,21 @@ function clearRoomSpeedData(roomId: string) {
 }
 
 export function getPlayerRoundNameId(roomId: string, playerId: string): string | null {
-  return playerRoundNameStore.get(roomId)?.get(playerId) ?? null
+  const val = playerRoundNameStore.get(roomId)?.get(playerId)
+  return val && val.trim() ? val.trim() : null
 }
 
-export function setPlayerRoundNameId(roomId: string, playerId: string, nameId: string) {
+export function setPlayerRoundNameId(roomId: string, playerId: string, nameId: string | null | undefined) {
   let map = playerRoundNameStore.get(roomId)
   if (!map) {
     map = new Map()
     playerRoundNameStore.set(roomId, map)
   }
-  map.set(playerId, nameId)
+  if (!nameId || !nameId.trim()) {
+    map.delete(playerId)
+  } else {
+    map.set(playerId, nameId.trim())
+  }
 }
 
 /**
@@ -2319,10 +2324,10 @@ async function advanceTurn(
 
     // nextPlayer'ın bu turdaki ATANMIŞ SABİT İSMİNİ al (tur içinde ASLA değişmez!)
     let nextNameId = getPlayerRoundNameId(room.id, nextPlayer.id)
-    if (!nextNameId) {
-      const candidate = names.find((n) => n.submitted_by !== nextPlayer.id) || names[0]!
-      nextNameId = candidate.id
-      setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+    if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
+      const candidate = names.find((n) => n.submitted_by !== nextPlayer.id) || names[0]
+      nextNameId = candidate?.id ?? null
+      if (nextNameId) setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
     }
 
     const { data, error } = await admin
@@ -2369,10 +2374,10 @@ async function advanceTurn(
 
     // nextPlayer'ın atanmış sabit ismini al
     let nextNameId = getPlayerRoundNameId(room.id, nextPlayer.id)
-    if (!nextNameId) {
-      const candidate = names.find((n) => n.submitted_by !== nextPlayer.id) || names[0]!
-      nextNameId = candidate.id
-      setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+    if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
+      const candidate = names.find((n) => n.submitted_by !== nextPlayer.id) || names[0]
+      nextNameId = candidate?.id ?? null
+      if (nextNameId) setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
     }
 
     const { data, error } = await admin
@@ -2417,7 +2422,7 @@ async function advanceTurn(
   }
 
   let nextNameId = getPlayerRoundNameId(room.id, nextPlayer.id)
-  if (!nextNameId) {
+  if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
     const dbAssigned = names.find((n) => n.assigned_to === nextPlayer.id && n.used_in_round === null)
     if (dbAssigned) {
       nextNameId = dbAssigned.id
@@ -2427,7 +2432,7 @@ async function advanceTurn(
     }
   }
 
-  if (!nextNameId) {
+  if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
     setPlayerClassicSolved(room.id, nextPlayer.id, true)
     return advanceTurn(room, players, names)
   }
