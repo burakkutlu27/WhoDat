@@ -219,10 +219,10 @@ export function assignNewClassicName(
       }
     }
   }
-
-  const currentAssignedId = getPlayerRoundNameId(roomId, player.id)
-  if (currentAssignedId) {
-    retiredSet.add(currentAssignedId)
+  for (const n of names) {
+    if (n.assigned_to && n.assigned_to !== player.id && n.used_in_round === null) {
+      currentlyAssignedToOthers.add(n.id)
+    }
   }
 
   // Kullanılabilir isimler: emekli olmayan, DB'de used_in_round olmayan ve başka bir oyuncunun elinde olmayan isimler
@@ -248,6 +248,11 @@ export function assignNewClassicName(
   setPlayerRoundNameId(roomId, player.id, picked.id)
   setPlayerLives(roomId, player.id, TOTAL_LIVES_PER_GAME)
   setPlayerClassicSolved(roomId, player.id, false)
+  try {
+    supabaseAdmin().from('names').update({ assigned_to: player.id }).eq('id', picked.id).then(() => {})
+  } catch {
+    // ignore
+  }
   return picked.id
 }
 
@@ -1954,7 +1959,14 @@ export async function startGame(roomId: string, playerId: string) {
     setPlayerLives(roomId, p.id, TOTAL_LIVES_PER_GAME)
     setPlayerPassRights(roomId, p.id, CLASSIC_MODE_MAX_PASSES)
   }
-  assignNamesForRound(roomId, players, names)
+  const assignments = assignNamesForRound(roomId, players, names)
+  for (const [pId, nId] of assignments.entries()) {
+    try {
+      await admin.from('names').update({ assigned_to: pId, used_in_round: null }).eq('id', nId)
+    } catch {
+      // ignore
+    }
+  }
   const firstNameId = getPlayerRoundNameId(roomId, firstPlayer.id)
 
   const { error } = await admin
@@ -2378,9 +2390,7 @@ async function advanceTurn(
 
   // Klasik Mod
   const currentRound = room.game_round ?? 1
-  const activePlayers = players.filter(
-    (p) => !isPlayerClassicSolved(room.id, p.id) && Boolean(getPlayerRoundNameId(room.id, p.id)),
-  )
+  const activePlayers = players.filter((p) => !isPlayerClassicSolved(room.id, p.id))
 
   if (activePlayers.length === 0) {
     if (categoryData.categoryMode === 'multi_phase' && categoryData.currentPhase < categoryData.totalPhases) {
@@ -2408,10 +2418,17 @@ async function advanceTurn(
 
   let nextNameId = getPlayerRoundNameId(room.id, nextPlayer.id)
   if (!nextNameId) {
-    nextNameId = assignNewClassicName(room.id, nextPlayer, names)
+    const dbAssigned = names.find((n) => n.assigned_to === nextPlayer.id && n.used_in_round === null)
+    if (dbAssigned) {
+      nextNameId = dbAssigned.id
+      setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+    } else {
+      nextNameId = assignNewClassicName(room.id, nextPlayer, names)
+    }
   }
 
   if (!nextNameId) {
+    setPlayerClassicSolved(room.id, nextPlayer.id, true)
     return advanceTurn(room, players, names)
   }
 

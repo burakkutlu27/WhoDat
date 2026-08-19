@@ -21,6 +21,7 @@ const {
   askTextQuestion,
   assignNamesForRound,
   autoAssignNames,
+  clearRoomMemoryState,
   createRoom,
   getClassicRetiredNames,
   getGameState,
@@ -238,6 +239,77 @@ describe('passTurn (Klasik Mod)', () => {
     expect(tables.rooms[0]!.current_player_id).toBe(host.id)
     expect(tables.rooms[0]!.current_identity_id).toBe(guestName.id)
     expect(getPlayerLives(room.id, host.id)).toBe(3)
+  })
+
+  it('3 oyunculu oyunda soru soruldukça ve sunucu hafızası sıfırlansa bile oyun erken bitmez', async () => {
+    const room = buildRoom({ status: 'playing', is_game_active: true, game_round: 1, game_mode: 'classic' })
+    const p1 = buildPlayer(room.id, { nickname: 'P1', is_host: true })
+    const p2 = buildPlayer(room.id, { nickname: 'P2' })
+    const p3 = buildPlayer(room.id, { nickname: 'P3' })
+
+    const n1 = buildName(room.id, p1.id, { name_text: 'İsim 1', assigned_to: p2.id })
+    const n2 = buildName(room.id, p2.id, { name_text: 'İsim 2', assigned_to: p3.id })
+    const n3 = buildName(room.id, p3.id, { name_text: 'İsim 3', assigned_to: p1.id })
+
+    room.current_player_id = p1.id
+    room.current_identity_id = n3.id
+
+    const tables: FakeTables = { rooms: [room], players: [p1, p2, p3], names: [n1, n2, n3] }
+    fake = createSupabaseFake(tables)
+
+    // P1 soru sordu -> Sıra P2'ye geçti
+    await passTurn(room.id, p1.id)
+    expect(tables.rooms[0]!.status).toBe('playing')
+    expect(tables.rooms[0]!.current_player_id).toBe(p2.id)
+
+    // Serverless cold start simülasyonu: in-memory store temizlendi
+    clearRoomMemoryState(room.id)
+
+    // P2 soru sordu -> Sıra P3'e geçti
+    await passTurn(room.id, p2.id)
+    expect(tables.rooms[0]!.status).toBe('playing')
+    expect(tables.rooms[0]!.current_player_id).toBe(p3.id)
+
+    // Serverless cold start simülasyonu: in-memory store temizlendi
+    clearRoomMemoryState(room.id)
+
+    // P3 soru sordu -> Sıra P1'e geri döndü
+    await passTurn(room.id, p3.id)
+    expect(tables.rooms[0]!.current_player_id).toBe(p1.id)
+    expect(tables.rooms[0]!.status).toBe('playing')
+  })
+
+  it('maksimum 6 kişilik oyunda tüm oyuncular arka arkaya soru sorduğunda ve sunucu hafızası sıfırlansa bile döngü sorunsuz çalışır', async () => {
+    const room = buildRoom({ status: 'playing', is_game_active: true, game_round: 1, game_mode: 'classic' })
+    const players = Array.from({ length: 6 }, (_, i) =>
+      buildPlayer(room.id, { nickname: `P${i + 1}`, is_host: i === 0 }),
+    )
+    const names = players.map((p, i) =>
+      buildName(room.id, p.id, {
+        name_text: `İsim ${i + 1}`,
+        assigned_to: players[(i + 1) % 6]!.id,
+      }),
+    )
+
+    room.current_player_id = players[0]!.id
+    room.current_identity_id = names[5]!.id
+
+    const tables: FakeTables = { rooms: [room], players, names }
+    fake = createSupabaseFake(tables)
+
+    // 6 oyuncu sırayla 2 tam tur (12 kez) soru sorsun ve her adımda memory temizlensin
+    for (let round = 0; round < 12; round++) {
+      const currentIdx = round % 6
+      const nextIdx = (round + 1) % 6
+      const currentPlayer = players[currentIdx]!
+      const nextPlayer = players[nextIdx]!
+
+      await passTurn(room.id, currentPlayer.id)
+      expect(tables.rooms[0]!.status).toBe('playing')
+      expect(tables.rooms[0]!.current_player_id).toBe(nextPlayer.id)
+
+      clearRoomMemoryState(room.id)
+    }
   })
 })
 
