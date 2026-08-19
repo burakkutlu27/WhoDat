@@ -13,6 +13,15 @@ module.exports = {
         display: ['var(--font-caveat)', 'Caveat', 'cursive'],
         mono: ['var(--font-mono)', 'monospace'],
       },
+      borderRadius: {
+        'sketch-xs': '4px 2px 5px 3px',
+        'sketch-sm': '6px 3px 8px 4px',
+        'sketch': '8px 4px 10px 6px',
+        'sketch-alt': '4px 8px 6px 10px',
+        'sketch-md': '10px 5px 12px 6px',
+        'sketch-lg': '14px 6px 16px 8px',
+        'sketch-xl': '18px 8px 20px 10px',
+      },
       colors: {
         paper: {
           bg: 'var(--paper-bg)',

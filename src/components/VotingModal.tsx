@@ -34,7 +34,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
       initial={{ opacity: 0, scale: 0.95, y: -10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-2xl shadow-xl space-y-4 text-center relative overflow-hidden"
+      className="paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-sketch-xl shadow-xl space-y-4 text-center relative overflow-hidden"
     >
       {/* Top Countdown Bar */}
       <div className="absolute top-0 left-0 right-0 h-2 bg-paper-border">
@@ -68,7 +68,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
           <h3 className="font-display text-3xl sm:text-4xl font-bold text-ink">
             &ldquo;{vote.questionText}&rdquo;
           </h3>
-          <div className="p-3.5 rounded-xl bg-paper-card border border-dashed border-paper-border inline-flex items-center gap-2 text-base font-sans text-ink-faded">
+          <div className="p-3.5 rounded-sketch-md bg-paper-card border border-dashed border-paper-border inline-flex items-center gap-2 text-base font-sans text-ink-faded">
             <Loader2 className="h-5 w-5 animate-spin text-pencil-orange" />
             <span>
               Arkadaşlarınızın oyları toplanıyor... ({vote.yesCount + vote.noCount} / {vote.totalEligible} oy verildi)
@@ -88,7 +88,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
           </div>
 
           {vote.hasVoted ? (
-            <div className="p-4 rounded-xl bg-pencil-green/10 border border-pencil-green/30 text-pencil-green font-display text-lg font-bold flex items-center justify-center gap-2">
+            <div className="p-4 rounded-sketch-md bg-pencil-green/10 border border-pencil-green/30 text-pencil-green font-display text-lg font-bold flex items-center justify-center gap-2">
               <Check className="h-6 w-6" />
               <span>
                 Oyunuz {vote.myAnswer ? 'EVET' : 'HAYIR'} olarak iletildi! Diğer oyuncular bekleniyor...

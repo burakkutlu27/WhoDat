@@ -1,17 +1,18 @@
 'use client'
 
-import { Brain, Check, CheckCircle2, Clock, Copy, Crown, Dices, Layers, Loader2, LogOut, MessageSquare, Mic, Pencil, Play, Send, Shuffle, Target, Users, Zap } from 'lucide-react'
+import { Brain, Check, CheckCircle2, Clock, Copy, Crown, Dices, Gauge, Layers, Loader2, LogOut, MessageSquare, Mic, Pencil, Play, Send, Shuffle, Target, Users, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
+import { CategoryIcon } from '@/components/CategoryIcon'
 import { CustomSelect } from '@/components/CustomSelect'
-import FamousPersonAutocompleteInput from '@/components/FamousPersonAutocompleteInput'
+import { FamousPersonAutocompleteInput } from '@/components/FamousPersonAutocompleteInput'
 import NameSuggestions from '@/components/NameSuggestions'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
-import type { AutoAssignResult, FamousPersonCategory, SubmitNamesResult } from '@/lib/game/types'
+import type { AutoAssignResult, FamousPerson, FamousPersonCategory, SubmitNamesResult } from '@/lib/game/types'
 import { useGameState } from '@/lib/useGameState'
 
 const NAME_SLOTS = 3
@@ -304,11 +305,36 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     ? 'Ortak Hedef (3 Tur)'
                     : 'Klasik Mod (3 Can)'}
             </span>
-            <span className="tag border-pencil-purple text-pencil-purple font-bold">
-              <Layers className="h-3.5 w-3.5 mr-1 inline" />
-              {state.room.categoryMode === 'multi_phase'
-                ? `3 Faz (${(state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler']).map(c => CATEGORIES.find(cat => cat.id === c)?.icon || '').join(' → ')})`
-                : `${CATEGORIES.find(c => c.id === (state.room.selectedCategory || 'all'))?.icon || ''} ${CATEGORIES.find(c => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}`}
+            <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1">
+              <Layers className="h-3.5 w-3.5" />
+              {state.room.categoryMode === 'multi_phase' ? (
+                <span>
+                  3 Faz (
+                  {(state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'])
+                    .map((c) => CATEGORIES.find((cat) => cat.id === c)?.label || c)
+                    .join(' → ')}
+                  )
+                </span>
+              ) : (
+                <span className="flex items-center gap-1">
+                  <CategoryIcon category={state.room.selectedCategory || 'all'} className="h-3.5 w-3.5" />
+                  <span>{CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}</span>
+                </span>
+              )}
+            </span>
+            <span className={`tag ${
+              state.room.difficulty === 'kolay'
+                ? 'border-pencil-green text-pencil-green font-bold'
+                : state.room.difficulty === 'zor'
+                  ? 'border-pencil-red text-pencil-red font-bold'
+                  : 'border-pencil-yellow text-pencil-yellow font-bold'
+            }`}>
+              <Gauge className="h-3.5 w-3.5 mr-1 inline" />
+              {state.room.difficulty === 'kolay'
+                ? 'Zorluk: Kolay (Tier 1-2)'
+                : state.room.difficulty === 'zor'
+                  ? 'Zorluk: Zor (Tüm Havuz)'
+                  : 'Zorluk: Orta (Tier 1-3)'}
             </span>
             <span className={`tag ${
               state.room.communicationMode === 'text'
@@ -349,7 +375,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'classic' } })
                       await refresh()
                     }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                       state.room.gameMode === 'classic'
                         ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
                         : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
@@ -365,7 +391,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'speed' } })
                       await refresh()
                     }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                       state.room.gameMode === 'speed'
                         ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
                         : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
@@ -381,7 +407,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'persistent' } })
                       await refresh()
                     }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                       state.room.gameMode === 'persistent'
                         ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
                         : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
@@ -397,7 +423,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'shared_target' } })
                       await refresh()
                     }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                       state.room.gameMode === 'shared_target'
                         ? 'bg-pencil-orange text-white shadow-sm ring-1 ring-pencil-orange'
                         : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
@@ -425,7 +451,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       await apiRequest(`/api/rooms/${roomId}/communication`, { method: 'PATCH', body: { communicationMode: 'voice' } })
                       await refresh()
                     }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                       state.room.communicationMode !== 'text'
                         ? 'bg-pencil-yellow text-white shadow-sm ring-1 ring-pencil-yellow'
                         : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
@@ -441,7 +467,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       await apiRequest(`/api/rooms/${roomId}/communication`, { method: 'PATCH', body: { communicationMode: 'text' } })
                       await refresh()
                     }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                       state.room.communicationMode === 'text'
                         ? 'bg-pencil-green text-white shadow-sm ring-1 ring-pencil-green'
                         : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
@@ -469,7 +495,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'single' } })
                       await refresh()
                     }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                       state.room.categoryMode !== 'multi_phase'
                         ? 'bg-pencil-blue text-white shadow-sm ring-1 ring-pencil-blue'
                         : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
@@ -485,7 +511,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'multi_phase' } })
                       await refresh()
                     }}
-                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                       state.room.categoryMode === 'multi_phase'
                         ? 'bg-pencil-purple text-white shadow-sm ring-1 ring-pencil-purple'
                         : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
@@ -498,7 +524,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               </div>
 
               {state.room.categoryMode !== 'multi_phase' ? (
-                <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-paper-card-alt border border-paper-border">
+                <div className="flex items-center justify-between gap-3 p-3 rounded-sketch-md bg-paper-card-alt border border-paper-border">
                   <span className="font-display text-base font-bold text-ink">Kategori:</span>
                   <CustomSelect
                     value={state.room.selectedCategory || 'all'}
@@ -514,18 +540,18 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     options={CATEGORIES.map((c) => ({
                       value: c.id,
                       label: c.label,
-                      icon: c.icon,
+                      icon: <CategoryIcon category={c.id} className="h-4 w-4" />,
                     }))}
                     className="min-w-[180px]"
                   />
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3 rounded-xl bg-paper-card-alt border border-paper-border">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3 rounded-sketch-md bg-paper-card-alt border border-paper-border">
                   {[0, 1, 2].map((idx) => {
                     const phases = state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler']
                     const currentVal = phases[idx] || 'all'
                     return (
-                      <div key={idx} className="flex flex-col gap-1.5 bg-paper-card p-2.5 rounded-lg border border-dashed border-paper-border">
+                      <div key={idx} className="flex flex-col gap-1.5 bg-paper-card p-2.5 rounded-sketch border border-dashed border-paper-border">
                         <span className="text-xs font-sans font-bold text-ink flex items-center gap-1.5">
                           <span className="h-5 w-5 rounded-full bg-pencil-purple/20 text-pencil-purple flex items-center justify-center text-xs font-bold">
                             {idx + 1}
@@ -546,7 +572,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                           options={CATEGORIES.filter((c) => c.id !== 'all').map((c) => ({
                             value: c.id,
                             label: c.label,
-                            icon: c.icon,
+                            icon: <CategoryIcon category={c.id} className="h-4 w-4" />,
                           }))}
                           size="sm"
                           className="w-full"
@@ -558,7 +584,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               )}
 
               {/* Host Hızlı Başlat / Sistem Otomatik Atasın */}
-              <div className="rounded-xl border border-dashed border-paper-border bg-paper-card-alt p-3.5 flex flex-wrap items-center justify-between gap-3">
+              <div className="rounded-sketch-md border border-dashed border-paper-border bg-paper-card-alt p-3.5 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
                   <Shuffle className="h-5 w-5 text-pencil-yellow shrink-0" />
                   <span className="font-display text-base font-bold text-ink">
@@ -570,7 +596,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     options={CATEGORIES.map((c) => ({
                       value: c.id,
                       label: c.label,
-                      icon: c.icon,
+                      icon: <CategoryIcon category={c.id} className="h-4 w-4" />,
                     }))}
                     size="sm"
                     className="min-w-[170px]"
@@ -635,14 +661,15 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     <FamousPersonAutocompleteInput
                       id="target-input"
                       value={targetNameInput}
-                      onChange={(val) => setTargetNameInput(val)}
-                      onSelect={(person) => {
+                      onChange={(val: string) => setTargetNameInput(val)}
+                      onSelect={(person: FamousPerson) => {
                         setTargetNameInput(person.name)
                         void handleSaveTarget(person.name)
                       }}
                       placeholder="Örn: Albert Einstein, Kemal Sunal, Tarkan..."
                       disabled={isSavingTarget}
                       maxLength={60}
+                      difficultyFilter={state.room.difficulty}
                     />
                     <button
                       type="button"
@@ -662,6 +689,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                     void handleSaveTarget(name)
                   }}
                   disabled={isSavingTarget}
+                  difficultyFilter={state.room.difficulty}
                   selectedNames={targetNameInput ? [targetNameInput] : []}
                 />
 
@@ -727,20 +755,20 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               </p>
 
               {state.room.categoryMode === 'multi_phase' ? (
-                <div className="mb-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-pencil-purple/10 border border-pencil-purple/30 text-pencil-purple text-sm font-display font-bold">
+                <div className="mb-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-sketch bg-pencil-purple/10 border border-pencil-purple/30 text-pencil-purple text-sm font-display font-bold">
                   <Layers className="h-4 w-4" />
-                  <span>
-                    1. Faz İsim Havuzu (Kategori:{' '}
-                    {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.icon}{' '}
-                    {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.label || state.room.activeCategory})
+                  <span className="flex items-center gap-1.5">
+                    <span>1. Faz İsim Havuzu (Kategori:</span>
+                    <CategoryIcon category={state.room.activeCategory} className="h-4 w-4" />
+                    <span>{CATEGORIES.find((c) => c.id === state.room.activeCategory)?.label || state.room.activeCategory})</span>
                   </span>
                 </div>
               ) : state.room.selectedCategory && state.room.selectedCategory !== 'all' ? (
-                <div className="mb-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-pencil-blue/10 border border-pencil-blue/30 text-pencil-blue text-sm font-display font-bold">
-                  <span>
-                    Seçili Kategori:{' '}
-                    {CATEGORIES.find((c) => c.id === state.room.selectedCategory)?.icon}{' '}
-                    {CATEGORIES.find((c) => c.id === state.room.selectedCategory)?.label}
+                <div className="mb-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-sketch bg-pencil-blue/10 border border-pencil-blue/30 text-pencil-blue text-sm font-display font-bold">
+                  <span className="flex items-center gap-1.5">
+                    <span>Seçili Kategori:</span>
+                    <CategoryIcon category={state.room.selectedCategory} className="h-4 w-4" />
+                    <span>{CATEGORIES.find((c) => c.id === state.room.selectedCategory)?.label}</span>
                   </span>
                 </div>
               ) : null}
@@ -761,12 +789,13 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                       disabled={isSubmitting}
                       placeholder={`Örn: ${index === 0 ? 'Albert Einstein' : index === 1 ? 'Sherlock Holmes' : 'Tarkan'}`}
                       categoryFilter={state.room.activeCategory || 'all'}
-                      onChange={(val) => {
+                      difficultyFilter={state.room.difficulty}
+                      onChange={(val: string) => {
                         const next = [...names]
                         next[index] = val
                         setNames(next)
                       }}
-                      onSelect={(person) => {
+                      onSelect={(person: FamousPerson) => {
                         const next = [...names]
                         next[index] = person.name
                         setNames(next)
@@ -779,6 +808,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               {/* Fikir mi lazım? Öneri Kartları */}
               <NameSuggestions
                 categoryFilter={state.room.activeCategory || 'all'}
+                difficultyFilter={state.room.difficulty}
                 onSelectName={handleSelectSuggestion}
                 onFillAllEmpty={handleFillAllEmpty}
                 emptySlotsCount={names.filter((n) => !n.trim()).length}

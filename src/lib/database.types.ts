@@ -284,6 +284,7 @@ export type Database = {
           status: string | null
           total_phases: number | null
           total_rounds: number | null
+          updated_at: string | null
         }
         Insert: {
           category_mode?: string | null
@@ -302,6 +303,7 @@ export type Database = {
           status?: string | null
           total_phases?: number | null
           total_rounds?: number | null
+          updated_at?: string | null
         }
         Update: {
           category_mode?: string | null
@@ -320,6 +322,7 @@ export type Database = {
           status?: string | null
           total_phases?: number | null
           total_rounds?: number | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -345,6 +348,10 @@ export type Database = {
     Functions: {
       increment_player_score: {
         Args: { p_player_id: string; p_delta: number }
+        Returns: number
+      }
+      close_expired_rooms: {
+        Args: { p_inactivity_minutes?: number }
         Returns: number
       }
     }

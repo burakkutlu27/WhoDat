@@ -111,14 +111,14 @@ export function CustomSelect({
             : 'px-3.5 py-2 text-sm font-sans font-bold rounded-lg'
         } ${
           isOpen
-            ? 'border-pencil-purple ring-2 ring-pencil-purple/30 shadow-sm'
+            ? 'border-pencil-purple shadow-sm'
             : 'border-paper-border hover:border-pencil-purple/60 hover:bg-paper-card-alt'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
         style={{ borderRadius: isSmall ? '6px 4px 6px 4px' : '8px 6px 10px 6px' }}
       >
-        <span className="flex items-center gap-1.5 truncate">
+        <span className="flex items-center gap-2 truncate">
           {selectedOption?.icon && (
-            <span className="shrink-0 text-base leading-none">{selectedOption.icon}</span>
+            <span className="shrink-0 flex items-center text-ink-faded">{selectedOption.icon}</span>
           )}
           <span className="truncate">{selectedOption?.label || placeholder}</span>
         </span>
@@ -140,8 +140,7 @@ export function CustomSelect({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
             transition={{ duration: 0.12 }}
-            className="absolute left-0 right-0 sm:right-auto sm:min-w-[200px] z-50 mt-1.5 max-h-60 overflow-y-auto rounded-xl border-2 border-paper-border bg-paper-card p-1 shadow-lg backdrop-blur-md"
-            style={{ borderRadius: '10px 6px 12px 8px' }}
+            className="absolute left-0 right-0 sm:right-auto sm:min-w-[200px] z-50 mt-1.5 max-h-60 overflow-y-auto rounded-sketch-md border-2 border-paper-border bg-paper-card p-1 shadow-lg backdrop-blur-md"
           >
             {options.map((option) => {
               const isSelected = option.value === value
@@ -154,14 +153,14 @@ export function CustomSelect({
                     onChange(option.value)
                     setIsOpen(false)
                   }}
-                  className={`flex cursor-pointer items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-sans transition-colors ${
+                  className={`flex cursor-pointer items-center justify-between gap-2 rounded-sketch-sm px-3 py-2 text-sm font-sans transition-colors ${
                     isSelected
                       ? 'bg-pencil-purple/15 text-pencil-purple font-bold'
                       : 'text-ink hover:bg-paper-card-alt hover:font-semibold'
                   }`}
                 >
                   <span className="flex items-center gap-2 truncate">
-                    {option.icon && <span className="text-base shrink-0 leading-none">{option.icon}</span>}
+                    {option.icon && <span className="shrink-0 flex items-center text-ink-faded">{option.icon}</span>}
                     <span className="truncate">{option.label}</span>
                   </span>
                   {isSelected && <Check className="h-4 w-4 text-pencil-purple shrink-0" />}

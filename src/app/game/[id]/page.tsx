@@ -32,6 +32,7 @@ import { useRouter } from 'next/navigation'
 import { use, useEffect, useRef, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
+import { CategoryIcon } from '@/components/CategoryIcon'
 import { ClueCard } from '@/components/ClueCard'
 import { QuestionPicker } from '@/components/QuestionPicker'
 import { VotingModal } from '@/components/VotingModal'
@@ -468,7 +469,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               </p>
             </div>
 
-            <div className="space-y-2 rounded-xl bg-paper-card-alt p-4 border-2 border-dashed border-paper-border text-left">
+            <div className="space-y-2 rounded-sketch-md bg-paper-card-alt p-4 border-2 border-dashed border-paper-border text-left">
               <div className="text-sm font-sans font-bold text-ink-faded uppercase tracking-wider mb-2">
                 Bu Turdaki Skorlar:
               </div>
@@ -584,10 +585,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-ink">
                 {phaseTransition.completedPhase}. Faz Sona Erdi!
               </h2>
-              <div className="mt-3 p-3.5 rounded-xl bg-pencil-purple/10 border border-pencil-purple/30 text-pencil-purple">
+              <div className="mt-3 p-3.5 rounded-sketch-md bg-pencil-purple/10 border border-pencil-purple/30 text-pencil-purple">
                 <span className="text-base font-display block font-normal">Sıradaki Aşama:</span>
                 <span className="font-display text-2xl font-bold flex items-center justify-center gap-2 mt-1">
-                  <span>{CATEGORIES.find((c) => c.id === phaseTransition.newCategory)?.icon}</span>
+                  <CategoryIcon category={phaseTransition.newCategory} className="h-6 w-6" />
                   <span>{phaseTransition.nextPhase}. Faz: {CATEGORIES.find((c) => c.id === phaseTransition.newCategory)?.label || phaseTransition.newCategory}</span>
                 </span>
               </div>
@@ -652,7 +653,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     <Layers className="h-4 w-4" />
                     <span>
                       Faz {state.room.currentPhase || 1}/{state.room.totalPhases || 3}:{' '}
-                      {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.icon}{' '}
+                      <CategoryIcon category={state.room.activeCategory} className="h-3.5 w-3.5 inline" />{' '}
                       {CATEGORIES.find((c) => c.id === state.room.activeCategory)?.label || state.room.activeCategory}
                     </span>
                     <span className="ml-1 flex items-center gap-1 text-xs">
@@ -661,7 +662,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           key={step}
                           className={`h-2.5 w-2.5 rounded-full ${
                             step === (state.room.currentPhase || 1)
-                              ? 'bg-pencil-purple ring-2 ring-pencil-purple/40'
+                              ? 'bg-pencil-purple ring-2 ring-pencil-purple'
                               : step < (state.room.currentPhase || 1)
                                 ? 'bg-pencil-purple/40'
                                 : 'bg-paper-border'
@@ -674,7 +675,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   <span className="tag border-pencil-purple text-pencil-purple font-bold flex items-center gap-1">
                     <Layers className="h-4 w-4" />
                     <span>
-                      {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.icon || '🎲'}{' '}
+                      <CategoryIcon category={state.room.selectedCategory || 'all'} className="h-4 w-4 inline" />{' '}
                       {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}
                     </span>
                   </span>
@@ -766,7 +767,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         <motion.div
                           initial={{ opacity: 0, scale: 0.95 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          className="paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-xl text-center space-y-4"
+                          className="paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-sketch-md text-center space-y-4"
                         >
                           <span className="tag border-pencil-orange text-pencil-orange font-bold text-sm uppercase animate-pulse">
                             Yeni Soru Geldi!
@@ -818,7 +819,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         <motion.div
                           initial={{ opacity: 0, scale: 0.95 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          className="alert-success p-6 rounded-xl space-y-4"
+                          className="alert-success p-6 rounded-sketch-md space-y-4"
                         >
                           <div className="flex items-center gap-2">
                             <Sparkles className="h-6 w-6 text-pencil-green animate-bounce" />
@@ -861,7 +862,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                     key={sug}
                                     type="button"
                                     onClick={() => setNextTargetInput(sug)}
-                                    className="rounded-lg bg-paper-card-alt px-3 py-1.5 text-xs font-sans font-bold border border-paper-border hover:border-pencil-green"
+                                    className="rounded-sketch bg-paper-card-alt px-3 py-1.5 text-xs font-sans font-bold border border-paper-border hover:border-pencil-green"
                                   >
                                     + {sug}
                                   </button>
@@ -869,7 +870,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               </div>
                             </div>
                           ) : (
-                            <div className="p-3 bg-pencil-green/10 rounded-lg text-base font-display font-bold text-pencil-green">
+                            <div className="p-3 bg-pencil-green/10 rounded-sketch text-base font-display font-bold text-pencil-green">
                               Tüm turlar tamamlandı! Skor ekranına yönlendiriliyorsunuz...
                             </div>
                           )}
@@ -890,9 +891,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     /* YARIŞMACI GÖRÜNÜMÜ */
                     <div className="space-y-6">
                       {/* Tahmin Butonu & Bilgilendirme */}
-                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-paper-card-alt border-2 border-dashed border-pencil-green/40 shadow-xs">
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-sketch-lg bg-paper-card-alt border-2 border-dashed border-pencil-green/40 shadow-xs">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-pencil-green/15 text-pencil-green shadow-xs">
+                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sketch bg-pencil-green/15 text-pencil-green shadow-xs">
                             <Lightbulb className="h-7 w-7" />
                           </div>
                           <div>
@@ -1080,7 +1081,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             const isZero = budget === 0
                             return (
                               <div
-                                className={`flex items-center gap-2 rounded-xl border-2 px-4 py-2 shadow-sm transition-colors ${
+                                className={`flex items-center gap-2 rounded-sketch-md border-2 px-4 py-2 shadow-sm transition-colors ${
                                   isZero
                                     ? 'border-solid border-pencil-red bg-pencil-red/10'
                                     : isLow
@@ -1117,7 +1118,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           })()}
 
                           {/* Can / Tahmin Hakkı Göstergesi */}
-                          <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
+                          <div className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
                             <span className="font-display text-base font-bold text-ink-faded">
                               Tahmin Hakkı:
                             </span>
@@ -1146,7 +1147,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           </div>
 
                           {/* Potansiyel Puan */}
-                          <div className="flex items-center gap-2 rounded-xl border-2 border-solid border-pencil-green bg-paper-card px-4 py-2 shadow-sm">
+                          <div className="flex items-center gap-2 rounded-sketch-md border-2 border-solid border-pencil-green bg-paper-card px-4 py-2 shadow-sm">
                             <Zap className="h-5 w-5 text-pencil-green animate-pulse" />
                             <span className="font-display text-lg font-bold text-ink">
                               {state.you.isYourTurn ? 'Şimdi Bilirsen: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Bilirse: `}
@@ -1166,7 +1167,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     ) : isSpeed ? (
                       <div className="mt-5 space-y-3">
                         <div className="flex flex-wrap items-center justify-center gap-4">
-                          <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
+                          <div className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
                             <Clock className="h-5 w-5 text-pencil-blue" />
                             <span className="font-display text-lg font-bold text-ink">
                               {state.you.isYourTurn ? 'Senin Soru Sayın: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Soru Sayısı: `}
@@ -1176,7 +1177,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             </span>
                           </div>
 
-                          <div className="flex items-center gap-2 rounded-xl border-2 border-solid border-pencil-green bg-paper-card px-4 py-2 shadow-sm">
+                          <div className="flex items-center gap-2 rounded-sketch-md border-2 border-solid border-pencil-green bg-paper-card px-4 py-2 shadow-sm">
                             <Zap className="h-5 w-5 text-pencil-green animate-pulse" />
                             <span className="font-display text-lg font-bold text-ink">
                               {state.you.isYourTurn ? 'Şimdi Bilirsen: ' : `${currentPlayer?.nickname ?? 'Oyuncu'} Bilirse: `}
@@ -1371,7 +1372,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="paper-card-alt p-6 rounded-xl border-2 border-dashed border-paper-border space-y-4"
+                className="paper-card-alt p-6 rounded-sketch-md border-2 border-dashed border-paper-border space-y-4"
               >
                 <div className="flex items-center justify-between border-b border-paper-border pb-3">
                   <h3 className="font-display text-2xl font-bold text-ink flex items-center gap-2">
@@ -1388,7 +1389,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     {state.room.questionLog.map((item, idx) => (
                       <div
                         key={item.id || idx}
-                        className="flex flex-wrap items-center justify-between gap-2 p-3.5 bg-paper-card rounded-lg border border-paper-border text-base font-display shadow-xs"
+                        className="flex flex-wrap items-center justify-between gap-2 p-3.5 bg-paper-card rounded-sketch border border-paper-border text-base font-display shadow-xs"
                       >
                         <div className="flex items-center gap-2 min-w-0">
                           <span className="text-sm font-mono font-bold text-ink-extra-faded">#{idx + 1}</span>

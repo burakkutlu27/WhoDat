@@ -32,6 +32,8 @@ export const gameModeSchema = z.enum(['classic', 'speed', 'persistent', 'shared_
 
 export const communicationModeSchema = z.enum(['voice', 'text'])
 
+export const difficultySchema = z.enum(['kolay', 'orta', 'zor'])
+
 export const lobbyCategoryModeSchema = z.enum(['single', 'multi_phase'])
 
 export const famousPersonCategorySchema = z.enum([
@@ -49,6 +51,7 @@ export const createRoomSchema = z.object({
   nickname: nicknameSchema,
   gameMode: gameModeSchema.optional(),
   communicationMode: communicationModeSchema.optional(),
+  difficulty: difficultySchema.optional(),
   categoryMode: lobbyCategoryModeSchema.optional(),
   category: famousPersonCategorySchema.optional(),
   phaseCategories: z.array(famousPersonCategorySchema).min(1).max(3).optional(),
@@ -130,6 +133,7 @@ export const submitTextVoteSchema = z.object({
 export const famousPeopleQuerySchema = z.object({
   q: z.string().trim().max(60).optional(),
   category: famousPersonCategorySchema.optional(),
+  difficulty: difficultySchema.optional(),
   random: z
     .union([z.boolean(), z.enum(['true', 'false', '1', '0'])])
     .optional()

@@ -5,8 +5,9 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 
 import { apiRequest } from '@/lib/apiClient'
+import { CategoryIcon } from '@/components/CategoryIcon'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
-import type { FamousPerson, FamousPersonCategory } from '@/lib/game/types'
+import type { DifficultyLevel, FamousPerson, FamousPersonCategory } from '@/lib/game/types'
 
 import SuggestNameModal from './SuggestNameModal'
 
@@ -19,11 +20,12 @@ interface AutocompleteInputProps {
   disabled?: boolean
   maxLength?: number
   categoryFilter?: FamousPersonCategory
+  difficultyFilter?: DifficultyLevel
   className?: string
   autoFocus?: boolean
 }
 
-export default function FamousPersonAutocompleteInput({
+export function FamousPersonAutocompleteInput({
   id,
   value,
   onChange,
@@ -32,6 +34,7 @@ export default function FamousPersonAutocompleteInput({
   disabled = false,
   maxLength = 60,
   categoryFilter = 'all',
+  difficultyFilter,
   className = '',
   autoFocus = false,
 }: AutocompleteInputProps) {
@@ -65,8 +68,9 @@ export default function FamousPersonAutocompleteInput({
       setIsLoading(true)
       try {
         const catParam = categoryFilter !== 'all' ? `&category=${categoryFilter}` : ''
+        const diffParam = difficultyFilter ? `&difficulty=${difficultyFilter}` : ''
         const res = await apiRequest<{ data: FamousPerson[] }>(
-          `/api/famous-people?q=${encodeURIComponent(trimmed)}${catParam}&limit=6`,
+          `/api/famous-people?q=${encodeURIComponent(trimmed)}${catParam}${diffParam}&limit=6`,
         )
         if (isMounted) {
           setResults(res.data || [])
@@ -89,7 +93,7 @@ export default function FamousPersonAutocompleteInput({
       isMounted = false
       clearTimeout(timer)
     }
-  }, [value, categoryFilter])
+  }, [value, categoryFilter, difficultyFilter])
 
   const handleSelect = (person: FamousPerson) => {
     onChange(person.name)
@@ -161,8 +165,7 @@ export default function FamousPersonAutocompleteInput({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -5, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 right-0 z-50 mt-1 max-h-72 overflow-auto rounded-xl border-2 border-paper-border bg-paper-card py-1.5 shadow-xl"
-            style={{ borderRadius: '10px 6px 12px 8px' }}
+            className="absolute left-0 right-0 z-50 mt-1 max-h-72 overflow-auto rounded-sketch-md border-2 border-paper-border bg-paper-card py-1.5 shadow-xl"
           >
             {results.length > 0 ? (
               <>
@@ -184,10 +187,9 @@ export default function FamousPersonAutocompleteInput({
                         <span className="font-display text-xl font-bold">{person.name}</span>
                         {catInfo && (
                           <span
-                            className="inline-flex items-center gap-1 rounded-md border border-dashed border-paper-border bg-paper-card px-2.5 py-1 font-sans text-xs font-semibold text-ink-faded"
-                            style={{ borderRadius: '6px 4px 6px 4px' }}
+                            className="inline-flex items-center gap-1.5 rounded-sketch-sm border border-dashed border-paper-border bg-paper-card px-2.5 py-1 font-sans text-xs font-semibold text-ink-faded"
                           >
-                            <span>{catInfo.icon}</span>
+                            <CategoryIcon category={catInfo.id} className="h-3.5 w-3.5" />
                             <span>{catInfo.label}</span>
                           </span>
                         )}
@@ -204,7 +206,7 @@ export default function FamousPersonAutocompleteInput({
                       setIsOpen(false)
                       setIsSuggestModalOpen(true)
                     }}
-                    className="flex w-full items-center justify-between gap-2 px-3 py-2 text-xs font-display font-bold text-ink-faded hover:text-pencil-yellow transition-colors rounded-lg hover:bg-paper-card"
+                    className="flex w-full items-center justify-between gap-2 px-3 py-2 text-xs font-display font-bold text-ink-faded hover:text-pencil-yellow transition-colors rounded-sketch hover:bg-paper-card"
                   >
                     <span className="flex items-center gap-1.5">
                       <Lightbulb className="h-4 w-4 text-pencil-yellow" />
@@ -255,3 +257,5 @@ export default function FamousPersonAutocompleteInput({
     </div>
   )
 }
+
+export default FamousPersonAutocompleteInput

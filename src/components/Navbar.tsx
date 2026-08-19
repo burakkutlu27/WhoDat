@@ -42,24 +42,28 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <motion.button
+              type="button"
               whileHover={{ scale: 1.05, rotate: 1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowSuggest(true)}
-              className="group flex items-center gap-1.5 rounded-xl border border-dashed border-paper-border bg-paper-card px-2.5 sm:px-3 py-1.5 font-display text-sm sm:text-base font-bold text-ink-faded shadow-2xs transition-all hover:border-pencil-yellow hover:text-pencil-yellow"
+              className="group flex h-10 w-10 sm:w-auto items-center justify-center gap-1.5 border-2 border-dashed border-paper-border bg-paper-card sm:px-3.5 font-display text-sm sm:text-base font-bold text-ink-faded shadow-xs transition-all hover:border-pencil-yellow hover:text-pencil-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pencil-red"
+              style={{ borderRadius: '8px 4px 10px 6px' }}
               title="Havuza Yeni İsim Öner"
             >
-              <Lightbulb className="h-4 w-4 text-pencil-yellow" />
+              <Lightbulb className="h-4 w-4 shrink-0 text-pencil-yellow" />
               <span className="hidden sm:inline">İsim Öner</span>
             </motion.button>
 
             <motion.button
+              type="button"
               whileHover={{ scale: 1.05, rotate: -1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowStats(true)}
-              className="group flex items-center gap-1.5 rounded-xl border-2 border-dashed border-pencil-yellow bg-paper-card px-2.5 sm:px-3 py-1.5 font-display text-sm sm:text-base font-bold text-ink shadow-xs transition-all hover:bg-pencil-yellow hover:text-white"
+              className="group flex h-10 w-10 sm:w-auto items-center justify-center gap-1.5 border-2 border-dashed border-pencil-yellow bg-paper-card sm:px-3.5 font-display text-sm sm:text-base font-bold text-ink shadow-xs transition-all hover:bg-pencil-yellow hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pencil-red"
+              style={{ borderRadius: '8px 4px 10px 6px' }}
               title="İstatistiklerimi Gör"
             >
-              <Trophy className="h-4 w-4 text-pencil-yellow transition-colors group-hover:text-white" />
+              <Trophy className="h-4 w-4 shrink-0 text-pencil-yellow transition-colors group-hover:text-white" />
               <span className="hidden sm:inline">İstatistiklerim</span>
             </motion.button>
 

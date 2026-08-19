@@ -1,9 +1,6 @@
 import type { RoomStatus } from '../database.types'
 
 /**
-import type { RoomStatus } from '../database.types'
-
-/**
  * Sunucu ile istemci arasındaki sözleşme.
  *
  * Ayrı bir dosyada duruyor çünkü engine.ts `server-only` işaretli; istemci bileşenleri
@@ -13,6 +10,8 @@ import type { RoomStatus } from '../database.types'
 export type GameMode = 'classic' | 'speed' | 'persistent' | 'shared_target'
 
 export type CommunicationMode = 'voice' | 'text'
+
+export type DifficultyLevel = 'kolay' | 'orta' | 'zor'
 
 export type LobbyCategoryMode = 'single' | 'multi_phase'
 
@@ -105,6 +104,8 @@ export interface GameState {
     communicationMode: CommunicationMode
     isGameActive: boolean
     currentPlayerId: string | null
+    /** Zorluk Seviyesi (Kolay / Orta / Zor) */
+    difficulty?: DifficultyLevel
     /** Kategori Lobisi Alanları */
     categoryMode?: LobbyCategoryMode
     selectedCategory?: FamousPersonCategory

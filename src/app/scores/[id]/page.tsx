@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
+import { CategoryIcon } from '@/components/CategoryIcon'
 import { StatsModal } from '@/components/StatsModal'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
@@ -135,7 +136,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
             initial={{ scale: 0, rotate: -30 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: 'spring', stiffness: 350, damping: 15, delay: 0.2 }}
-            className="mb-3 inline-block rounded-2xl border-2 border-paper-border bg-paper-card p-3 text-pencil-yellow shadow-md animate-trophy-bounce"
+            className="mb-3 inline-block rounded-sketch-lg border-2 border-paper-border bg-paper-card p-3 text-pencil-yellow shadow-md animate-trophy-bounce"
           >
             <Trophy className="h-12 w-12" />
           </motion.div>
@@ -173,17 +174,15 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                 <span>
                   3 Fazlı Oyun Tamamlandı:{' '}
                   {(state.room.phaseCategories || ['sporcular', 'cizgi_karakterler', 'tarihi_kisiler'])
-                    .map((c) => `${CATEGORIES.find((cat) => cat.id === c)?.icon || ''} ${CATEGORIES.find((cat) => cat.id === c)?.label || c}`)
+                    .map((c) => CATEGORIES.find((cat) => cat.id === c)?.label || c)
                     .join(' → ')}
                 </span>
               </span>
             ) : (
               <span className="tag border-pencil-purple text-pencil-purple font-bold text-sm flex items-center gap-1.5">
-                <Layers className="h-4 w-4" />
+                <CategoryIcon category={state.room.selectedCategory || 'all'} className="h-4 w-4" />
                 <span>
-                  Kategori:{' '}
-                  {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.icon || '🎲'}{' '}
-                  {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}
+                  Kategori: {CATEGORIES.find((c) => c.id === (state.room.selectedCategory || 'all'))?.label || 'Tümü'}
                 </span>
               </span>
             )}
@@ -338,7 +337,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => setShowStats(true)}
-            className="group inline-flex items-center gap-2 rounded-xl border-2 border-dashed border-pencil-yellow bg-paper-card px-5 py-2.5 font-display text-lg font-bold text-ink shadow-xs transition-all hover:bg-pencil-yellow hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-pencil-yellow bg-paper-card px-5 py-2.5 font-display text-lg font-bold text-ink shadow-xs transition-all hover:bg-pencil-yellow hover:text-white"
           >
             <Trophy className="h-5 w-5 text-pencil-yellow transition-colors group-hover:text-white" />
             <span>Genel İstatistiklerimi Gör</span>

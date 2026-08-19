@@ -56,7 +56,7 @@ function JoinRoomForm() {
           className="paper-card p-8"
         >
           <div className="mb-6 text-center">
-            <div className="mb-3 inline-block rounded-xl border border-paper-border bg-paper-card p-2.5 text-pencil-blue shadow-sm">
+            <div className="mb-3 inline-block rounded-sketch border border-paper-border bg-paper-card p-2.5 text-pencil-blue shadow-sm">
               <DoorOpen className="h-8 w-8" />
             </div>
             <h1 className="font-display text-4xl font-bold text-ink">

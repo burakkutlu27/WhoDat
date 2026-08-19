@@ -1,21 +1,23 @@
 'use client'
 
-import { ArrowLeft, Brain, Check, FileText, Layers, Loader2, MessageSquare, Mic, Pencil, Target, User, Users, Zap } from 'lucide-react'
+import { ArrowLeft, Brain, Check, Feather, Flame, Gauge, Layers, Loader2, MessageSquare, Mic, Pencil, Target, User, Users, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { CategoryIcon } from '@/components/CategoryIcon'
 import { CustomSelect } from '@/components/CustomSelect'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { getDeviceId } from '@/lib/deviceId'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
-import type { CommunicationMode, FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
+import type { CommunicationMode, DifficultyLevel, FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
 
 export default function CreateRoomPage() {
   const router = useRouter()
   const [nickname, setNickname] = useState('')
   const [gameMode, setGameMode] = useState<GameMode>('classic')
   const [communicationMode, setCommunicationMode] = useState<CommunicationMode>('voice')
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>('orta')
   const [categoryMode, setCategoryMode] = useState<LobbyCategoryMode>('single')
   const [selectedCategory, setSelectedCategory] = useState<FamousPersonCategory>('all')
   const [phaseCategories, setPhaseCategories] = useState<FamousPersonCategory[]>([
@@ -40,6 +42,7 @@ export default function CreateRoomPage() {
           nickname: nickname.trim(),
           gameMode,
           communicationMode,
+          difficulty,
           categoryMode,
           category: selectedCategory,
           phaseCategories: categoryMode === 'multi_phase' ? phaseCategories : undefined,
@@ -67,9 +70,6 @@ export default function CreateRoomPage() {
           className="paper-card-lg p-6 sm:p-8"
         >
           <div className="mb-6 text-center">
-            <div className="mb-3 inline-block rounded-xl border border-paper-border bg-paper-card p-2.5 text-pencil-red shadow-sm">
-              <FileText className="h-8 w-8" />
-            </div>
             <h1 className="font-display text-4xl font-bold text-ink sm:text-5xl">
               Yeni Oda Oluştur
             </h1>
@@ -111,92 +111,120 @@ export default function CreateRoomPage() {
 
             {/* Oyun Modu Seçimi */}
             <div>
-              <label className="mb-2 block font-display text-2xl font-bold text-ink">
-                Oyun Modu
+              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Target className="h-5 w-5 text-pencil-yellow" />
+                  <span>Oyun Modu</span>
+                </span>
+                <span className="text-sm font-sans font-semibold text-ink-faded">
+                  {gameMode === 'classic'
+                    ? 'Klasik (3 Can)'
+                    : gameMode === 'speed'
+                      ? 'Hız Modu (3 Tur)'
+                      : gameMode === 'persistent'
+                        ? 'Israrcı (10 Soru)'
+                        : 'Ortak Hedef (Hakem)'}
+                </span>
               </label>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <button
                   type="button"
                   onClick={() => setGameMode('classic')}
-                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
+                  className={`relative p-3.5 sm:p-4 text-left transition-all duration-200 border-2 rounded-sketch-md flex flex-col justify-between ${
                     gameMode === 'classic'
-                      ? 'sticky-note sticky-note-yellow scale-[1.02] shadow-md border-pencil-yellow ring-2 ring-pencil-yellow'
-                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
+                      ? 'border-pencil-yellow bg-pencil-yellow/10 shadow-xs font-bold text-ink'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
-                  style={{ borderRadius: '8px 4px 10px 6px' }}
                 >
-                  <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
-                      <Target className="h-5 w-5 text-pencil-yellow" />
+                  <div className="space-y-1.5 pr-6">
+                    <span className="font-display text-lg sm:text-xl font-bold text-ink flex items-center gap-1.5">
+                      <Target className="h-5 w-5 text-pencil-yellow shrink-0" />
                       <span>Klasik</span>
                     </span>
-                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
+                    <span className="block text-xs sm:text-sm text-ink-faded font-sans font-normal leading-relaxed">
                       3 Can Hakkı. Yanlış tahmin can götürür, hayatta kalan kazanır!
                     </span>
                   </div>
+                  {gameMode === 'classic' && (
+                    <span className="absolute top-3 right-3 h-5 w-5 rounded-full bg-pencil-yellow text-white flex items-center justify-center shadow-2xs">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
+                  )}
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setGameMode('speed')}
-                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
+                  className={`relative p-3.5 sm:p-4 text-left transition-all duration-200 border-2 rounded-sketch-md flex flex-col justify-between ${
                     gameMode === 'speed'
-                      ? 'sticky-note sticky-note-green scale-[1.02] shadow-md border-pencil-green ring-2 ring-pencil-green'
-                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
+                      ? 'border-pencil-green bg-pencil-green/10 shadow-xs font-bold text-ink'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
-                  style={{ borderRadius: '6px 10px 4px 8px' }}
                 >
-                  <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
-                      <Zap className="h-5 w-5 text-pencil-green" />
+                  <div className="space-y-1.5 pr-6">
+                    <span className="font-display text-lg sm:text-xl font-bold text-ink flex items-center gap-1.5">
+                      <Zap className="h-5 w-5 text-pencil-green shrink-0" />
                       <span>Hız Modu</span>
                     </span>
-                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
+                    <span className="block text-xs sm:text-sm text-ink-faded font-sans font-normal leading-relaxed">
                       Az Soru, Çok Puan! 3 turda en az soruyla bil, puanları topla!
                     </span>
                   </div>
+                  {gameMode === 'speed' && (
+                    <span className="absolute top-3 right-3 h-5 w-5 rounded-full bg-pencil-green text-white flex items-center justify-center shadow-2xs">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
+                  )}
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setGameMode('persistent')}
-                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
+                  className={`relative p-3.5 sm:p-4 text-left transition-all duration-200 border-2 rounded-sketch-md flex flex-col justify-between ${
                     gameMode === 'persistent'
-                      ? 'sticky-note sticky-note-blue scale-[1.02] shadow-md border-pencil-blue ring-2 ring-pencil-blue'
-                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
+                      ? 'border-pencil-blue bg-pencil-blue/10 shadow-xs font-bold text-ink'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
-                  style={{ borderRadius: '10px 6px 8px 4px' }}
                 >
-                  <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
-                      <Brain className="h-5 w-5 text-pencil-blue" />
+                  <div className="space-y-1.5 pr-6">
+                    <span className="font-display text-lg sm:text-xl font-bold text-ink flex items-center gap-1.5">
+                      <Brain className="h-5 w-5 text-pencil-blue shrink-0" />
                       <span>Israrcı</span>
                     </span>
-                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
+                    <span className="block text-xs sm:text-sm text-ink-faded font-sans font-normal leading-relaxed">
                       10 Soru Bütçesi & 3 Can. Bütçen bitince zorunlu tahmin!
                     </span>
                   </div>
+                  {gameMode === 'persistent' && (
+                    <span className="absolute top-3 right-3 h-5 w-5 rounded-full bg-pencil-blue text-white flex items-center justify-center shadow-2xs">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
+                  )}
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setGameMode('shared_target')}
-                  className={`flex flex-col justify-between text-left p-4 transition-all duration-200 ${
+                  className={`relative p-3.5 sm:p-4 text-left transition-all duration-200 border-2 rounded-sketch-md flex flex-col justify-between ${
                     gameMode === 'shared_target'
-                      ? 'sticky-note sticky-note-orange scale-[1.02] shadow-md border-pencil-orange ring-2 ring-pencil-orange'
-                      : 'paper-card hover:bg-paper-card-alt opacity-75 hover:opacity-100'
+                      ? 'border-pencil-orange bg-pencil-orange/10 shadow-xs font-bold text-ink'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
-                  style={{ borderRadius: '8px 10px 6px 8px' }}
                 >
-                  <div>
-                    <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
-                      <Users className="h-5 w-5 text-pencil-orange" />
+                  <div className="space-y-1.5 pr-6">
+                    <span className="font-display text-lg sm:text-xl font-bold text-ink flex items-center gap-1.5">
+                      <Users className="h-5 w-5 text-pencil-orange shrink-0" />
                       <span>Ortak Hedef</span>
                     </span>
-                    <span className="mt-2 block text-sm font-sans text-ink-faded leading-relaxed">
+                    <span className="block text-xs sm:text-sm text-ink-faded font-sans font-normal leading-relaxed">
                       Tek Gizli Kişi & Hakem! Sırayla soru sor, ilk sen bil!
                     </span>
                   </div>
+                  {gameMode === 'shared_target' && (
+                    <span className="absolute top-3 right-3 h-5 w-5 rounded-full bg-pencil-orange text-white flex items-center justify-center shadow-2xs">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
+                  )}
                 </button>
               </div>
             </div>
@@ -217,13 +245,13 @@ export default function CreateRoomPage() {
                 <button
                   type="button"
                   onClick={() => setCommunicationMode('voice')}
-                  className={`p-4 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                  className={`relative p-4 text-left transition-all duration-200 border-2 rounded-sketch-md flex items-center justify-between ${
                     communicationMode === 'voice'
-                      ? 'border-pencil-yellow bg-pencil-yellow/10 shadow-xs font-bold text-ink ring-2 ring-pencil-yellow/30'
+                      ? 'border-pencil-yellow bg-pencil-yellow/10 shadow-xs font-bold text-ink'
                       : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 pr-8">
                     <span className="font-display text-xl font-bold flex items-center gap-2 text-ink">
                       <Mic className="h-5 w-5 text-pencil-yellow" />
                       <span>Sesli İletişim (Klasik)</span>
@@ -233,7 +261,7 @@ export default function CreateRoomPage() {
                     </span>
                   </div>
                   {communicationMode === 'voice' && (
-                    <span className="h-6 w-6 rounded-full bg-pencil-yellow text-white flex items-center justify-center text-sm shrink-0 ml-2">
+                    <span className="absolute top-4 right-4 h-6 w-6 rounded-full bg-pencil-yellow text-white flex items-center justify-center text-sm shadow-2xs">
                       <Check className="h-4 w-4" />
                     </span>
                   )}
@@ -242,13 +270,13 @@ export default function CreateRoomPage() {
                 <button
                   type="button"
                   onClick={() => setCommunicationMode('text')}
-                  className={`p-4 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                  className={`relative p-4 text-left transition-all duration-200 border-2 rounded-sketch-md flex items-center justify-between ${
                     communicationMode === 'text'
-                      ? 'border-pencil-green bg-pencil-green/10 shadow-xs font-bold text-ink ring-2 ring-pencil-green/30'
+                      ? 'border-pencil-green bg-pencil-green/10 shadow-xs font-bold text-ink'
                       : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 pr-8">
                     <span className="font-display text-xl font-bold flex items-center gap-2 text-ink">
                       <MessageSquare className="h-5 w-5 text-pencil-green" />
                       <span>Tam Metin / Uzaktan</span>
@@ -258,7 +286,7 @@ export default function CreateRoomPage() {
                     </span>
                   </div>
                   {communicationMode === 'text' && (
-                    <span className="h-6 w-6 rounded-full bg-pencil-green text-white flex items-center justify-center text-sm shrink-0 ml-2">
+                    <span className="absolute top-4 right-4 h-6 w-6 rounded-full bg-pencil-green text-white flex items-center justify-center text-sm shadow-2xs">
                       <Check className="h-4 w-4" />
                     </span>
                   )}
@@ -283,13 +311,13 @@ export default function CreateRoomPage() {
                 <button
                   type="button"
                   onClick={() => setCategoryMode('single')}
-                  className={`p-3.5 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                  className={`relative p-3.5 text-left transition-all duration-200 border-2 rounded-sketch-md flex items-center justify-between ${
                     categoryMode === 'single'
                       ? 'border-pencil-blue bg-pencil-blue/5 shadow-xs font-bold text-ink'
                       : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
-                  <div>
+                  <div className="pr-7">
                     <span className="font-display text-xl font-bold flex items-center gap-1.5">
                       <Target className="h-5 w-5 text-pencil-blue" />
                       <span>Tek Kategori</span>
@@ -299,7 +327,7 @@ export default function CreateRoomPage() {
                     </span>
                   </div>
                   {categoryMode === 'single' && (
-                    <span className="h-6 w-6 rounded-full bg-pencil-blue text-white flex items-center justify-center text-sm shrink-0 ml-2">
+                    <span className="absolute top-3.5 right-3.5 h-6 w-6 rounded-full bg-pencil-blue text-white flex items-center justify-center text-sm shadow-2xs">
                       <Check className="h-4 w-4" />
                     </span>
                   )}
@@ -308,13 +336,13 @@ export default function CreateRoomPage() {
                 <button
                   type="button"
                   onClick={() => setCategoryMode('multi_phase')}
-                  className={`p-3.5 text-left transition-all duration-200 border-2 rounded-xl flex items-center justify-between ${
+                  className={`relative p-3.5 text-left transition-all duration-200 border-2 rounded-sketch-md flex items-center justify-between ${
                     categoryMode === 'multi_phase'
                       ? 'border-pencil-purple bg-pencil-purple/5 shadow-xs font-bold text-ink'
                       : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
                   }`}
                 >
-                  <div>
+                  <div className="pr-7">
                     <span className="font-display text-xl font-bold flex items-center gap-1.5">
                       <Layers className="h-5 w-5 text-pencil-purple" />
                       <span>3 Fazlı Karışık</span>
@@ -324,7 +352,7 @@ export default function CreateRoomPage() {
                     </span>
                   </div>
                   {categoryMode === 'multi_phase' && (
-                    <span className="h-6 w-6 rounded-full bg-pencil-purple text-white flex items-center justify-center text-sm shrink-0 ml-2">
+                    <span className="absolute top-3.5 right-3.5 h-6 w-6 rounded-full bg-pencil-purple text-white flex items-center justify-center text-sm shadow-2xs">
                       <Check className="h-4 w-4" />
                     </span>
                   )}
@@ -333,7 +361,7 @@ export default function CreateRoomPage() {
 
               {/* Tek Kategori İçin Kategori Çipleri */}
               {categoryMode === 'single' ? (
-                <div className="p-4 rounded-xl border border-paper-border bg-paper-card-alt space-y-2.5">
+                <div className="p-4 rounded-sketch-md border border-paper-border bg-paper-card-alt space-y-2.5">
                   <span className="text-sm font-display text-base font-bold text-ink block">
                     Oynanacak Kategoriyi Seçin:
                   </span>
@@ -345,13 +373,13 @@ export default function CreateRoomPage() {
                           key={cat.id}
                           type="button"
                           onClick={() => setSelectedCategory(cat.id)}
-                          className={`px-3.5 py-2.5 text-sm font-sans font-bold rounded-lg border transition-all flex items-center gap-2 ${
+                          className={`px-3.5 py-2.5 text-sm font-sans font-bold rounded-sketch border transition-all flex items-center gap-2 ${
                             isSelected
-                              ? 'bg-pencil-blue/15 text-ink shadow-xs border-pencil-blue ring-2 ring-pencil-blue/40'
+                              ? 'bg-pencil-blue/15 text-ink shadow-xs border-pencil-blue'
                               : 'border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
                           }`}
                         >
-                          <span className="text-lg">{cat.icon}</span>
+                          <CategoryIcon category={cat.id} className="h-4 w-4 shrink-0 text-pencil-blue" />
                           <span className="truncate">{cat.label}</span>
                         </button>
                       )
@@ -360,7 +388,7 @@ export default function CreateRoomPage() {
                 </div>
               ) : (
                 /* 3 Fazlı Mod İçin 3 Aşama Seçimi */
-                <div className="p-4 rounded-xl border border-paper-border bg-paper-card-alt space-y-3">
+                <div className="p-4 rounded-sketch-md border border-paper-border bg-paper-card-alt space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-display text-base font-bold text-ink block">
                       3 Faz İçin Sıralı Kategoriler:
@@ -375,7 +403,7 @@ export default function CreateRoomPage() {
                       return (
                         <div
                           key={idx}
-                          className="p-3 bg-paper-card rounded-lg border border-dashed border-paper-border space-y-1.5"
+                          className="p-3 bg-paper-card rounded-sketch border border-dashed border-paper-border space-y-1.5"
                         >
                           <div className="flex items-center justify-between text-sm font-sans font-bold text-ink">
                             <span className="flex items-center gap-1.5">
@@ -395,7 +423,7 @@ export default function CreateRoomPage() {
                             options={CATEGORIES.filter((c) => c.id !== 'all').map((c) => ({
                               value: c.id,
                               label: c.label,
-                              icon: c.icon,
+                              icon: <CategoryIcon category={c.id} className="h-4 w-4" />,
                             }))}
                             className="w-full"
                           />
@@ -407,7 +435,95 @@ export default function CreateRoomPage() {
               )}
             </div>
 
+            {/* Zorluk Seviyesi Seçimi (08a-zorluk-seviyesi-BASIT.md) */}
+            <div>
+              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Gauge className="h-5 w-5 text-pencil-orange" />
+                  <span>Zorluk Seviyesi</span>
+                </span>
+                <span className="text-sm font-sans font-semibold text-ink-faded">
+                  {difficulty === 'kolay' ? 'Kolay (Tier 1-2)' : difficulty === 'orta' ? 'Orta (Tier 1-3)' : 'Zor (Tüm Havuz)'}
+                </span>
+              </label>
 
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setDifficulty('kolay')}
+                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 border-2 rounded-sketch-md ${
+                    difficulty === 'kolay'
+                      ? 'border-pencil-green bg-pencil-green/10 shadow-xs text-ink'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
+                        <Feather className="h-4 w-4 text-pencil-green" />
+                        <span>Kolay</span>
+                      </span>
+                      <span className="text-xs font-sans font-bold px-2 py-0.5 rounded-full bg-pencil-green/20 text-pencil-green">
+                        Tier 1-2
+                      </span>
+                    </div>
+                    <span className="block text-xs font-normal text-ink-faded font-sans leading-relaxed">
+                      En popüler ve herkesin bildiği isimler. Rahat ve eğlenceli.
+                    </span>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setDifficulty('orta')}
+                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 border-2 rounded-sketch-md ${
+                    difficulty === 'orta'
+                      ? 'border-pencil-yellow bg-pencil-yellow/10 shadow-xs text-ink'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
+                        <Zap className="h-4 w-4 text-pencil-yellow" />
+                        <span>Orta</span>
+                      </span>
+                      <span className="text-xs font-sans font-bold px-2 py-0.5 rounded-full bg-pencil-yellow/20 text-pencil-yellow">
+                        Tier 1-3
+                      </span>
+                    </div>
+                    <span className="block text-xs font-normal text-ink-faded font-sans leading-relaxed">
+                      Popüler ve bilinen isimler. Standart oyun deneyimi.
+                    </span>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setDifficulty('zor')}
+                  className={`flex flex-col justify-between text-left p-3.5 transition-all duration-200 border-2 rounded-sketch-md ${
+                    difficulty === 'zor'
+                      ? 'border-pencil-red bg-pencil-red/10 shadow-xs text-ink'
+                      : 'border-dashed border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                  }`}
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="font-display text-xl font-bold text-ink flex items-center gap-1.5">
+                        <Flame className="h-4 w-4 text-pencil-red" />
+                        <span>Zor</span>
+                      </span>
+                      <span className="text-xs font-sans font-bold px-2 py-0.5 rounded-full bg-pencil-red/20 text-pencil-red">
+                        Tier 1-5
+                      </span>
+                    </div>
+                    <span className="block text-xs font-normal text-ink-faded font-sans leading-relaxed">
+                      Tüm havuz! Niş ve detaylı karakterler dahil.
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </div>
 
             {error && (
               <motion.div

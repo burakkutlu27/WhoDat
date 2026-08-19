@@ -2,13 +2,13 @@ import 'server-only'
 
 import { randomUUID } from 'node:crypto'
 
-import type { NameRow, PlayerRow, RoomRow, RoomStatus } from '../database.types'
+import type { Database, NameRow, PlayerRow, RoomRow, RoomStatus } from '../database.types'
 import { badRequest, conflict, forbidden, notFound } from '../http'
 import { supabaseAdmin } from '../supabaseAdmin'
 import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
 import { QUESTION_BANK_SEED } from './questionBankData'
-import type { AutoAssignResult, ClueCardItem, CommunicationMode, DeviceStats, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
+import type { AutoAssignResult, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -25,6 +25,7 @@ import {
   distributeNames,
   estimatePersistentScore,
   estimateSpeedScore,
+  filterByDifficulty,
   generateRoomCode,
   selectNameForPlayer,
   selectNextPlayer,
@@ -98,6 +99,7 @@ export interface TextQuestionVoteInternal {
 const globalRef = globalThis as unknown as {
   __whoDat_roomModeStore?: Map<string, RoomModeData>
   __whoDat_roomCommunicationModeStore?: Map<string, CommunicationMode>
+  __whoDat_roomDifficultyStore?: Map<string, DifficultyLevel>
   __whoDat_roomCategoryStore?: Map<string, RoomCategoryData>
   __whoDat_playerSpeedStore?: Map<string, Map<string, PlayerSpeedData>>
   __whoDat_playerRoundNameStore?: Map<string, Map<string, string>>
@@ -111,6 +113,7 @@ const globalRef = globalThis as unknown as {
 
 globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
 globalRef.__whoDat_roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore ?? new Map()
+globalRef.__whoDat_roomDifficultyStore = globalRef.__whoDat_roomDifficultyStore ?? new Map()
 globalRef.__whoDat_roomCategoryStore = globalRef.__whoDat_roomCategoryStore ?? new Map()
 globalRef.__whoDat_playerSpeedStore = globalRef.__whoDat_playerSpeedStore ?? new Map()
 globalRef.__whoDat_playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore ?? new Map()
@@ -123,6 +126,7 @@ globalRef.__whoDat_playerClueCardStore = globalRef.__whoDat_playerClueCardStore 
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
 const roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore
+const roomDifficultyStore = globalRef.__whoDat_roomDifficultyStore
 const roomCategoryStore = globalRef.__whoDat_roomCategoryStore
 const playerSpeedStore = globalRef.__whoDat_playerSpeedStore
 const playerRoundNameStore = globalRef.__whoDat_playerRoundNameStore
@@ -241,6 +245,26 @@ export function getRoomCommunicationMode(roomId: string, dbRoomCommMode?: string
 export function setRoomCommunicationModeData(roomId: string, mode: CommunicationMode) {
   roomCommunicationModeStore.set(roomId, mode)
   return mode
+}
+
+/**
+ * Zorluk Seviyesi Store & Helper'ları
+ */
+export function getRoomDifficulty(roomId: string, dbDifficulty?: string | null): DifficultyLevel {
+  const stored = roomDifficultyStore.get(roomId)
+  if (stored) return stored
+  if (dbDifficulty === 'kolay' || dbDifficulty === 'orta' || dbDifficulty === 'zor') {
+    roomDifficultyStore.set(roomId, dbDifficulty)
+    return dbDifficulty
+  }
+  const defaultDifficulty: DifficultyLevel = 'orta'
+  roomDifficultyStore.set(roomId, defaultDifficulty)
+  return defaultDifficulty
+}
+
+export function setRoomDifficulty(roomId: string, difficulty: DifficultyLevel): DifficultyLevel {
+  roomDifficultyStore.set(roomId, difficulty)
+  return difficulty
 }
 
 export function getPlayerClueCard(roomId: string, playerId: string): ClueCardItem[] {
@@ -503,10 +527,121 @@ export function setPlayerLives(roomId: string, playerId: string, lives: number):
   map.set(playerId, Math.max(0, lives))
 }
 
+export const ROOM_INACTIVITY_TIMEOUT_MS = 60 * 60 * 1000 // 60 dakika
+
+export function isRoomExpired(room: RoomRow, timeoutMs: number = ROOM_INACTIVITY_TIMEOUT_MS): boolean {
+  if (room.status === 'closed') return false
+  const lastActiveStr = room.updated_at || room.created_at
+  if (!lastActiveStr) return false
+  const lastActiveTime = new Date(lastActiveStr).getTime()
+  if (Number.isNaN(lastActiveTime)) return false
+  return Date.now() - lastActiveTime > timeoutMs
+}
+
+export function clearRoomMemoryState(roomId: string): void {
+  roomModeStore.delete(roomId)
+  roomCommunicationModeStore.delete(roomId)
+  roomCategoryStore.delete(roomId)
+  playerSpeedStore.delete(roomId)
+  playerRoundNameStore.delete(roomId)
+  roomLivesStore.delete(roomId)
+  roomUsedNamesStore.delete(roomId)
+  playerPersistentStore.delete(roomId)
+  sharedTargetStore.delete(roomId)
+  roomActiveVoteStore.delete(roomId)
+  playerClueCardStore.delete(roomId)
+}
+
+export async function closeExpiredRoom(roomId: string): Promise<void> {
+  clearRoomMemoryState(roomId)
+  try {
+    await supabaseAdmin()
+      .from('rooms')
+      .update({ status: 'closed', is_game_active: false })
+      .eq('id', roomId)
+  } catch (err) {
+    console.error(`closeExpiredRoom(${roomId}) hatası:`, err)
+  }
+}
+
+export async function closeExpiredRooms(inactivityMinutes: number = 60): Promise<number> {
+  const admin = supabaseAdmin()
+  try {
+    const { data, error } = await admin.rpc('close_expired_rooms', {
+      p_inactivity_minutes: inactivityMinutes,
+    })
+    if (!error && typeof data === 'number') {
+      return data
+    }
+  } catch {
+    // RPC başarısız olursa sorgu ile devam et
+  }
+
+  try {
+    const cutoff = new Date(Date.now() - inactivityMinutes * 60 * 1000).toISOString()
+    const { data: expiredRooms, error: selectErr } = await admin
+      .from('rooms')
+      .select('id')
+      .neq('status', 'closed')
+      .lt('updated_at', cutoff)
+
+    if (selectErr || !expiredRooms || expiredRooms.length === 0) return 0
+
+    const expiredIds = expiredRooms.map((r) => r.id)
+    for (const id of expiredIds) {
+      clearRoomMemoryState(id)
+    }
+
+    const { error: updateErr } = await admin
+      .from('rooms')
+      .update({ status: 'closed', is_game_active: false })
+      .neq('status', 'closed')
+      .lt('updated_at', cutoff)
+
+    if (updateErr) throw updateErr
+    return expiredIds.length
+  } catch (err) {
+    console.error('closeExpiredRooms fallback hatası:', err)
+    return 0
+  }
+}
+
+export async function closeAllRooms(): Promise<number> {
+  const admin = supabaseAdmin()
+  try {
+    const { data: openRooms, error: selectErr } = await admin
+      .from('rooms')
+      .select('id')
+      .neq('status', 'closed')
+
+    if (selectErr || !openRooms) return 0
+
+    for (const r of openRooms) {
+      clearRoomMemoryState(r.id)
+    }
+
+    const { error: updateErr } = await admin
+      .from('rooms')
+      .update({ status: 'closed', is_game_active: false })
+      .neq('status', 'closed')
+
+    if (updateErr) throw updateErr
+    return openRooms.length
+  } catch (err) {
+    console.error('closeAllRooms hatası:', err)
+    return 0
+  }
+}
+
 async function loadRoom(roomId: string): Promise<RoomRow> {
   const { data, error } = await supabaseAdmin().from('rooms').select('*').eq('id', roomId).maybeSingle()
   if (error) throw error
   if (!data) throw notFound('room_not_found', 'Oda bulunamadı.')
+  if (data.status !== 'closed' && isRoomExpired(data)) {
+    await closeExpiredRoom(data.id)
+    data.status = 'closed'
+    data.is_game_active = false
+  }
   return data
 }
 
@@ -563,12 +698,17 @@ export async function createRoom(
     category?: FamousPersonCategory
     phaseCategories?: FamousPersonCategory[]
     communicationMode?: CommunicationMode
+    difficulty?: DifficultyLevel
     deviceId?: string
   },
 ) {
+  // Arka planda süresi dolmuş eski odaları temizle
+  void closeExpiredRooms().catch(() => {})
+
   const admin = supabaseAdmin()
   const totalRounds = gameMode === 'speed' ? DEFAULT_SPEED_ROUNDS : 1
   const communicationMode = categorySettings?.communicationMode || 'voice'
+  const difficulty = categorySettings?.difficulty || 'orta'
   const deviceId = categorySettings?.deviceId || null
 
   for (let attempt = 0; attempt < 5; attempt++) {
@@ -599,6 +739,7 @@ export async function createRoom(
     // INV-1: game_mode sadece lobi kurulurken kaydedilir
     setRoomModeData(room.id, gameMode)
     setRoomCommunicationModeData(room.id, communicationMode)
+    setRoomDifficulty(room.id, difficulty)
     setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
 
     const categoryMode: LobbyCategoryMode = categorySettings?.categoryMode || 'single'
@@ -621,13 +762,14 @@ export async function createRoom(
       await admin.from('rooms').update({
         game_mode: gameMode,
         communication_mode: communicationMode,
+        difficulty,
         total_rounds: totalRounds,
         category_mode: categoryMode,
         selected_category: category,
         phase_categories: phaseCategories,
         current_phase: 1,
         total_phases: totalPhases,
-      }).eq('id', room.id)
+      } as unknown as Database['public']['Tables']['rooms']['Update']).eq('id', room.id)
       await admin.from('players').update({ questions_this_round: 0, round_scores: [], has_finished_round: false }).eq('id', host.id)
     } catch {
       // Sütun yoksa yut
@@ -879,6 +1021,11 @@ export async function joinRoom(roomCode: string, nickname: string, deviceId?: st
   if (error) throw error
   if (!room) throw notFound('room_not_found', 'Oda bulunamadı. Oda kodunu kontrol edin.')
 
+  if (room.status !== 'closed' && isRoomExpired(room)) {
+    await closeExpiredRoom(room.id)
+    room.status = 'closed'
+  }
+
   if (room.status === 'finished' || room.status === 'closed') {
     throw conflict('room_closed', 'Bu oda yeni oyuncu kabul etmiyor.')
   }
@@ -1030,6 +1177,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       totalRounds,
       gameMode,
       communicationMode,
+      difficulty: getRoomDifficulty(roomId, (room as unknown as { difficulty?: string }).difficulty),
       isGameActive: room.is_game_active ?? false,
       currentPlayerId: room.current_player_id,
       categoryMode: categoryData.categoryMode,
@@ -1145,13 +1293,25 @@ export async function submitNames(roomId: string, playerId: string, names: strin
 export async function getFamousPeople(options: {
   query?: string
   category?: FamousPersonCategory
+  difficulty?: DifficultyLevel
   random?: boolean
   limit?: number
   maxFameTier?: number
   fameTiers?: number[]
 }): Promise<FamousPerson[]> {
-  const { query, category, random, limit = 10, maxFameTier, fameTiers } = options
+  const { query, category, difficulty, random, limit = 10, fameTiers } = options
   const admin = supabaseAdmin()
+
+  // Zorluk seviyesine göre maksimum fameTier belirle (08a-zorluk-seviyesi-BASIT.md)
+  let difficultyMaxTier: number | undefined = undefined
+  if (difficulty === 'kolay') difficultyMaxTier = 2
+  else if (difficulty === 'orta') difficultyMaxTier = 3
+  else if (difficulty === 'zor') difficultyMaxTier = undefined
+
+  const maxFameTier =
+    options.maxFameTier !== undefined && difficultyMaxTier !== undefined
+      ? Math.min(options.maxFameTier, difficultyMaxTier)
+      : (options.maxFameTier ?? difficultyMaxTier)
 
   const combinedMap = new Map<string, FamousPerson>()
 
@@ -1229,7 +1389,7 @@ export async function getFamousPeople(options: {
     }
   }
 
-  const results = Array.from(combinedMap.values())
+  const results = filterByDifficulty(Array.from(combinedMap.values()), difficulty)
 
   // Öneri & Rastgele Mod: Önce fameTier'a göre küçükten büyüğe sırala,
   // aynı tier içindeki isimleri rastgele karıştır (shuffle) ve ilk limit kadarını getir.
@@ -1348,24 +1508,25 @@ export async function autoAssignNames(
     category && category !== 'all' ? category : getActivePhaseCategory(categoryData)
 
   const gameMode = getRoomMode(roomId, room.game_mode)
+  const difficulty = getRoomDifficulty(roomId, (room as unknown as { difficulty?: string }).difficulty)
 
   if (gameMode === 'shared_target') {
     let candidates = await getFamousPeople({
       category: effectiveCategory,
+      difficulty,
       random: true,
       limit: 10,
-      maxFameTier: 1,
     })
-    if (candidates.length === 0) {
+    if (candidates.length === 0 && effectiveCategory !== 'all') {
       candidates = await getFamousPeople({
-        category: effectiveCategory,
+        category: 'all',
+        difficulty,
         random: true,
         limit: 10,
-        maxFameTier: 2,
       })
     }
     if (candidates.length === 0) {
-      throw badRequest('no_famous_people', 'Seçilen kategoride ünlü bulunamadı.')
+      throw badRequest('no_famous_people', 'Seçilen kriterlere uygun ünlü bulunamadı.')
     }
     const picked = candidates[0]!
     const sharedData = getSharedTargetRoomData(roomId)
@@ -1382,30 +1543,16 @@ export async function autoAssignNames(
   const totalNamesNeeded = players.length * MAX_NAMES_PER_PLAYER
   const pool = await getFamousPeople({
     category: effectiveCategory,
+    difficulty,
     random: true,
-    maxFameTier: 1,
     limit: Math.max(totalNamesNeeded + 10, 50),
   })
 
-  if (pool.length < totalNamesNeeded) {
+  if (pool.length < totalNamesNeeded && effectiveCategory !== 'all') {
     const extra = await getFamousPeople({
       category: 'all',
+      difficulty,
       random: true,
-      maxFameTier: 1,
-      limit: totalNamesNeeded + 10,
-    })
-    for (const item of extra) {
-      if (!pool.some((p) => p.name.toLocaleLowerCase('tr') === item.name.toLocaleLowerCase('tr'))) {
-        pool.push(item)
-      }
-    }
-  }
-
-  if (pool.length < totalNamesNeeded) {
-    const extra = await getFamousPeople({
-      category: effectiveCategory,
-      random: true,
-      maxFameTier: 2,
       limit: totalNamesNeeded + 10,
     })
     for (const item of extra) {
@@ -1661,34 +1808,22 @@ async function transitionToNextPhase(
   // 1. Önceki fazın isimlerini temizle
   await admin.from('names').delete().eq('room_id', room.id)
 
+  const difficulty = getRoomDifficulty(room.id, (room as unknown as { difficulty?: string }).difficulty)
+
   // 2. Yeni fazın kategorisinden yeni isimler çek ve dağıt
   const totalNamesNeeded = players.length * MAX_NAMES_PER_PLAYER
   const pool = await getFamousPeople({
     category: nextCategory,
+    difficulty,
     random: true,
-    maxFameTier: 1,
     limit: Math.max(totalNamesNeeded + 10, 50),
   })
 
-  if (pool.length < totalNamesNeeded) {
+  if (pool.length < totalNamesNeeded && nextCategory !== 'all') {
     const extra = await getFamousPeople({
       category: 'all',
+      difficulty,
       random: true,
-      maxFameTier: 1,
-      limit: totalNamesNeeded + 10,
-    })
-    for (const item of extra) {
-      if (!pool.some((p) => p.name.toLocaleLowerCase('tr') === item.name.toLocaleLowerCase('tr'))) {
-        pool.push(item)
-      }
-    }
-  }
-
-  if (pool.length < totalNamesNeeded) {
-    const extra = await getFamousPeople({
-      category: nextCategory,
-      random: true,
-      maxFameTier: 2,
       limit: totalNamesNeeded + 10,
     })
     for (const item of extra) {
@@ -3026,6 +3161,7 @@ export async function leaveRoom(roomId: string, playerId: string) {
   if (error) throw error
 
   if (remaining.length === 0) {
+    clearRoomMemoryState(roomId)
     await admin.from('rooms').update({ status: 'closed', is_game_active: false }).eq('id', roomId)
     return { roomClosed: true }
   }

@@ -88,7 +88,7 @@ export function ClueCard({
   }
 
   return (
-    <div className="sticky-note sticky-note-yellow p-4 sm:p-5 rounded-2xl shadow-md border-2 border-pencil-yellow transition-all">
+    <div className="sticky-note sticky-note-yellow p-4 sm:p-5 rounded-sketch-lg shadow-md border-2 border-pencil-yellow transition-all">
       {/* Header */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0">
@@ -111,7 +111,7 @@ export function ClueCard({
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1.5 rounded-md text-ink-faded hover:text-ink hover:bg-paper-card transition-colors"
+            className="p-1.5 rounded-sketch text-ink-faded hover:text-ink hover:bg-paper-card transition-colors"
             aria-label={isExpanded ? 'Not defterini daralt' : 'Not defterini genişlet'}
           >
             {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
@@ -140,7 +140,7 @@ export function ClueCard({
                       key={tag}
                       type="button"
                       onClick={() => handleAddTag(tag)}
-                      className="text-xs font-sans font-semibold px-2 py-0.5 rounded-md bg-paper-card/90 hover:bg-paper-card border border-paper-border text-ink hover:border-pencil-yellow transition-all active:scale-95 shadow-2xs"
+                      className="text-xs font-sans font-semibold px-2 py-0.5 rounded-sketch-sm bg-paper-card/90 hover:bg-paper-card border border-paper-border text-ink hover:border-pencil-yellow transition-all active:scale-95 shadow-2xs"
                     >
                       +{tag}
                     </button>
@@ -165,7 +165,7 @@ export function ClueCard({
                   {isMounted && notes.trim().length > 0 && (
                     <div>
                       {isConfirmingClear ? (
-                        <div className="flex items-center gap-1.5 bg-paper-card px-2 py-0.5 rounded-md border border-paper-border text-xs">
+                        <div className="flex items-center gap-1.5 bg-paper-card px-2 py-0.5 rounded-sketch-sm border border-paper-border text-xs">
                           <span className="text-ink-faded font-medium">Temizlensin mi?</span>
                           <button
                             type="button"
@@ -206,7 +206,7 @@ export function ClueCard({
                     return (
                       <div
                         key={item.id || index}
-                        className="p-3 bg-paper-card rounded-xl border border-paper-border shadow-2xs space-y-2"
+                        className="p-3 bg-paper-card rounded-sketch-md border border-paper-border shadow-2xs space-y-2"
                       >
                         {/* Soru Metni */}
                         <div className="flex items-start gap-2">
@@ -224,7 +224,7 @@ export function ClueCard({
                             {item.yesCount} Evet, {item.noCount} Hayır
                           </span>
                           <span
-                            className={`text-xs font-sans font-bold px-2 py-0.5 rounded-md flex items-center gap-1 shrink-0 ${
+                            className={`text-xs font-sans font-bold px-2 py-0.5 rounded-sketch-sm flex items-center gap-1 shrink-0 ${
                               isYes
                                 ? 'bg-pencil-green text-white shadow-2xs'
                                 : isNo

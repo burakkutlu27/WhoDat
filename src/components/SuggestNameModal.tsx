@@ -1,10 +1,11 @@
 'use client'
 
-import { CheckCircle2, Lightbulb, Loader2, Sparkles, X } from 'lucide-react'
+import { CheckCircle2, Lightbulb, Loader2, Send, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
+import { CategoryIcon } from '@/components/CategoryIcon'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import type { FamousPersonCategory } from '@/lib/game/types'
 
@@ -119,7 +120,7 @@ export default function SuggestNameModal({
             {/* Close button */}
             <button
               onClick={onClose}
-              className="absolute right-4 top-4 rounded-xl border border-paper-border bg-paper-card p-2 text-ink-faded transition-all hover:rotate-90 hover:border-pencil-red hover:text-pencil-red"
+              className="absolute right-4 top-4 rounded-sketch border border-paper-border bg-paper-card p-2 text-ink-faded transition-all hover:rotate-90 hover:border-pencil-red hover:text-pencil-red"
               aria-label="Kapat"
             >
               <X className="h-5 w-5" />
@@ -131,7 +132,7 @@ export default function SuggestNameModal({
                 animate={{ opacity: 1, scale: 1 }}
                 className="py-8 text-center space-y-4"
               >
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-dashed border-pencil-green bg-pencil-green/10 text-pencil-green">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-sketch-lg border-2 border-dashed border-pencil-green bg-pencil-green/10 text-pencil-green">
                   <CheckCircle2 className="h-10 w-10 animate-bounce" />
                 </div>
                 <h3 className="font-display text-3xl font-bold text-ink">
@@ -148,7 +149,7 @@ export default function SuggestNameModal({
                   <motion.div
                     animate={{ rotate: [-4, 4, -4] }}
                     transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-                    className="mb-2 inline-block rounded-2xl border-2 border-paper-border bg-paper-card p-3 text-pencil-yellow shadow-md"
+                    className="mb-2 inline-block rounded-sketch-lg border-2 border-paper-border bg-paper-card p-3 text-pencil-yellow shadow-md"
                   >
                     <Lightbulb className="h-8 w-8 text-pencil-yellow" />
                   </motion.div>
@@ -166,7 +167,7 @@ export default function SuggestNameModal({
                   <motion.div
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-4 rounded-xl border border-pencil-red/40 bg-pencil-red/10 p-3 text-xs font-bold text-pencil-red"
+                    className="mb-4 rounded-sketch-md border border-pencil-red/40 bg-pencil-red/10 p-3 text-xs font-bold text-pencil-red"
                   >
                     {error}
                   </motion.div>
@@ -204,14 +205,13 @@ export default function SuggestNameModal({
                             key={cat.id}
                             type="button"
                             onClick={() => setCategory(cat.id as Exclude<FamousPersonCategory, 'all'>)}
-                            className={`flex items-center gap-1.5 p-2.5 rounded-xl border-2 transition-all font-sans text-xs font-bold text-left ${
+                            className={`flex items-center gap-1.5 p-2.5 rounded-sketch-md border-2 transition-all font-sans text-xs font-bold text-left ${
                               isSelected
                                 ? 'border-pencil-yellow bg-pencil-yellow/15 text-ink shadow-xs scale-[1.02]'
                                 : 'border-paper-border bg-paper-card text-ink-faded hover:bg-paper-card-alt hover:text-ink'
                             }`}
-                            style={{ borderRadius: '10px 6px 12px 8px' }}
                           >
-                            <span className="text-base">{cat.icon}</span>
+                            <CategoryIcon category={cat.id} className="h-4 w-4 shrink-0 text-pencil-yellow" />
                             <span className="truncate">{cat.label}</span>
                           </button>
                         )
@@ -249,7 +249,7 @@ export default function SuggestNameModal({
                         </>
                       ) : (
                         <>
-                          <Sparkles className="h-5 w-5 fill-current" />
+                          <Send className="h-5 w-5" />
                           <span>Öneriyi Havuza Gönder</span>
                         </>
                       )}

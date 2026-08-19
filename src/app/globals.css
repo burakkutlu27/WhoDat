@@ -382,6 +382,15 @@
 }
 
 @layer utilities {
+  /* Asimetrik Kağıt / Sketch Köşe Sınıfları */
+  .rounded-sketch-xs { border-radius: 4px 2px 5px 3px; }
+  .rounded-sketch-sm { border-radius: 6px 3px 8px 4px; }
+  .rounded-sketch { border-radius: 8px 4px 10px 6px; }
+  .rounded-sketch-alt { border-radius: 4px 8px 6px 10px; }
+  .rounded-sketch-md { border-radius: 10px 5px 12px 6px; }
+  .rounded-sketch-lg { border-radius: 14px 6px 16px 8px; }
+  .rounded-sketch-xl { border-radius: 18px 8px 20px 10px; }
+
   /* Elle çizilmiş altı çizili efekt */
   .underline-sketch {
     text-decoration: none;

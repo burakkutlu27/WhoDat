@@ -9,17 +9,17 @@ export type FamousPersonCategory =
 export interface CategoryInfo {
   id: FamousPersonCategory
   label: string
-  icon: string
+  icon?: string
   color: string
 }
 
 export const CATEGORIES: CategoryInfo[] = [
-  { id: 'all', label: 'Tümü / Karışık', icon: '🎲', color: 'pencil-yellow' },
-  { id: 'unluler', label: 'Ünlüler', icon: '🎭', color: 'pencil-red' },
-  { id: 'tarihi_kisiler', label: 'Tarihi Kişiler', icon: '🏛️', color: 'pencil-blue' },
-  { id: 'cizgi_karakterler', label: 'Kurgusal & Çizgi', icon: '🎨', color: 'pencil-purple' },
-  { id: 'sporcular', label: 'Sporcular', icon: '⚽', color: 'pencil-green' },
-  { id: 'dizi_film_karakterleri', label: 'Dizi & Film', icon: '🎬', color: 'pencil-orange' },
+  { id: 'all', label: 'Tümü / Karışık', color: 'pencil-yellow' },
+  { id: 'unluler', label: 'Ünlüler', color: 'pencil-red' },
+  { id: 'tarihi_kisiler', label: 'Tarihi Kişiler', color: 'pencil-blue' },
+  { id: 'cizgi_karakterler', label: 'Kurgusal & Çizgi', color: 'pencil-purple' },
+  { id: 'sporcular', label: 'Sporcular', color: 'pencil-green' },
+  { id: 'dizi_film_karakterleri', label: 'Dizi & Film', color: 'pencil-orange' },
 ]
 
 export interface FamousPersonItem {
