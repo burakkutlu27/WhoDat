@@ -1,6 +1,6 @@
 'use client'
 
-import { BarChart2, Check, Flame, HelpCircle, Info, Loader2, ShieldCheck, Trophy, X, Zap } from 'lucide-react'
+import { BarChart2, Flame, HelpCircle, Info, Loader2, ShieldCheck, Trophy, X, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 

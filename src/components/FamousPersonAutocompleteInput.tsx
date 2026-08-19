@@ -44,22 +44,27 @@ export function FamousPersonAutocompleteInput({
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
   const [isSuggestModalOpen, setIsSuggestModalOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const isUserTypingRef = useRef(false)
 
   // Click outside listener to close dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setIsOpen(false)
+        isUserTypingRef.current = false
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // Debounced search when value changes
+  // Debounced search when value changes - ONLY opens dropdown if the user actively typed
   useEffect(() => {
     const trimmed = value.trim()
-    if (trimmed.length < 2) {
+    if (trimmed.length < 2 || !isUserTypingRef.current) {
+      if (!isUserTypingRef.current) {
+        setIsOpen(false)
+      }
       return
     }
 
@@ -74,13 +79,17 @@ export function FamousPersonAutocompleteInput({
         )
         if (isMounted) {
           setResults(res.data || [])
-          setIsOpen(true)
+          if (isUserTypingRef.current) {
+            setIsOpen(true)
+          }
           setHighlightedIndex(-1)
         }
       } catch {
         if (isMounted) {
           setResults([])
-          setIsOpen(true)
+          if (isUserTypingRef.current) {
+            setIsOpen(true)
+          }
         }
       } finally {
         if (isMounted) {
@@ -96,6 +105,7 @@ export function FamousPersonAutocompleteInput({
   }, [value, categoryFilter, difficultyFilter])
 
   const handleSelect = (person: FamousPerson) => {
+    isUserTypingRef.current = false
     onChange(person.name)
     onSelect?.(person)
     setIsOpen(false)
@@ -115,6 +125,7 @@ export function FamousPersonAutocompleteInput({
       e.preventDefault()
       handleSelect(results[highlightedIndex]!)
     } else if (e.key === 'Escape') {
+      isUserTypingRef.current = false
       setIsOpen(false)
     }
   }
@@ -134,6 +145,7 @@ export function FamousPersonAutocompleteInput({
           autoFocus={autoFocus}
           placeholder={placeholder}
           onChange={(e) => {
+            isUserTypingRef.current = true
             onChange(e.target.value)
             if (e.target.value.trim().length < 2) {
               setIsOpen(false)
@@ -141,8 +153,16 @@ export function FamousPersonAutocompleteInput({
             }
           }}
           onFocus={() => {
-            if (value.trim().length >= 2) {
+            // Kullanıcı daha önce bizzat yazdıysa ve sonuçlar varsa aç
+            if (isUserTypingRef.current && value.trim().length >= 2) {
               setIsOpen(true)
+            }
+          }}
+          onBlur={(e) => {
+            // Eğer tıklanan yer dropdown içi değilse kapat
+            if (containerRef.current && !containerRef.current.contains(e.relatedTarget as Node)) {
+              isUserTypingRef.current = false
+              setIsOpen(false)
             }
           }}
           onKeyDown={handleKeyDown}

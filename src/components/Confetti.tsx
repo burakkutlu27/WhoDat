@@ -9,7 +9,10 @@ interface ConfettiPiece {
   color: string
   delay: number
   rotation: number
-  shape: 'rect' | 'circle' | 'triangle'
+  shape: 'paper_scrap' | 'post_it' | 'torn_strip' | 'polygon'
+  width: number
+  height: number
+  tilt: number
 }
 
 const CONFETTI_COLORS = [
@@ -21,24 +24,47 @@ const CONFETTI_COLORS = [
   'var(--pencil-orange)',
 ]
 
-const PIECE_COUNT = 24
+const PIECE_COUNT = 32
 
 function createPieces(): ConfettiPiece[] {
-  return Array.from({ length: PIECE_COUNT }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 20 - 10,
-    color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]!,
-    delay: Math.random() * 0.4,
-    rotation: Math.random() * 360,
-    shape: (['rect', 'circle', 'triangle'] as const)[Math.floor(Math.random() * 3)]!,
-  }))
+  const shapes = ['paper_scrap', 'post_it', 'torn_strip', 'polygon'] as const
+  return Array.from({ length: PIECE_COUNT }, (_, i) => {
+    const shape = shapes[Math.floor(Math.random() * shapes.length)]!
+    let width = 8
+    let height = 6
+    if (shape === 'torn_strip') {
+      width = 12 + Math.random() * 4
+      height = 4 + Math.random() * 2
+    } else if (shape === 'post_it') {
+      width = 9 + Math.random() * 3
+      height = 9 + Math.random() * 3
+    } else if (shape === 'paper_scrap') {
+      width = 8 + Math.random() * 5
+      height = 6 + Math.random() * 4
+    } else {
+      width = 7 + Math.random() * 4
+      height = 7 + Math.random() * 4
+    }
+
+    return {
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 25 - 15,
+      color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]!,
+      delay: Math.random() * 0.45,
+      rotation: Math.random() * 360,
+      shape,
+      width,
+      height,
+      tilt: (Math.random() - 0.5) * 20,
+    }
+  })
 }
 
 /**
  * Confetti — Kağıt konfeti patlama efekti.
  * Doğru tahmin ve şampiyon duyurusu gibi anlarda tetiklenir.
- * Tamamıyla CSS animasyonlu, bir kez patlar ve kaybolur.
+ * Masaya dökülen el kesimi kağıt ve post-it parçacıkları hissi verir.
  */
 export default function Confetti({ trigger }: { trigger: boolean }) {
   const [pieces, setPieces] = useState<ConfettiPiece[]>([])
@@ -49,7 +75,7 @@ export default function Confetti({ trigger }: { trigger: boolean }) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setPieces(createPieces())
       setActive(true)
-      const timer = setTimeout(() => setActive(false), 1500)
+      const timer = setTimeout(() => setActive(false), 1600)
       return () => clearTimeout(timer)
     }
   }, [trigger])
@@ -72,34 +98,51 @@ export default function Confetti({ trigger }: { trigger: boolean }) {
             transform: `rotate(${piece.rotation}deg)`,
           }}
         >
-          {piece.shape === 'rect' && (
+          {piece.shape === 'post_it' && (
             <div
               style={{
-                width: '8px',
-                height: '6px',
+                width: `${piece.width}px`,
+                height: `${piece.height}px`,
                 backgroundColor: piece.color,
-                borderRadius: '1px',
+                borderRadius: '1px 1px 4px 1px',
+                boxShadow: '1px 1px 2px rgba(0,0,0,0.12)',
+                transform: `rotate(${piece.tilt}deg)`,
               }}
             />
           )}
-          {piece.shape === 'circle' && (
+
+          {piece.shape === 'torn_strip' && (
             <div
               style={{
-                width: '6px',
-                height: '6px',
+                width: `${piece.width}px`,
+                height: `${piece.height}px`,
                 backgroundColor: piece.color,
-                borderRadius: '50%',
+                borderRadius: '2px 0px 3px 1px',
+                opacity: 0.9,
+                transform: `rotate(${piece.tilt * 1.5}deg)`,
               }}
             />
           )}
-          {piece.shape === 'triangle' && (
+
+          {piece.shape === 'paper_scrap' && (
             <div
               style={{
-                width: 0,
-                height: 0,
-                borderLeft: '4px solid transparent',
-                borderRight: '4px solid transparent',
-                borderBottom: `7px solid ${piece.color}`,
+                width: `${piece.width}px`,
+                height: `${piece.height}px`,
+                backgroundColor: piece.color,
+                clipPath: 'polygon(0% 15%, 85% 0%, 100% 85%, 15% 100%)',
+                boxShadow: '1px 1px 2px rgba(0,0,0,0.08)',
+              }}
+            />
+          )}
+
+          {piece.shape === 'polygon' && (
+            <div
+              style={{
+                width: `${piece.width}px`,
+                height: `${piece.height}px`,
+                backgroundColor: piece.color,
+                clipPath: 'polygon(25% 0%, 100% 20%, 75% 100%, 0% 80%)',
               }}
             />
           )}
@@ -108,3 +151,4 @@ export default function Confetti({ trigger }: { trigger: boolean }) {
     </div>
   )
 }
+

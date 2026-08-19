@@ -85,7 +85,7 @@ export const statsQuerySchema = z.object({
 export const submitNamesSchema = z.object({
   names: z
     .array(nameTextSchema)
-    .min(1, 'En az bir isim girmelisiniz.')
+    .min(3, 'Lütfen 3 ismi de eksiksiz doldurun.')
     .max(3, 'En fazla 3 isim gönderebilirsiniz.'),
 })
 

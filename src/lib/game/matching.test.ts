@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
-import { fuzzyMatch, levenshteinDistance, normalizeGuess, similarity } from './matching'
+import {
+  extractMatchCandidates,
+  fuzzyMatch,
+  levenshteinDistance,
+  normalizeGuess,
+  similarity,
+} from './matching'
 
 describe('normalizeGuess', () => {
   it('Türkçe karakterleri ASCII karşılıklarına indirger', () => {
@@ -22,6 +28,34 @@ describe('normalizeGuess', () => {
   it('boşluk, noktalama ve büyük/küçük harf farkını yok sayar', () => {
     expect(normalizeGuess('  Kemal   Sunal!  ')).toBe('kemalsunal')
     expect(normalizeGuess('kemal-sunal')).toBe('kemalsunal')
+  })
+})
+
+describe('extractMatchCandidates', () => {
+  it('parantez içermeyen basit isimler için kendisini döner', () => {
+    const candidates = extractMatchCandidates('Kemal Sunal')
+    expect(candidates).toContain('Kemal Sunal')
+  })
+
+  it('parantezli isimlerde hem ana gövdeyi hem parantez içini çıkarır', () => {
+    const candidates = extractMatchCandidates('Walter White (Heisenberg)')
+    expect(candidates).toContain('Walter White (Heisenberg)')
+    expect(candidates).toContain('Walter White')
+    expect(candidates).toContain('Heisenberg')
+  })
+
+  it('parantez içinde slash ile ayrılmış çoklu aliasları ayrı ayrı çıkarır', () => {
+    const candidates = extractMatchCandidates('Vito Corleone (Baba / The Godfather)')
+    expect(candidates).toContain('Vito Corleone')
+    expect(candidates).toContain('Baba')
+    expect(candidates).toContain('The Godfather')
+    expect(candidates).toContain('Godfather')
+  })
+
+  it('slash ile ayrılmış iki taraflı isimleri böler', () => {
+    const candidates = extractMatchCandidates('Superman / Clark Kent')
+    expect(candidates).toContain('Superman')
+    expect(candidates).toContain('Clark Kent')
   })
 })
 
@@ -83,4 +117,55 @@ describe('fuzzyMatch', () => {
     // Yalnızca noktalama içeren tahmin de boşa normalize olur.
     expect(fuzzyMatch('!!!', '!!!')).toBe(false)
   })
+
+  describe('parantezli ve takma adlı karakter eşleştirmeleri', () => {
+    it('parantezsiz ana ismi yazınca doğru kabul eder (Walter White)', () => {
+      expect(fuzzyMatch('Walter White', 'Walter White (Heisenberg)')).toBe(true)
+      expect(fuzzyMatch('walter white', 'Walter White (Heisenberg)')).toBe(true)
+    })
+
+    it('parantez içindeki takma adı yazınca doğru kabul eder (Heisenberg)', () => {
+      expect(fuzzyMatch('Heisenberg', 'Walter White (Heisenberg)')).toBe(true)
+      expect(fuzzyMatch('heisenberg', 'Walter White (Heisenberg)')).toBe(true)
+    })
+
+    it('parantezli tam ismi yazınca doğru kabul eder', () => {
+      expect(fuzzyMatch('Walter White (Heisenberg)', 'Walter White (Heisenberg)')).toBe(true)
+      expect(fuzzyMatch('Walter White Heisenberg', 'Walter White (Heisenberg)')).toBe(true)
+    })
+
+    it('çoklu alternatifli parantezlerdeki tüm varyantları kabul eder (Vito Corleone)', () => {
+      const target = 'Vito Corleone (Baba / The Godfather)'
+      expect(fuzzyMatch('Vito Corleone', target)).toBe(true)
+      expect(fuzzyMatch('vito corleone', target)).toBe(true)
+      expect(fuzzyMatch('Baba', target)).toBe(true)
+      expect(fuzzyMatch('baba', target)).toBe(true)
+      expect(fuzzyMatch('The Godfather', target)).toBe(true)
+      expect(fuzzyMatch('Godfather', target)).toBe(true)
+    })
+
+    it('çizgi ve film karakterlerinde parantezsiz ve parantez içi eşleşmeler', () => {
+      expect(fuzzyMatch('Batman', 'Batman (Bruce Wayne)')).toBe(true)
+      expect(fuzzyMatch('Bruce Wayne', 'Batman (Bruce Wayne)')).toBe(true)
+
+      expect(fuzzyMatch('Jon Snow', 'Jon Snow (Game of Thrones)')).toBe(true)
+      expect(fuzzyMatch('Thomas Shelby', 'Thomas Shelby (Peaky Blinders)')).toBe(true)
+      expect(fuzzyMatch('Tony Montana', 'Tony Montana (Yaralı Yüz / Scarface)')).toBe(true)
+      expect(fuzzyMatch('Scarface', 'Tony Montana (Yaralı Yüz / Scarface)')).toBe(true)
+      expect(fuzzyMatch('Yaralı Yüz', 'Tony Montana (Yaralı Yüz / Scarface)')).toBe(true)
+      expect(fuzzyMatch('Yarali Yuz', 'Tony Montana (Yaralı Yüz / Scarface)')).toBe(true)
+      expect(fuzzyMatch('Dobby', 'Dobby (Ev Cini)')).toBe(true)
+      expect(fuzzyMatch('Ronaldo', 'Ronaldo (Nazário)')).toBe(true)
+      expect(fuzzyMatch('Nazario', 'Ronaldo (Nazário)')).toBe(true)
+      expect(fuzzyMatch('Gandalf', 'Gandalf (Gri/Ak Gandalf)')).toBe(true)
+    })
+
+    it('yanlış tahminleri parantezli hedeflerde de reddeder', () => {
+      expect(fuzzyMatch('Cem Yılmaz', 'Walter White (Heisenberg)')).toBe(false)
+      expect(fuzzyMatch('Jesse Pinkman', 'Walter White (Heisenberg)')).toBe(false)
+      expect(fuzzyMatch('Al Pacino', 'Vito Corleone (Baba / The Godfather)')).toBe(false)
+      expect(fuzzyMatch('Superman', 'Batman (Bruce Wayne)')).toBe(false)
+    })
+  })
 })
+

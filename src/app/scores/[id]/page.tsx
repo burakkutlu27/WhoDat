@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
+import { CopiedPostIt, PencilLoader } from '@/components/animations'
 import { CategoryIcon } from '@/components/CategoryIcon'
 import { StatsModal } from '@/components/StatsModal'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
@@ -80,9 +81,8 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
   if (phase === 'loading') {
     return (
       <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
-        <div className="mx-auto max-w-3xl space-y-6" aria-busy="true" aria-label="Sonuçlar yükleniyor">
-          <div className="h-32 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />
-          <div className="h-72 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />
+        <div className="mx-auto max-w-3xl space-y-6 flex flex-col items-center justify-center min-h-[50vh]" aria-busy="true" aria-label="Sonuçlar yükleniyor">
+          <PencilLoader size={44} text="Sonuçlar Hesaplanıyor..." color="var(--pencil-yellow)" />
         </div>
       </div>
     )
@@ -120,34 +120,73 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
   const standings = [...state.players].sort((a, b) => b.score - a.score)
   const topScore = standings[0]?.score ?? 0
   const winners = standings.filter((player) => player.score === topScore && topScore > 0)
+  const youIndex = standings.findIndex((p) => p.id === state.you.playerId)
+  const youRank = youIndex !== -1 ? youIndex + 1 : null
+  const isYouWinner = winners.some((w) => w.id === state.you.playerId)
+
+  const firstPlace = standings[0]
+  const secondPlace = standings[1]
+  const thirdPlace = standings[2]
 
   return (
     <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
       <Confetti trigger={showConfetti} />
       <div className="mx-auto max-w-3xl space-y-6">
-        {/* Victory Header Card */}
+        {/* Victory / Game Over Header Card */}
         <motion.header
           initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
-          className="paper-card-lg p-8 text-center shadow-xl"
+          className={`paper-card-lg p-6 sm:p-8 text-center shadow-xl border-4 ${
+            isYouWinner
+              ? 'border-pencil-yellow bg-pencil-yellow/5'
+              : youRank === 2
+                ? 'border-ink-faded bg-paper-card'
+                : youRank === 3
+                  ? 'border-pencil-orange bg-paper-card'
+                  : 'border-paper-border bg-paper-card'
+          }`}
         >
           <motion.div
             initial={{ scale: 0, rotate: -30 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: 'spring', stiffness: 350, damping: 15, delay: 0.2 }}
-            className="mb-3 inline-block rounded-sketch-lg border-2 border-paper-border bg-paper-card p-3 text-pencil-yellow shadow-md animate-trophy-bounce"
+            className={`mb-3 inline-block rounded-sketch-lg border-2 border-paper-border p-3.5 shadow-md ${
+              isYouWinner
+                ? 'bg-pencil-yellow text-white animate-trophy-bounce'
+                : youRank === 2
+                  ? 'bg-ink-faded text-white'
+                  : youRank === 3
+                    ? 'bg-pencil-orange text-white'
+                    : 'bg-paper-card text-pencil-yellow'
+            }`}
           >
-            <Trophy className="h-12 w-12" />
+            {isYouWinner ? (
+              <Trophy className="h-14 w-14" />
+            ) : youRank === 2 ? (
+              <Medal className="h-12 w-12" />
+            ) : youRank === 3 ? (
+              <Award className="h-12 w-12" />
+            ) : (
+              <Trophy className="h-12 w-12" />
+            )}
           </motion.div>
 
-          <h1 className="font-display text-5xl font-bold text-ink">
-            Oyun Bitti!
+          <h1 className="font-display text-4xl sm:text-5xl font-bold text-ink">
+            {isYouWinner
+              ? 'Tebrikler Şampiyon! 🎉'
+              : youRank === 2 || youRank === 3
+                ? `${youRank}. Oldunuz! Harika Mücadele 👏`
+                : 'Oyun Bitti!'}
           </h1>
 
           {winners.length === 0 ? (
-            <p className="mt-2 text-sm text-ink-faded">
-              Bu turda kimse puan alamadı.
+            <p className="mt-2 text-base text-ink-faded">
+              Bu oyunda kimse puan alamadı.
+            </p>
+          ) : isYouWinner ? (
+            <p className="mt-2 text-xl text-ink font-display">
+              Toplam <strong className="text-pencil-yellow font-bold text-2xl">{topScore} Puan</strong> alarak zirvenin sahibi oldunuz!
             </p>
           ) : winners.length === 1 ? (
             <p className="mt-2 text-lg text-ink-faded">
@@ -189,26 +228,154 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
           </div>
 
           <div className="mt-5 flex justify-center">
-            <button
-              type="button"
-              onClick={() => void handleCopyCode()}
-              className="group relative inline-flex items-center gap-2 border-2 border-dashed border-pencil-red bg-paper-card px-5 py-2 font-mono text-base font-bold tracking-widest text-pencil-red transition-all hover:bg-pencil-red hover:text-white"
-              style={{ borderRadius: '6px 10px 4px 12px' }}
-            >
-              <span>ODA KODU: {state.room.roomCode}</span>
-              {copied ? (
-                <Check className="h-4 w-4 text-pencil-green" />
-              ) : (
-                <Copy className="h-4 w-4 opacity-60 group-hover:opacity-100" />
-              )}
-              {copied && (
-                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 rounded bg-ink px-2.5 py-1 font-sans text-xs font-semibold text-paper-card shadow-md">
-                  Kopyalandı!
-                </span>
-              )}
-            </button>
+            <div className="relative inline-block">
+              <button
+                type="button"
+                onClick={() => void handleCopyCode()}
+                className="group relative inline-flex items-center gap-2 border-2 border-dashed border-pencil-red bg-paper-card px-5 py-2 font-mono text-base font-bold tracking-widest text-pencil-red transition-all hover:bg-pencil-red hover:text-white active:scale-95"
+                style={{ borderRadius: '6px 10px 4px 12px' }}
+              >
+                <span>ODA KODU: {state.room.roomCode}</span>
+                {copied ? (
+                  <Check className="h-4 w-4 text-pencil-green" />
+                ) : (
+                  <Copy className="h-4 w-4 opacity-60 group-hover:opacity-100" />
+                )}
+              </button>
+              <CopiedPostIt show={copied} />
+            </div>
           </div>
         </motion.header>
+
+        {/* Hiyerarşik Podyum (Podium) Bölümü */}
+        {standings.length >= 2 && (
+          <section className="paper-card p-6 sm:p-8">
+            <div className="text-center mb-6">
+              <h2 className="font-display text-3xl font-bold text-ink flex items-center justify-center gap-2">
+                <Trophy className="h-7 w-7 text-pencil-yellow" />
+                <span>Podyum</span>
+              </h2>
+              <p className="text-sm text-ink-faded font-sans mt-0.5">
+                Oyunun en yüksek skoruna ulaşan ilk 3 oyuncusu
+              </p>
+            </div>
+
+            <div className="flex items-end justify-center gap-3 sm:gap-4 max-w-lg mx-auto pt-6 pb-2">
+              {/* 2. Sıra (Gümüş - Sol) */}
+              {secondPlace && (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex-1 flex flex-col items-center min-w-0"
+                >
+                  <div className="mb-2 text-center w-full px-1">
+                    <div className="flex items-center justify-center gap-1">
+                      <Medal className="h-5 w-5 text-ink-faded shrink-0" />
+                      <span className="font-display text-lg sm:text-xl font-bold text-ink truncate">
+                        {secondPlace.nickname}
+                      </span>
+                    </div>
+                    {secondPlace.id === state.you.playerId && (
+                      <span className="tag tag-you text-xs mt-0.5 inline-block">SEN</span>
+                    )}
+                    <div className="font-display font-bold text-base text-ink-faded mt-0.5">
+                      {secondPlace.score} <span className="text-xs font-sans">P</span>
+                    </div>
+                  </div>
+                  <div
+                    className="w-full h-32 sm:h-36 bg-gradient-to-b from-paper-card-alt to-paper-card border-4 border-ink-faded/60 rounded-t-sketch flex flex-col items-center justify-center shadow-md relative"
+                    style={{ borderRadius: '12px 12px 0 0' }}
+                  >
+                    <span className="font-display text-5xl sm:text-6xl font-black text-ink-faded/40 select-none">
+                      2
+                    </span>
+                    <span className="text-xs font-sans font-bold text-ink-faded uppercase tracking-wider mt-1">
+                      2. Sıra
+                    </span>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* 1. Sıra (Altın / Şampiyon - Orta - En Yüksek) */}
+              {firstPlace && (
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="flex-1 flex flex-col items-center min-w-0 z-10"
+                >
+                  <div className="mb-2 text-center w-full px-1">
+                    <div className="flex items-center justify-center gap-1 text-pencil-yellow">
+                      <Crown className="h-6 w-6 text-pencil-yellow shrink-0 animate-bounce" />
+                      <span className="font-display text-xl sm:text-2xl font-bold text-ink truncate">
+                        {firstPlace.nickname}
+                      </span>
+                    </div>
+                    {firstPlace.id === state.you.playerId && (
+                      <span className="tag tag-you text-xs mt-0.5 inline-block">SEN</span>
+                    )}
+                    <div className="font-display font-bold text-lg text-pencil-yellow mt-0.5">
+                      {firstPlace.score} <span className="text-xs font-sans">Puan</span>
+                    </div>
+                  </div>
+                  <div
+                    className="w-full h-44 sm:h-48 bg-gradient-to-b from-pencil-yellow/20 to-pencil-yellow/10 border-4 border-pencil-yellow rounded-t-sketch flex flex-col items-center justify-center shadow-xl relative"
+                    style={{ borderRadius: '14px 14px 0 0' }}
+                  >
+                    <div className="absolute -top-3.5 px-2.5 py-0.5 bg-pencil-yellow text-white text-xs font-display font-bold rounded-full shadow-xs uppercase tracking-wider">
+                      Şampiyon
+                    </div>
+                    <span className="font-display text-6xl sm:text-7xl font-black text-pencil-yellow select-none">
+                      1
+                    </span>
+                    <span className="text-xs font-sans font-bold text-pencil-yellow uppercase tracking-wider mt-1">
+                      1. Sıra
+                    </span>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* 3. Sıra (Bronz - Sağ) */}
+              {thirdPlace ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex-1 flex flex-col items-center min-w-0"
+                >
+                  <div className="mb-2 text-center w-full px-1">
+                    <div className="flex items-center justify-center gap-1">
+                      <Award className="h-5 w-5 text-pencil-orange shrink-0" />
+                      <span className="font-display text-lg sm:text-xl font-bold text-ink truncate">
+                        {thirdPlace.nickname}
+                      </span>
+                    </div>
+                    {thirdPlace.id === state.you.playerId && (
+                      <span className="tag tag-you text-xs mt-0.5 inline-block">SEN</span>
+                    )}
+                    <div className="font-display font-bold text-base text-pencil-orange mt-0.5">
+                      {thirdPlace.score} <span className="text-xs font-sans">P</span>
+                    </div>
+                  </div>
+                  <div
+                    className="w-full h-24 sm:h-28 bg-gradient-to-b from-pencil-orange/15 to-paper-card border-4 border-pencil-orange/60 rounded-t-sketch flex flex-col items-center justify-center shadow-md relative"
+                    style={{ borderRadius: '12px 12px 0 0' }}
+                  >
+                    <span className="font-display text-4xl sm:text-5xl font-black text-pencil-orange/40 select-none">
+                      3
+                    </span>
+                    <span className="text-xs font-sans font-bold text-pencil-orange uppercase tracking-wider mt-1">
+                      3. Sıra
+                    </span>
+                  </div>
+                </motion.div>
+              ) : (
+                <div className="flex-1 hidden sm:block" />
+              )}
+            </div>
+          </section>
+        )}
 
         {/* Final Standings List */}
         <section className="paper-card p-6 sm:p-8">

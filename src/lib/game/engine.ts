@@ -55,6 +55,11 @@ export interface RoomCategoryData {
   phaseCategories: FamousPersonCategory[]
   currentPhase: number
   totalPhases: number
+  phaseIntermission?: {
+    completedPhase: number
+    nextPhase: number
+    readyPlayerIds: string[]
+  } | null
 }
 
 interface PlayerSpeedData {
@@ -109,6 +114,7 @@ const globalRef = globalThis as unknown as {
   __whoDat_sharedTargetStore?: Map<string, SharedTargetRoomData>
   __whoDat_roomActiveVoteStore?: Map<string, TextQuestionVoteInternal>
   __whoDat_playerClueCardStore?: Map<string, Map<string, ClueCardItem[]>>
+  __whoDat_playerSubmittedPhaseNamesStore?: Map<string, Map<string, string[]>>
 }
 
 globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
@@ -123,6 +129,7 @@ globalRef.__whoDat_playerPersistentStore = globalRef.__whoDat_playerPersistentSt
 globalRef.__whoDat_sharedTargetStore = globalRef.__whoDat_sharedTargetStore ?? new Map()
 globalRef.__whoDat_roomActiveVoteStore = globalRef.__whoDat_roomActiveVoteStore ?? new Map()
 globalRef.__whoDat_playerClueCardStore = globalRef.__whoDat_playerClueCardStore ?? new Map()
+globalRef.__whoDat_playerSubmittedPhaseNamesStore = globalRef.__whoDat_playerSubmittedPhaseNamesStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
 const roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore
@@ -136,6 +143,7 @@ const playerPersistentStore = globalRef.__whoDat_playerPersistentStore
 const sharedTargetStore = globalRef.__whoDat_sharedTargetStore
 const roomActiveVoteStore = globalRef.__whoDat_roomActiveVoteStore
 const playerClueCardStore = globalRef.__whoDat_playerClueCardStore
+const playerSubmittedPhaseNamesStore = globalRef.__whoDat_playerSubmittedPhaseNamesStore
 
 /**
  * Kategori Lobisi & Faz Store Yardımcıları
@@ -188,6 +196,7 @@ export function setRoomCategoryData(
     phaseCategories: data.phaseCategories ?? existing.phaseCategories,
     currentPhase: data.currentPhase ?? existing.currentPhase,
     totalPhases,
+    phaseIntermission: data.phaseIntermission !== undefined ? data.phaseIntermission : existing.phaseIntermission,
   }
   roomCategoryStore.set(roomId, updated)
   return updated
@@ -782,12 +791,68 @@ export async function createRoom(
 }
 
 /**
+ * Tek bir oyuncunun oyun sonucunu cihaz kimliğine göre `game_results` tablosuna kaydeder.
+ */
+export async function savePlayerGameResult(
+  roomId: string,
+  gameMode: GameMode,
+  player: PlayerRow,
+  placement: number,
+  survived: boolean,
+): Promise<void> {
+  if (!player.device_id) return
+  try {
+    const admin = supabaseAdmin()
+    let profileId: string | null = null
+    const { data: existingProfile } = await admin
+      .from('player_profiles')
+      .select('id')
+      .eq('device_id', player.device_id)
+      .maybeSingle()
+
+    if (existingProfile?.id) {
+      profileId = existingProfile.id
+    } else {
+      const { data: newProfile } = await admin
+        .from('player_profiles')
+        .insert({ device_id: player.device_id })
+        .select('id')
+        .maybeSingle()
+      profileId = newProfile?.id ?? null
+    }
+
+    if (!profileId) return
+
+    // İdempotency: Aynı oyun ve profil için daha önce kayıt atılmış mı?
+    const { data: existingResult } = await admin
+      .from('game_results')
+      .select('id')
+      .eq('game_room_id', roomId)
+      .eq('player_profile_id', profileId)
+      .maybeSingle()
+
+    if (!existingResult) {
+      await admin.from('game_results').insert({
+        player_profile_id: profileId,
+        game_room_id: roomId,
+        game_mode: gameMode,
+        score: player.score ?? 0,
+        placement,
+        survived,
+        played_at: new Date().toISOString(),
+      })
+    }
+  } catch (err) {
+    console.error('savePlayerGameResult error:', err)
+  }
+}
+
+/**
  * Oyun tamamlandığında odadaki tüm oyuncuların sonuçlarını (Seviye 1 Cihaz Bazlı İstatistikler)
  * `game_results` tablosuna kaydeder.
  */
 export async function recordGameResults(roomId: string): Promise<void> {
   try {
-    const admin = supabaseAdmin()
     const [room, players] = await Promise.all([loadRoom(roomId), loadPlayers(roomId)])
     if (!room || players.length === 0) return
 
@@ -822,47 +887,7 @@ export async function recordGameResults(roomId: string): Promise<void> {
       }
 
       const placement = placements.get(player.id) ?? 1
-
-      // 1. Cihaz profilini bul veya oluştur
-      let profileId: string | null = null
-      const { data: existingProfile } = await admin
-        .from('player_profiles')
-        .select('id')
-        .eq('device_id', player.device_id)
-        .maybeSingle()
-
-      if (existingProfile?.id) {
-        profileId = existingProfile.id
-      } else {
-        const { data: newProfile } = await admin
-          .from('player_profiles')
-          .insert({ device_id: player.device_id })
-          .select('id')
-          .maybeSingle()
-        profileId = newProfile?.id ?? null
-      }
-
-      if (!profileId) continue
-
-      // 2. İdempotency: Aynı oyun ve profil için daha önce kayıt atılmış mı?
-      const { data: existingResult } = await admin
-        .from('game_results')
-        .select('id')
-        .eq('game_room_id', roomId)
-        .eq('player_profile_id', profileId)
-        .maybeSingle()
-
-      if (!existingResult) {
-        await admin.from('game_results').insert({
-          player_profile_id: profileId,
-          game_room_id: roomId,
-          game_mode: gameMode,
-          score: player.score ?? 0,
-          placement,
-          survived,
-          played_at: new Date().toISOString(),
-        })
-      }
+      await savePlayerGameResult(roomId, gameMode, player, placement, survived)
     }
   } catch (err) {
     // İstatistik kaydı ana oyun akışını asla kesmemelidir
@@ -1136,7 +1161,20 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     : (allPlayersSubmittedNames && players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS)
 
   const communicationMode = getRoomCommunicationMode(roomId, room.communication_mode)
-  const rawActiveVote = getActiveTextVote(roomId)
+  let rawActiveVote = getActiveTextVote(roomId)
+
+  // Süresi dolmuş açık oylama varsa sonuçlandır ve Hayır ise turu devret
+  if (rawActiveVote && rawActiveVote.status === 'open' && Date.now() >= rawActiveVote.closesAt) {
+    const clueItem = resolveTextVoteInternal(roomId, rawActiveVote.id)
+    if (clueItem && clueItem.majority !== 'yes' && room.status === 'playing') {
+      await advanceTurn(room, players, names)
+      const freshRoom = await loadRoom(roomId)
+      room.current_player_id = freshRoom.current_player_id
+      room.current_identity_id = freshRoom.current_identity_id
+      room.game_round = freshRoom.game_round
+    }
+    rawActiveVote = getActiveTextVote(roomId)
+  }
 
   let formattedActiveVote: TextQuestionVote | null = null
   if (rawActiveVote) {
@@ -1186,6 +1224,17 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       currentPhase: categoryData.currentPhase,
       totalPhases: categoryData.totalPhases,
       activeCategory,
+      phaseIntermission: categoryData.phaseIntermission
+        ? {
+            completedPhase: categoryData.phaseIntermission.completedPhase,
+            nextPhase: categoryData.phaseIntermission.nextPhase,
+            nextCategory: categoryData.phaseCategories[categoryData.phaseIntermission.nextPhase - 1] || 'all',
+            readyPlayerIds: categoryData.phaseIntermission.readyPlayerIds,
+            isReady: categoryData.phaseIntermission.readyPlayerIds.includes(viewer.id),
+            totalPlayers: players.length,
+            readyCount: categoryData.phaseIntermission.readyPlayerIds.length,
+          }
+        : null,
       questionBudgetPerPlayer: isPersistent ? PERSISTENT_MODE_QUESTION_BUDGET : undefined,
       // INV-2: current_target_name sadece Host'a veya hedef açıklandığında gönderilir
       sharedTargetName: isSharedTarget
@@ -1254,13 +1303,21 @@ export async function submitNames(roomId: string, playerId: string, names: strin
     }
   }
 
-  if (unique.length === 0) {
-    throw badRequest('no_names', 'Lütfen en az bir isim girin.')
+  if (unique.length < MAX_NAMES_PER_PLAYER) {
+    throw badRequest('missing_names', `Lütfen ${MAX_NAMES_PER_PLAYER} ismi de eksiksiz doldurun.`)
   }
 
   if (unique.length > MAX_NAMES_PER_PLAYER) {
     throw badRequest('too_many_names', `En fazla ${MAX_NAMES_PER_PLAYER} isim gönderebilirsiniz.`)
   }
+
+  // Faz bazlı isim store'una oyuncunun girdiği 3 ismi kaydet
+  let roomPhaseMap = playerSubmittedPhaseNamesStore.get(roomId)
+  if (!roomPhaseMap) {
+    roomPhaseMap = new Map()
+    playerSubmittedPhaseNamesStore.set(roomId, roomPhaseMap)
+  }
+  roomPhaseMap.set(playerId, [...unique])
 
   // Oyuncu daha önce isim göndermişse (düzenleme akışı), eski isimlerini silip yenilerini kaydedelim
   await admin.from('names').delete().eq('room_id', roomId).eq('submitted_by', playerId)
@@ -1504,8 +1561,17 @@ export async function autoAssignNames(
   }
 
   const categoryData = getRoomCategoryData(roomId, room)
-  const effectiveCategory: FamousPersonCategory =
-    category && category !== 'all' ? category : getActivePhaseCategory(categoryData)
+  const isMultiPhase = categoryData.categoryMode === 'multi_phase'
+  const effectiveCategory: FamousPersonCategory = isMultiPhase
+    ? (categoryData.phaseCategories[0] || 'all')
+    : (category && category !== 'all' ? category : getActivePhaseCategory(categoryData))
+
+  // 3 Fazlı modda kişi başı 1 isim atanır (her fazda 1 isim döner)
+  const namesPerPlayer = isMultiPhase ? 1 : MAX_NAMES_PER_PLAYER
+
+  if (isMultiPhase) {
+    playerSubmittedPhaseNamesStore.delete(roomId)
+  }
 
   const gameMode = getRoomMode(roomId, room.game_mode)
   const difficulty = getRoomDifficulty(roomId, (room as unknown as { difficulty?: string }).difficulty)
@@ -1540,7 +1606,7 @@ export async function autoAssignNames(
     }
   }
 
-  const totalNamesNeeded = players.length * MAX_NAMES_PER_PLAYER
+  const totalNamesNeeded = players.length * namesPerPlayer
   const pool = await getFamousPeople({
     category: effectiveCategory,
     difficulty,
@@ -1569,7 +1635,7 @@ export async function autoAssignNames(
   let poolIdx = 0
 
   for (const p of players) {
-    for (let slot = 0; slot < MAX_NAMES_PER_PLAYER; slot++) {
+    for (let slot = 0; slot < namesPerPlayer; slot++) {
       if (poolIdx >= shuffledPool.length) {
         poolIdx = 0
       }
@@ -1682,7 +1748,36 @@ export async function startGame(roomId: string, playerId: string) {
     return
   }
 
-  const names = await loadNames(roomId)
+  const categoryData = getRoomCategoryData(roomId, room)
+  categoryData.phaseIntermission = null
+  categoryData.currentPhase = 1
+  setRoomCategoryData(roomId, categoryData)
+
+  let names = await loadNames(roomId)
+
+  // 3 Fazlı modda manuel girilmiş isimler varsa Faz 1 için sadece 1. isimleri (kişi başı 1 isim) ayarla
+  if (categoryData.categoryMode === 'multi_phase') {
+    const submittedPhaseMap = playerSubmittedPhaseNamesStore.get(roomId)
+    const hasManual =
+      submittedPhaseMap &&
+      players.every((p) => {
+        const list = submittedPhaseMap.get(p.id)
+        return list && list.length >= 1 && Boolean(list[0])
+      })
+    if (hasManual) {
+      await admin.from('names').delete().eq('room_id', roomId)
+      const phase1Names = players.map((p) => ({
+        id: randomUUID(),
+        room_id: roomId,
+        submitted_by: p.id,
+        name_text: submittedPhaseMap.get(p.id)![0]!,
+      }))
+      const { error: insErr } = await admin.from('names').insert(phase1Names)
+      if (insErr) throw insErr
+      names = await loadNames(roomId)
+    }
+  }
+
   const firstPlayer = players[0]!
 
   if (isPersistent) {
@@ -1777,10 +1872,101 @@ interface AdvanceTurnOutcome {
 }
 
 /**
- * 3 Fazlı modda bir sonraki faza geçiş:
- * İsim havuzunu sıfırlar, yeni fazın kategorisinden yeni isimler dağıtır, can/puan kümülatif devam eder.
+ * 3 Fazlı modda faz tamamlandığında faz arası bekleme durumunu başlatır.
+ * Tüm oyuncular hazır olana veya host sonraki faza geçirene kadar bu durumda kalınır.
  */
-async function transitionToNextPhase(
+export async function startPhaseIntermission(
+  room: RoomRow,
+  players: PlayerRow[],
+  categoryData: RoomCategoryData,
+): Promise<AdvanceTurnOutcome> {
+  const admin = supabaseAdmin()
+  const currentPhase = categoryData.currentPhase
+  const nextPhase = currentPhase + 1
+
+  categoryData.phaseIntermission = {
+    completedPhase: currentPhase,
+    nextPhase,
+    readyPlayerIds: [],
+  }
+  setRoomCategoryData(room.id, categoryData)
+
+  // Realtime tetiklemek için rooms tablosuna dokun
+  await admin.from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', room.id)
+
+  return {
+    claimed: true,
+    finished: false,
+    nextRoundStarted: false,
+    phaseChanged: false,
+  }
+}
+
+/**
+ * Oyuncunun faz geçişinde hazır olduğunu kaydeder.
+ * Tüm oyuncular hazır olduysa otomatik olarak yeni fazı başlatır.
+ */
+export async function setPlayerPhaseReady(
+  roomId: string,
+  playerId: string,
+): Promise<{ success: boolean; allReady: boolean; nextPhaseStarted: boolean }> {
+  const admin = supabaseAdmin()
+  const players = await loadPlayers(roomId)
+  requireMembership(players, playerId)
+
+  const room = await loadRoom(roomId)
+  const categoryData = getRoomCategoryData(roomId, room)
+
+  if (!categoryData.phaseIntermission) {
+    return { success: true, allReady: false, nextPhaseStarted: false }
+  }
+
+  if (!categoryData.phaseIntermission.readyPlayerIds.includes(playerId)) {
+    categoryData.phaseIntermission.readyPlayerIds.push(playerId)
+    setRoomCategoryData(roomId, categoryData)
+  }
+
+  const allReady = categoryData.phaseIntermission.readyPlayerIds.length >= players.length
+  if (allReady) {
+    await transitionToNextPhase(room, players, categoryData)
+    return { success: true, allReady: true, nextPhaseStarted: true }
+  }
+
+  await admin.from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
+  return { success: true, allReady: false, nextPhaseStarted: false }
+}
+
+/**
+ * Host'un tüm oyuncuların hazır olmasını beklemeden veya herkes hazır olduğunda
+ * sonraki faza doğrudan geçmesini sağlar.
+ */
+export async function startNextPhaseByHost(
+  roomId: string,
+  playerId: string,
+): Promise<{ success: boolean; nextPhaseStarted: boolean }> {
+  const players = await loadPlayers(roomId)
+  const player = requireMembership(players, playerId)
+
+  if (!player.is_host) {
+    throw forbidden('not_host', 'Sonraki fazı yalnızca oda sahibi başlatabilir.')
+  }
+
+  const room = await loadRoom(roomId)
+  const categoryData = getRoomCategoryData(roomId, room)
+
+  if (!categoryData.phaseIntermission) {
+    return { success: true, nextPhaseStarted: false }
+  }
+
+  await transitionToNextPhase(room, players, categoryData)
+  return { success: true, nextPhaseStarted: true }
+}
+
+/**
+ * 3 Fazlı modda bir sonraki faza geçiş:
+ * İsim havuzunu sıfırlar, yeni fazın isimlerini dağıtır (kişi başı 1 isim), can/puan kümülatif devam eder.
+ */
+export async function transitionToNextPhase(
   room: RoomRow,
   players: PlayerRow[],
   categoryData: RoomCategoryData,
@@ -1791,6 +1977,8 @@ async function transitionToNextPhase(
 
   if (currentPhase >= totalPhases) {
     // Tüm 3 faz tamamlandı -> Oyun biter
+    categoryData.phaseIntermission = null
+    setRoomCategoryData(room.id, categoryData)
     const { data } = await admin
       .from('rooms')
       .update({ status: 'finished', is_game_active: false, current_identity_id: null })
@@ -1803,42 +1991,63 @@ async function transitionToNextPhase(
   const nextPhase = currentPhase + 1
   const nextCategory = categoryData.phaseCategories[nextPhase - 1] || 'all'
   categoryData.currentPhase = nextPhase
+  categoryData.phaseIntermission = null
   setRoomCategoryData(room.id, categoryData)
 
   // 1. Önceki fazın isimlerini temizle
   await admin.from('names').delete().eq('room_id', room.id)
 
   const difficulty = getRoomDifficulty(room.id, (room as unknown as { difficulty?: string }).difficulty)
+  const newAssignedNames: { id: string; room_id: string; submitted_by: string; name_text: string }[] = []
 
-  // 2. Yeni fazın kategorisinden yeni isimler çek ve dağıt
-  const totalNamesNeeded = players.length * MAX_NAMES_PER_PLAYER
-  const pool = await getFamousPeople({
-    category: nextCategory,
-    difficulty,
-    random: true,
-    limit: Math.max(totalNamesNeeded + 10, 50),
-  })
+  // Manuel girilen isimler kontrolü
+  const submittedPhaseMap = playerSubmittedPhaseNamesStore.get(room.id)
+  const hasManualNames =
+    submittedPhaseMap &&
+    players.every((p) => {
+      const list = submittedPhaseMap.get(p.id)
+      return list && list.length >= nextPhase && Boolean(list[nextPhase - 1])
+    })
 
-  if (pool.length < totalNamesNeeded && nextCategory !== 'all') {
-    const extra = await getFamousPeople({
-      category: 'all',
+  if (hasManualNames) {
+    // Oyuncuların bu faz için lobide girdiği isimleri ata (kişi başı 1 isim)
+    for (const p of players) {
+      const list = submittedPhaseMap.get(p.id)!
+      newAssignedNames.push({
+        id: randomUUID(),
+        room_id: room.id,
+        submitted_by: p.id,
+        name_text: list[nextPhase - 1]!,
+      })
+    }
+  } else {
+    // Otomatik atama: yeni fazın kategorisinden kişi başı 1 isim çek ve dağıt
+    const totalNamesNeeded = players.length * 1
+    const pool = await getFamousPeople({
+      category: nextCategory,
       difficulty,
       random: true,
-      limit: totalNamesNeeded + 10,
+      limit: Math.max(totalNamesNeeded + 10, 50),
     })
-    for (const item of extra) {
-      if (!pool.some((p) => p.name.toLocaleLowerCase('tr') === item.name.toLocaleLowerCase('tr'))) {
-        pool.push(item)
+
+    if (pool.length < totalNamesNeeded && nextCategory !== 'all') {
+      const extra = await getFamousPeople({
+        category: 'all',
+        difficulty,
+        random: true,
+        limit: totalNamesNeeded + 10,
+      })
+      for (const item of extra) {
+        if (!pool.some((p) => p.name.toLocaleLowerCase('tr') === item.name.toLocaleLowerCase('tr'))) {
+          pool.push(item)
+        }
       }
     }
-  }
 
-  const shuffledPool = [...pool].sort(() => Math.random() - 0.5)
-  const newAssignedNames: { id: string; room_id: string; submitted_by: string; name_text: string }[] = []
-  let poolIdx = 0
+    const shuffledPool = [...pool].sort(() => Math.random() - 0.5)
+    let poolIdx = 0
 
-  for (const p of players) {
-    for (let slot = 0; slot < MAX_NAMES_PER_PLAYER; slot++) {
+    for (const p of players) {
       if (poolIdx >= shuffledPool.length) {
         poolIdx = 0
       }
@@ -1859,6 +2068,12 @@ async function transitionToNextPhase(
   playerRoundNameStore.delete(room.id)
   roomUsedNamesStore.delete(room.id)
   resetRoomSpeedRound(room.id)
+
+  // 4. Canları yenile — yeni fazda herkes tam canla başlar
+  roomLivesStore.delete(room.id)
+  for (const p of players) {
+    setPlayerLives(room.id, p.id, TOTAL_LIVES_PER_GAME)
+  }
 
   const firstPlayer = players[0]!
   const availableFirstName = newAssignedNames.find((n) => n.submitted_by !== firstPlayer.id) || newAssignedNames[0]!
@@ -1923,7 +2138,7 @@ async function advanceTurn(
 
     if (unfinishedPlayers.length === 0) {
       if (categoryData.categoryMode === 'multi_phase' && categoryData.currentPhase < categoryData.totalPhases) {
-        return transitionToNextPhase(room, players, categoryData)
+        return startPhaseIntermission(room, players, categoryData)
       }
 
       if (currentRound >= totalRounds) {
@@ -2008,7 +2223,7 @@ async function advanceTurn(
 
     if (unfinishedPlayers.length === 0) {
       if (categoryData.categoryMode === 'multi_phase' && categoryData.currentPhase < categoryData.totalPhases) {
-        return transitionToNextPhase(room, players, categoryData)
+        return startPhaseIntermission(room, players, categoryData)
       }
 
       // Tüm oyuncular solved veya eliminated → oyun biter
@@ -2063,7 +2278,7 @@ async function advanceTurn(
 
   if (!nextPlayer || availableNames.length === 0 || activePlayerIds.size === 0) {
     if (categoryData.categoryMode === 'multi_phase' && categoryData.currentPhase < categoryData.totalPhases) {
-      return transitionToNextPhase(room, players, categoryData)
+      return startPhaseIntermission(room, players, categoryData)
     }
 
     const { data } = await admin
@@ -2128,6 +2343,11 @@ export async function makeGuess(roomId: string, playerId: string, guess: string)
   }
 
   assertPlayersTurn(room, playerId)
+
+  const activeVote = roomActiveVoteStore.get(roomId)
+  if (activeVote && activeVote.status === 'open' && Date.now() < activeVote.closesAt) {
+    throw conflict('vote_in_progress', 'Şu anda oylama devam ediyor. Lütfen sorunuzun yanıtlanmasını bekleyin.')
+  }
 
   const currentName = names.find((name) => name.id === room.current_identity_id)
   if (!currentName) {
@@ -3064,7 +3284,11 @@ export async function submitTextVote(
   }
 
   if (Date.now() >= vote.closesAt) {
-    resolveTextVoteInternal(roomId, voteId)
+    const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
+    const resolvedClue = resolveTextVoteInternal(roomId, voteId)
+    if (resolvedClue && resolvedClue.majority !== 'yes' && room.status === 'playing') {
+      await advanceTurn(room, players, names)
+    }
     throw conflict('vote_expired', 'Oylama süresi (15 saniye) doldu.')
   }
 
@@ -3081,19 +3305,38 @@ export async function submitTextVote(
   // Eğer tüm uygun oyuncular oy kullandıysa hemen sonuçlandır
   let isResolved = false
   let clueCardItem: ClueCardItem | null = null
+  let turnPassed = false
+
   if (vote.responses.size >= vote.eligibleVoterIds.size) {
+    const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
     clueCardItem = resolveTextVoteInternal(roomId, voteId)
     isResolved = true
+
+    if (clueCardItem && clueCardItem.majority !== 'yes') {
+      if (room.status === 'playing') {
+        await advanceTurn(room, players, names)
+        turnPassed = true
+      }
+    } else {
+      await supabaseAdmin().from('rooms').update({ status: 'playing' }).eq('id', roomId)
+    }
+  } else {
+    // Realtime tetikle
+    await supabaseAdmin().from('rooms').update({ status: 'playing' }).eq('id', roomId)
   }
 
-  // Realtime tetikle
-  await supabaseAdmin().from('rooms').update({ status: 'playing' }).eq('id', roomId)
+  const message = clueCardItem
+    ? clueCardItem.majority === 'yes'
+      ? 'Cevap: EVET! Soru sormaya devam edebilir veya tahmin yapabilirsiniz.'
+      : 'Cevap: HAYIR! Sıra diğer oyuncuya geçti.'
+    : 'Oyunuz kaydedildi.'
 
   return {
-    message: 'Oyunuz kaydedildi.',
+    message,
     hasVoted: true,
     isResolved,
     clueCardItem,
+    turnPassed,
   }
 }
 
@@ -3151,10 +3394,32 @@ export async function leaveRoom(roomId: string, playerId: string) {
   const room = await loadRoom(roomId)
   const wasCurrentPlayer = room.current_player_id === playerId
   const remaining = players.filter((player) => player.id !== playerId)
+  const leavingPlayer = players.find((player) => player.id === playerId)!
+  const gameMode = getRoomMode(roomId, room.game_mode)
 
-  if (wasCurrentPlayer && remaining.length > 0 && room.status === 'playing') {
-    const names = await loadNames(roomId)
-    await advanceTurn(room, players, names)
+  if (room.status === 'playing') {
+    if (remaining.length < 2) {
+      // 2 kişilik veya tek kalan maçta biri çıktığında maç hükmen biter:
+      // Terk eden mağlup (sonuncu), kalan oyuncu(lar) galip (1.lik)
+      await savePlayerGameResult(roomId, gameMode, leavingPlayer, players.length, false)
+      for (const remPlayer of remaining) {
+        await savePlayerGameResult(roomId, gameMode, remPlayer, 1, true)
+      }
+
+      // Odayı sonlandır (Kalan oyuncu otomatik olarak skor ekranına yönlendirilir)
+      await admin
+        .from('rooms')
+        .update({ status: 'finished', is_game_active: false, current_identity_id: null })
+        .eq('id', roomId)
+    } else {
+      // 3 veya daha fazla oyuncu varsa terk eden sonuncu olarak kaydedilir, oyun devam eder
+      await savePlayerGameResult(roomId, gameMode, leavingPlayer, players.length, false)
+
+      if (wasCurrentPlayer) {
+        const names = await loadNames(roomId)
+        await advanceTurn(room, remaining, names)
+      }
+    }
   }
 
   const { error } = await admin.from('players').delete().eq('id', playerId)
@@ -3166,8 +3431,7 @@ export async function leaveRoom(roomId: string, playerId: string) {
     return { roomClosed: true }
   }
 
-  const leavingPlayer = players.find((player) => player.id === playerId)
-  if (leavingPlayer?.is_host) {
+  if (leavingPlayer?.is_host && remaining.length > 0) {
     await admin.from('players').update({ is_host: true }).eq('id', remaining[0]!.id)
   }
 

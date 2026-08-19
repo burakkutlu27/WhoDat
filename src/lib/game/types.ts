@@ -93,6 +93,16 @@ export interface PublicPlayer {
   hasGuessCooldown?: boolean
 }
 
+export interface PhaseIntermissionState {
+  completedPhase: number
+  nextPhase: number
+  nextCategory: FamousPersonCategory
+  readyPlayerIds: string[]
+  isReady: boolean
+  totalPlayers: number
+  readyCount: number
+}
+
 export interface GameState {
   room: {
     id: string
@@ -113,6 +123,8 @@ export interface GameState {
     currentPhase?: number
     totalPhases?: number
     activeCategory?: FamousPersonCategory
+    /** 3 Fazlı Mod: Faz Arası Bekleme / Hazır Olma Durumu */
+    phaseIntermission?: PhaseIntermissionState | null
     /** Israrcı Mod: oyuncu başına toplam soru bütçesi */
     questionBudgetPerPlayer?: number
     /** Ortak Hedef Modu: Hedef isim (SADECE host'a veya hedef açıklandığında gönderilir) */
