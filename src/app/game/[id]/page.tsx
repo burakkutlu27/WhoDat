@@ -1589,10 +1589,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               >
                                 <SkipForward className="h-5 w-5" />
                                 <span>
-                                  {!isSpeed && !isPersistent
-                                    ? 'Soru Sordum'
-                                    : state.room.communicationMode === 'text'
-                                      ? 'Sırayı Devret'
+                                  {state.room.communicationMode === 'text'
+                                    ? 'Sırayı Devret'
+                                    : !isSpeed && !isPersistent
+                                      ? 'Soru Sordum'
                                       : 'Cevap Hayır (Sırayı Devret)'}
                                 </span>
                               </motion.button>

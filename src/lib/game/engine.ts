@@ -509,14 +509,7 @@ export async function getActiveTextVote(roomId: string, players?: PlayerRow[]): 
       .maybeSingle()
 
     if (!dbVote) {
-      const memVote = roomActiveVoteStore.get(roomId)
-      if (memVote && memVote.status === 'open') {
-        if (Date.now() >= memVote.closesAt) {
-          await resolveTextVoteInternal(roomId, memVote.id)
-          return null
-        }
-        return memVote
-      }
+      roomActiveVoteStore.delete(roomId)
       return null
     }
 
@@ -578,21 +571,36 @@ export async function resolveTextVoteInternal(roomId: string, voteId: string): P
 
   let qText = memVote?.questionText
   let askerId = memVote?.askerId
+  let alreadyClosed = false
 
   try {
-    const { data: dbVote } = await admin
+    // Atomik koşullu güncelleme: Yalnızca status='open' olanı kapat (Race Condition Koruması)
+    const { data: updatedRows } = await admin
       .from('question_votes')
-      .select()
+      .update({ status: 'closed' })
       .eq('id', voteId)
-      .maybeSingle()
+      .eq('status', 'open')
+      .select()
 
-    if (dbVote) {
-      qText = dbVote.question_text
-      askerId = dbVote.asker_player_id
-      await admin
+    if (updatedRows && updatedRows.length > 0) {
+      const closedVote = updatedRows[0]!
+      qText = closedVote.question_text
+      askerId = closedVote.asker_player_id
+    } else {
+      // Başka bir istek aynı anda zaten kapatmış veya kayıt yok
+      const { data: dbVote } = await admin
         .from('question_votes')
-        .update({ status: 'closed' })
+        .select()
         .eq('id', voteId)
+        .maybeSingle()
+
+      if (dbVote) {
+        qText = dbVote.question_text
+        askerId = dbVote.asker_player_id
+        if (dbVote.status === 'closed') {
+          alreadyClosed = true
+        }
+      }
     }
   } catch {
     // DB hatası durumunda memory üzerinden devam
@@ -602,7 +610,9 @@ export async function resolveTextVoteInternal(roomId: string, voteId: string): P
     memVote.status = 'closed'
   }
 
-  if (!qText || !askerId) return null
+  if (alreadyClosed || !qText || !askerId) {
+    return null
+  }
 
   let yesCount = 0
   let noCount = 0
@@ -1500,7 +1510,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
   // Süresi dolmuş açık oylama varsa sonuçlandır ve Hayır ise turu devret
   if (rawActiveVote && rawActiveVote.status === 'open' && Date.now() >= rawActiveVote.closesAt) {
     const clueItem = await resolveTextVoteInternal(roomId, rawActiveVote.id)
-    if (clueItem && clueItem.majority !== 'yes' && room.status === 'playing') {
+    if (clueItem && room.status === 'playing') {
       await advanceTurn(room, players, names)
       const freshRoom = await loadRoom(roomId)
       room.current_player_id = freshRoom.current_player_id
@@ -3811,18 +3821,9 @@ export async function submitTextVote(
     clueCardItem = await resolveTextVoteInternal(roomId, voteId)
     isResolved = true
 
-    if (clueCardItem && clueCardItem.majority !== 'yes') {
-      if (room.status === 'playing') {
-        await advanceTurn(room, players, names)
-        turnPassed = true
-      }
-    } else {
-      // Çoğunluk EVET: Sıra oyuncuda kalır AMA bu turda soru hakkı bitti, tahmin veya devret yapabilir
-      try {
-        await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
-      } catch {
-        //
-      }
+    if (room.status === 'playing') {
+      await advanceTurn(room, players, names)
+      turnPassed = true
     }
   } else {
     // Soru AÇIK KALMAYA DEVAM EDİYOR! Realtime tetikle
@@ -3834,9 +3835,7 @@ export async function submitTextVote(
   }
 
   const message = clueCardItem
-    ? clueCardItem.majority === 'yes'
-      ? 'Cevap: EVET! Soru hakkınızı kullandınız, şimdi tahmin yapabilir veya sırayı devredebilirsiniz.'
-      : 'Cevap: HAYIR! Sıra diğer oyuncuya geçti.'
+    ? `Cevap: ${clueCardItem.yesCount} Evet, ${clueCardItem.noCount} Hayır (${clueCardItem.majority === 'yes' ? 'EVET' : clueCardItem.majority === 'no' ? 'HAYIR' : 'EŞİTLİK'}). Sıra bir sonraki oyuncuya geçti.`
     : 'Oyunuz kaydedildi. Diğer oyuncuların oyları bekleniyor...'
 
   return {
