@@ -86,6 +86,8 @@ interface SharedTargetRoomData {
 }
 
 // Tam Metin Modu Oylama Oturumu State
+export const TEXT_VOTE_DURATION_MS = 30000 // 30 saniye
+
 export interface TextQuestionVoteInternal {
   id: string
   roomId: string
@@ -116,6 +118,7 @@ const globalRef = globalThis as unknown as {
   __whoDat_playerClassicSolvedStore?: Map<string, Set<string>>
   __whoDat_playerPassRightsStore?: Map<string, Map<string, number>>
   __whoDat_classicRetiredNamesStore?: Map<string, Set<string>>
+  __whoDat_playerTurnAskedStore?: Map<string, Set<string>>
 }
 
 globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
@@ -134,6 +137,7 @@ globalRef.__whoDat_playerSubmittedPhaseNamesStore = globalRef.__whoDat_playerSub
 globalRef.__whoDat_playerClassicSolvedStore = globalRef.__whoDat_playerClassicSolvedStore ?? new Map()
 globalRef.__whoDat_playerPassRightsStore = globalRef.__whoDat_playerPassRightsStore ?? new Map()
 globalRef.__whoDat_classicRetiredNamesStore = globalRef.__whoDat_classicRetiredNamesStore ?? new Map()
+globalRef.__whoDat_playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
 const roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore
@@ -151,6 +155,7 @@ const playerSubmittedPhaseNamesStore = globalRef.__whoDat_playerSubmittedPhaseNa
 const playerClassicSolvedStore = globalRef.__whoDat_playerClassicSolvedStore
 const playerPassRightsStore = globalRef.__whoDat_playerPassRightsStore
 const classicRetiredNamesStore = globalRef.__whoDat_classicRetiredNamesStore
+const playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore
 
 export const CLASSIC_MODE_MAX_PASSES = 3 // Oyuncu başına oyun boyunca en fazla 3 isim pas geçme hakkı
 
@@ -387,6 +392,24 @@ export function setRoomDifficulty(roomId: string, difficulty: DifficultyLevel): 
   return difficulty
 }
 
+export function hasPlayerAskedQuestionInTurn(roomId: string, playerId: string): boolean {
+  return playerTurnAskedStore.get(roomId)?.has(playerId) ?? false
+}
+
+export function setPlayerAskedQuestionInTurn(roomId: string, playerId: string, asked: boolean) {
+  let roomSet = playerTurnAskedStore.get(roomId)
+  if (!roomSet) {
+    roomSet = new Set()
+    playerTurnAskedStore.set(roomId, roomSet)
+  }
+  if (asked) roomSet.add(playerId)
+  else roomSet.delete(playerId)
+}
+
+export function clearRoomTurnAskedData(roomId: string) {
+  playerTurnAskedStore.get(roomId)?.clear()
+}
+
 export function getPlayerClueCard(roomId: string, playerId: string): ClueCardItem[] {
   let roomClueMap = playerClueCardStore.get(roomId)
   if (!roomClueMap) {
@@ -403,40 +426,230 @@ export function getPlayerClueCard(roomId: string, playerId: string): ClueCardIte
 
 export function addClueCardItem(roomId: string, playerId: string, item: ClueCardItem) {
   const cards = getPlayerClueCard(roomId, playerId)
-  cards.push(item)
+  if (!cards.some((c) => c.id === item.id || (c.questionText === item.questionText && c.timestamp === item.timestamp))) {
+    cards.push(item)
+  }
   return cards
 }
 
-export function getActiveTextVote(roomId: string): TextQuestionVoteInternal | null {
-  const vote = roomActiveVoteStore.get(roomId)
-  if (!vote) return null
-  if (vote.status === 'open' && Date.now() >= vote.closesAt) {
-    resolveTextVoteInternal(roomId, vote.id)
-    return roomActiveVoteStore.get(roomId) ?? null
+export async function getPlayerClueCardDb(roomId: string, playerId: string, players?: PlayerRow[]): Promise<ClueCardItem[]> {
+  try {
+    const admin = supabaseAdmin()
+    const { data: dbVotes } = await admin
+      .from('question_votes')
+      .select()
+      .eq('room_id', roomId)
+      .eq('asker_player_id', playerId)
+      .eq('status', 'closed')
+      .order('created_at', { ascending: true })
+
+    if (!dbVotes || dbVotes.length === 0) {
+      return getPlayerClueCard(roomId, playerId)
+    }
+
+    const voteIds = dbVotes.map((v) => v.id)
+    const { data: dbResponses } = await admin
+      .from('question_vote_responses')
+      .select()
+      .in('vote_id', voteIds)
+
+    const responsesByVote = new Map<string, { yes: number; no: number; total: number }>()
+    if (dbResponses) {
+      for (const r of dbResponses) {
+        let stats = responsesByVote.get(r.vote_id)
+        if (!stats) {
+          stats = { yes: 0, no: 0, total: 0 }
+          responsesByVote.set(r.vote_id, stats)
+        }
+        stats.total++
+        if (r.answer) stats.yes++
+        else stats.no++
+      }
+    }
+
+    const roomPlayers = players || (await loadPlayers(roomId))
+    const totalEligible = Math.max(0, roomPlayers.filter((p) => p.id !== playerId).length)
+
+    const items: ClueCardItem[] = dbVotes.map((v) => {
+      const stats = responsesByVote.get(v.id) || { yes: 0, no: 0, total: 0 }
+      const unansweredCount = Math.max(0, totalEligible - stats.total)
+      const majority: 'yes' | 'no' | 'tie' = stats.yes > stats.no ? 'yes' : stats.no > stats.yes ? 'no' : 'tie'
+      return {
+        id: v.id,
+        questionText: v.question_text,
+        yesCount: stats.yes,
+        noCount: stats.no,
+        unansweredCount,
+        majority,
+        timestamp: v.created_at || new Date().toISOString(),
+      }
+    })
+
+    // Memory store ile senkronize et
+    for (const item of items) {
+      addClueCardItem(roomId, playerId, item)
+    }
+
+    return items
+  } catch {
+    return getPlayerClueCard(roomId, playerId)
   }
-  return vote
 }
 
-export function resolveTextVoteInternal(roomId: string, voteId: string): ClueCardItem | null {
-  const vote = roomActiveVoteStore.get(roomId)
-  if (!vote || vote.id !== voteId) return null
+export async function getActiveTextVote(roomId: string, players?: PlayerRow[]): Promise<TextQuestionVoteInternal | null> {
+  try {
+    const admin = supabaseAdmin()
+    const { data: dbVote } = await admin
+      .from('question_votes')
+      .select()
+      .eq('room_id', roomId)
+      .eq('status', 'open')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
 
-  if (vote.status === 'open') {
-    vote.status = 'closed'
+    if (!dbVote) {
+      const memVote = roomActiveVoteStore.get(roomId)
+      if (memVote && memVote.status === 'open') {
+        if (Date.now() >= memVote.closesAt) {
+          await resolveTextVoteInternal(roomId, memVote.id)
+          return null
+        }
+        return memVote
+      }
+      return null
+    }
+
+    const openedAtTime = dbVote.opened_at ? new Date(dbVote.opened_at).getTime() : Date.now()
+    const closesAtTime = dbVote.closes_at ? new Date(dbVote.closes_at).getTime() : openedAtTime + TEXT_VOTE_DURATION_MS
+
+    if (Date.now() >= closesAtTime) {
+      await resolveTextVoteInternal(roomId, dbVote.id)
+      return null
+    }
+
+    const { data: dbResponses } = await admin
+      .from('question_vote_responses')
+      .select()
+      .eq('vote_id', dbVote.id)
+
+    const responses = new Map<string, boolean>()
+    if (dbResponses) {
+      for (const r of dbResponses) {
+        responses.set(r.responder_player_id, r.answer)
+      }
+    }
+
+    const roomPlayers = players || (await loadPlayers(roomId))
+    const eligibleVoterIds = new Set(roomPlayers.filter((p) => p.id !== dbVote.asker_player_id).map((p) => p.id))
+    const askerPlayer = roomPlayers.find((p) => p.id === dbVote.asker_player_id)
+
+    const voteInternal: TextQuestionVoteInternal = {
+      id: dbVote.id,
+      roomId,
+      askerId: dbVote.asker_player_id,
+      askerNickname: askerPlayer?.nickname || 'Oyuncu',
+      questionText: dbVote.question_text,
+      status: 'open',
+      openedAt: openedAtTime,
+      closesAt: closesAtTime,
+      responses,
+      eligibleVoterIds,
+    }
+
+    roomActiveVoteStore.set(roomId, voteInternal)
+    return voteInternal
+  } catch {
+    const memVote = roomActiveVoteStore.get(roomId)
+    if (memVote && memVote.status === 'open') {
+      if (Date.now() >= memVote.closesAt) {
+        await resolveTextVoteInternal(roomId, memVote.id)
+        return null
+      }
+      return memVote
+    }
+    return null
   }
+}
+
+export async function resolveTextVoteInternal(roomId: string, voteId: string): Promise<ClueCardItem | null> {
+  const admin = supabaseAdmin()
+  const memVote = roomActiveVoteStore.get(roomId)
+
+  let qText = memVote?.questionText
+  let askerId = memVote?.askerId
+
+  try {
+    const { data: dbVote } = await admin
+      .from('question_votes')
+      .select()
+      .eq('id', voteId)
+      .maybeSingle()
+
+    if (dbVote) {
+      qText = dbVote.question_text
+      askerId = dbVote.asker_player_id
+      await admin
+        .from('question_votes')
+        .update({ status: 'closed' })
+        .eq('id', voteId)
+    }
+  } catch {
+    // DB hatası durumunda memory üzerinden devam
+  }
+
+  if (memVote && memVote.id === voteId) {
+    memVote.status = 'closed'
+  }
+
+  if (!qText || !askerId) return null
 
   let yesCount = 0
   let noCount = 0
-  for (const answer of vote.responses.values()) {
-    if (answer) yesCount++
-    else noCount++
+  const responsesMap = new Map<string, boolean>()
+
+  try {
+    const { data: dbResponses } = await admin
+      .from('question_vote_responses')
+      .select()
+      .eq('vote_id', voteId)
+
+    if (dbResponses && dbResponses.length > 0) {
+      for (const r of dbResponses) {
+        responsesMap.set(r.responder_player_id, r.answer)
+        if (r.answer) yesCount++
+        else noCount++
+      }
+    } else if (memVote) {
+      for (const ans of memVote.responses.values()) {
+        if (ans) yesCount++
+        else noCount++
+      }
+    }
+  } catch {
+    if (memVote) {
+      for (const ans of memVote.responses.values()) {
+        if (ans) yesCount++
+        else noCount++
+      }
+    }
   }
-  const unansweredCount = Math.max(0, vote.eligibleVoterIds.size - vote.responses.size)
+
+  let totalEligible = memVote?.eligibleVoterIds.size ?? 0
+  try {
+    const players = await loadPlayers(roomId)
+    totalEligible = Math.max(0, players.filter((p) => p.id !== askerId).length)
+  } catch {
+    //
+  }
+
+  const totalAnswered = responsesMap.size || (memVote?.responses.size ?? 0)
+  const unansweredCount = Math.max(0, totalEligible - totalAnswered)
   const majority: 'yes' | 'no' | 'tie' = yesCount > noCount ? 'yes' : noCount > yesCount ? 'no' : 'tie'
 
   const clueItem: ClueCardItem = {
-    id: randomUUID(),
-    questionText: vote.questionText,
+    id: voteId,
+    questionText: qText,
     yesCount,
     noCount,
     unansweredCount,
@@ -444,12 +657,14 @@ export function resolveTextVoteInternal(roomId: string, voteId: string): ClueCar
     timestamp: new Date().toISOString(),
   }
 
-  addClueCardItem(roomId, vote.askerId, clueItem)
+  addClueCardItem(roomId, askerId, clueItem)
+  roomActiveVoteStore.delete(roomId)
   return clueItem
 }
 
 function clearRoomTextVoteData(roomId: string) {
   roomActiveVoteStore.delete(roomId)
+  clearRoomTurnAskedData(roomId)
 }
 
 // --- Ortak Hedef Modu Store Helpers ---
@@ -842,9 +1057,29 @@ export async function createRoom(
   for (let attempt = 0; attempt < 5; attempt++) {
     const roomCode = generateRoomCode()
     
+    const categoryMode: LobbyCategoryMode = categorySettings?.categoryMode || 'single'
+    const category: FamousPersonCategory = categorySettings?.category || 'all'
+    const phaseCategories: FamousPersonCategory[] =
+      categorySettings?.phaseCategories && categorySettings.phaseCategories.length > 0
+        ? categorySettings.phaseCategories
+        : ['unluler', 'sporcular', 'cizgi_karakterler']
+    const totalPhases = categoryMode === 'multi_phase' ? 3 : 1
+
     const { data: room, error } = await admin
       .from('rooms')
-      .insert({ room_code: roomCode, status: 'waiting' })
+      .insert({
+        room_code: roomCode,
+        status: 'waiting',
+        game_mode: gameMode,
+        communication_mode: communicationMode,
+        difficulty,
+        total_rounds: totalRounds,
+        category_mode: categoryMode,
+        selected_category: category,
+        phase_categories: phaseCategories,
+        current_phase: 1,
+        total_phases: totalPhases,
+      })
       .select()
       .single()
 
@@ -864,19 +1099,11 @@ export async function createRoom(
       throw hostError
     }
 
-    // INV-1: game_mode sadece lobi kurulurken kaydedilir
+    // In-memory store'ları da hemen senkronize et
     setRoomModeData(room.id, gameMode)
     setRoomCommunicationModeData(room.id, communicationMode)
     setRoomDifficulty(room.id, difficulty)
     setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
-
-    const categoryMode: LobbyCategoryMode = categorySettings?.categoryMode || 'single'
-    const category: FamousPersonCategory = categorySettings?.category || 'all'
-    const phaseCategories: FamousPersonCategory[] =
-      categorySettings?.phaseCategories && categorySettings.phaseCategories.length > 0
-        ? categorySettings.phaseCategories
-        : ['unluler', 'sporcular', 'cizgi_karakterler']
-    const totalPhases = categoryMode === 'multi_phase' ? 3 : 1
 
     setRoomCategoryData(room.id, {
       categoryMode,
@@ -885,23 +1112,6 @@ export async function createRoom(
       currentPhase: 1,
       totalPhases,
     })
-
-    try {
-      await admin.from('rooms').update({
-        game_mode: gameMode,
-        communication_mode: communicationMode,
-        difficulty,
-        total_rounds: totalRounds,
-        category_mode: categoryMode,
-        selected_category: category,
-        phase_categories: phaseCategories,
-        current_phase: 1,
-        total_phases: totalPhases,
-      } as unknown as Database['public']['Tables']['rooms']['Update']).eq('id', room.id)
-      await admin.from('players').update({ questions_this_round: 0, round_scores: [], has_finished_round: false }).eq('id', host.id)
-    } catch {
-      // Sütun yoksa yut
-    }
 
     return { roomId: room.id, roomCode: room.room_code, playerId: host.id }
   }
@@ -1285,11 +1495,11 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     : (allPlayersSubmittedNames && players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS)
 
   const communicationMode = getRoomCommunicationMode(roomId, room.communication_mode)
-  let rawActiveVote = getActiveTextVote(roomId)
+  let rawActiveVote = await getActiveTextVote(roomId, players)
 
   // Süresi dolmuş açık oylama varsa sonuçlandır ve Hayır ise turu devret
   if (rawActiveVote && rawActiveVote.status === 'open' && Date.now() >= rawActiveVote.closesAt) {
-    const clueItem = resolveTextVoteInternal(roomId, rawActiveVote.id)
+    const clueItem = await resolveTextVoteInternal(roomId, rawActiveVote.id)
     if (clueItem && clueItem.majority !== 'yes' && room.status === 'playing') {
       await advanceTurn(room, players, names)
       const freshRoom = await loadRoom(roomId)
@@ -1297,7 +1507,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       room.current_identity_id = freshRoom.current_identity_id
       room.game_round = freshRoom.game_round
     }
-    rawActiveVote = getActiveTextVote(roomId)
+    rawActiveVote = await getActiveTextVote(roomId, players)
   }
 
   let formattedActiveVote: TextQuestionVote | null = null
@@ -1328,7 +1538,8 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     }
   }
 
-  const viewerClueCard = getPlayerClueCard(roomId, viewer.id)
+  const viewerClueCard = await getPlayerClueCardDb(roomId, viewer.id, players)
+  const hasAskedThisTurn = hasPlayerAskedQuestionInTurn(roomId, viewer.id)
 
   return {
     room: {
@@ -1395,6 +1606,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       canBuzz: isSharedTarget ? (!viewer.is_host && !sharedData.targetRevealed) : undefined,
       skippedQuestionTurn: isSharedTarget ? (sharedData.playerPenalties.get(viewer.id) ?? false) : undefined,
       clueCard: viewerClueCard,
+      hasAskedQuestionThisTurn: hasAskedThisTurn,
     },
     currentName: isViewerTurn ? null : (currentName?.name_text ?? null),
     namesTotal: isSharedTarget ? 1 : names.length,
@@ -2248,6 +2460,7 @@ async function advanceTurn(
   players: PlayerRow[],
   names: NameRow[],
 ): Promise<AdvanceTurnOutcome> {
+  clearRoomTurnAskedData(room.id)
   const admin = supabaseAdmin()
   const gameMode = getRoomMode(room.id, room.game_mode)
   const categoryData = getRoomCategoryData(room.id, room)
@@ -3411,6 +3624,11 @@ export async function askTextQuestion(
     throw forbidden('not_your_turn', 'Soru sorma sırası sizde değil.')
   }
 
+  const gameMode = getRoomMode(roomId, room.game_mode)
+  if (gameMode === 'classic' && hasPlayerAskedQuestionInTurn(roomId, playerId)) {
+    throw conflict('question_already_asked', 'Bu turdaki 1 soru hakkınızı zaten kullandınız. Lütfen tahmin yapın veya sırayı devredin.')
+  }
+
   // Soru metnini belirle
   let qText = params.questionText?.trim()
   if (!qText && params.questionId) {
@@ -3425,10 +3643,10 @@ export async function askTextQuestion(
   }
 
   // Önceki açık oylama var mı kontrol et
-  const existingVote = roomActiveVoteStore.get(roomId)
+  const existingVote = await getActiveTextVote(roomId, players)
   if (existingVote && existingVote.status === 'open') {
     if (Date.now() >= existingVote.closesAt) {
-      resolveTextVoteInternal(roomId, existingVote.id)
+      await resolveTextVoteInternal(roomId, existingVote.id)
     } else {
       throw conflict('vote_already_active', 'Şu anda devam eden bir oylama var.')
     }
@@ -3441,10 +3659,11 @@ export async function askTextQuestion(
   }
 
   const now = Date.now()
-  const closesAt = now + 15000 // 15 saniye
+  const closesAt = now + TEXT_VOTE_DURATION_MS // 30 saniye
+  const voteId = randomUUID()
 
   const voteInternal: TextQuestionVoteInternal = {
-    id: randomUUID(),
+    id: voteId,
     roomId,
     askerId: playerId,
     askerNickname: player.nickname,
@@ -3457,9 +3676,25 @@ export async function askTextQuestion(
   }
 
   roomActiveVoteStore.set(roomId, voteInternal)
+  setPlayerAskedQuestionInTurn(roomId, playerId, true)
+
+  // DB'ye oylama kaydı ekle
+  try {
+    const admin = supabaseAdmin()
+    await admin.from('question_votes').insert({
+      id: voteId,
+      room_id: roomId,
+      asker_player_id: playerId,
+      question_text: qText,
+      status: 'open',
+      opened_at: new Date(now).toISOString(),
+      closes_at: new Date(closesAt).toISOString(),
+    })
+  } catch {
+    // DB tablosu yoksa memory store ile devam
+  }
 
   // Soru sayısını veya bütçesini güncelle
-  const gameMode = getRoomMode(roomId, room.game_mode)
   if (gameMode === 'speed') {
     const speed = getPlayerSpeedData(roomId, playerId)
     setPlayerSpeedData(roomId, playerId, {
@@ -3472,17 +3707,25 @@ export async function askTextQuestion(
     pData.totalQuestionsUsed += 1
   } else {
     // Klasik mod: questions_this_round 1 artar
-    await supabaseAdmin()
-      .from('players')
-      .update({ questions_this_round: (player.questions_this_round ?? 0) + 1 })
-      .eq('id', playerId)
+    try {
+      await supabaseAdmin()
+        .from('players')
+        .update({ questions_this_round: (player.questions_this_round ?? 0) + 1 })
+        .eq('id', playerId)
+    } catch {
+      //
+    }
   }
 
   // Realtime tetikle
-  await supabaseAdmin().from('rooms').update({ status: room.status }).eq('id', roomId)
+  try {
+    await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
+  } catch {
+    //
+  }
 
   return {
-    message: 'Sorunuz diğer oyunculara iletildi, oylar bekleniyor (15 saniye)...',
+    message: 'Sorunuz diğer oyunculara iletildi, oylar bekleniyor (30 saniye)...',
     voteId: voteInternal.id,
     questionText: qText,
     closesAt: new Date(closesAt).toISOString(),
@@ -3498,8 +3741,25 @@ export async function submitTextVote(
   const players = await loadPlayers(roomId)
   requireMembership(players, voterPlayerId)
 
-  const vote = roomActiveVoteStore.get(roomId)
+  let vote = await getActiveTextVote(roomId, players)
   if (!vote || vote.id !== voteId) {
+    // DB'den doğrudan kontrol et
+    const { data: dbVote } = await supabaseAdmin()
+      .from('question_votes')
+      .select()
+      .eq('id', voteId)
+      .maybeSingle()
+
+    if (!dbVote) {
+      throw notFound('vote_not_found', 'Aktif oylama oturumu bulunamadı.')
+    }
+    if (dbVote.status !== 'open') {
+      throw conflict('vote_closed', 'Bu oylama oturumu sona ermiştir.')
+    }
+    vote = await getActiveTextVote(roomId, players)
+  }
+
+  if (!vote) {
     throw notFound('vote_not_found', 'Aktif oylama oturumu bulunamadı.')
   }
 
@@ -3509,11 +3769,11 @@ export async function submitTextVote(
 
   if (Date.now() >= vote.closesAt) {
     const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
-    const resolvedClue = resolveTextVoteInternal(roomId, voteId)
+    const resolvedClue = await resolveTextVoteInternal(roomId, voteId)
     if (resolvedClue && resolvedClue.majority !== 'yes' && room.status === 'playing') {
       await advanceTurn(room, players, names)
     }
-    throw conflict('vote_expired', 'Oylama süresi (15 saniye) doldu.')
+    throw conflict('vote_expired', 'Oylama süresi (30 saniye) doldu.')
   }
 
   if (vote.askerId === voterPlayerId) {
@@ -3526,6 +3786,21 @@ export async function submitTextVote(
 
   vote.responses.set(voterPlayerId, answer)
 
+  // DB'ye oyu kaydet
+  try {
+    await supabaseAdmin().from('question_vote_responses').upsert(
+      {
+        vote_id: voteId,
+        responder_player_id: voterPlayerId,
+        answer,
+        responded_at: new Date().toISOString(),
+      },
+      { onConflict: 'vote_id,responder_player_id' },
+    )
+  } catch {
+    // DB hatasında memory store üzerinden devam
+  }
+
   // Eğer tüm uygun oyuncular oy kullandıysa hemen sonuçlandır
   let isResolved = false
   let clueCardItem: ClueCardItem | null = null
@@ -3533,7 +3808,7 @@ export async function submitTextVote(
 
   if (vote.responses.size >= vote.eligibleVoterIds.size) {
     const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
-    clueCardItem = resolveTextVoteInternal(roomId, voteId)
+    clueCardItem = await resolveTextVoteInternal(roomId, voteId)
     isResolved = true
 
     if (clueCardItem && clueCardItem.majority !== 'yes') {
@@ -3542,18 +3817,27 @@ export async function submitTextVote(
         turnPassed = true
       }
     } else {
-      await supabaseAdmin().from('rooms').update({ status: 'playing' }).eq('id', roomId)
+      // Çoğunluk EVET: Sıra oyuncuda kalır AMA bu turda soru hakkı bitti, tahmin veya devret yapabilir
+      try {
+        await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
+      } catch {
+        //
+      }
     }
   } else {
-    // Realtime tetikle
-    await supabaseAdmin().from('rooms').update({ status: 'playing' }).eq('id', roomId)
+    // Soru AÇIK KALMAYA DEVAM EDİYOR! Realtime tetikle
+    try {
+      await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
+    } catch {
+      //
+    }
   }
 
   const message = clueCardItem
     ? clueCardItem.majority === 'yes'
-      ? 'Cevap: EVET! Soru sormaya devam edebilir veya tahmin yapabilirsiniz.'
+      ? 'Cevap: EVET! Soru hakkınızı kullandınız, şimdi tahmin yapabilir veya sırayı devredebilirsiniz.'
       : 'Cevap: HAYIR! Sıra diğer oyuncuya geçti.'
-    : 'Oyunuz kaydedildi.'
+    : 'Oyunuz kaydedildi. Diğer oyuncuların oyları bekleniyor...'
 
   return {
     message,

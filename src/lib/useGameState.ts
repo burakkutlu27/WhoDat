@@ -100,14 +100,15 @@ export function useGameState(roomId: string): UseGameStateResult {
     }
   }, [roomId, refresh, scheduleRefresh])
 
-  // Emniyet ağı & Canlı Senkronizasyon: lobide, oyunda ve Realtime kesintilerinde düzenli yenile.
+  // Emniyet ağı & Canlı Senkronizasyon: lobide, oyunda, aktif oylamada ve Realtime kesintilerinde düzenli yenile.
   useEffect(() => {
     const isWaiting = state?.room.status === 'waiting'
     const isPlaying = state?.room.status === 'playing'
-    const intervalMs = isWaiting ? 2000 : isPlaying ? 2000 : FALLBACK_POLL_MS
+    const hasActiveVote = state?.room.activeVote?.status === 'open'
+    const intervalMs = hasActiveVote ? 1000 : isWaiting ? 2000 : isPlaying ? 2000 : FALLBACK_POLL_MS
     const interval = setInterval(() => void refresh(), intervalMs)
     return () => clearInterval(interval)
-  }, [state?.room.status, refresh])
+  }, [state?.room.status, state?.room.activeVote?.status, refresh])
 
 
   return { state, phase, error, degraded: !realtimeConnected, refresh }

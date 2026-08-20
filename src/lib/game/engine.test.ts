@@ -1164,6 +1164,20 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     expect(state.room.communicationMode).toBe('text')
   })
 
+  it('createRoom ile text mod ve tek kategori (unluler) birlikte seçildiğinde tüm ayarlar korunur', async () => {
+    const { roomId, playerId } = await createRoom('HostUser', 'classic', {
+      communicationMode: 'text',
+      categoryMode: 'single',
+      category: 'unluler',
+      difficulty: 'orta',
+    })
+    const state = await getGameState(roomId, playerId)
+    expect(state.room.communicationMode).toBe('text')
+    expect(state.room.categoryMode).toBe('single')
+    expect(state.room.selectedCategory).toBe('unluler')
+    expect(state.room.difficulty).toBe('orta')
+  })
+
   it('setCommunicationMode ile host lobide modu değiştirebilir, misafir değiştiremez', async () => {
     const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic')
     const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
@@ -1207,7 +1221,7 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     // Sıradaki oyuncu soru sorar
     const askRes = await askTextQuestion(roomId, currentAskerId, { questionId: 'qb-01' })
     expect(askRes.voteId).toBeDefined()
-    expect(askRes.questionText).toBe('Gerçek bir kişi miyim, yoksa kurgu bir karakter miyim?')
+    expect(askRes.questionText).toBe('Gerçek hayatta yaşamış veya yaşayan bir insan mıyım?')
 
     // Oylama oturumu aktif
     const stateDuring = await getGameState(roomId, currentAskerId)
@@ -1241,13 +1255,13 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     const askerStateAfter = await getGameState(roomId, currentAskerId)
     expect(askerStateAfter.you.clueCard).toHaveLength(1)
     expect(askerStateAfter.you.clueCard?.[0]?.questionText).toBe(
-      'Gerçek bir kişi miyim, yoksa kurgu bir karakter miyim?',
+      'Gerçek hayatta yaşamış veya yaşayan bir insan mıyım?',
     )
     expect(askerStateAfter.you.clueCard?.[0]?.yesCount).toBe(1)
     expect(askerStateAfter.you.clueCard?.[0]?.noCount).toBe(1)
   })
 
-  it('Tam Metin modunda Evet çoğunluğu gelirse sıra soru soranda kalır', async () => {
+  it('Tam Metin modunda Evet çoğunluğu gelirse sıra soru soranda kalır fakat aynı turda tekrar soru soramaz', async () => {
     const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic', {
       communicationMode: 'text',
     })
@@ -1272,10 +1286,18 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     expect(voteRes.clueCardItem?.majority).toBe('yes')
     expect(voteRes.turnPassed).toBe(false)
 
-    // Sıra hâlâ askerId'dedir
+    // Sıra hâlâ askerId'dedir fakat bu turdaki soru hakkı bitmiştir
     const stateAfter = await getGameState(roomId, askerId)
     expect(stateAfter.room.currentPlayerId).toBe(askerId)
     expect(stateAfter.you.isYourTurn).toBe(true)
+    expect(stateAfter.you.hasAskedQuestionThisTurn).toBe(true)
+
+    // Aynı turda 2. kez soru soramaz
+    await expect(
+      askTextQuestion(roomId, askerId, { questionText: 'İkinci bir soru sorabilir miyim?' }),
+    ).rejects.toMatchObject({
+      code: 'question_already_asked',
+    })
   })
 
   it('Israrcı Modda Tam Metin soru sorulduğunda soru bütçesi azalır', async () => {

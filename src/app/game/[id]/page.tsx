@@ -1513,20 +1513,27 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                       </div>
                     ) : isSpeed || myLives > 0 ? (
                       <div className="mx-auto max-w-md space-y-4">
-                        {/* Tam Metin Modu: Soru Bankasından Soru Seç Butonu */}
+                        {/* Tam Metin Modu: Soru Bankasından Soru Seç Butonu veya Hak Kullanıldı Bildirimi */}
                         {state.room.communicationMode === 'text' && (!state.room.activeVote || state.room.activeVote.status === 'closed') && (
                           (!isPersistent || (state.you.questionBudgetRemaining ?? 10) > 0) && (
-                            <motion.button
-                              type="button"
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              onClick={() => setIsQuestionPickerOpen(true)}
-                              disabled={isBusy}
-                              className="btn-pencil-yellow w-full py-4 font-display text-xl font-bold flex items-center justify-center gap-2 shadow-md border-2 border-pencil-yellow"
-                            >
-                              <HelpCircle className="h-6 w-6" />
-                              <span>Soru Bankasından Soru Sor (15sn Oylama)</span>
-                            </motion.button>
+                            state.you.hasAskedQuestionThisTurn ? (
+                              <div className="p-3.5 rounded-sketch-md bg-paper-card border border-dashed border-pencil-orange/50 text-center font-display text-base font-bold text-pencil-orange flex items-center justify-center gap-2">
+                                <HelpCircle className="h-5 w-5 shrink-0" />
+                                <span>Bu turdaki 1 soru hakkınızı kullandınız. Tahmin yapabilir veya sırayı devredebilirsiniz.</span>
+                              </div>
+                            ) : (
+                              <motion.button
+                                type="button"
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => setIsQuestionPickerOpen(true)}
+                                disabled={isBusy}
+                                className="btn-pencil-yellow w-full py-4 font-display text-xl font-bold flex items-center justify-center gap-2 shadow-md border-2 border-pencil-yellow"
+                              >
+                                <HelpCircle className="h-6 w-6" />
+                                <span>Soru Bankasından Soru Sor (30sn Oylama)</span>
+                              </motion.button>
+                            )
                           )
                         )}
 

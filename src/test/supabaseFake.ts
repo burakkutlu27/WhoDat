@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 
-import type { FamousPersonRow, GameResultRow, NameRow, NameSuggestionRow, PlayerProfileRow, PlayerRow, RoomRow } from '@/lib/database.types'
+import type { FamousPersonRow, GameResultRow, NameRow, NameSuggestionRow, PlayerProfileRow, PlayerRow, QuestionVoteResponseRow, QuestionVoteRow, RoomRow } from '@/lib/database.types'
 
 /**
  * Bellek içi Supabase test ikizi.
@@ -18,6 +18,8 @@ export interface FakeTables {
   name_suggestions?: NameSuggestionRow[]
   player_profiles?: PlayerProfileRow[]
   game_results?: GameResultRow[]
+  question_votes?: QuestionVoteRow[]
+  question_vote_responses?: QuestionVoteResponseRow[]
 }
 
 type TableName = keyof FakeTables
@@ -116,6 +118,11 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
     return this
   }
 
+  in(column: string, values: unknown[]) {
+    this.filters.push([column, values, 'in' as unknown as 'eq'])
+    return this
+  }
+
   limit(count: number) {
     this.limitCount = count
     return this
@@ -138,6 +145,10 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
 
   private matches(row: Row): boolean {
     return this.filters.every(([column, value, op]) => {
+      if ((op as string) === 'in') {
+        const arr = Array.isArray(value) ? value : []
+        return arr.includes(row[column])
+      }
       if (op === 'ilike') {
         const strVal = String(row[column] ?? '').toLocaleLowerCase('tr')
         const pattern = String(value ?? '').replace(/%/g, '').toLocaleLowerCase('tr')
@@ -329,6 +340,7 @@ export function buildRoom(overrides: Partial<RoomRow> = {}): RoomRow {
     phase_categories: null,
     current_phase: 1,
     total_phases: 1,
+    difficulty: 'orta',
     ...overrides,
   }
 }
