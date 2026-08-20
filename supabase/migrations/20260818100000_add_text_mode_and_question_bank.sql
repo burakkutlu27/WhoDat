@@ -16,23 +16,28 @@ CREATE TABLE IF NOT EXISTS question_bank (
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- 3. Soru Bankası başlangıç verisi (15 Temel Soru)
+-- 3. Soru Bankası başlangıç verisi (Evet / Hayır Formatında Standart Sorular)
 INSERT INTO question_bank (text_tr, tag, difficulty, sort_order) VALUES
-('Gerçek bir kişi miyim, yoksa kurgu bir karakter miyim?', 'kimlik', 'genel', 1),
-('Hayatta mıyım?', 'durum', 'genel', 2),
-('Bir kadın mıyım?', 'cinsiyet', 'genel', 3),
-('Tanınırlığım sanat/eğlence dünyasından mı geliyor?', 'meslek', 'genel', 4),
-('Spor dünyasından mıyım?', 'meslek', 'genel', 5),
-('Tarihi bir figür müyüm (20. yüzyıldan önce mi yaşadım)?', 'tarih', 'daraltici', 6),
-('Türk müyüm?', 'koken', 'daraltici', 7),
-('Filmlerde ya da dizilerde mi tanınıyorum?', 'sanat', 'daraltici', 8),
-('Müzikle mi tanınıyorum?', 'sanat', 'daraltici', 9),
-('Bir çizgi film karakteri miyim?', 'kurgu', 'daraltici', 10),
-('İsmim üç harften uzun mu?', 'isim', 'spesifik', 11),
-('Adım bir sesli harfle mi başlıyor?', 'isim', 'spesifik', 12),
-('Genel olarak "iyi" bir karakter olarak mı biliniyorum?', 'kisilik', 'daraltici', 13),
-('Bugün hâlâ aktif/güncel biri miyim?', 'durum', 'genel', 14),
-('Bir spor dalında ünlü müyüm?', 'spor', 'daraltici', 15);
+('Gerçek hayatta yaşamış veya yaşayan bir insan mıyım?', 'kimlik', 'genel', 1),
+('Kurgusal veya hayal ürünü bir karakter miyim?', 'kimlik', 'genel', 2),
+('Şu anda hayatta mıyım?', 'durum', 'genel', 3),
+('Bir kadın mıyım?', 'kimlik', 'genel', 4),
+('Bir erkek miyim?', 'kimlik', 'genel', 5),
+('Türkiye kökenli / Türk vatandaşı mıyım?', 'koken', 'daraltici', 6),
+('Yabancı (Türkiye dışından) biri miyim?', 'koken', 'daraltici', 7),
+('Sanat, sinema veya müzik dünyasından mıyım?', 'sanat', 'genel', 8),
+('Oyunculuk veya sinema/dizi sektöründe mi tanınıyorum?', 'sanat', 'daraltici', 9),
+('Müzisyen, şarkıcı veya besteci miyim?', 'sanat', 'daraltici', 10),
+('Bir sporcu veya spor dünyasından biri miyim?', 'spor', 'daraltici', 11),
+('Tarihi bir kişilik miyim (20. yüzyıldan önce mi yaşadım)?', 'durum', 'daraltici', 12),
+('Bilim, edebiyat veya siyaset alanında mı tanınıyorum?', 'meslek', 'daraltici', 13),
+('Bir çizgi film, animasyon veya çizgi roman karakteri miyim?', 'kimlik', 'daraltici', 14),
+('Süper güçleri veya fantastik yetenekleri olan bir karakter miyim?', 'kimlik', 'spesifik', 15),
+('Genel olarak olumlu / "iyi" tarafta bir karakter miyim?', 'kisilik', 'daraltici', 16),
+('Kötü / kötü adam (antagonist) bir karakter miyim?', 'kisilik', 'daraltici', 17),
+('İsmim (veya ilk adım) 5 harften uzun mu?', 'isim', 'spesifik', 18),
+('Adım bir sesli harfle (A, E, I, İ, O, Ö, U, Ü) mi başlıyor?', 'isim', 'spesifik', 19),
+('Bugün hâlâ aktif/güncel olarak tanınan biri miyim?', 'durum', 'genel', 20);
 
 -- 4. Oylama ve Cevap Tabloları (Opsiyonel veritabanı kalıcılığı için)
 CREATE TABLE IF NOT EXISTS question_votes (

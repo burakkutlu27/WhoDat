@@ -266,6 +266,90 @@ export type Database = {
         }
         Relationships: []
       }
+      question_votes: {
+        Row: {
+          id: string
+          room_id: string
+          asker_player_id: string
+          question_text: string
+          status: string | null
+          opened_at: string | null
+          closes_at: string | null
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          room_id: string
+          asker_player_id: string
+          question_text: string
+          status?: string | null
+          opened_at?: string | null
+          closes_at?: string | null
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          room_id?: string
+          asker_player_id?: string
+          question_text?: string
+          status?: string | null
+          opened_at?: string | null
+          closes_at?: string | null
+          created_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'question_votes_room_id_fkey'
+            columns: ['room_id']
+            isOneToOne: false
+            referencedRelation: 'rooms'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'question_votes_asker_player_id_fkey'
+            columns: ['asker_player_id']
+            isOneToOne: false
+            referencedRelation: 'players'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      question_vote_responses: {
+        Row: {
+          vote_id: string
+          responder_player_id: string
+          answer: boolean
+          responded_at: string | null
+        }
+        Insert: {
+          vote_id: string
+          responder_player_id: string
+          answer: boolean
+          responded_at?: string | null
+        }
+        Update: {
+          vote_id?: string
+          responder_player_id?: string
+          answer?: boolean
+          responded_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'question_vote_responses_vote_id_fkey'
+            columns: ['vote_id']
+            isOneToOne: false
+            referencedRelation: 'question_votes'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'question_vote_responses_responder_player_id_fkey'
+            columns: ['responder_player_id']
+            isOneToOne: false
+            referencedRelation: 'players'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       rooms: {
         Row: {
           category_mode: string | null
@@ -274,6 +358,7 @@ export type Database = {
           current_identity_id: string | null
           current_phase: number | null
           current_player_id: string | null
+          difficulty: string | null
           game_mode: string | null
           game_round: number | null
           id: string
@@ -293,6 +378,7 @@ export type Database = {
           current_identity_id?: string | null
           current_phase?: number | null
           current_player_id?: string | null
+          difficulty?: string | null
           game_mode?: string | null
           game_round?: number | null
           id?: string
@@ -312,6 +398,7 @@ export type Database = {
           current_identity_id?: string | null
           current_phase?: number | null
           current_player_id?: string | null
+          difficulty?: string | null
           game_mode?: string | null
           game_round?: number | null
           id?: string
@@ -371,5 +458,7 @@ export type FamousPersonRow = Database['public']['Tables']['famous_people']['Row
 export type NameSuggestionRow = Database['public']['Tables']['name_suggestions']['Row']
 export type PlayerProfileRow = Database['public']['Tables']['player_profiles']['Row']
 export type GameResultRow = Database['public']['Tables']['game_results']['Row']
+export type QuestionVoteRow = Database['public']['Tables']['question_votes']['Row']
+export type QuestionVoteResponseRow = Database['public']['Tables']['question_vote_responses']['Row']
 
 export type RoomStatus = 'waiting' | 'playing' | 'finished' | 'closed'

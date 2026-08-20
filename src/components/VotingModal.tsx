@@ -29,7 +29,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
     return () => clearInterval(interval)
   }, [vote.closesAt])
 
-  const progressPercent = Math.max(0, Math.min(100, (localSeconds / 15) * 100))
+  const progressPercent = Math.max(0, Math.min(100, (localSeconds / 30) * 100))
 
   return (
     <motion.div
@@ -42,7 +42,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
       <div className="absolute top-0 left-0 right-0 h-2 bg-paper-border">
         <motion.div
           className={`h-full transition-all duration-300 ${
-            localSeconds <= 4 ? 'bg-pencil-red' : 'bg-pencil-orange'
+            localSeconds <= 6 ? 'bg-pencil-red' : 'bg-pencil-orange'
           }`}
           style={{ width: `${progressPercent}%` }}
         />
@@ -55,7 +55,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
         </span>
         <span className="font-mono text-sm font-bold text-ink-faded flex items-center gap-1.5">
           <span>Kalan Süre:</span>
-          <span className={`text-base font-bold ${localSeconds <= 4 ? 'text-pencil-red' : 'text-pencil-orange'}`}>
+          <span className={`text-base font-bold ${localSeconds <= 6 ? 'text-pencil-red' : 'text-pencil-orange'}`}>
             {localSeconds}s
           </span>
         </span>

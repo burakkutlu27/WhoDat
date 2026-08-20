@@ -169,6 +169,8 @@ export interface GameState {
     skippedQuestionTurn?: boolean
     /** Tam Metin Modu: Oyuncunun kişisel ipucu kartı (not defteri) */
     clueCard?: ClueCardItem[]
+    /** Bu turda soru sorma hakkı kullanıldı mı (Tur başına 1 soru hakkı) */
+    hasAskedQuestionThisTurn?: boolean
   }
   /** Tahmin sırası sizdeyse null: doğru cevap tahmin edene gönderilmez. */
   currentName: string | null
