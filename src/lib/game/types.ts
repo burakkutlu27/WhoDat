@@ -171,6 +171,8 @@ export interface GameState {
     clueCard?: ClueCardItem[]
     /** Bu turda soru sorma hakkı kullanıldı mı (Tur başına 1 soru hakkı) */
     hasAskedQuestionThisTurn?: boolean
+    /** Oyuncunun şu an çözmeye çalıştığı gizli ismin ID'si (not defteri kapsamı için) */
+    targetNameId?: string | null
   }
   /** Tahmin sırası sizdeyse null: doğru cevap tahmin edene gönderilmez. */
   currentName: string | null

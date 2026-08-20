@@ -432,6 +432,33 @@ export function addClueCardItem(roomId: string, playerId: string, item: ClueCard
   return cards
 }
 
+export function clearPlayerClueCardMemory(roomId: string, playerId: string): void {
+  const roomClueMap = playerClueCardStore.get(roomId)
+  if (roomClueMap) {
+    roomClueMap.delete(playerId)
+  }
+}
+
+export async function clearPlayerClueCard(roomId: string, playerId: string): Promise<void> {
+  clearPlayerClueCardMemory(roomId, playerId)
+  try {
+    const admin = supabaseAdmin()
+    const { data: dbVotes } = await admin
+      .from('question_votes')
+      .select('id')
+      .eq('room_id', roomId)
+      .eq('asker_player_id', playerId)
+
+    if (dbVotes && dbVotes.length > 0) {
+      const voteIds = dbVotes.map((v) => v.id)
+      await admin.from('question_vote_responses').delete().in('vote_id', voteIds)
+      await admin.from('question_votes').delete().in('id', voteIds)
+    }
+  } catch {
+    // DB hatası durumunda memory zaten temizlendi
+  }
+}
+
 export async function getPlayerClueCardDb(roomId: string, playerId: string, players?: PlayerRow[]): Promise<ClueCardItem[]> {
   try {
     const admin = supabaseAdmin()
@@ -1617,6 +1644,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       skippedQuestionTurn: isSharedTarget ? (sharedData.playerPenalties.get(viewer.id) ?? false) : undefined,
       clueCard: viewerClueCard,
       hasAskedQuestionThisTurn: hasAskedThisTurn,
+      targetNameId: getPlayerRoundNameId(roomId, viewer.id),
     },
     currentName: isViewerTurn ? null : (currentName?.name_text ?? null),
     namesTotal: isSharedTarget ? 1 : names.length,
@@ -2416,11 +2444,16 @@ export async function transitionToNextPhase(
   playerRoundNameStore.delete(room.id)
   roomUsedNamesStore.delete(room.id)
   resetRoomSpeedRound(room.id)
+  classicRetiredNamesStore.delete(room.id)
+  playerClassicSolvedStore.delete(room.id)
+  playerPassRightsStore.delete(room.id)
+  playerClueCardStore.delete(room.id)
 
-  // 4. Canları yenile — yeni fazda herkes tam canla başlar
+  // 4. Canları ve pas haklarını yenile — yeni fazda herkes tam can ve 3 pas hakkıyla başlar
   roomLivesStore.delete(room.id)
   for (const p of players) {
     setPlayerLives(room.id, p.id, TOTAL_LIVES_PER_GAME)
+    setPlayerPassRights(room.id, p.id, CLASSIC_MODE_MAX_PASSES)
   }
 
   const firstPlayer = players[0]!
@@ -3441,11 +3474,25 @@ async function handleClassicModeGiveUp(
   const newPassRights = passRights - 1
   setPlayerPassRights(room.id, playerId, newPassRights)
 
-  const currentNameId = getPlayerRoundNameId(room.id, playerId)
+  let currentNameId = getPlayerRoundNameId(room.id, playerId)
+  if (!currentNameId) {
+    if (room.current_player_id === playerId && room.current_identity_id) {
+      currentNameId = room.current_identity_id
+    } else {
+      const assigned = names.find((n) => n.assigned_to === playerId && n.used_in_round === null)
+      if (assigned) currentNameId = assigned.id
+    }
+  }
+
   if (currentNameId) {
     retireClassicName(room.id, currentNameId)
     await supabaseAdmin().from('names').update({ used_in_round: 1 }).eq('id', currentNameId)
+    const foundName = names.find((n) => n.id === currentNameId)
+    if (foundName) foundName.used_in_round = 1
   }
+
+  // Not defterini / ipucu kartını temizle (yeni isme geçiliyor)
+  await clearPlayerClueCard(room.id, playerId)
 
   // Havuzdan yeni isim ata (can kaybı yok, hak 3'e resetlenir)
   const nextNameId = assignNewClassicName(room.id, player, names)
@@ -3476,7 +3523,15 @@ async function handleClassicModeGuess(
 ): Promise<GuessResult> {
   const player = players.find((p) => p.id === playerId)!
   const currentLives = getPlayerLives(room.id, playerId)
-  const currentNameId = getPlayerRoundNameId(room.id, playerId)
+  let currentNameId = getPlayerRoundNameId(room.id, playerId)
+  if (!currentNameId) {
+    if (room.current_player_id === playerId && room.current_identity_id) {
+      currentNameId = room.current_identity_id
+    } else {
+      const assigned = names.find((n) => n.assigned_to === playerId && n.used_in_round === null)
+      if (assigned) currentNameId = assigned.id
+    }
+  }
 
   const isCorrect = fuzzyMatch(guess, targetNameText)
 
@@ -3485,7 +3540,12 @@ async function handleClassicModeGuess(
     if (currentNameId) {
       retireClassicName(room.id, currentNameId)
       await supabaseAdmin().from('names').update({ used_in_round: 1 }).eq('id', currentNameId)
+      const foundName = names.find((n) => n.id === currentNameId)
+      if (foundName) foundName.used_in_round = 1
     }
+
+    // Not defterini / ipucu kartını temizle (yeni isme geçiliyor)
+    await clearPlayerClueCard(room.id, playerId)
 
     const { error } = await supabaseAdmin().rpc('increment_player_score', {
       p_player_id: playerId,
@@ -3530,7 +3590,12 @@ async function handleClassicModeGuess(
     if (currentNameId) {
       retireClassicName(room.id, currentNameId)
       await supabaseAdmin().from('names').update({ used_in_round: 1 }).eq('id', currentNameId)
+      const foundName = names.find((n) => n.id === currentNameId)
+      if (foundName) foundName.used_in_round = 1
     }
+
+    // Not defterini / ipucu kartını temizle (yeni isme geçiliyor)
+    await clearPlayerClueCard(room.id, playerId)
 
     const nextNameId = assignNewClassicName(room.id, player, names)
 
