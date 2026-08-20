@@ -1374,12 +1374,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           {/* Can / Tahmin Hakkı Göstergesi — TornPaperHeart */}
                           <div className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-4 py-2 shadow-sm">
                             <span className="font-display text-base font-bold text-ink-faded">
-                              Tahmin Hakkı:
+                              Tahmin Hakkın:
                             </span>
                             <div className="flex items-center gap-1.5">
                               {Array.from({ length: maxLives }).map((_, index) => {
-                                const displayLives = state.you.isYourTurn ? myLives : activePlayerLives
-                                const isFilled = index < displayLives
+                                const isFilled = index < myLives
                                 return (
                                   <TornPaperHeart
                                     key={index}
@@ -1457,12 +1456,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         {/* Deneme Hakkı */}
                         <div className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm">
                           <span className="font-display text-sm font-bold text-ink-faded">
-                            {state.you.isYourTurn ? 'Bu İsim İçin Deneme:' : `${currentPlayer?.nickname ?? 'Oyuncu'} Deneme:`}
+                            Deneme Hakkın:
                           </span>
                           <div className="flex items-center gap-1">
                             {Array.from({ length: maxLives }).map((_, index) => {
-                              const displayLives = state.you.isYourTurn ? myLives : activePlayerLives
-                              const isFilled = index < displayLives
+                              const isFilled = index < myLives
                               return (
                                 <TornPaperHeart
                                   key={index}
@@ -1477,10 +1475,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         {/* Pas Geçme Hakkı */}
                         <div className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm">
                           <span className="font-display text-sm font-bold text-ink-faded">
-                            {state.you.isYourTurn ? 'Kalan Pas Hakkın:' : `${currentPlayer?.nickname ?? 'Oyuncu'} Pas Hakkı:`}
+                            Kalan Pas Hakkın:
                           </span>
                           <span className="font-display text-base font-bold text-pencil-orange">
-                            {state.you.isYourTurn ? (state.you.passRightsRemaining ?? 3) : (currentPlayer?.passRightsRemaining ?? 3)} / 3
+                            {state.you.passRightsRemaining ?? 3} / 3
                           </span>
                         </div>
                       </div>
@@ -1748,6 +1746,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               clueItems={state.you.clueCard}
               communicationMode={state.room.communicationMode}
               roomId={roomId}
+              targetNameId={state.you.targetNameId}
             />
 
             <div className="paper-card-alt p-6">

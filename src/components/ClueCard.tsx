@@ -11,6 +11,7 @@ interface ClueCardProps {
   defaultExpanded?: boolean
   communicationMode?: CommunicationMode
   roomId?: string
+  targetNameId?: string | null
 }
 
 const QUICK_TAGS = ['Erkek', 'Kadın', 'Türk', 'Yabancı', 'Yaşıyor', 'Vefat Etti', 'Sanatçı', 'Sporcu']
@@ -20,12 +21,13 @@ export function ClueCard({
   defaultExpanded = true,
   communicationMode = 'voice',
   roomId = '',
+  targetNameId = '',
 }: ClueCardProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded)
   const isVoiceMode = communicationMode === 'voice'
 
-  // Sesli mod serbest not defteri durumu (localStorage ile kalıcı)
-  const storageKey = `whoDat_voice_notes_${roomId || 'default'}`
+  // Sesli mod serbest not defteri durumu (hedef isme ve odaya göre localStorage ile kalıcı)
+  const storageKey = `whoDat_voice_notes_${roomId || 'default'}_${targetNameId || 'default'}`
   const [notes, setNotes] = useState('')
   const [isMounted, setIsMounted] = useState(false)
   const [isConfirmingClear, setIsConfirmingClear] = useState(false)
@@ -37,9 +39,9 @@ export function ClueCard({
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem(storageKey)
-        if (saved) setNotes(saved)
+        setNotes(saved || '')
       } catch {
-        // localStorage erişimi engellenmişse sessizce geç
+        setNotes('')
       }
     }
   }, [storageKey])

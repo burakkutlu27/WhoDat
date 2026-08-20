@@ -16,6 +16,7 @@ vi.mock('@/lib/supabaseAdmin', () => ({
 }))
 
 const {
+  addClueCardItem,
   answerSharedQuestion,
   askSharedQuestion,
   askTextQuestion,
@@ -25,6 +26,7 @@ const {
   createRoom,
   getClassicRetiredNames,
   getGameState,
+  getPlayerClueCard,
   getPlayerLives,
   getPlayerPassRights,
   getRoomMode,
@@ -346,6 +348,79 @@ describe('giveUp (Klasik Mod — İsmi Pas Geç)', () => {
 
     setPlayerPassRights(room.id, host.id, 0)
     await expect(giveUp(room.id, host.id)).rejects.toMatchObject({ code: 'no_pass_rights' })
+  })
+
+  it('ismi pas geçildiğinde o isim emekliye ayrılır, havuzdan düşer ve namesRemaining 1 azalır', async () => {
+    const { room, host, guest, tables } = playingRoom()
+    const extraName = buildName(room.id, guest.id, { name_text: 'Şener Şen' })
+    tables.names.push(extraName)
+    fake = createSupabaseFake(tables)
+
+    const stateBefore = await getGameState(room.id, host.id)
+    expect(stateBefore.namesRemaining).toBe(3)
+
+    await giveUp(room.id, host.id)
+
+    const stateAfter = await getGameState(room.id, host.id)
+    expect(stateAfter.namesRemaining).toBe(2)
+  })
+
+  it('ismi pas geçildiğinde oyuncunun not defteri / ipucu kartı (clueCard) temizlenir', async () => {
+    const { room, host, guest, tables } = playingRoom()
+    const extraName = buildName(room.id, guest.id, { name_text: 'Adile Naşit' })
+    tables.names.push(extraName)
+    fake = createSupabaseFake(tables)
+
+    // Oyuncunun önceden kaydedilmiş soru ipuçları olsun
+    addClueCardItem(room.id, host.id, {
+      id: 'vote-1',
+      questionText: 'Kadın mıyım?',
+      yesCount: 1,
+      noCount: 0,
+      unansweredCount: 0,
+      majority: 'yes',
+      timestamp: new Date().toISOString(),
+    })
+
+    const stateBefore = await getGameState(room.id, host.id)
+    expect(stateBefore.you.clueCard).toHaveLength(1)
+
+    // İsmi pas geç
+    await giveUp(room.id, host.id)
+
+    // Not defteri sıfırlanmış olmalı
+    const stateAfter = await getGameState(room.id, host.id)
+    expect(stateAfter.you.clueCard).toHaveLength(0)
+    expect(getPlayerClueCard(room.id, host.id)).toHaveLength(0)
+  })
+
+  it('isim doğru tahmin edildiğinde oyuncunun not defteri / ipucu kartı (clueCard) temizlenir', async () => {
+    const { room, host, guest, tables } = playingRoom()
+    const extraName = buildName(room.id, guest.id, { name_text: 'Tarık Akan' })
+    tables.names.push(extraName)
+    fake = createSupabaseFake(tables)
+
+    // Host için gizli isim Türkan Şoray (guestName) atanmış durumda
+    addClueCardItem(room.id, host.id, {
+      id: 'vote-1',
+      questionText: 'Oyuncu muyum?',
+      yesCount: 1,
+      noCount: 0,
+      unansweredCount: 0,
+      majority: 'yes',
+      timestamp: new Date().toISOString(),
+    })
+
+    const stateBefore = await getGameState(room.id, host.id)
+    expect(stateBefore.you.clueCard).toHaveLength(1)
+
+    // Doğru tahmin yap
+    await makeGuess(room.id, host.id, 'Türkan Şoray')
+
+    // Yeni isim atandığı için not defteri sıfırlanmış olmalı
+    const stateAfter = await getGameState(room.id, host.id)
+    expect(stateAfter.you.clueCard).toHaveLength(0)
+    expect(getPlayerClueCard(room.id, host.id)).toHaveLength(0)
   })
 })
 
