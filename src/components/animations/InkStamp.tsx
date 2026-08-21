@@ -11,6 +11,7 @@ interface InkStampProps {
   className?: string
   type?: 'button' | 'submit' | 'reset'
   'aria-label'?: string
+  'data-testid'?: string
 }
 
 const COLOR_MAP = {
@@ -63,6 +64,7 @@ export function InkStamp({
   className = '',
   type = 'button',
   'aria-label': ariaLabel,
+  'data-testid': testId,
 }: InkStampProps) {
   const [isPressed, setIsPressed] = useState(false)
   const [stampKey, setStampKey] = useState(0)
@@ -83,6 +85,7 @@ export function InkStamp({
       <motion.button
         type={type}
         aria-label={ariaLabel}
+        data-testid={testId}
         disabled={disabled}
         onClick={handleClick}
         whileHover={!disabled && !shouldReduceMotion ? { scale: 1.02, rotate: -0.5 } : undefined}

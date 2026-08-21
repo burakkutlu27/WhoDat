@@ -90,6 +90,7 @@ export default function Home() {
               whileHover={{ scale: 1.03, rotate: -0.5 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => router.push('/room/create')}
+              data-testid="create-room-link"
               className="btn-pencil-red flex w-full items-center justify-center gap-2 py-4 font-display text-xl tracking-wide shadow-md"
             >
               <Play className="h-5 w-5 fill-current" />
@@ -130,6 +131,7 @@ export default function Home() {
                 onChange={(e) => setQuickCode(e.target.value.toUpperCase())}
                 placeholder="ODA KODU"
                 maxLength={6}
+                data-testid="quick-code-input"
                 className="paper-input-boxed text-center font-mono text-xl tracking-[0.3em] uppercase transition-all duration-200 focus:scale-[1.01]"
               />
             </div>
@@ -138,6 +140,7 @@ export default function Home() {
               type="submit"
               whileHover={{ scale: 1.02, rotate: 0.5 }}
               whileTap={{ scale: 0.98 }}
+              data-testid="quick-join-button"
               className="btn-outline flex w-full items-center justify-center gap-2 py-3.5 font-display text-lg"
             >
               <span>Koda Katıl</span>

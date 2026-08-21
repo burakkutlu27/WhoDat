@@ -1,4 +1,4 @@
-# KimBu (v3.7)
+# KimBu (v3.8)
 
 **Ben Kimim? (Who Am I?)** parti ve masa oyununun Next.js ve Supabase ile geliştirilmiş çok oyunculu çevrimiçi sürümü.
 
@@ -11,6 +11,21 @@ Oyuncular 6 haneli oda koduyla aynı lobiye katılır, seçilen oyun moduna, kat
 ---
 
 ## Sürüm Geçmişi & Öne Çıkan Özellikler
+
+### v3.8 — Çoklu Oyuncu Uçtan Uca (E2E) Test Altyapısı, Kombinasyon Matrisi & Eşzamanlılık Koruması
+- **Playwright Tabanlı Çoklu Oturum E2E Mimarisi:**
+  - Bağımsız tarayıcı bağlamları (`browserContext`) kullanılarak 2 ila 6 oyuncunun gerçek zamanlı lobide buluşması, isim girmesi, soru sorması, canlı oylama yapması ve skor podyumuna ulaşması uçtan uca simüle edilir.
+  - **15 Playwright E2E Testi:**
+    - **Test 2 Regresyon Testi:** Havuz tükenmesinde oyuncunun kendi yazdığı ismi almaması kuralının (Kök Neden C ve atomik isim seçimi) gerçek UI doğrulaması.
+    - **12 Kombinasyon UI Senaryosu:** 4 Oyun Modu (Klasik, Hız, Israrcı, Ortak Hedef) × 2 İletişim Türü (Metin, Ses) × 2 Kategori Tipi (Tek, 3 Fazlı) × 2-6 Oyuncu rotasyonu.
+    - **2 Eşzamanlılık & Race Condition Testi:** `Promise.all` ile milisaniyelik çakışmaların ve buzzer yarışlarının doğrulanması.
+- **Kapsamlı Motor Test Matrisi (Vitest):**
+  - **192 Kombinasyonluk Motor Matrisi (`combinationMatrix.test.ts`):** 4 Mod × 2 İletişim × 2 Kategori × 3 Zorluk × 4 Oyuncu boyutu matrisinin tamamında oyun başlangıcı, can dağıtımı, soru bütçesi ve hedef atamalarının kural doğrulaması.
+  - **12 Dosya / 373 Birim & Entegrasyon Testi:** %100 yeşil test güvencesi (`npm test`).
+- **Gelişmiş Eşzamanlılık ve Güvenilirlik Korumaları:**
+  - **Buzzer Tahmin Çakışma Kilidi:** Ortak hedef modunda aynı anda doğru tahminde bulunan yarışmacılardan yalnızca ilki atomik olarak kazanan ilan edilir (`targetRevealed` kilidi); çift puan ve çift kazanan bug'ı sıfırlandı.
+  - **Veritabanı Kısıt Filtrelemesi:** Otomatik isim havuzu seçiminde PostgreSQL `names_text_length_check` (60 karakter) kısıtına takılmayan steril veri filtrelemesi.
+  - **Geliştirme & Test Ortamı Rate-Limit Bypass'ı:** Yerel test koşumlarında ve CI akışlarında test odalarının burst kota kilitlenmesine takılması engellendi.
 
 ### v3.7 — Zorluk Seviyesi Seçimi (Kolay / Orta / Zor) & Veri Filtreleme
 - **3 Sabit Zorluk Seviyesi:**

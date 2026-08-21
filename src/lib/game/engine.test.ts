@@ -1391,7 +1391,107 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     const stateAfter = await getGameState(roomId, askerId)
     expect(stateAfter.you.questionBudgetRemaining).toBe(9)
   })
+
+  it('2 kişilik Klasik modda hiçbir oyuncu kendi yazdığı ismi almaz ve havuz bitince erken tamamlanır', async () => {
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic')
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    fake.tables.players.push(guest)
+
+    // Host 3 isim gönderir (A1, A2, A3)
+    await submitNames(roomId, hostId, ['Prens Harry', 'Şahan Gökbakar', 'Elraen'])
+    // Guest 3 isim gönderir (B1, B2, B3)
+    await submitNames(roomId, guest.id, ['The Weeknd', 'Karl Lagerfeld', 'Christopher Nolan'])
+
+    await startGame(roomId, hostId)
+
+    // Başlangıç atamalarını kontrol et
+    const hostState1 = await getGameState(roomId, hostId)
+    const guestState1 = await getGameState(roomId, guest.id)
+
+    const hostInitialName = fake.tables.names.find((n) => n.id === hostState1.you.targetNameId)
+    const guestInitialName = fake.tables.names.find((n) => n.id === guestState1.you.targetNameId)
+
+    // Host sadece Guest'in yazdığı isimlerden birini almalı
+    expect(hostInitialName?.submitted_by).toBe(guest.id)
+    expect(['The Weeknd', 'Karl Lagerfeld', 'Christopher Nolan']).toContain(hostInitialName?.name_text)
+
+    // Guest sadece Host'un yazdığı isimlerden birini almalı
+    expect(guestInitialName?.submitted_by).toBe(hostId)
+    expect(['Prens Harry', 'Şahan Gökbakar', 'Elraen']).toContain(guestInitialName?.name_text)
+
+    // Host tüm isimleri pas geçsin (B1 -> B2 -> B3)
+    const hostNamesAssigned: string[] = [hostInitialName!.name_text]
+
+    // 1. Pas
+    const pass1 = await giveUp(roomId, hostId)
+    expect(pass1.passRightsLeft).toBe(2)
+    // Sıra guest'e geçti, guest pas geçsin
+    await passTurn(roomId, guest.id)
+
+    // Sıra tekrar host'ta
+    const hostState2 = await getGameState(roomId, hostId)
+    const hostName2 = fake.tables.names.find((n) => n.id === hostState2.you.targetNameId)
+    expect(hostName2?.submitted_by).toBe(guest.id)
+    expect(hostNamesAssigned).not.toContain(hostName2?.name_text)
+    hostNamesAssigned.push(hostName2!.name_text)
+
+    // 2. Pas
+    const pass2 = await giveUp(roomId, hostId)
+    expect(pass2.passRightsLeft).toBe(1)
+    await passTurn(roomId, guest.id)
+
+    // Sıra tekrar host'ta
+    const hostState3 = await getGameState(roomId, hostId)
+    const hostName3 = fake.tables.names.find((n) => n.id === hostState3.you.targetNameId)
+    expect(hostName3?.submitted_by).toBe(guest.id)
+    expect(hostNamesAssigned).not.toContain(hostName3?.name_text)
+    hostNamesAssigned.push(hostName3!.name_text)
+
+    // 3. Pas (Artık Guest'in tüm isimleri bitti)
+    const pass3 = await giveUp(roomId, hostId)
+    expect(pass3.passRightsLeft).toBe(0)
+
+    // Host için havuzda isim kalmadığından erken tamamlandı (nameSolved / solved = true)
+    const hostFinalState = await getGameState(roomId, hostId)
+    expect(hostFinalState.you.nameSolved).toBe(true)
+    expect(hostFinalState.you.targetNameId).toBeNull()
+
+    // Host'a KESİNLİKLE kendi yazdığı isimler atanmamıştır!
+    for (const assigned of hostNamesAssigned) {
+      expect(['Prens Harry', 'Şahan Gökbakar', 'Elraen']).not.toContain(assigned)
+    }
+  })
+
+  it('3 deneme hakkı bittiğinde isim elenir, yeni isim 3 canla gelir ama pas hakkı eksilmez', async () => {
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic')
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    fake.tables.players.push(guest)
+
+    await submitNames(roomId, hostId, ['İsim A1', 'İsim A2', 'İsim A3'])
+    await submitNames(roomId, guest.id, ['İsim B1', 'İsim B2', 'İsim B3'])
+    await startGame(roomId, hostId)
+
+    // Host 1. yanlış tahmin
+    await makeGuess(roomId, hostId, 'Yanlış 1')
+    expect(getPlayerLives(roomId, hostId)).toBe(2)
+    expect(getPlayerPassRights(roomId, hostId)).toBe(3)
+    await passTurn(roomId, guest.id)
+
+    // Host 2. yanlış tahmin
+    await makeGuess(roomId, hostId, 'Yanlış 2')
+    expect(getPlayerLives(roomId, hostId)).toBe(1)
+    expect(getPlayerPassRights(roomId, hostId)).toBe(3)
+    await passTurn(roomId, guest.id)
+
+    // Host 3. yanlış tahmin -> Can 0 olur, isim elenir, YENİ isim 3 canla atanır!
+    const guess3 = await makeGuess(roomId, hostId, 'Yanlış 3')
+    expect(guess3.correct).toBe(false)
+    expect(guess3.livesLeft).toBe(3) // Yeni isim için hak 3'e resetlendi
+    expect(getPlayerLives(roomId, hostId)).toBe(3)
+    expect(getPlayerPassRights(roomId, hostId)).toBe(3) // Pas hakkı hala 3
+  })
 })
+
 
 
 

@@ -11,7 +11,7 @@ export default function VersionDisplay() {
   const [isVisible, setIsVisible] = useState(false)
 
   const versionInfo: VersionInfo = {
-    version: '3.7.0',
+    version: '3.8.0',
     environment: process.env.NODE_ENV || 'development'
   }
 
@@ -56,7 +56,7 @@ export default function VersionDisplay() {
             </div>
             <div className="divider-sketch my-2" />
             <p className="text-xs text-ink-extra-faded">
-              Zorluk Seviyesi Seçimi (Kolay / Orta / Zor), 7.450+ İsim Havuzu, Cihaz Bazlı İstatistikler & Liderlik Tablosu, Tam Metin Modu, Soru Bankası, Kategori Lobisi ve 4 Oyun Modu Aktif
+              Çoklu Oyuncu Playwright E2E Test Paketi, 192+ Kombinasyon Motor Matrisi, Eşzamanlılık & Race Condition Koruması, 7.450+ İsim Havuzu ve 4 Oyun Modu Aktif
             </p>
           </div>
         </div>

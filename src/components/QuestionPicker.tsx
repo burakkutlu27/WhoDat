@@ -124,6 +124,7 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
                   filteredQuestions.map((q) => (
                     <motion.button
                       key={q.id}
+                      data-testid="question-item"
                       whileTap={{ scale: 0.99 }}
                       onClick={() => handlePickQuestion(q)}
                       disabled={isBusy}

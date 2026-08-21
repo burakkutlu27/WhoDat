@@ -194,6 +194,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         setFeedback({ tone: 'success', text: result.message })
         setGuess('')
         setShowConfetti(true)
+        void refresh()
         setTimeout(async () => {
           setGuessResultModal(null)
           setShowConfetti(false)
@@ -203,6 +204,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         setGuessResultModal({ isCorrect: false, message: result.message, guessText: guess.trim() })
         setFeedback({ tone: 'error', text: result.message })
         setGuess('')
+        void refresh()
         setTimeout(async () => {
           setGuessResultModal(null)
           await refresh()
@@ -670,6 +672,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   maxLength={60}
                   autoFocus
                   disabled={isBusy}
+                  data-testid="buzzer-input"
                   className="paper-input-boxed text-center font-display text-3xl font-bold w-full"
                 />
 
@@ -677,6 +680,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   <button
                     type="submit"
                     disabled={isBusy || !buzzerGuess.trim()}
+                    data-testid="buzzer-submit"
                     className="btn-pencil-green flex-1 py-3.5 font-display text-xl font-bold flex items-center justify-center gap-2 shadow-sm"
                   >
                     {isBusy ? <Loader2 className="h-5 w-5 animate-spin" /> : <><span>Tahmini Gönder</span><Send className="h-5 w-5" /></>}
@@ -1005,7 +1009,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           <Crown className="h-5 w-5" />
                           <span>GİZLİ HEDEF (YALNIZCA SİZ GÖRÜYORSUNUZ)</span>
                         </span>
-                        <h2 className="mt-2 font-display text-4xl sm:text-5xl font-bold text-ink">
+                        <h2
+                          data-testid="active-target-name"
+                          className="mt-2 font-display text-4xl sm:text-5xl font-bold text-ink"
+                        >
                           {state.room.sharedTargetName ?? 'Hedef Belirlenmedi'}
                         </h2>
                         <p className="mt-1 text-sm text-ink-faded font-sans">
@@ -1163,6 +1170,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           whileTap={{ scale: 0.97 }}
                           onClick={() => setIsBuzzerOpen(true)}
                           disabled={isBusy || isTargetRevealed}
+                          data-testid="buzzer-guess-button"
                           className="btn-pencil-green px-7 py-3.5 font-display text-xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all shrink-0"
                         >
                           <Target className="h-5 w-5" />
@@ -1203,7 +1211,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             </div>
                           ) : (
                             <div>
-                              <span className="highlight-yellow font-display text-2xl font-bold text-pencil-yellow tracking-wide inline-flex items-center gap-1.5 mb-2">
+                              <span
+                                data-testid="your-turn-banner"
+                                className="highlight-yellow font-display text-2xl font-bold text-pencil-yellow tracking-wide inline-flex items-center gap-1.5 mb-2"
+                              >
                                 <Gamepad2 className="h-6 w-6 animate-bounce" />
                                 <span>SENİN SORU SIRAN!</span>
                               </span>
@@ -1242,6 +1253,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => void handlePass()}
                                     disabled={isBusy}
+                                    data-testid="pass-turn-button"
                                     className="btn-outline px-5 py-3.5 font-display text-base font-bold"
                                   >
                                     <SkipForward className="h-5 w-5" />
@@ -1290,7 +1302,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           transition={{ type: 'spring', stiffness: 300, damping: 15 }}
                           className="inline-block px-3 py-1"
                         >
-                          <span className="highlight-yellow font-display text-2xl font-bold text-pencil-yellow tracking-wide flex items-center justify-center gap-2">
+                          <span
+                            data-testid="your-turn-banner"
+                            className="highlight-yellow font-display text-2xl font-bold text-pencil-yellow tracking-wide flex items-center justify-center gap-2"
+                          >
                             <Gamepad2 className="h-6 w-6 animate-bounce text-pencil-yellow" />
                             <span>SENİN SIRAN!</span>
                           </span>
@@ -1454,7 +1469,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     ) : (
                       <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
                         {/* Deneme Hakkı */}
-                        <div className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm">
+                        <div
+                          data-testid="own-lives-remaining"
+                          className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm"
+                        >
                           <span className="font-display text-sm font-bold text-ink-faded">
                             Deneme Hakkın:
                           </span>
@@ -1473,7 +1491,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         </div>
 
                         {/* Pas Geçme Hakkı */}
-                        <div className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm">
+                        <div
+                          data-testid="own-pass-rights"
+                          className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm"
+                        >
                           <span className="font-display text-sm font-bold text-ink-faded">
                             Kalan Pas Hakkın:
                           </span>
@@ -1500,7 +1521,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   {/* Action Form or Secret Card */}
                   {state.you.isYourTurn ? (
                     state.you.nameSolved ? (
-                      <div className="mx-auto max-w-md p-6 text-center rounded-sketch-lg bg-pencil-green/10 border-2 border-pencil-green space-y-3">
+                      <div
+                        data-testid="you-finished-early-banner"
+                        className="mx-auto max-w-md p-6 text-center rounded-sketch-lg bg-pencil-green/10 border-2 border-pencil-green space-y-3"
+                      >
                         <div className="flex justify-center text-pencil-green">
                           <CheckCircle2 className="h-12 w-12" />
                         </div>
@@ -1526,6 +1550,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => setIsQuestionPickerOpen(true)}
                                 disabled={isBusy}
+                                data-testid="ask-question-button"
                                 className="btn-pencil-yellow w-full py-4 font-display text-xl font-bold flex items-center justify-center gap-2 shadow-md border-2 border-pencil-yellow"
                               >
                                 <HelpCircle className="h-6 w-6" />
@@ -1553,6 +1578,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               maxLength={60}
                               autoComplete="off"
                               disabled={isBusy}
+                              data-testid="guess-input"
                               className="paper-input-boxed text-center font-display text-3xl font-bold transition-all duration-200 focus:scale-[1.02]"
                             />
                           </div>
@@ -1563,6 +1589,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               whileHover={{ scale: 1.03, rotate: -0.5 }}
                               whileTap={{ scale: 0.97 }}
                               disabled={isBusy || !guess.trim()}
+                              data-testid="guess-submit"
                               className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-xl font-bold shadow-md"
                             >
                               {isBusy ? (
@@ -1583,6 +1610,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => void handlePass()}
                                 disabled={isBusy}
+                                data-testid="pass-turn-button"
                                 className="btn-outline flex items-center justify-center gap-2 px-5 py-3.5 font-display text-base font-bold"
                               >
                                 <SkipForward className="h-5 w-5" />
@@ -1604,6 +1632,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => void handlePassName()}
                                 disabled={isBusy || (state.you.passRightsRemaining ?? 3) <= 0}
+                                data-testid="give-up-button"
                                 className={`btn-outline flex items-center justify-center gap-1.5 px-4 py-3.5 font-display text-base font-bold border-dashed ${
                                   (state.you.passRightsRemaining ?? 3) <= 0
                                     ? 'opacity-40 cursor-not-allowed border-ink-faded text-ink-faded'
@@ -1628,25 +1657,39 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                       </div>
                     )
                   ) : (
-                    state.currentName && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 15, rotate: -2, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
-                        transition={{ duration: 0.45, ease: [0.34, 1.56, 0.64, 1] }}
-                        className="sticky-note sticky-note-green animate-envelope-open mx-auto max-w-md p-6 text-center shadow-lg"
-                      >
-                        <span className="flex items-center justify-center gap-1.5 font-display text-lg font-bold text-pencil-green">
-                          <HelpCircle className="h-5 w-5" />
-                          <span>GİZLİ KART (SADECE SEN GÖRÜYORSUN)</span>
-                        </span>
-                        <p className="mt-2 font-display text-4xl font-bold text-ink tracking-wide">
-                          {state.currentName}
-                        </p>
-                        <p className="mt-2 text-sm text-ink-faded font-sans">
-                          {currentPlayer?.nickname ?? 'Sıradaki oyuncu'} bu ismi tahmin etmeye çalışıyor.
-                        </p>
-                      </motion.div>
-                    )
+                    <div>
+                      {state.you.nameSolved && (
+                        <div
+                          data-testid="you-finished-early-banner"
+                          className="mb-4 mx-auto max-w-md p-3 text-center rounded-sketch bg-pencil-green/10 border border-pencil-green text-pencil-green font-display text-base font-bold flex items-center justify-center gap-2"
+                        >
+                          <CheckCircle2 className="h-5 w-5 shrink-0" />
+                          <span>Tüm İsimlerinizi Tamamladınız! Diğer oyuncuları izliyorsunuz.</span>
+                        </div>
+                      )}
+                      {state.currentName && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 15, rotate: -2, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+                          transition={{ duration: 0.45, ease: [0.34, 1.56, 0.64, 1] }}
+                          className="sticky-note sticky-note-green animate-envelope-open mx-auto max-w-md p-6 text-center shadow-lg"
+                        >
+                          <span className="flex items-center justify-center gap-1.5 font-display text-lg font-bold text-pencil-green">
+                            <HelpCircle className="h-5 w-5" />
+                            <span>GİZLİ KART (SADECE SEN GÖRÜYORSUN)</span>
+                          </span>
+                          <p
+                            data-testid="active-target-name"
+                            className="mt-2 font-display text-4xl font-bold text-ink tracking-wide"
+                          >
+                            {state.currentName}
+                          </p>
+                          <p className="mt-2 text-sm text-ink-faded font-sans">
+                            {currentPlayer?.nickname ?? 'Sıradaki oyuncu'} bu ismi tahmin etmeye çalışıyor.
+                          </p>
+                        </motion.div>
+                      )}
+                    </div>
                   )}
                 </div>
               )}

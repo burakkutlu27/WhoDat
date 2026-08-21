@@ -54,7 +54,7 @@ build/
 *.tsbuildinfo
 next-env.d.ts
 
-# Plans
+# Plans & Agent files
 plans
 AGENTS.md
 CLAUDE.md
@@ -63,4 +63,9 @@ GEMINI.md
 GROK.md
 KORREL.md
 NOMIC.md
-NOMIC.md
+
+# Playwright & E2E Test Results
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
