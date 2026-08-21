@@ -94,6 +94,7 @@ function JoinRoomForm() {
                   autoComplete="off"
                   spellCheck={false}
                   disabled={isSubmitting}
+                  data-testid="join-code-input"
                   className="paper-input-boxed pl-10 text-center font-mono text-2xl font-bold tracking-[0.3em] text-pencil-red uppercase"
                 />
               </div>
@@ -122,6 +123,7 @@ function JoinRoomForm() {
                   autoComplete="nickname"
                   disabled={isSubmitting}
                   aria-describedby={error ? 'join-room-error' : undefined}
+                  data-testid="join-nickname-input"
                   className="paper-input pl-11 font-display text-2xl font-bold"
                 />
               </div>
@@ -146,6 +148,7 @@ function JoinRoomForm() {
                 whileHover={{ scale: 1.02, rotate: -0.5 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isSubmitting || !roomCode.trim() || !nickname.trim()}
+                data-testid="join-button"
                 className="btn-pencil-red flex w-full items-center justify-center gap-2 py-4 font-display text-2xl font-bold shadow-md"
               >
                 {isSubmitting ? (

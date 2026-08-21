@@ -207,13 +207,13 @@ export function setPlayerClassicSolved(roomId: string, playerId: string, solved:
  * Klasik Mod: Oyuncuya havuzdan daha önce kullanılmamış/emekliye ayrılmamış yeni bir gizli isim atar
  * ve o isim için deneme hakkını 3'e resetler.
  * Emekliye ayrılmış isimler ve şu an başka bir oyuncuda olan isimler havuzdan çıkarılır.
- * Oyuncunun kendi yazdığı isim olmaması önceliklendirilir.
+ * Oyuncunun kendi yazdığı isim KESİNLİKLE ATANMAZ (fallback yapılmaz).
  */
-export function assignNewClassicName(
+export async function assignNewClassicName(
   roomId: string,
   player: PlayerRow,
   names: NameRow[],
-): string | null {
+): Promise<string | null> {
   const retiredSet = getClassicRetiredNames(roomId)
   const roomNameMap = playerRoundNameStore.get(roomId)
   const currentlyAssignedToOthers = new Set<string>()
@@ -225,25 +225,22 @@ export function assignNewClassicName(
     }
   }
   for (const n of names) {
-    if (n.assigned_to && n.assigned_to !== player.id && n.used_in_round === null) {
+    if (n.assigned_to && n.assigned_to !== player.id && (n.used_in_round == null)) {
       currentlyAssignedToOthers.add(n.id)
     }
   }
 
-  // Kullanılabilir isimler: emekli olmayan, DB'de used_in_round olmayan ve başka bir oyuncunun elinde olmayan isimler
-  const availableCandidates = names.filter(
+  // Kullanılabilir isimler: KESİNLİKLE oyuncunun kendi yazmadığı, emekli olmayan, DB'de used_in_round olmayan ve başka bir oyuncunun elinde olmayan isimler
+  const pool = names.filter(
     (n) =>
+      n.submitted_by !== player.id &&
       !retiredSet.has(n.id) &&
-      n.used_in_round === null &&
+      (n.used_in_round == null) &&
       !currentlyAssignedToOthers.has(n.id),
   )
 
-  // 1. Öncelik: Kendi yazmadığı isimler
-  const p1 = availableCandidates.filter((n) => n.submitted_by !== player.id)
-  const pool = p1.length > 0 ? p1 : availableCandidates
-
   if (pool.length === 0) {
-    // Havuzda bu oyuncu için isim kalmadı
+    // Havuzda bu oyuncu için isim kalmadı -> Erken tamamlama (Kural 6)
     setPlayerRoundNameId(roomId, player.id, null)
     setPlayerClassicSolved(roomId, player.id, true)
     return null
@@ -254,7 +251,7 @@ export function assignNewClassicName(
   setPlayerLives(roomId, player.id, TOTAL_LIVES_PER_GAME)
   setPlayerClassicSolved(roomId, player.id, false)
   try {
-    supabaseAdmin().from('names').update({ assigned_to: player.id }).eq('id', picked.id).then(() => {})
+    await supabaseAdmin().from('names').update({ assigned_to: player.id }).eq('id', picked.id)
   } catch {
     // ignore
   }
@@ -869,10 +866,9 @@ export function assignNamesForRound(
   for (const player of players) {
     const candidate =
       shuffled.find((n) => n.submitted_by !== player.id && !usedAcrossRounds!.has(n.id) && !usedInThisRound.has(n.id)) ||
-      shuffled.find((n) => !usedAcrossRounds!.has(n.id) && !usedInThisRound.has(n.id)) ||
       shuffled.find((n) => n.submitted_by !== player.id && !usedInThisRound.has(n.id)) ||
-      shuffled.find((n) => !usedInThisRound.has(n.id)) ||
-      shuffled[0]!
+      shuffled.find((n) => n.submitted_by !== player.id) ||
+      null
 
     if (candidate) {
       usedAcrossRounds.add(candidate.id)
@@ -1644,13 +1640,16 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       skippedQuestionTurn: isSharedTarget ? (sharedData.playerPenalties.get(viewer.id) ?? false) : undefined,
       clueCard: viewerClueCard,
       hasAskedQuestionThisTurn: hasAskedThisTurn,
-      targetNameId: getPlayerRoundNameId(roomId, viewer.id),
+      targetNameId:
+        getPlayerRoundNameId(roomId, viewer.id) ||
+        names.find((n) => n.assigned_to === viewer.id && (n.used_in_round == null))?.id ||
+        null,
     },
     currentName: isViewerTurn ? null : (currentName?.name_text ?? null),
     namesTotal: isSharedTarget ? 1 : names.length,
     namesRemaining: isSharedTarget
       ? 1
-      : names.filter((name) => name.used_in_round === null && !getClassicRetiredNames(roomId).has(name.id)).length,
+      : names.filter((name) => (name.used_in_round == null) && !getClassicRetiredNames(roomId).has(name.id)).length,
     allPlayersSubmittedNames,
     canStart,
     maxLives: TOTAL_LIVES_PER_GAME,
@@ -1984,20 +1983,20 @@ export async function autoAssignNames(
   }
 
   const totalNamesNeeded = players.length * namesPerPlayer
-  const pool = await getFamousPeople({
+  const pool = (await getFamousPeople({
     category: effectiveCategory,
     difficulty,
     random: true,
     limit: Math.max(totalNamesNeeded + 10, 50),
-  })
+  })).filter((p) => p.name.trim().length > 0 && p.name.trim().length <= 60)
 
   if (pool.length < totalNamesNeeded && effectiveCategory !== 'all') {
-    const extra = await getFamousPeople({
+    const extra = (await getFamousPeople({
       category: 'all',
       difficulty,
       random: true,
       limit: totalNamesNeeded + 10,
-    })
+    })).filter((p) => p.name.trim().length > 0 && p.name.trim().length <= 60)
     for (const item of extra) {
       if (!pool.some((p) => p.name.toLocaleLowerCase('tr') === item.name.toLocaleLowerCase('tr'))) {
         pool.push(item)
@@ -2020,7 +2019,7 @@ export async function autoAssignNames(
       assignedNames.push({
         room_id: roomId,
         submitted_by: p.id,
-        name_text: person.name,
+        name_text: person.name.trim().slice(0, 60),
       })
     }
   }
@@ -2679,12 +2678,12 @@ async function advanceTurn(
 
   let nextNameId = getPlayerRoundNameId(room.id, nextPlayer.id)
   if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
-    const dbAssigned = names.find((n) => n.assigned_to === nextPlayer.id && n.used_in_round === null)
+    const dbAssigned = names.find((n) => n.assigned_to === nextPlayer.id && (n.used_in_round == null))
     if (dbAssigned) {
       nextNameId = dbAssigned.id
       setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
     } else {
-      nextNameId = assignNewClassicName(room.id, nextPlayer, names)
+      nextNameId = await assignNewClassicName(room.id, nextPlayer, names)
     }
   }
 
@@ -3486,7 +3485,7 @@ async function handleClassicModeGiveUp(
 
   if (currentNameId) {
     retireClassicName(room.id, currentNameId)
-    await supabaseAdmin().from('names').update({ used_in_round: 1 }).eq('id', currentNameId)
+    await supabaseAdmin().from('names').update({ used_in_round: 1, assigned_to: null }).eq('id', currentNameId)
     const foundName = names.find((n) => n.id === currentNameId)
     if (foundName) foundName.used_in_round = 1
   }
@@ -3494,10 +3493,11 @@ async function handleClassicModeGiveUp(
   // Not defterini / ipucu kartını temizle (yeni isme geçiliyor)
   await clearPlayerClueCard(room.id, playerId)
 
-  // Havuzdan yeni isim ata (can kaybı yok, hak 3'e resetlenir)
-  const nextNameId = assignNewClassicName(room.id, player, names)
+  // Taze isim listesi ile yeni isim ata (can kaybı yok, hak 3'e resetlenir)
+  const freshNames = await loadNames(room.id)
+  const nextNameId = await assignNewClassicName(room.id, player, freshNames)
 
-  const outcome = await advanceTurn(room, players, names)
+  const outcome = await advanceTurn(room, players, freshNames)
 
   return {
     message: nextNameId
@@ -3539,7 +3539,7 @@ async function handleClassicModeGuess(
     // Doğru tahmin! Bu isim başarıyla çözüldü, emekliye ayrılır (+10 puan)
     if (currentNameId) {
       retireClassicName(room.id, currentNameId)
-      await supabaseAdmin().from('names').update({ used_in_round: 1 }).eq('id', currentNameId)
+      await supabaseAdmin().from('names').update({ used_in_round: 1, assigned_to: null }).eq('id', currentNameId)
       const foundName = names.find((n) => n.id === currentNameId)
       if (foundName) foundName.used_in_round = 1
     }
@@ -3561,10 +3561,11 @@ async function handleClassicModeGuess(
       }
     }
 
-    // Oyuncuya havuzdan yeni isim ata
-    const nextNameId = assignNewClassicName(room.id, player, names)
+    // Taze isim listesi ile yeni isim ata
+    const freshNames = await loadNames(room.id)
+    const nextNameId = await assignNewClassicName(room.id, player, freshNames)
 
-    const outcome = await advanceTurn(room, players, names)
+    const outcome = await advanceTurn(room, players, freshNames)
 
     return {
       correct: true,
@@ -3589,7 +3590,7 @@ async function handleClassicModeGuess(
     // Deneme hakkı tükendi -> Bu isim elendi, yeni isim atanır (deneme hakkı 3'e resetlenir)
     if (currentNameId) {
       retireClassicName(room.id, currentNameId)
-      await supabaseAdmin().from('names').update({ used_in_round: 1 }).eq('id', currentNameId)
+      await supabaseAdmin().from('names').update({ used_in_round: 1, assigned_to: null }).eq('id', currentNameId)
       const foundName = names.find((n) => n.id === currentNameId)
       if (foundName) foundName.used_in_round = 1
     }
@@ -3597,9 +3598,10 @@ async function handleClassicModeGuess(
     // Not defterini / ipucu kartını temizle (yeni isme geçiliyor)
     await clearPlayerClueCard(room.id, playerId)
 
-    const nextNameId = assignNewClassicName(room.id, player, names)
+    const freshNames = await loadNames(room.id)
+    const nextNameId = await assignNewClassicName(room.id, player, freshNames)
 
-    const outcome = await advanceTurn(room, players, names)
+    const outcome = await advanceTurn(room, players, freshNames)
 
     return {
       correct: false,
@@ -3702,6 +3704,12 @@ export async function askTextQuestion(
   const gameMode = getRoomMode(roomId, room.game_mode)
   if (gameMode === 'classic' && hasPlayerAskedQuestionInTurn(roomId, playerId)) {
     throw conflict('question_already_asked', 'Bu turdaki 1 soru hakkınızı zaten kullandınız. Lütfen tahmin yapın veya sırayı devredin.')
+  }
+  if (gameMode === 'persistent') {
+    const pData = getPlayerPersistentData(roomId, playerId)
+    if (pData.questionBudgetRemaining <= 0) {
+      throw badRequest('budget_exhausted', 'Soru bütçeniz bitti, sadece tahmin edebilirsiniz.')
+    }
   }
 
   // Soru metnini belirle

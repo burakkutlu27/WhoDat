@@ -13,6 +13,7 @@ import SuggestNameModal from './SuggestNameModal'
 
 interface AutocompleteInputProps {
   id?: string
+  'data-testid'?: string
   value: string
   onChange: (val: string) => void
   onSelect?: (person: FamousPerson) => void
@@ -27,6 +28,7 @@ interface AutocompleteInputProps {
 
 export function FamousPersonAutocompleteInput({
   id,
+  'data-testid': testId,
   value,
   onChange,
   onSelect,
@@ -138,6 +140,7 @@ export function FamousPersonAutocompleteInput({
       <div className="relative">
         <input
           id={id}
+          data-testid={testId || id}
           type="text"
           value={value}
           maxLength={maxLength}

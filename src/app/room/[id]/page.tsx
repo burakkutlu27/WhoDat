@@ -276,7 +276,10 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 className="group relative inline-flex items-center justify-center gap-3 border-2 border-dashed border-pencil-red bg-paper-card px-6 py-2.5 shadow-sm transition-all hover:bg-pencil-red/5 hover:border-pencil-red hover:shadow-md active:scale-95 cursor-pointer"
                 style={{ borderRadius: '10px 18px 8px 16px' }}
               >
-                <span className="font-mono text-3xl sm:text-4xl font-extrabold tracking-[0.2em] text-pencil-red select-all">
+                <span
+                  data-testid="room-code"
+                  className="font-mono text-3xl sm:text-4xl font-extrabold tracking-[0.2em] text-pencil-red select-all"
+                >
                   {state.room.roomCode}
                 </span>
                 <div className="flex items-center justify-center h-8 w-8 rounded-full bg-pencil-red/10 group-hover:bg-pencil-red group-hover:text-white text-pencil-red transition-colors">
@@ -673,6 +676,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
                 <button
                   type="button"
+                  data-testid="auto-assign-button"
                   disabled={isAutoAssigning}
                   onClick={() =>
                     void handleAutoAssign(
@@ -927,6 +931,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   whileTap={{ scale: 0.98 }}
                   onClick={() => void handleSubmitNames()}
                   disabled={isSubmitting || names.some((name) => !name.trim())}
+                  data-testid="submit-names-button"
                   className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-4 font-display text-2xl font-bold"
                 >
                   {isSubmitting ? (
@@ -1083,6 +1088,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 whileTap={{ scale: state.canStart ? 0.98 : 1 }}
                 onClick={() => void handleStart()}
                 disabled={isStarting || !state.canStart}
+                data-testid="start-game-button"
                 className={`flex w-full items-center justify-center gap-2 py-4 font-display text-2xl font-bold text-white transition-all ${
                   state.canStart
                     ? 'btn-pencil-green animate-wiggle'

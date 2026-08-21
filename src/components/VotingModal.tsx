@@ -104,6 +104,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
             <div className="grid grid-cols-2 gap-4 pt-1">
               <InkStamp
                 color="green"
+                data-testid="vote-yes"
                 disabled={isBusy}
                 onClick={() => void onVote(true)}
                 className="btn-pencil-green w-full py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
@@ -114,6 +115,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
 
               <InkStamp
                 color="red"
+                data-testid="vote-no"
                 disabled={isBusy}
                 onClick={() => void onVote(false)}
                 className="btn-pencil-red w-full py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg"

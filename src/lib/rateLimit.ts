@@ -40,6 +40,10 @@ export function enforceRateLimit(options: {
   windowMs: number
   message: string
 }): void {
+  if (process.env.PLAYWRIGHT_TEST === '1') {
+    return
+  }
+
   const { request, bucket, limit, windowMs, message } = options
   const now = Date.now()
 

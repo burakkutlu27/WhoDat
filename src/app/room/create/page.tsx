@@ -104,6 +104,7 @@ export default function CreateRoomPage() {
                   autoComplete="nickname"
                   disabled={isSubmitting}
                   aria-describedby={error ? 'create-room-error' : undefined}
+                  data-testid="nickname-input"
                   className="paper-input pl-11 font-display text-3xl font-bold"
                 />
               </div>
@@ -178,6 +179,7 @@ export default function CreateRoomPage() {
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98, y: 1 }}
                       onClick={() => setGameMode(item.id)}
+                      data-testid={`mode-${item.id}`}
                       className={`relative p-3.5 sm:p-4 text-left transition-colors duration-200 border-2 rounded-sketch-md flex flex-col justify-between ${
                         isSelected
                           ? 'border-transparent font-bold text-ink bg-paper-card'
@@ -263,6 +265,7 @@ export default function CreateRoomPage() {
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98, y: 1 }}
                       onClick={() => setCommunicationMode(item.id)}
+                      data-testid={`communication-${item.id}`}
                       className={`relative p-4 text-left transition-colors duration-200 border-2 rounded-sketch-md flex items-center justify-between ${
                         isSelected
                           ? 'border-transparent font-bold text-ink bg-paper-card'
@@ -348,6 +351,7 @@ export default function CreateRoomPage() {
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98, y: 1 }}
                       onClick={() => setCategoryMode(item.id)}
+                      data-testid={`category-mode-${item.id}`}
                       className={`relative p-3.5 text-left transition-colors duration-200 border-2 rounded-sketch-md flex items-center justify-between ${
                         isSelected
                           ? 'border-transparent font-bold text-ink bg-paper-card'
@@ -597,6 +601,7 @@ export default function CreateRoomPage() {
                 whileHover={{ scale: 1.02, rotate: -0.5 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isSubmitting || !nickname.trim()}
+                data-testid="create-room-button"
                 className="btn-pencil-red flex w-full items-center justify-center gap-2 py-4 font-display text-2xl font-bold tracking-wide"
               >
                 {isSubmitting ? (
