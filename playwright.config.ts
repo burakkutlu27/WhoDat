@@ -11,7 +11,7 @@ export default defineConfig({
     timeout: 15000,
   },
   use: {
-    baseURL: process.env.E2E_BASE_URL || 'http://localhost:8080',
+    baseURL: process.env.E2E_BASE_URL || 'http://localhost:3100',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -25,8 +25,8 @@ export default defineConfig({
   webServer: process.env.E2E_BASE_URL
     ? undefined
     : {
-        command: 'npx next dev -p 8080',
-        url: 'http://localhost:8080',
+        command: 'npx next dev -p 3100',
+        url: 'http://localhost:3100',
         reuseExistingServer: !process.env.CI,
         timeout: 120000,
         env: {

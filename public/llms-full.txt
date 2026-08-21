@@ -1,0 +1,44 @@
+# KimBu (WhoDat) - Kapsamlı Dokümantasyon & Oyun Kılavuzu
+
+## 1. Giriş ve Proje Amacı
+KimBu (WhoDat), geleneksel "Alna Kağıt Yapıştırma" / "Ben Kimim?" parti oyununu modern web teknolojileri (Next.js, React, Tailwind CSS, Supabase Realtime) ile dijital ortama taşıyan, gerçek zamanlı çok oyunculu bir web oyunudur.
+
+- Canlı URL: https://whodat.burakkutlu.com
+- Geliştirici: Burak Kutlu (https://burakkutlu.com)
+- Desteklenen Cihazlar: Masaüstü, Tablet, Mobil (Tam Duyarlı / Responsive)
+- Dil Desteği: Türkçe
+
+## 2. Kural Seti ve Oyun Aşamaları
+
+### 2.1. Lobi ve Eşleşme
+- Oda lideri (host) oda parametrelerini seçer: Oyun Modu, İletişim Tarzı, Kategori ve Zorluk Seviyesi.
+- 6 haneli benzersiz alfa-nümerik oda kodu üretilir.
+- Katılımcılar isimleriyle odaya dahil olur.
+
+### 2.2. Gizli İsim Seçimi
+- Her oyuncu için sistem rastgele veya oyuncular tarafından seçilen 3 gizli isim belirler.
+- İsim havuzu: 7.450'den fazla doğrulanmış Türk ve Dünya ünlüleri, oyuncular, müzisyenler, sporcular, tarihi şahsiyetler, bilim insanları ve kurgusal karakterler.
+- Kategori filtreleri: Sinema/Dizi, Müzik, Spor, Tarih, Bilim, Kurgusal vb.
+
+### 2.3. Soru-Cevap Döngüsü
+- Sırası gelen oyuncu bir soru sorar.
+- Sorular sadece "Evet" veya "Hayır" ile yanıtlanabilir.
+- Sesli modda cevaplar sözlü verilir; Metin modunda diğer oyuncular 15 saniye içinde oy kullanır.
+- Oyuncu hazır hissettiğinde "Ben Kimim?" tahmininde bulunur.
+
+### 2.4. Skorlama ve Bitiş
+- Doğru tahmin yapan oyuncu turun puanını alır.
+- Yanlış tahmin durumunda seçili moda göre can kaybeder veya ceza puanı alır.
+- Oyun sonunda detaylı skor tablosu, istatistikler ve başarımlar gösterilir.
+
+## 3. Oyun Modları Detayları
+1. **Klasik Mod:** 3 Can Hakkı. Her yanlış tahmin 1 can eksiltir. Canı biten elenir veya pasif izleyici olur.
+2. **Hız Modu:** 3 Tur. En az soru sorarak kimliğini bilen en yüksek puanı alır.
+3. **Israrcı Mod:** 10 Soru Bütçesi. Sorular bittiğinde zorunlu tahmin yapılır.
+4. **Ortak Hedef:** Tek bir gizli hedef kişi seçilir. Tüm oyuncular sırayla soru sorar; kimliğini ilk çözen kazanır.
+
+## 4. Teknik Altyapı & Güvenlik
+- SSR & SSG ile optimize edilmiş Next.js App Router mimarisi.
+- WebSockets ve Supabase Realtime ile anlık durum senkronizasyonu.
+- Güçlü Content Security Policy (CSP), HSTS, X-Frame-Options güvenlik başlıkları.
+- WCAG 2.2 uyumlu erişilebilirlik ve mobil uyumluluk.
