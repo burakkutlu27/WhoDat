@@ -109,14 +109,13 @@ export function CustomSelect({
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={`w-full flex items-center justify-between gap-2 border-2 transition-all bg-paper-card text-ink ${
           isSmall
-            ? 'px-2.5 py-1.5 text-xs font-sans font-bold rounded-md'
-            : 'px-3.5 py-2 text-sm font-sans font-bold rounded-lg'
+            ? 'px-2.5 py-1.5 text-xs font-sans font-bold rounded-sketch-sm'
+            : 'px-3.5 py-2 text-sm font-sans font-bold rounded-sketch'
         } ${
           isOpen
             ? 'border-pencil-purple shadow-sm'
             : 'border-paper-border hover:border-pencil-purple/60 hover:bg-paper-card-alt'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-        style={{ borderRadius: isSmall ? '6px 4px 6px 4px' : '8px 6px 10px 6px' }}
       >
         <span className="flex items-center gap-2 truncate">
           {selectedOption?.icon && (

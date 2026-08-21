@@ -1,0 +1,31 @@
+# KimBu (WhoDat) - Online Ben Kimim & Ünlü Tahmin Oyunu
+
+> KimBu, arkadaşlarınızla tarayıcı üzerinden anında oynayabileceğiniz ücretsiz, gerçek zamanlı, çok oyunculu bir "Ben Kimim?" (Who Am I) ve ünlü tahmin parti oyunudur.
+
+## Genel Bakış
+- **Web Sitesi:** https://whodat.burakkutlu.com
+- **Geliştirici:** Burak Kutlu (https://burakkutlu.com)
+- **Kategori:** Çevrimiçi Çok Oyunculu Parti & Kutu Oyunu (Web Tabanlı)
+- **Fiyat / Erişim:** Tamamen Ücretsiz, İndirme ve Üyelik Gerektirmez
+- **Dil:** Türkçe (tr-TR)
+
+## Oyun Nasıl Oynanır?
+1. **Oda Kur / Katıl:** Bir oyuncu yeni oda açarak 6 haneli oda kodu oluşturur, diğer oyuncular bu kodla katılır.
+2. **İsim Belirleme:** Her oyuncu diğer oyuncuların tahmin etmesi için 7.450+ kişilik havuzdan veya serbest metinle gizli isimler belirler.
+3. **Soru Sorma:** Sırası gelen oyuncu yalnızca "Evet" veya "Hayır" şeklinde yanıtlanabilecek sorular sorar (örn. "Yaşıyor muyum?", "Sanatçı mıyım?").
+4. **Tahmin:** İpuçlarını toplayan oyuncu kimliğini doğru tahmin ettiğinde puan kazanır.
+
+## Oyun Modları
+- **Klasik Mod (3 Can):** Her oyuncu 3 can ile başlar. Yanlış tahmin can götürür, hayatta kalan kazanır.
+- **Hız Modu (3 Tur):** 3 turda en az soru sorarak kimliğini bilen oyuncu en yüksek puanı toplar.
+- **Israrcı Mod (10 Soru):** Oyuncuların 10 soru bütçesi vardır. Bütçe bitince zorunlu tahmin yapılır.
+- **Ortak Hedef (Hakemli):** Tüm oyuncular tek bir gizli ismi bulmak için sırayla soru sorar, ilk bilen kazanır.
+
+## İletişim Seçenekleri
+- **Sesli İletişim:** Discord veya fiziksel ortamda konuşarak oynama.
+- **Tam Metin Modu:** Ses gerektirmeden hazır soru kalıpları, 15 saniyelik oylama mekanizması ve not defteri ile uzaktan sessiz oynama.
+
+## Önemli Bağlantılar
+- [Oyun Odası Oluştur](https://whodat.burakkutlu.com/room/create): Yeni bir oyun odası başlatın.
+- [Odaya Katıl](https://whodat.burakkutlu.com/room/join): Var olan bir odaya 6 haneli kodla katılın.
+- [Geliştirici Web Sitesi](https://burakkutlu.com): Burak Kutlu kişisel web sitesi.

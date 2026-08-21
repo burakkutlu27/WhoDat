@@ -386,10 +386,20 @@
   .rounded-sketch-xs { border-radius: 4px 2px 5px 3px; }
   .rounded-sketch-sm { border-radius: 6px 3px 8px 4px; }
   .rounded-sketch { border-radius: 8px 4px 10px 6px; }
+  .rounded-sketch-nav { border-radius: 8px 4px 10px 6px; }
   .rounded-sketch-alt { border-radius: 4px 8px 6px 10px; }
   .rounded-sketch-md { border-radius: 10px 5px 12px 6px; }
   .rounded-sketch-lg { border-radius: 14px 6px 16px 8px; }
   .rounded-sketch-xl { border-radius: 18px 8px 20px 10px; }
+
+  /* Floating Doodle Konum ve Zamanlama Sınıfları */
+  .doodle-pos-1 { top: 12%; left: 3%; opacity: 0.06; animation-delay: 0s; will-change: transform; }
+  .doodle-pos-2 { top: 8%; right: 5%; opacity: 0.05; animation-delay: 2s; will-change: transform; }
+  .doodle-pos-3 { bottom: 18%; left: 4%; opacity: 0.05; animation-delay: 4s; will-change: transform; }
+  .doodle-pos-4 { bottom: 25%; right: 3%; opacity: 0.05; animation-delay: 1s; will-change: transform; }
+  .doodle-pos-5 { top: 45%; left: 2%; opacity: 0.04; animation-delay: 3s; will-change: transform; }
+  .doodle-pos-6 { top: 55%; right: 2%; opacity: 0.04; animation-delay: 5s; will-change: transform; }
+  .doodle-pos-7 { top: 5%; left: 40%; opacity: 0.04; animation-delay: 3.5s; will-change: transform; }
 
   /* Elle çizilmiş altı çizili efekt */
   .underline-sketch {
