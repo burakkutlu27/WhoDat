@@ -146,6 +146,14 @@ export const autoAssignSchema = z.object({
   category: famousPersonCategorySchema.optional(),
 })
 
+export const addBotSchema = z.object({
+  level: difficultySchema.default('orta'),
+})
+
+export const removeBotSchema = z.object({
+  botId: z.string().uuid('Geçersiz bot kimliği.'),
+})
+
 export const suggestNameSchema = z.object({
   name: z
     .string()

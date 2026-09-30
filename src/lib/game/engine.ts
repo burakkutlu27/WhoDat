@@ -9,7 +9,8 @@ import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
 import { QUESTION_BANK_SEED } from './questionBankData'
 import { registerRuntimeStores, withRoomRuntime } from './runtimeState'
-import type { AutoAssignResult, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
+import { lookupAttributes } from './bot/knowledge'
+import type { AutoAssignResult, BotLevel, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -120,6 +121,14 @@ const globalRef = globalThis as unknown as {
   __whoDat_playerPassRightsStore?: Map<string, Map<string, number>>
   __whoDat_classicRetiredNamesStore?: Map<string, Set<string>>
   __whoDat_playerTurnAskedStore?: Map<string, Set<string>>
+  __whoDat_botMemoryStore?: Map<string, Map<string, BotMemory>>
+}
+
+/** Botun kendi hamlelerinden hatırladıkları (hedef ismi değişince sıfırlanır). */
+export interface BotMemory {
+  /** Botun o an çözmeye çalıştığı ismin kimliği; değişince hafıza sıfırlanır. */
+  targetKey: string | null
+  wrongGuesses: string[]
 }
 
 globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
@@ -139,6 +148,7 @@ globalRef.__whoDat_playerClassicSolvedStore = globalRef.__whoDat_playerClassicSo
 globalRef.__whoDat_playerPassRightsStore = globalRef.__whoDat_playerPassRightsStore ?? new Map()
 globalRef.__whoDat_classicRetiredNamesStore = globalRef.__whoDat_classicRetiredNamesStore ?? new Map()
 globalRef.__whoDat_playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore ?? new Map()
+globalRef.__whoDat_botMemoryStore = globalRef.__whoDat_botMemoryStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
 const roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore
@@ -157,6 +167,7 @@ const playerClassicSolvedStore = globalRef.__whoDat_playerClassicSolvedStore
 const playerPassRightsStore = globalRef.__whoDat_playerPassRightsStore
 const classicRetiredNamesStore = globalRef.__whoDat_classicRetiredNamesStore
 const playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore
+const botMemoryStore = globalRef.__whoDat_botMemoryStore
 
 // Store'lar yalnızca instance içi önbellek; kalıcı kopya room_runtime tablosunda (bkz. runtimeState.ts).
 // Anahtar adları DB'deki JSON'da kullanıldığı için değiştirilmemeli.
@@ -178,7 +189,21 @@ registerRuntimeStores({
   passRights: playerPassRightsStore,
   retiredNames: classicRetiredNamesStore,
   turnAsked: playerTurnAskedStore,
+  botMemory: botMemoryStore,
 })
+
+export function getBotMemory(roomId: string, botId: string): BotMemory {
+  return botMemoryStore.get(roomId)?.get(botId) ?? { targetKey: null, wrongGuesses: [] }
+}
+
+export function setBotMemory(roomId: string, botId: string, memory: BotMemory): void {
+  let roomMap = botMemoryStore.get(roomId)
+  if (!roomMap) {
+    roomMap = new Map()
+    botMemoryStore.set(roomId, roomMap)
+  }
+  roomMap.set(botId, memory)
+}
 
 export const CLASSIC_MODE_MAX_PASSES = 3 // Oyuncu başına oyun boyunca en fazla 3 isim pas geçme hakkı
 
@@ -949,6 +974,7 @@ export function clearRoomMemoryState(roomId: string): void {
   playerClassicSolvedStore.delete(roomId)
   playerPassRightsStore.delete(roomId)
   classicRetiredNamesStore.delete(roomId)
+  botMemoryStore.delete(roomId)
 }
 
 export async function closeExpiredRoom(roomId: string): Promise<void> {
@@ -1372,6 +1398,10 @@ export async function setRoomCategory(
     throw conflict('game_already_started', 'Oyun başladıktan sonra kategori ayarları değiştirilemez.')
   }
 
+  if (settings.categoryMode === 'multi_phase' && hasBots(players)) {
+    throw badRequest('bots_unsupported', 'Botlu odada 3 fazlı kategori henüz desteklenmiyor. Önce botları çıkarın.')
+  }
+
   const updated = setRoomCategoryData(roomId, settings)
 
   try {
@@ -1406,6 +1436,10 @@ export async function setRoomMode(roomId: string, playerId: string, gameMode: Ga
   const room = await loadRoom(roomId)
   if (room.status !== 'waiting') {
     throw conflict('game_already_started', 'Oyun başladıktan sonra mod değiştirilemez.')
+  }
+
+  if (gameMode === 'shared_target' && hasBots(players)) {
+    throw badRequest('bots_unsupported', 'Botlu odada Ortak Hedef modu henüz desteklenmiyor. Önce botları çıkarın.')
   }
 
   const modeData = setRoomModeData(roomId, gameMode)
@@ -1469,6 +1503,98 @@ export async function joinRoom(roomCode: string, nickname: string, deviceId?: st
   return { roomId: room.id, roomCode: room.room_code, playerId: player.id }
 }
 
+function hasBots(players: PlayerRow[]): boolean {
+  return players.some((player) => player.is_bot)
+}
+
+const BOT_NICKNAMES: Record<BotLevel, string[]> = {
+  kolay: ['Çaylak Bot', 'Uykucu Bot', 'Şaşkın Bot'],
+  orta: ['Meraklı Bot', 'Kurnaz Bot', 'Dedektif Bot'],
+  zor: ['Dahi Bot', 'Profesör Bot', 'Kâhin Bot'],
+}
+
+/**
+ * Lobiye bot ekler (yalnızca host). Bot, isim havuzuna kendi isimlerini hemen yazar ki
+ * insanlar elle isim girse de oyun başlatılabilsin. Botlar yalnızca Tam Metin modunda
+ * oynayabildiği için gerekirse oda Tam Metin'e çevrilir.
+ */
+export async function addBot(roomId: string, playerId: string, level: BotLevel) {
+  const admin = supabaseAdmin()
+  const [room, players] = await Promise.all([loadRoom(roomId), loadPlayers(roomId)])
+  const host = requireMembership(players, playerId)
+
+  if (!host.is_host) throw forbidden('not_host', 'Bot eklemeyi yalnızca oda sahibi yapabilir.')
+  if (room.status !== 'waiting') throw conflict('game_already_started', 'Oyun başladıktan sonra bot eklenemez.')
+  if (players.length >= MAX_PLAYERS) throw conflict('room_full', `Oda dolu (en fazla ${MAX_PLAYERS} oyuncu).`)
+
+  const gameMode = getRoomMode(roomId, room.game_mode)
+  const categoryData = getRoomCategoryData(roomId, room)
+  if (gameMode === 'shared_target' || categoryData.categoryMode === 'multi_phase') {
+    throw badRequest('bots_unsupported', 'Botlar şimdilik Ortak Hedef ve 3 fazlı lobide oynayamıyor.')
+  }
+
+  if (getRoomCommunicationMode(roomId, room.communication_mode) !== 'text') {
+    setRoomCommunicationModeData(roomId, 'text')
+    await admin.from('rooms').update({ communication_mode: 'text' }).eq('id', roomId)
+  }
+
+  const taken = new Set(players.map((player) => player.nickname))
+  const nickname =
+    BOT_NICKNAMES[level].find((candidate) => !taken.has(candidate)) ??
+    `${BOT_NICKNAMES[level][0]} ${players.filter((player) => player.is_bot).length + 1}`
+
+  const { data: bot, error } = await admin
+    .from('players')
+    .insert({ room_id: roomId, nickname, is_host: false, score: 0, is_bot: true, bot_level: level })
+    .select()
+    .single()
+  if (error) throw error
+
+  setPlayerSpeedData(roomId, bot.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+
+  const names = await loadNames(roomId)
+  const existing = new Set(names.map((name) => name.name_text.toLocaleLowerCase('tr')))
+  const pool = (await getFamousPeople({
+    category: getActivePhaseCategory(categoryData),
+    difficulty: getRoomDifficulty(roomId, room.difficulty),
+    random: true,
+    limit: MAX_NAMES_PER_PLAYER + names.length + 10,
+  })).filter((person) => person.name.length <= 60 && !existing.has(person.name.toLocaleLowerCase('tr')))
+
+  const botNames = pool.slice(0, MAX_NAMES_PER_PLAYER).map((person) => ({
+    room_id: roomId,
+    submitted_by: bot.id,
+    name_text: person.name,
+  }))
+  if (botNames.length > 0) {
+    const { error: namesError } = await admin.from('names').insert(botNames)
+    if (namesError) throw namesError
+  }
+
+  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  return { botId: bot.id, nickname }
+}
+
+/** Lobiden bot çıkarır (yalnızca host); botun havuza yazdığı isimler de silinir. */
+export async function removeBot(roomId: string, playerId: string, botId: string) {
+  const admin = supabaseAdmin()
+  const [room, players] = await Promise.all([loadRoom(roomId), loadPlayers(roomId)])
+  const host = requireMembership(players, playerId)
+
+  if (!host.is_host) throw forbidden('not_host', 'Bot çıkarmayı yalnızca oda sahibi yapabilir.')
+  if (room.status !== 'waiting') throw conflict('game_already_started', 'Oyun başladıktan sonra bot çıkarılamaz.')
+
+  const bot = players.find((player) => player.id === botId)
+  if (!bot || !bot.is_bot) throw notFound('bot_not_found', 'Bot bulunamadı.')
+
+  await admin.from('names').delete().eq('room_id', roomId).eq('submitted_by', botId)
+  await admin.from('players').delete().eq('id', botId)
+  playerSpeedStore.get(roomId)?.delete(botId)
+
+  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  return { removed: true }
+}
+
 export async function getGameState(roomId: string, viewerId: string): Promise<GameState> {
   const [room, players, names] = await Promise.all([
     loadRoom(roomId),
@@ -1521,6 +1647,8 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       id: player.id,
       nickname: player.nickname,
       isHost: isPlayerHost,
+      isBot: Boolean(player.is_bot),
+      botLevel: player.is_bot ? (player.bot_level as BotLevel | null) ?? undefined : undefined,
       score,
       hasSubmittedNames: isSharedTarget ? true : submitters.has(player.id),
       livesLeft: getPlayerLives(roomId, player.id),
@@ -1709,6 +1837,17 @@ export async function submitNames(roomId: string, playerId: string, names: strin
 
   if (unique.length < MAX_NAMES_PER_PLAYER) {
     throw badRequest('missing_names', `Lütfen ${MAX_NAMES_PER_PLAYER} ismi de eksiksiz doldurun.`)
+  }
+
+  // Botlar yalnızca veri setindeki kişiler hakkında soru cevaplayıp tahmin edebilir.
+  if (hasBots(players)) {
+    const unknown = unique.filter((name) => !lookupAttributes(name))
+    if (unknown.length > 0) {
+      throw badRequest(
+        'unknown_name_for_bots',
+        `Botlu odada isimler listeden seçilmeli. Tanınmayan: ${unknown.join(', ')}`,
+      )
+    }
   }
 
   if (unique.length > MAX_NAMES_PER_PLAYER) {
@@ -3712,6 +3851,9 @@ export async function setCommunicationMode(
   const room = await loadRoom(roomId)
   if (room.status !== 'waiting') {
     throw conflict('game_already_started', 'Oyun başladıktan sonra iletişim modu değiştirilemez.')
+  }
+  if (mode === 'voice' && hasBots(players)) {
+    throw badRequest('bots_need_text_mode', 'Botlar yalnızca Tam Metin modunda oynayabilir. Önce botları çıkarın.')
   }
 
   setRoomCommunicationModeData(roomId, mode)

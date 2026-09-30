@@ -2,6 +2,7 @@
 
 import {
   AlertCircle,
+  Bot,
   Brain,
   Check,
   CheckCircle2,
@@ -1843,7 +1844,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           }`}
                           style={{ borderRadius: '6px 3px 8px 4px' }}
                         >
-                          {initial}
+                          {player.isBot ? <Bot className="h-4 w-4" aria-label="Bot" /> : initial}
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5">

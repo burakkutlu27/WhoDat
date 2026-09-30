@@ -41,17 +41,23 @@ interface RuntimeGlobals {
   /** Son yüklenen/yazılan state'in serileştirilmiş hali; gereksiz yazmayı önler. */
   lastSynced: Map<string, string>
   locks: Map<string, Promise<unknown>>
+  /**
+   * DB'deki snapshot'ta olup bu süreçte kayıtlı olmayan store'lar. Serverless'ta her route ayrı
+   * paketlenebilir; bir store'u tanımayan route yazarken o store'un verisini silmesin diye
+   * olduğu gibi geri yazılır.
+   */
+  foreign: Map<string, Record<string, SerializedValue>>
 }
 
 // Store'lar gibi bunlar da HMR yeniden yüklemelerinde kaybolmasın diye globalThis'te.
-const globalRef = globalThis as unknown as { __whoDat_runtime?: RuntimeGlobals }
-globalRef.__whoDat_runtime ??= {
-  stores: new Map(),
-  versions: new Map(),
-  lastSynced: new Map(),
-  locks: new Map(),
-}
-const runtime = globalRef.__whoDat_runtime
+const globalRef = globalThis as unknown as { __whoDat_runtime?: Partial<RuntimeGlobals> }
+const runtimeRef = (globalRef.__whoDat_runtime ??= {})
+runtimeRef.stores ??= new Map()
+runtimeRef.versions ??= new Map()
+runtimeRef.lastSynced ??= new Map()
+runtimeRef.locks ??= new Map()
+runtimeRef.foreign ??= new Map()
+const runtime = runtimeRef as RuntimeGlobals
 
 const activeRooms = new AsyncLocalStorage<ReadonlySet<string>>()
 
@@ -100,7 +106,7 @@ function decode(value: unknown): unknown {
 
 /** Odanın tüm store'lardaki kaydını tek bir JSON nesnesine çevirir. */
 export function exportRoomRuntime(roomId: string): Record<string, SerializedValue> {
-  const snapshot: Record<string, SerializedValue> = {}
+  const snapshot: Record<string, SerializedValue> = { ...runtime.foreign.get(roomId) }
   for (const [name, store] of runtime.stores) {
     if (store.has(roomId)) snapshot[name] = encode(store.get(roomId))
   }
@@ -113,6 +119,12 @@ export function importRoomRuntime(roomId: string, snapshot: Record<string, unkno
     if (name in snapshot) store.set(roomId, decode(snapshot[name]))
     else store.delete(roomId)
   }
+  const foreign: Record<string, SerializedValue> = {}
+  for (const [name, value] of Object.entries(snapshot)) {
+    if (!runtime.stores.has(name)) foreign[name] = value as SerializedValue
+  }
+  if (Object.keys(foreign).length > 0) runtime.foreign.set(roomId, foreign)
+  else runtime.foreign.delete(roomId)
 }
 
 /** Bu instance'ın oda hakkındaki bellek ve önbellek bilgisini unutur; sonraki kapsam DB'den yükler. */
@@ -120,6 +132,7 @@ export function evictRoomRuntime(roomId: string): void {
   for (const store of runtime.stores.values()) store.delete(roomId)
   runtime.versions.delete(roomId)
   runtime.lastSynced.delete(roomId)
+  runtime.foreign.delete(roomId)
 }
 
 async function hydrate(roomId: string): Promise<void> {

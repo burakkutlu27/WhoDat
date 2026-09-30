@@ -68,10 +68,16 @@ export interface TextQuestionVote {
   myAnswer?: boolean
 }
 
+/** Bot zorluk seviyesi — oda zorluk seviyesiyle aynı adlandırma. */
+export type BotLevel = DifficultyLevel
+
 export interface PublicPlayer {
   id: string
   nickname: string
   isHost: boolean
+  /** Sunucu tarafında yönetilen bot oyuncu */
+  isBot?: boolean
+  botLevel?: BotLevel
   score: number
   hasSubmittedNames: boolean
   livesLeft: number

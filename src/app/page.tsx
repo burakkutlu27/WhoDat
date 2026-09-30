@@ -3,6 +3,7 @@
 import {
   ArrowRight,
   BookOpen,
+  Bot,
   ChevronDown,
   Globe,
   HelpCircle,
@@ -143,6 +144,17 @@ export default function Home() {
               >
                 <Play className="h-5 w-5 fill-current" />
                 <span>Oda Oluştur</span>
+              </motion.button>
+              {/* Arkadaş beklemeden oynamak için: oda kurma formu bot seçenekleri açık gelir. */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => router.push('/room/create?bots=1')}
+                data-testid="play-vs-bots-link"
+                className="btn-outline mt-3 flex w-full items-center justify-center gap-2 py-3.5 font-display text-lg"
+              >
+                <Bot className="h-5 w-5 text-pencil-blue" />
+                <span>Botlara Karşı Oyna</span>
               </motion.button>
             </div>
           </motion.div>

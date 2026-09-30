@@ -64,6 +64,9 @@ GROK.md
 KORREL.md
 NOMIC.md
 
+# Veri script'lerinin ağ önbelleği (scripts/enrich-attributes.mjs)
+scripts/.cache/
+
 # Playwright & E2E Test Results
 test-results/
 playwright-report/

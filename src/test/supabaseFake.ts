@@ -357,6 +357,8 @@ export function buildPlayer(roomId: string, overrides: Partial<PlayerRow> = {}):
     questions_this_round: 0,
     has_finished_round: false,
     device_id: null,
+    is_bot: false,
+    bot_level: null,
     created_at: nextTimestamp(),
     ...overrides,
   }

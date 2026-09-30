@@ -1,19 +1,36 @@
 'use client'
 
-import { ArrowLeft, Brain, Check, Feather, Flame, Gauge, Layers, Loader2, MessageSquare, Mic, Pencil, Target, User, Users, Zap } from 'lucide-react'
+import { ArrowLeft, Bot, Brain, Check, Feather, Flame, Gauge, Layers, Loader2, MessageSquare, Mic, Pencil, Target, User, Users, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense, useState } from 'react'
 
 import { CategoryIcon } from '@/components/CategoryIcon'
 import { CustomSelect } from '@/components/CustomSelect'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { getDeviceId } from '@/lib/deviceId'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
-import type { CommunicationMode, DifficultyLevel, FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
+import { MAX_PLAYERS } from '@/lib/game/rules'
+import type { BotLevel, CommunicationMode, DifficultyLevel, FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
 
+const BOT_LEVELS: { id: BotLevel; label: string }[] = [
+  { id: 'kolay', label: 'Kolay' },
+  { id: 'orta', label: 'Orta' },
+  { id: 'zor', label: 'Zor' },
+]
+
+// useSearchParams statik ön işlemede Suspense sınırı ister.
 export default function CreateRoomPage() {
+  return (
+    <Suspense>
+      <CreateRoomForm />
+    </Suspense>
+  )
+}
+
+function CreateRoomForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [nickname, setNickname] = useState('')
   const [gameMode, setGameMode] = useState<GameMode>('classic')
   const [communicationMode, setCommunicationMode] = useState<CommunicationMode>('voice')
@@ -27,30 +44,64 @@ export default function CreateRoomPage() {
   ])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  // Ana sayfadaki "Botlara Karşı Oyna" kısayolu ?bots=1 ile gelir.
+  const [vsBots, setVsBots] = useState(() => searchParams.has('bots'))
+  const [botCount, setBotCount] = useState(2)
+  const [botLevel, setBotLevel] = useState<BotLevel>('orta')
+  const [progress, setProgress] = useState<string | null>(null)
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     if (!nickname.trim() || isSubmitting) return
 
+    if (vsBots && gameMode === 'shared_target') {
+      setError('Botlar şimdilik Ortak Hedef modunda oynayamıyor. Lütfen başka bir mod seçin.')
+      return
+    }
+
     setIsSubmitting(true)
     setError(null)
 
+    let createdRoomId: string | null = null
     try {
+      setProgress(vsBots ? 'Oda kuruluyor...' : null)
       const { roomId } = await apiRequest<{ roomId: string; roomCode: string }>('/api/rooms', {
         method: 'POST',
         body: {
           nickname: nickname.trim(),
           gameMode,
-          communicationMode,
+          // Botlar yalnızca Tam Metin ve tek kategoride oynayabiliyor.
+          communicationMode: vsBots ? 'text' : communicationMode,
           difficulty,
-          categoryMode,
+          categoryMode: vsBots ? 'single' : categoryMode,
           category: selectedCategory,
-          phaseCategories: categoryMode === 'multi_phase' ? phaseCategories : undefined,
+          phaseCategories: !vsBots && categoryMode === 'multi_phase' ? phaseCategories : undefined,
           deviceId: getDeviceId(),
         },
       })
-      router.push(`/room/${roomId}`)
+      createdRoomId = roomId
+
+      if (!vsBots) {
+        router.push(`/room/${roomId}`)
+        return
+      }
+
+      for (let i = 0; i < botCount; i++) {
+        setProgress(`Botlar masaya oturuyor... (${i + 1}/${botCount})`)
+        await apiRequest(`/api/rooms/${roomId}/bots`, { method: 'POST', body: { level: botLevel } })
+      }
+      setProgress('İsimler dağıtılıyor...')
+      await apiRequest(`/api/rooms/${roomId}/auto-assign`, { method: 'POST', body: { category: selectedCategory } })
+      setProgress('Oyun başlıyor...')
+      await apiRequest(`/api/rooms/${roomId}/start`, { method: 'POST' })
+      router.push(`/game/${roomId}`)
     } catch (caught) {
+      // Oda kurulduysa lobiye git: kalan adımlar (bot ekleme / başlatma) oradan elle yapılabilir.
+      if (createdRoomId) {
+        router.push(`/room/${createdRoomId}`)
+        return
+      }
+      setProgress(null)
       setError(
         caught instanceof ApiClientError
           ? caught.message
@@ -582,6 +633,79 @@ export default function CreateRoomPage() {
               </div>
             </div>
 
+            {/* Botlara Karşı Oyna — tek başına oynamak veya eksik oyuncuyu tamamlamak için */}
+            <div className="space-y-3 rounded-sketch-md border-2 border-dashed border-pencil-blue/50 bg-paper-card-alt p-4">
+              <button
+                type="button"
+                role="switch"
+                aria-checked={vsBots}
+                onClick={() => {
+                  setVsBots((value) => !value)
+                  if (gameMode === 'shared_target') setGameMode('classic')
+                }}
+                data-testid="vs-bots-toggle"
+                className="flex w-full min-h-11 items-center justify-between gap-3 text-left"
+              >
+                <span className="flex items-center gap-2 font-display text-xl font-bold text-ink">
+                  <Bot className="h-5 w-5 text-pencil-blue" />
+                  <span>Botlara Karşı Oyna</span>
+                </span>
+                <span
+                  className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${vsBots ? 'bg-pencil-blue' : 'bg-paper-border'}`}
+                >
+                  <span
+                    className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${vsBots ? 'left-[1.375rem]' : 'left-0.5'}`}
+                  />
+                </span>
+              </button>
+
+              {vsBots && (
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-display text-base font-bold text-ink-faded">Bot sayısı:</span>
+                    {Array.from({ length: MAX_PLAYERS - 1 }, (_, i) => i + 1).map((count) => (
+                      <button
+                        key={count}
+                        type="button"
+                        onClick={() => setBotCount(count)}
+                        aria-pressed={botCount === count}
+                        data-testid={`bot-count-${count}`}
+                        className={`min-h-11 min-w-11 rounded-sketch font-display text-lg font-bold transition-colors ${
+                          botCount === count
+                            ? 'bg-pencil-blue text-white'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        {count}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-display text-base font-bold text-ink-faded">Bot seviyesi:</span>
+                    {BOT_LEVELS.map((level) => (
+                      <button
+                        key={level.id}
+                        type="button"
+                        onClick={() => setBotLevel(level.id)}
+                        aria-pressed={botLevel === level.id}
+                        data-testid={`bot-level-${level.id}`}
+                        className={`min-h-11 rounded-sketch px-4 font-sans text-sm font-bold transition-colors ${
+                          botLevel === level.id
+                            ? 'bg-pencil-blue text-white'
+                            : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                        }`}
+                      >
+                        {level.label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-xs text-ink-extra-faded">
+                    Botlarla Tam Metin ve tek kategori kullanılır; Ortak Hedef modu şimdilik desteklenmiyor.
+                  </p>
+                </div>
+              )}
+            </div>
+
             {error && (
               <motion.div
                 initial={{ opacity: 0, x: -10 }}
@@ -607,10 +731,10 @@ export default function CreateRoomPage() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="h-5 w-5 animate-spin" />
-                    <span>Oda Oluşturuluyor...</span>
+                    <span aria-live="polite">{progress ?? 'Oda Oluşturuluyor...'}</span>
                   </>
                 ) : (
-                  <span>Oda Oluştur</span>
+                  <span>{vsBots ? 'Botlarla Oyuna Başla' : 'Oda Oluştur'}</span>
                 )}
               </motion.button>
 

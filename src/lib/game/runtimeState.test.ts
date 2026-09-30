@@ -105,6 +105,18 @@ describe('withRoomRuntime', () => {
     expect(guestLives).toBe(1)
   })
 
+  it('bu süreçte kayıtlı olmayan store verisini silmez (route\'lar ayrı paketlenebilir)', async () => {
+    const { room, host } = playingRoom()
+    await withRoomRuntime(room.id, async () => undefined)
+    const row = runtimeRow(room.id)!
+    row.state = { ...(row.state as object), baskaModul: { __map: [['x', 1]] } }
+    row.version += 1
+
+    await withRoomRuntime(room.id, async () => setPlayerLives(room.id, host.id, 1))
+
+    expect(runtimeRow(room.id)!.state).toMatchObject({ baskaModul: { __map: [['x', 1]] } })
+  })
+
   it('Map ve Set içeren state\'i kayıpsız taşır', async () => {
     const { room, host, guest } = playingRoom()
 
