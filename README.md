@@ -121,7 +121,7 @@ Oda kurulurken veya lobide oda sahibi tarafından 4 farklı oyun modu seçilebil
 - **Kesintisiz Sıra:** Soru sorulduğunda veya yanlış tahmin yapıldığında sıra hemen devredilmez; oyuncu ismini bilene kadar sıra kendisinde kalır.
 - **Bütçe ve Can:** Her oyuncunun 10 Soru Bütçesi ve 3 Can Hakkı bulunur.
 - **Puanlama:** Kalan soru bütçesi üzerinden puan hesaplanır (`Puan = Kalan Soru * 10`).
-- **Sıra Devri:** İsim doğru bilindiğinde, soru bütçesi bittiğinde veya 3 can tükendiğinde sıra sonraki oyuncuya geçer.
+- **Sıra Devri:** Sıra yalnızca isim doğru bilindiğinde, 3 can tükendiğinde veya oyuncu kendisi pas geçtiğinde sonraki oyuncuya geçer. Soru bütçesi biten oyuncu tahmin etmeye ya da pas geçmeye devam edebilir.
 
 ### 4. Klasik Mod
 - Her oyuncunun tüm maç boyunca toplam 3 Can Hakkı bulunur.

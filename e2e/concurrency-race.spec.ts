@@ -5,7 +5,6 @@ import {
   createPlayerContexts,
   createRoom,
   joinRoom,
-  passTurn,
   startGame,
   vote,
 } from './helpers/harness'
@@ -63,8 +62,9 @@ test.describe('Eşzamanlılık & Race Condition E2E Testleri', () => {
       await p3.waitForURL(/\/scores\/[0-9a-f-]+/, { timeout: 25000 })
 
       // 5. Podyumda tam olarak tek bir şampiyon (100 Puan) ve tek bir 0 Puan yer alır
-      await expect(p2.getByText(/100 Puan/i)).toBeVisible({ timeout: 15000 })
-      await expect(p3.getByText(/100 Puan/i)).toBeVisible({ timeout: 15000 })
+      // Kazananın puanı podyumda birden çok yerde (başlık, kart, liste) yazıyor; tekillik kontrolü 6. adımda.
+      await expect(p2.getByText(/100 Puan/i).first()).toBeVisible({ timeout: 15000 })
+      await expect(p3.getByText(/100 Puan/i).first()).toBeVisible({ timeout: 15000 })
 
       // 6. Sunucu state kontrolü: İki oyuncunun puanları toplamı tam 100 olmalıdır (çift kazanan/çift puan bug'ı yok)
       const state = await p1.evaluate(async () => {
@@ -124,12 +124,9 @@ test.describe('Eşzamanlılık & Race Condition E2E Testleri', () => {
       await expect(p2.getByTestId('vote-yes')).not.toBeVisible({ timeout: 15000 })
       await expect(p3.getByTestId('vote-yes')).not.toBeVisible({ timeout: 15000 })
 
-      // Oylama çözülür ve P1 ekranında pas geçme butonu görünür
-      const passBtn = p1.getByTestId('pass-turn-button')
-      await expect(passBtn).toBeVisible({ timeout: 20000 })
-      await passTurn(p1)
-
-      // Sıra 2. oyuncuya (Voter1) geçer
+      // İki oy da sayıldıysa oylama 30 sn beklemeden kapanır ve sıra kendiliğinden Voter1'e geçer
+      // (plans/12: soru-cevap sonrası sıra otomatik devredilir). Oylardan biri kaybolsaydı
+      // oylama açık kalır, sıra zaman aşımına kadar Asker'de beklerdi.
       await expect(p2.getByTestId('your-turn-banner')).toBeVisible({ timeout: 20000 })
       await expect(p1.getByTestId('your-turn-banner')).not.toBeVisible()
     } finally {

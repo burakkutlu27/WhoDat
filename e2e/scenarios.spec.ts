@@ -264,10 +264,13 @@ test.describe('Katman 2 E2E Çoklu Oyuncu Senaryoları', () => {
       await vote(p2, true)
       await expect(p2.getByTestId('vote-yes')).not.toBeVisible({ timeout: 10000 })
 
-      // P1 sırayı devreder
-      await expect(p1.getByTestId('pass-turn-button')).toBeVisible({ timeout: 10000 })
-      await passTurn(p1)
+      // Israrcı Mod: oylama kapansa da sıra P1'de kalır; yeniden soru sorabilir (bütçe 9/10).
+      await expect(p1.getByTestId('ask-question-button')).toBeVisible({ timeout: 15000 })
+      await expect(p1.getByTestId('your-turn-banner')).toBeVisible()
+      await expect(p2.getByTestId('your-turn-banner')).not.toBeVisible()
 
+      // Sıra yalnızca P1 kendisi pas geçince devredilir
+      await passTurn(p1)
       await expect(p2.getByTestId('your-turn-banner')).toBeVisible({ timeout: 15000 })
     } finally {
       for (const p of players) {

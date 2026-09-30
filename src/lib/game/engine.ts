@@ -2801,6 +2801,14 @@ export async function passTurn(roomId: string, playerId: string) {
   if (gameMode === 'speed') {
     return handleSpeedModeAskQuestion(room, players, names, playerId)
   } else if (gameMode === 'persistent') {
+    // Sesli modda bu buton "Cevap Hayır" demek: sorulan soru bütçeden düşer, sıra geçer.
+    // Metin modunda soru askTextQuestion'da zaten sayıldı; bütçesi biten oyuncunun da
+    // sırayı bırakabilmesi gerekir. Bu iki durumda buton saf pas'tır.
+    const pData = getPlayerPersistentData(room.id, playerId)
+    const commMode = getRoomCommunicationMode(room.id, room.communication_mode)
+    if (commMode === 'text' || pData.questionBudgetRemaining <= 0) {
+      return handlePersistentModePassTurn(room, players, names)
+    }
     return handlePersistentModeAskQuestion(room, players, names, playerId)
   } else if (gameMode === 'classic') {
     return handleClassicModePassTurn(room, players, names)
@@ -3066,6 +3074,17 @@ async function handlePersistentModeAskQuestion(
   }
 }
 
+async function handlePersistentModePassTurn(room: RoomRow, players: PlayerRow[], names: NameRow[]) {
+  const outcome = await advanceTurn(room, players, names)
+  return {
+    message: 'Sırayı devrettiniz.',
+    finished: outcome.finished,
+    phaseChanged: outcome.phaseChanged,
+    newPhase: outcome.newPhase,
+    newCategory: outcome.newCategory,
+  }
+}
+
 async function handlePersistentModeGuess(
   room: RoomRow,
   players: PlayerRow[],
@@ -3160,19 +3179,15 @@ async function handlePersistentModeGuess(
     }
   }
 
-  // Can hâlâ var — sıra geçer
-  const outcome = await advanceTurn(room, players, names)
+  // Can hâlâ var — Israrcı Mod: sıra oyuncuda kalır (yalnızca can bitince, isim bilinince veya pas'ta geçer).
+  // Can değişikliği yalnızca runtime state'te; istemcilerin yenilenmesi için realtime'ı tetikle.
   await admin.from('rooms').update({ status: room.status }).eq('id', room.id)
 
   return {
     correct: false,
-    message: `Yanlış tahmin! 1 can kaybettiniz (Kalan Can: ${newLives}). Sıra diğer oyuncuya geçti.`,
+    message: `Yanlış tahmin! 1 can kaybettiniz (Kalan Can: ${newLives}). Sormaya veya tahmin etmeye devam edebilirsiniz.`,
     livesLeft: newLives,
-    turnPassed: true,
-    finished: outcome.finished,
-    phaseChanged: outcome.phaseChanged,
-    newPhase: outcome.newPhase,
-    newCategory: outcome.newCategory,
+    turnPassed: false,
   }
 }
 
@@ -3787,7 +3802,8 @@ export async function askTextQuestion(
   }
 
   roomActiveVoteStore.set(roomId, voteInternal)
-  setPlayerAskedQuestionInTurn(roomId, playerId, true)
+  // Tur başına 1 soru sınırı Israrcı Mod için geçerli değil; orada sınır soru bütçesidir.
+  if (gameMode !== 'persistent') setPlayerAskedQuestionInTurn(roomId, playerId, true)
 
   // DB'ye oylama kaydı ekle
   try {
@@ -3878,10 +3894,13 @@ export async function submitTextVote(
     throw conflict('vote_closed', 'Bu oylama oturumu sona ermiştir.')
   }
 
+  // Israrcı Mod'da oylama sonucu sırayı devretmez; oyuncu bütçesiyle sormaya devam eder.
+  const keepsTurnAfterVote = getRoomMode(roomId, (await loadRoom(roomId)).game_mode) === 'persistent'
+
   if (Date.now() >= vote.closesAt) {
     const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
     const resolvedClue = await resolveTextVoteInternal(roomId, voteId)
-    if (resolvedClue && resolvedClue.majority !== 'yes' && room.status === 'playing') {
+    if (resolvedClue && resolvedClue.majority !== 'yes' && room.status === 'playing' && !keepsTurnAfterVote) {
       await advanceTurn(room, players, names)
     }
     throw conflict('vote_expired', 'Oylama süresi (30 saniye) doldu.')
@@ -3922,9 +3941,16 @@ export async function submitTextVote(
     clueCardItem = await resolveTextVoteInternal(roomId, voteId)
     isResolved = true
 
-    if (room.status === 'playing') {
+    if (room.status === 'playing' && !keepsTurnAfterVote) {
       await advanceTurn(room, players, names)
       turnPassed = true
+    } else {
+      // Sıra değişmedi; ipucu kartı yalnızca runtime state'te, istemcilere realtime sinyali gönder.
+      try {
+        await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
+      } catch {
+        //
+      }
     }
   } else {
     // Soru AÇIK KALMAYA DEVAM EDİYOR! Realtime tetikle
@@ -3936,7 +3962,7 @@ export async function submitTextVote(
   }
 
   const message = clueCardItem
-    ? `Cevap: ${clueCardItem.yesCount} Evet, ${clueCardItem.noCount} Hayır (${clueCardItem.majority === 'yes' ? 'EVET' : clueCardItem.majority === 'no' ? 'HAYIR' : 'EŞİTLİK'}). Sıra bir sonraki oyuncuya geçti.`
+    ? `Cevap: ${clueCardItem.yesCount} Evet, ${clueCardItem.noCount} Hayır (${clueCardItem.majority === 'yes' ? 'EVET' : clueCardItem.majority === 'no' ? 'HAYIR' : 'EŞİTLİK'}).${turnPassed ? ' Sıra bir sonraki oyuncuya geçti.' : ''}`
     : 'Oyunuz kaydedildi. Diğer oyuncuların oyları bekleniyor...'
 
   return {

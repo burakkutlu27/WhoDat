@@ -1602,27 +1602,26 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               )}
                             </motion.button>
                             
-                            {/* Soru Sorma / Sırayı Devretme Butonu */}
-                            {(!isPersistent || (state.you.questionBudgetRemaining ?? 10) > 0) && (
-                              <motion.button
-                                type="button"
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => void handlePass()}
-                                disabled={isBusy}
-                                data-testid="pass-turn-button"
-                                className="btn-outline flex items-center justify-center gap-2 px-5 py-3.5 font-display text-base font-bold"
-                              >
-                                <SkipForward className="h-5 w-5" />
-                                <span>
-                                  {state.room.communicationMode === 'text'
-                                    ? 'Sırayı Devret'
-                                    : !isSpeed && !isPersistent
-                                      ? 'Soru Sordum'
-                                      : 'Cevap Hayır (Sırayı Devret)'}
-                                </span>
-                              </motion.button>
-                            )}
+                            {/* Soru Sorma / Sırayı Devretme Butonu — Israrcı'da bütçe bitse de sıra bırakılabilir */}
+                            <motion.button
+                              type="button"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              onClick={() => void handlePass()}
+                              disabled={isBusy}
+                              data-testid="pass-turn-button"
+                              className="btn-outline flex items-center justify-center gap-2 px-5 py-3.5 font-display text-base font-bold"
+                            >
+                              <SkipForward className="h-5 w-5" />
+                              <span>
+                                {state.room.communicationMode === 'text' ||
+                                (isPersistent && (state.you.questionBudgetRemaining ?? 10) <= 0)
+                                  ? 'Sırayı Devret'
+                                  : !isSpeed && !isPersistent
+                                    ? 'Soru Sordum'
+                                    : 'Cevap Hayır (Sırayı Devret)'}
+                              </span>
+                            </motion.button>
 
                             {/* Klasik Modda 3. Seçenek: İsmi Pas Geç (Maksimum 3 hak) */}
                             {!isSpeed && !isPersistent && (
