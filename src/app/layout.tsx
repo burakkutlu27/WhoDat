@@ -39,6 +39,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/icon.svg',
+    apple: '/icons/apple-touch-icon.png',
+  },
+  // iOS "Ana Ekrana Ekle": manifest'i kısmen okuduğu için ayrıca belirtilir.
+  appleWebApp: {
+    capable: true,
+    title: 'KimBu',
+    statusBarStyle: 'default',
   },
   keywords: [
     'kimbu',

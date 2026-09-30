@@ -24,7 +24,12 @@ test('Tam Metin oyununda soru, tahmin ve oylama kontrolleri kaydırmadan görün
 
   try {
     const { roomCode } = await createRoom(p1, 'Asker', { gameMode: 'classic', communicationMode: 'text' })
+    // Lobi en üstten açılmalı; host "Oyunu Başlat"ı kaydırmadan görmeli (alt sabit çubuk).
+    await expect(p1.getByTestId('room-code')).toBeInViewport()
+    await expect(p1.getByTestId('start-game-button')).toBeInViewport({ ratio: 1 })
+
     await joinRoom(p2, 'Voter', roomCode)
+    await expect(p2.getByTestId('lobby-action-bar')).toBeInViewport({ ratio: 1 })
     await autoAssignNames(p1)
     await startGame(p1)
     await p2.waitForURL(/\/game\//)

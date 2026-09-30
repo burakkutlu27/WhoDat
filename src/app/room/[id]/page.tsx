@@ -47,6 +47,11 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const status = state?.room.status
   const isSharedTarget = state?.room.gameMode === 'shared_target'
 
+  // Oda kurma/katılma formundaki kaydırma konumu taşınıyor, telefonda lobi ortadan açılıyordu.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   useEffect(() => {
     if (!status) return
     if (status === 'playing') router.replace(`/game/${roomId}`)
@@ -229,10 +234,16 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
   const hasSubmitted = isSharedTarget ? Boolean(state.room.sharedTargetName) : state.you.submittedNames.length > 0
 
+  // Ortak Hedef'te oyuncular isim göndermez; "0/3 hazır" yanıltıcı olur.
+  const readyLabel = isSharedTarget
+    ? ''
+    : ` (${state.players.filter((player) => player.hasSubmittedNames).length}/${state.players.length} hazır)`
+
   return (
-    <div className="relative min-h-[calc(100dvh-4rem)] px-4 py-8">
+    // pb-44: telefonda alttaki sabit "Oyunu Başlat" çubuğu son içeriğin üstüne binmesin.
+    <div className="relative min-h-[calc(100dvh-4rem)] px-3 pt-4 pb-44 sm:px-4 sm:py-8">
       <Confetti trigger={showConfetti} />
-      <div className="mx-auto max-w-4xl space-y-6">
+      <div className="mx-auto max-w-4xl space-y-4 sm:space-y-6">
         {/* Header Card */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
@@ -1079,8 +1090,11 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
           </div>
         </section>
 
-        {/* Start Game Action */}
-        <section className="paper-card p-6 text-center">
+        {/* Start Game Action — telefonda ekranın altına sabit: lobi uzun, host "Başlat" için en alta kaydırmasın */}
+        <section
+          data-testid="lobby-action-bar"
+          className="paper-card p-6 text-center max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:z-30 max-sm:rounded-none max-sm:border-x-0 max-sm:border-b-0 max-sm:p-3 max-sm:pb-[calc(env(safe-area-inset-bottom)+0.75rem)] max-sm:shadow-[0_-4px_14px_rgba(0,0,0,0.10)]"
+        >
           {state.you.isHost ? (
             <>
               <motion.button
@@ -1089,9 +1103,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 onClick={() => void handleStart()}
                 disabled={isStarting || !state.canStart}
                 data-testid="start-game-button"
-                className={`flex w-full items-center justify-center gap-2 py-4 font-display text-2xl font-bold text-white transition-all ${
+                className={`flex w-full items-center justify-center gap-2 py-3 font-display text-xl font-bold transition-all sm:py-4 sm:text-2xl ${
                   state.canStart
-                    ? 'btn-pencil-green animate-wiggle'
+                    ? 'btn-pencil-green animate-wiggle text-white'
                     : 'cursor-not-allowed border-2 border-dashed border-paper-border bg-paper-card text-ink-extra-faded'
                 }`}
                 style={state.canStart ? undefined : { borderRadius: '8px 12px 6px 14px' }}
@@ -1108,21 +1122,21 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   </>
                 )}
               </motion.button>
-              <p className="mt-3 font-display text-lg text-ink-faded" aria-live="polite">
+              <p className="mt-2 font-display text-sm text-ink-faded sm:mt-3 sm:text-lg" aria-live="polite">
                 {state.players.length < 2
                   ? 'Oyunu başlatmak için en az 2 oyuncu olmalıdır.'
                   : !state.allPlayersSubmittedNames
-                    ? 'Tüm oyuncuların isimlerini tamamlaması bekleniyor...'
+                    ? `Tüm oyuncuların isimlerini tamamlaması bekleniyor...${readyLabel}`
                     : 'Herkes hazır! Oyunu başlatabilirsiniz.'}
               </p>
             </>
           ) : (
-            <div className="py-2 text-ink-faded" aria-live="polite">
-              <p className="font-display text-2xl font-bold flex items-center justify-center gap-2">
+            <div className="py-1 text-ink-faded sm:py-2" aria-live="polite">
+              <p className="font-display text-base font-bold flex items-center justify-center gap-2 sm:text-2xl">
                 <Clock className="h-5 w-5 animate-spin" style={{ animationDuration: '5s' }} />
-                <span>Oda sahibinin oyunu başlatması bekleniyor...</span>
+                <span>Oda sahibinin oyunu başlatması bekleniyor...{readyLabel}</span>
               </p>
-              <p className="mt-1 text-base text-ink-extra-faded">
+              <p className="mt-1 hidden text-base text-ink-extra-faded sm:block">
                 Oyun başladığında ekranınız otomatik olarak güncellenecektir.
               </p>
             </div>

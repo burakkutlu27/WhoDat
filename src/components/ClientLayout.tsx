@@ -2,6 +2,7 @@
 
 import FloatingDoodles from '@/components/FloatingDoodles'
 import Navbar from '@/components/Navbar'
+import ServiceWorkerRegistrar from '@/components/ServiceWorkerRegistrar'
 import VersionDisplay from '@/components/VersionDisplay'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 
@@ -17,6 +18,7 @@ export default function ClientLayout({
         <Navbar />
         <main className="relative">{children}</main>
         <VersionDisplay />
+        <ServiceWorkerRegistrar />
       </div>
     </ThemeProvider>
   )
