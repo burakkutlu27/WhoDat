@@ -46,13 +46,17 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-xs">
+      {/* Telefonda alttan açılan panel: başparmak erişimi ve klavye açıldığında da liste görünür kalır. */}
+      <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/70 backdrop-blur-xs sm:items-center sm:p-4">
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Soru Seçici"
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ duration: 0.25 }}
-          className="paper-card-lg max-w-2xl w-full p-6 sm:p-7 max-h-[90vh] flex flex-col shadow-2xl border-2 border-pencil-blue"
+          className="paper-card-lg max-w-2xl w-full p-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] sm:p-7 max-h-[92dvh] sm:max-h-[90dvh] flex flex-col shadow-2xl border-2 border-pencil-blue max-sm:rounded-b-none"
         >
           {/* Header */}
           <div className="flex items-center justify-between border-b border-paper-border pb-4">
@@ -61,25 +65,26 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
                 <HelpCircle className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="font-display text-2xl font-bold text-ink">
+                <h3 className="font-display text-xl font-bold text-ink sm:text-2xl">
                   Soru Seçici (Soru Bankası)
                 </h3>
                 <p className="text-sm text-ink-faded font-sans">
-                  Sorunuzu seçin, diğer oyuncular 15 saniyede Evet/Hayır oyu versin!
+                  Sorunuzu seçin, diğer oyuncular 30 saniyede Evet/Hayır oyu versin!
                 </p>
               </div>
             </div>
             <button
               onClick={onClose}
               disabled={isBusy}
-              className="rounded-sketch p-1.5 text-ink-faded hover:bg-paper-card-alt hover:text-ink transition-colors"
+              aria-label="Kapat"
+              className="shrink-0 rounded-sketch p-2.5 text-ink-faded hover:bg-paper-card-alt hover:text-ink transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
 
           {!isCustomMode ? (
-            <div className="flex flex-col flex-1 overflow-hidden pt-4 space-y-4">
+            <div className="flex min-h-0 flex-col flex-1 overflow-hidden pt-4 space-y-4">
               {/* Search Bar */}
               <div className="relative">
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-ink-extra-faded" />
@@ -101,12 +106,12 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
               </div>
 
               {/* Category Tags */}
-              <div className="flex flex-wrap items-center gap-2 text-sm">
+              <div className="no-scrollbar -mx-1 flex shrink-0 items-center gap-2 overflow-x-auto whitespace-nowrap px-1 text-sm sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
                 {QUESTION_TAGS.map((t) => (
                   <button
                     key={t.id}
                     onClick={() => setSelectedTag(t.id)}
-                    className={`px-3 py-1.5 rounded-sketch font-sans font-bold transition-all border text-xs sm:text-sm flex items-center ${
+                    className={`shrink-0 px-3 py-2 sm:py-1.5 rounded-sketch font-sans font-bold transition-all border text-xs sm:text-sm flex items-center ${
                       selectedTag === t.id
                         ? 'bg-pencil-blue text-white border-pencil-blue shadow-xs'
                         : 'border-paper-border bg-paper-card text-ink-faded hover:text-ink hover:border-ink-faded'
@@ -119,7 +124,7 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
               </div>
 
               {/* Question List */}
-              <div className="flex-1 overflow-y-auto overflow-x-hidden space-y-2.5 p-1.5 max-h-80 min-h-48 no-scrollbar">
+              <div className="flex-1 overflow-y-auto overflow-x-hidden space-y-2.5 p-1.5 sm:max-h-80 min-h-48 no-scrollbar">
                 {filteredQuestions.length > 0 ? (
                   filteredQuestions.map((q) => (
                     <motion.button

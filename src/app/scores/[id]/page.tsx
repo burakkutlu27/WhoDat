@@ -80,7 +80,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
 
   if (phase === 'loading') {
     return (
-      <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
+      <div className="min-h-[calc(100dvh-4rem)] px-4 py-8">
         <div className="mx-auto max-w-3xl space-y-6 flex flex-col items-center justify-center min-h-[50vh]" aria-busy="true" aria-label="Sonuçlar yükleniyor">
           <PencilLoader size={44} text="Sonuçlar Hesaplanıyor..." color="var(--pencil-yellow)" />
         </div>
@@ -90,7 +90,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
 
   if (phase === 'error' || !state) {
     return (
-      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+      <div className="flex min-h-[calc(100dvh-4rem)] items-center justify-center p-4">
         <div className="max-w-md text-center">
           <h1 className="mb-2 font-display text-3xl font-bold text-ink">
             Sonuçlar Açılamadı
@@ -129,7 +129,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
   const thirdPlace = standings[2]
 
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
+    <div className="relative min-h-[calc(100dvh-4rem)] px-4 py-8">
       <Confetti trigger={showConfetti} />
       <div className="mx-auto max-w-3xl space-y-6">
         {/* Victory / Game Over Header Card */}

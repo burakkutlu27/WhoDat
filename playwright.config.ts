@@ -21,6 +21,12 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    // Mobil düzen: aynı senaryolar telefon ekranında da koşar (harness cihaz ayarlarını
+    // her oyuncu bağlamına aktarır). `npx playwright test --project=mobile-chrome`
+    {
+      name: 'mobile-chrome',
+      use: { ...devices['Pixel 7'] },
+    },
   ],
   webServer: process.env.E2E_BASE_URL
     ? undefined

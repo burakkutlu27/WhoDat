@@ -115,6 +115,22 @@ export function useGameState(roomId: string): UseGameStateResult {
     return () => clearInterval(interval)
   }, [state?.room.status, state?.room.activeVote?.status, refresh])
 
+  // Telefonda sekme/uygulama arka plandayken tarayıcı zamanlayıcıları ve WebSocket'i
+  // uyutur; geri dönüldüğünde bir sonraki poll'u beklemeden hemen tazele.
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') scheduleRefresh()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    window.addEventListener('online', scheduleRefresh)
+    window.addEventListener('pageshow', scheduleRefresh)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible)
+      window.removeEventListener('online', scheduleRefresh)
+      window.removeEventListener('pageshow', scheduleRefresh)
+    }
+  }, [scheduleRefresh])
+
 
   return { state, phase, error, degraded: !realtimeConnected, refresh }
 }

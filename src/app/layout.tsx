@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Caveat, JetBrains_Mono, Nunito } from 'next/font/google'
 import './globals.css'
 import ClientLayout from '@/components/ClientLayout'
@@ -80,6 +80,21 @@ export const metadata: Metadata = {
     description:
       'Arkadaşlarınla online oda kur, gizli isimler belirle ve sorular sorarak kimliğini tahmin et!',
   },
+}
+
+/**
+ * viewportFit 'cover': PWA/Capacitor tam ekranda içerik çentiğin altına uzanır, boşluklar
+ * globals.css ve Navbar'daki safe-area padding'leriyle verilir. Tema rengi kağıt zemini
+ * (--paper-bg) ile aynı, tarayıcı çubuğu sayfayla bütün görünsün.
+ */
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#F5F0E8' },
+    { media: '(prefers-color-scheme: dark)', color: '#1A1814' },
+  ],
 }
 
 /**

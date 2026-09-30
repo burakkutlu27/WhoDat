@@ -61,7 +61,7 @@ export default function CreateRoomPage() {
   }
 
   return (
-    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-8">
+    <div className="relative flex min-h-[calc(100dvh-4rem)] items-center justify-center px-4 py-8">
       <div className="w-full max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 15, rotate: -1 }}

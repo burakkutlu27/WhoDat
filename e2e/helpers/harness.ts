@@ -1,4 +1,4 @@
-import { type Browser, type BrowserContext, type Page, expect } from '@playwright/test'
+import { type Browser, type BrowserContext, type Page, expect, test } from '@playwright/test'
 
 export interface RoomSettings {
   gameMode?: 'classic' | 'speed' | 'persistent' | 'shared_target'
@@ -8,9 +8,12 @@ export interface RoomSettings {
 }
 
 export async function createPlayerContexts(browser: Browser, count: number): Promise<{ context: BrowserContext; page: Page }[]> {
+  // browser.newContext() projenin `use` ayarlarını devralmaz; mobil projelerin gerçekten
+  // telefon boyutunda koşması için cihaz ayarlarını elle aktarıyoruz.
+  const { viewport, userAgent, deviceScaleFactor, isMobile, hasTouch } = test.info().project.use
   const players: { context: BrowserContext; page: Page }[] = []
   for (let i = 0; i < count; i++) {
-    const context = await browser.newContext()
+    const context = await browser.newContext({ viewport, userAgent, deviceScaleFactor, isMobile, hasTouch })
     const page = await context.newPage()
     players.push({ context, page })
   }

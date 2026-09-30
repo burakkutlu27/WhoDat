@@ -202,7 +202,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
   if (phase === 'error' || !state) {
     return (
-      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+      <div className="flex min-h-[calc(100dvh-4rem)] items-center justify-center p-4">
         <div className="max-w-md text-center">
           <h1 className="mb-2 font-display text-3xl font-bold text-ink">Oda Açılamadı</h1>
           <p className="mb-6 text-sm text-ink-faded">
@@ -230,7 +230,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const hasSubmitted = isSharedTarget ? Boolean(state.room.sharedTargetName) : state.you.submittedNames.length > 0
 
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
+    <div className="relative min-h-[calc(100dvh-4rem)] px-4 py-8">
       <Confetti trigger={showConfetti} />
       <div className="mx-auto max-w-4xl space-y-6">
         {/* Header Card */}
@@ -1135,7 +1135,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
 function RoomSkeleton() {
   return (
-    <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
+    <div className="min-h-[calc(100dvh-4rem)] px-4 py-8">
       <div className="mx-auto max-w-4xl space-y-6" aria-busy="true" aria-label="Oda yükleniyor">
         <div className="h-28 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />
         <div className="h-64 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />

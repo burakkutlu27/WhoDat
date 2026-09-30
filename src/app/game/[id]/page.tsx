@@ -96,6 +96,12 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const currentRound = state?.room.gameRound ?? 1
   const prevRoundRef = useRef<number>(currentRound)
 
+  // Lobiden gelirken "Başlat" için aşağı kaydırılmış konum taşınıyor ve telefonda oyuncu
+  // "Senin Sıran" başlığını görmeden sayfanın ortasında açıyordu.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   useEffect(() => {
     if (!status) return
     if (status === 'waiting') router.replace(`/room/${roomId}`)
@@ -455,7 +461,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
   if (phase === 'loading') {
     return (
-      <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
+      <div className="min-h-[calc(100dvh-4rem)] px-4 py-8">
         <div className="mx-auto max-w-5xl space-y-6 flex flex-col items-center justify-center min-h-[50vh]" aria-busy="true" aria-label="Oyun yükleniyor">
           <PencilLoader size={44} text="Oyun Yükleniyor..." color="var(--pencil-yellow)" />
         </div>
@@ -465,7 +471,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
   if (phase === 'error' || !state) {
     return (
-      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+      <div className="flex min-h-[calc(100dvh-4rem)] items-center justify-center p-4">
         <div className="max-w-md text-center">
           <h1 className="mb-2 font-display text-3xl font-bold text-ink">Oyun Açılamadı</h1>
           <p className="mb-6 text-sm text-ink-faded">
@@ -493,7 +499,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const isTargetRevealed = Boolean(state.room.targetRevealed)
 
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
+    <div className="relative min-h-[calc(100dvh-4rem)] px-3 py-4 sm:px-4 sm:py-8">
       <Confetti trigger={showConfetti} />
       <PaperAirplane trigger={showPaperAirplane} />
 
@@ -861,24 +867,25 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         </div>
       )}
 
-      <div className="mx-auto max-w-5xl space-y-6">
+      <div className="mx-auto max-w-5xl space-y-4 sm:space-y-6">
         {/* Game Header Bar */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="paper-card-lg p-6"
+          className="paper-card-lg p-4 sm:p-6"
         >
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
+          <div className="flex items-start justify-between gap-3 sm:flex-wrap sm:items-center sm:gap-4">
+            <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <span className="font-display text-3xl font-bold text-ink">
+                <span className="font-display text-2xl font-bold text-ink sm:text-3xl">
                   KimBu<span className="inline-block animate-wiggle text-pencil-yellow">?</span>
                 </span>
                 <span className="tag font-mono text-sm font-bold tracking-widest text-pencil-red tag-animate">
                   {state.room.roomCode}
                 </span>
               </div>
-              <div className="mt-2 flex flex-wrap items-center gap-3">
+              {/* Telefonda etiketler tek satırda yatay kayar; başlık kartı ekranın yarısını yemesin. */}
+              <div className="no-scrollbar -mx-1 mt-2 flex items-center gap-2 overflow-x-auto whitespace-nowrap px-1 pb-1 sm:mx-0 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:whitespace-normal sm:px-0 sm:pb-0">
                 <span className={`tag ${
                   isSpeed
                     ? 'border-pencil-green text-pencil-green font-bold'
@@ -970,23 +977,24 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setIsLeaveModalOpen(true)}
-              className="btn-outline flex items-center gap-2 px-4 py-2.5 font-display text-lg font-bold hover:border-pencil-red hover:text-pencil-red transition-all"
+              aria-label="Oyundan Çık"
+              className="btn-outline flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 px-3 py-2 font-display text-lg font-bold hover:border-pencil-red hover:text-pencil-red transition-all sm:px-4 sm:py-2.5"
             >
               <LogOut className="h-4 w-4" />
-              <span>Oyundan Çık</span>
+              <span className="hidden sm:inline">Oyundan Çık</span>
             </motion.button>
           </div>
         </motion.header>
 
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-3">
           {/* Main Play Arena */}
           <main className="lg:col-span-2 space-y-6">
             <PageFlipTransition key={`${state.room.gameRound}-${state.room.currentPhase || 1}-${state.room.currentPlayerId}`} type="flip">
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              className={`p-6 sm:p-8 transition-all duration-300 ${
+              className={`p-4 sm:p-8 transition-all duration-300 ${
                 state.you.isYourTurn && !isReferee
                   ? 'paper-card-lg border-pencil-yellow turn-active shadow-lg'
                   : 'paper-card'
@@ -1293,7 +1301,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                 /* KLASİK / HIZ / ISRARCI MOD GÖRÜNÜMÜ */
                 <div>
                   {/* Turn Banner */}
-                  <div className="mb-6 text-center">
+                  <div className="mb-4 text-center sm:mb-6">
                     {state.you.isYourTurn ? (
                       <HandDrawnBorder color="var(--pencil-yellow)" className="inline-block p-1">
                         <motion.div
@@ -1318,21 +1326,21 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                       </div>
                     )}
 
-                    <h2 className="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">
+                    <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:mt-3 sm:text-4xl">
                       {state.you.isYourTurn
                         ? isPersistent && (state.you.questionBudgetRemaining ?? 10) === 0
                           ? 'Soru Bütçen Bitti — Karar Anı!'
                           : 'Ben Kimim? Soru Sor & Tahmin Et!'
                         : `${currentPlayer?.nickname ?? 'Oyuncu'} İpucu Arıyor`}
                     </h2>
-                    <p className="mx-auto mt-2 max-w-md text-base text-ink-faded font-sans">
+                    <p className="mx-auto mt-2 max-w-md text-sm text-ink-faded font-sans sm:text-base">
                       {state.you.isYourTurn
                         ? isSpeed
                           ? 'Sorunu sesli sor ve "Soru Sordum" butonuna bas, ya da emin olduğunda tahminini yap!'
                           : isPersistent
                             ? (state.you.questionBudgetRemaining ?? 10) > 0
                               ? 'Sorunu sesli sorup "Soru Sordum" butonuna basabilir veya doğrudan tahmin yapabilirsin!'
-                              : 'Soru bütçen bitti! Elindeki bilgilerle tahmin yapmak zorundasın.'
+                              : 'Soru bütçen bitti! Elindeki bilgilerle tahmin et ya da sırayı devret.'
                             : 'Sorunu sor ("Soru Sordum"), tahmin et ("Tahmin Et") veya ismi değiştir ("İsmi Pas Geç")!'
                         : 'Sana sorulan sorulara dürüstçe yalnızca evet veya hayır deyin.'}
                     </p>
@@ -1467,14 +1475,15 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         )}
                       </div>
                     ) : (
-                      <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                      <div className="mt-3 flex flex-wrap items-center justify-center gap-2 sm:mt-4 sm:gap-3">
                         {/* Deneme Hakkı */}
                         <div
                           data-testid="own-lives-remaining"
-                          className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm"
+                          className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-2.5 py-1.5 shadow-sm sm:px-3.5 sm:py-2"
                         >
                           <span className="font-display text-sm font-bold text-ink-faded">
-                            Deneme Hakkın:
+                            <span className="sm:hidden">Can:</span>
+                            <span className="hidden sm:inline">Deneme Hakkın:</span>
                           </span>
                           <div className="flex items-center gap-1">
                             {Array.from({ length: maxLives }).map((_, index) => {
@@ -1493,10 +1502,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         {/* Pas Geçme Hakkı */}
                         <div
                           data-testid="own-pass-rights"
-                          className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-3.5 py-2 shadow-sm"
+                          className="flex items-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card px-2.5 py-1.5 shadow-sm sm:px-3.5 sm:py-2"
                         >
                           <span className="font-display text-sm font-bold text-ink-faded">
-                            Kalan Pas Hakkın:
+                            <span className="sm:hidden">İsim Pas:</span>
+                            <span className="hidden sm:inline">Kalan Pas Hakkın:</span>
                           </span>
                           <span className="font-display text-base font-bold text-pencil-orange">
                             {state.you.passRightsRemaining ?? 3} / 3
@@ -1551,10 +1561,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                 onClick={() => setIsQuestionPickerOpen(true)}
                                 disabled={isBusy}
                                 data-testid="ask-question-button"
-                                className="btn-pencil-yellow w-full py-4 font-display text-xl font-bold flex items-center justify-center gap-2 shadow-md border-2 border-pencil-yellow"
+                                className="btn-pencil-yellow w-full py-3 font-display text-lg font-bold flex items-center justify-center gap-2 shadow-md border-2 border-pencil-yellow sm:py-4 sm:text-xl"
                               >
                                 <HelpCircle className="h-6 w-6" />
-                                <span>Soru Bankasından Soru Sor (30sn Oylama)</span>
+                                <span className="sm:hidden">Soru Sor (30sn Oylama)</span>
+                                <span className="hidden sm:inline">Soru Bankasından Soru Sor (30sn Oylama)</span>
                               </motion.button>
                             )
                           )
@@ -1564,7 +1575,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           <div>
                             <label
                               htmlFor="guess"
-                              className="mb-2 flex items-center justify-center gap-1.5 font-display text-2xl font-bold text-ink"
+                              className="mb-2 flex items-center justify-center gap-1.5 font-display text-xl font-bold text-ink sm:text-2xl"
                             >
                               <Pencil className="h-5 w-5 text-pencil-red" />
                               <span>Tahmininiz</span>
@@ -1579,18 +1590,19 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               autoComplete="off"
                               disabled={isBusy}
                               data-testid="guess-input"
-                              className="paper-input-boxed text-center font-display text-3xl font-bold transition-all duration-200 focus:scale-[1.02]"
+                              className="paper-input-boxed text-center font-display text-2xl font-bold transition-all duration-200 focus:scale-[1.02] sm:text-3xl"
                             />
                           </div>
 
-                          <div className="flex flex-col gap-2.5 sm:flex-row">
+                          {/* Telefonda: Tahmin Et tam genişlik, ikincil butonlar yan yana (dikey alan kazanmak için). */}
+                          <div className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-row">
                             <motion.button
                               type="submit"
                               whileHover={{ scale: 1.03, rotate: -0.5 }}
                               whileTap={{ scale: 0.97 }}
                               disabled={isBusy || !guess.trim()}
                               data-testid="guess-submit"
-                              className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-xl font-bold shadow-md"
+                              className="btn-pencil-red col-span-2 flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-xl font-bold shadow-md"
                             >
                               {isBusy ? (
                                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -1610,7 +1622,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               onClick={() => void handlePass()}
                               disabled={isBusy}
                               data-testid="pass-turn-button"
-                              className="btn-outline flex items-center justify-center gap-2 px-5 py-3.5 font-display text-base font-bold"
+                              className={`btn-outline flex items-center justify-center gap-2 px-3 py-3.5 font-display text-base font-bold sm:px-5 ${
+                                !isSpeed && !isPersistent ? '' : 'col-span-2'
+                              }`}
                             >
                               <SkipForward className="h-5 w-5" />
                               <span>

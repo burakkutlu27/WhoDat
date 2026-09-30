@@ -73,7 +73,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="page-enter mx-auto flex min-h-[calc(100vh-4rem)] max-w-5xl flex-col justify-center px-4 py-8">
+      <main className="page-enter mx-auto flex min-h-[calc(100dvh-4rem)] max-w-5xl flex-col justify-center px-4 py-8">
         {/* Hero Header */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-center sm:text-left">
           <motion.div

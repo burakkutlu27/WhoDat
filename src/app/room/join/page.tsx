@@ -47,7 +47,7 @@ function JoinRoomForm() {
   }
 
   return (
-    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-8">
+    <div className="relative flex min-h-[calc(100dvh-4rem)] items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         <motion.div
           initial={{ opacity: 0, y: 15, rotate: 0.5 }}
@@ -184,7 +184,7 @@ export default function JoinRoomPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center">
+        <div className="flex min-h-[calc(100dvh-4rem)] items-center justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-pencil-red" />
         </div>
       }
