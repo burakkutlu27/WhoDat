@@ -2,7 +2,8 @@ import type { NextRequest } from 'next/server'
 
 import { submitTextVote } from '@/lib/game/engine'
 import { requireSession } from '@/lib/guards'
-import { jsonOk, readJsonBody, route } from '@/lib/http'
+import { jsonOk, readJsonBody } from '@/lib/http'
+import { roomRoute } from '@/lib/roomRoute'
 import { enforceRateLimit } from '@/lib/rateLimit'
 import { roomIdFrom, type RoomRouteContext } from '@/lib/routeContext'
 import { parseBody, submitTextVoteSchema } from '@/lib/validation'
@@ -10,7 +11,7 @@ import { parseBody, submitTextVoteSchema } from '@/lib/validation'
 /**
  * POST /api/rooms/[id]/vote — Tam Metin modunda diğer oyuncuların Evet / Hayır oyu vermesi.
  */
-export const POST = route(async (request: NextRequest, context: RoomRouteContext) => {
+export const POST = roomRoute(async (request: NextRequest, context: RoomRouteContext) => {
   const roomId = await roomIdFrom(context)
   const session = requireSession(request, roomId)
 

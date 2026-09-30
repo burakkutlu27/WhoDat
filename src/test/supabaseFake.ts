@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 
-import type { FamousPersonRow, GameResultRow, NameRow, NameSuggestionRow, PlayerProfileRow, PlayerRow, QuestionVoteResponseRow, QuestionVoteRow, RoomRow } from '@/lib/database.types'
+import type { FamousPersonRow, GameResultRow, NameRow, NameSuggestionRow, PlayerProfileRow, PlayerRow, QuestionVoteResponseRow, QuestionVoteRow, RoomRow, RoomRuntimeRow } from '@/lib/database.types'
 
 /**
  * Bellek içi Supabase test ikizi.
@@ -20,6 +20,7 @@ export interface FakeTables {
   game_results?: GameResultRow[]
   question_votes?: QuestionVoteRow[]
   question_vote_responses?: QuestionVoteResponseRow[]
+  room_runtime?: RoomRuntimeRow[]
 }
 
 type TableName = keyof FakeTables

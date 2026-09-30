@@ -8,6 +8,7 @@ import { supabaseAdmin } from '../supabaseAdmin'
 import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
 import { QUESTION_BANK_SEED } from './questionBankData'
+import { registerRuntimeStores, withRoomRuntime } from './runtimeState'
 import type { AutoAssignResult, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
@@ -156,6 +157,28 @@ const playerClassicSolvedStore = globalRef.__whoDat_playerClassicSolvedStore
 const playerPassRightsStore = globalRef.__whoDat_playerPassRightsStore
 const classicRetiredNamesStore = globalRef.__whoDat_classicRetiredNamesStore
 const playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore
+
+// Store'lar yalnızca instance içi önbellek; kalıcı kopya room_runtime tablosunda (bkz. runtimeState.ts).
+// Anahtar adları DB'deki JSON'da kullanıldığı için değiştirilmemeli.
+registerRuntimeStores({
+  mode: roomModeStore,
+  communication: roomCommunicationModeStore,
+  difficulty: roomDifficultyStore,
+  category: roomCategoryStore,
+  speed: playerSpeedStore,
+  roundName: playerRoundNameStore,
+  lives: roomLivesStore,
+  usedNames: roomUsedNamesStore,
+  persistent: playerPersistentStore,
+  sharedTarget: sharedTargetStore,
+  activeVote: roomActiveVoteStore,
+  clueCards: playerClueCardStore,
+  submittedPhaseNames: playerSubmittedPhaseNamesStore,
+  classicSolved: playerClassicSolvedStore,
+  passRights: playerPassRightsStore,
+  retiredNames: classicRetiredNamesStore,
+  turnAsked: playerTurnAskedStore,
+})
 
 export const CLASSIC_MODE_MAX_PASSES = 3 // Oyuncu başına oyun boyunca en fazla 3 isim pas geçme hakkı
 
@@ -1132,18 +1155,20 @@ export async function createRoom(
       throw hostError
     }
 
-    // In-memory store'ları da hemen senkronize et
-    setRoomModeData(room.id, gameMode)
-    setRoomCommunicationModeData(room.id, communicationMode)
-    setRoomDifficulty(room.id, difficulty)
-    setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+    // Oda route'u henüz yok; runtime kapsamını burada açıp state'i ilk kez yazıyoruz.
+    await withRoomRuntime(room.id, async () => {
+      setRoomModeData(room.id, gameMode)
+      setRoomCommunicationModeData(room.id, communicationMode)
+      setRoomDifficulty(room.id, difficulty)
+      setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
 
-    setRoomCategoryData(room.id, {
-      categoryMode,
-      category,
-      phaseCategories,
-      currentPhase: 1,
-      totalPhases,
+      setRoomCategoryData(room.id, {
+        categoryMode,
+        category,
+        phaseCategories,
+        currentPhase: 1,
+        totalPhases,
+      })
     })
 
     return { roomId: room.id, roomCode: room.room_code, playerId: host.id }
@@ -1430,7 +1455,10 @@ export async function joinRoom(roomCode: string, nickname: string, deviceId?: st
 
   if (playerError) throw playerError
 
-  setPlayerSpeedData(room.id, player.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+  // Katılma isteği oda koduyla gelir; runtime kapsamı oda id'si ancak burada bilindiği için burada açılıyor.
+  await withRoomRuntime(room.id, async () => {
+    setPlayerSpeedData(room.id, player.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+  })
 
   try {
     await admin.from('players').update({ questions_this_round: 0, round_scores: [], has_finished_round: false }).eq('id', player.id)

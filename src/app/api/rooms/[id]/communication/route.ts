@@ -2,14 +2,15 @@ import type { NextRequest } from 'next/server'
 
 import { setCommunicationMode } from '@/lib/game/engine'
 import { requireSession } from '@/lib/guards'
-import { jsonOk, readJsonBody, route } from '@/lib/http'
+import { jsonOk, readJsonBody } from '@/lib/http'
+import { roomRoute } from '@/lib/roomRoute'
 import { roomIdFrom, type RoomRouteContext } from '@/lib/routeContext'
 import { parseBody, setCommunicationModeSchema } from '@/lib/validation'
 
 /**
  * PATCH /api/rooms/[id]/communication — Lobide iletişim modunu (sesli vs tam metin) günceller.
  */
-export const PATCH = route(async (request: NextRequest, context: RoomRouteContext) => {
+export const PATCH = roomRoute(async (request: NextRequest, context: RoomRouteContext) => {
   const roomId = await roomIdFrom(context)
   const session = requireSession(request, roomId)
 

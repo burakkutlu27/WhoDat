@@ -2,7 +2,8 @@ import type { NextRequest } from 'next/server'
 
 import { makeGuess } from '@/lib/game/engine'
 import { requireSession } from '@/lib/guards'
-import { jsonOk, readJsonBody, route } from '@/lib/http'
+import { jsonOk, readJsonBody } from '@/lib/http'
+import { roomRoute } from '@/lib/roomRoute'
 import { enforceRateLimit } from '@/lib/rateLimit'
 import { roomIdFrom, type RoomRouteContext } from '@/lib/routeContext'
 import { guessSchema, parseBody } from '@/lib/validation'
@@ -12,7 +13,7 @@ import { guessSchema, parseBody } from '@/lib/validation'
  *
  * Eşleştirme ve puanlama sunucuda yapılır. Yanlış tahmin sıranın kaybına yol açmaz.
  */
-export const POST = route(async (request: NextRequest, context: RoomRouteContext) => {
+export const POST = roomRoute(async (request: NextRequest, context: RoomRouteContext) => {
   const roomId = await roomIdFrom(context)
   const session = requireSession(request, roomId)
 

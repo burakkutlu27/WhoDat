@@ -2,7 +2,8 @@ import type { NextRequest } from 'next/server'
 
 import { getGameState } from '@/lib/game/engine'
 import { requireSession } from '@/lib/guards'
-import { jsonOk, route } from '@/lib/http'
+import { jsonOk } from '@/lib/http'
+import { roomRoute } from '@/lib/roomRoute'
 import { roomIdFrom, type RoomRouteContext } from '@/lib/routeContext'
 
 /**
@@ -11,7 +12,7 @@ import { roomIdFrom, type RoomRouteContext } from '@/lib/routeContext'
  * İstemcinin tek veri kaynağı burasıdır. Doğru cevap, sırası gelen oyuncuya
  * gönderilmez; önceden bu bilgi herkesin tarayıcısına iniyordu.
  */
-export const GET = route(async (request: NextRequest, context: RoomRouteContext) => {
+export const GET = roomRoute(async (request: NextRequest, context: RoomRouteContext) => {
   const roomId = await roomIdFrom(context)
   const session = requireSession(request, roomId)
 

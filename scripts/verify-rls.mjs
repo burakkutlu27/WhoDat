@@ -60,6 +60,16 @@ const checks = [
     pass: (r) => r.status !== 200 || r.body === '[]',
   },
   {
+    label: 'room_runtime okunamıyor (Ortak Hedef hedefi ve isim atamaları burada)',
+    run: () => request('GET', 'room_runtime?select=state&limit=1'),
+    pass: (r) => r.status !== 200 || r.body === '[]',
+  },
+  {
+    label: 'room_runtime tablosuna yazılamıyor',
+    run: () => request('POST', 'room_runtime', { room_id: crypto.randomUUID(), state: {} }),
+    pass: (r) => r.status >= 400,
+  },
+  {
     label: 'rooms tablosuna yazılamıyor',
     run: () => request('POST', 'rooms', { room_code: 'ZZZZZZ' }),
     pass: (r) => r.status >= 400,
