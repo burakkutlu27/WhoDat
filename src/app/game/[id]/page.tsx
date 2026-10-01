@@ -1373,7 +1373,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             ? (state.you.questionBudgetRemaining ?? 10) > 0
                               ? 'Sorunu sesli sorup "Soru Sordum" butonuna basabilir veya doğrudan tahmin yapabilirsin!'
                               : 'Soru bütçen bitti! Elindeki bilgilerle tahmin et ya da sırayı devret.'
-                            : 'Sorunu sor ("Soru Sordum"), tahmin et ("Tahmin Et") veya ismi değiştir ("İsmi Pas Geç")!'
+                            : state.room.communicationMode === 'text'
+                              ? 'Soru bankasından soru sor, tahmin et veya ismi değiştir ("İsmi Pas Geç")!'
+                              : 'Sorunu sor ("Soru Sordum"), tahmin et ("Tahmin Et") veya ismi değiştir ("İsmi Pas Geç")!'
                         : isTeammateTurn
                           ? 'Takım arkadaşın ortak isminizi arıyor; cevabı sen de bilmiyorsun. Takım notuyla fikrini paylaş.'
                           : 'Sana sorulan sorulara dürüstçe yalnızca evet veya hayır deyin.'}

@@ -8,7 +8,7 @@
  * Kullanım: node scripts/generate-icons.mjs
  */
 
-import { mkdirSync } from 'node:fs'
+import { existsSync, mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import { chromium } from '@playwright/test'
@@ -37,25 +37,73 @@ const fullBleedSvg = `
   <g transform="translate(16 16) scale(0.78) translate(-16 -16)">${GLYPH}</g>
 </svg>`
 
+// Android yuvarlak ikon (eski başlatıcılar).
+const roundSvg = `
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="16" cy="16" r="16" fill="${PAPER}"/>
+  <g transform="translate(16 16) scale(0.7) translate(-16 -16)">${GLYPH}</g>
+</svg>`
+
+// Android adaptive ikon ön planı: zemin şeffaf (renk res/values/ic_launcher_background.xml'de).
+// Üreticiler ikonu farklı kırptığı için çizim 108dp'nin ortadaki 66dp'lik güvenli alanında kalmalı.
+const adaptiveForegroundSvg = `
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(16 16) scale(0.6) translate(-16 -16)">${GLYPH}</g>
+</svg>`
+
+/** Açılış ekranı: kağıt zemin, ortada logo (kısa kenarın ~%35'i). */
+function splashSvg(width, height) {
+  const scale = (Math.min(width, height) * 0.35) / 32
+  return `
+<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+  <rect width="${width}" height="${height}" fill="#F5F0E8"/>
+  <g transform="translate(${width / 2} ${height / 2}) scale(${scale}) translate(-16 -16)">${GLYPH}</g>
+</svg>`
+}
+
+const ANDROID_RES = resolve(import.meta.dirname, '../android/app/src/main/res')
+const DENSITIES = { mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4 }
+const SPLASH_PORTRAIT = { mdpi: [320, 480], hdpi: [480, 800], xhdpi: [720, 1280], xxhdpi: [960, 1600], xxxhdpi: [1280, 1920] }
+
 const targets = [
-  { file: 'icon-192.png', size: 192, svg: cardSvg },
-  { file: 'icon-512.png', size: 512, svg: cardSvg },
-  { file: 'icon-maskable-512.png', size: 512, svg: fullBleedSvg },
-  { file: 'apple-touch-icon.png', size: 180, svg: fullBleedSvg },
+  { path: resolve(OUT_DIR, 'icon-192.png'), width: 192, height: 192, svg: cardSvg },
+  { path: resolve(OUT_DIR, 'icon-512.png'), width: 512, height: 512, svg: cardSvg },
+  { path: resolve(OUT_DIR, 'icon-maskable-512.png'), width: 512, height: 512, svg: fullBleedSvg },
+  { path: resolve(OUT_DIR, 'apple-touch-icon.png'), width: 180, height: 180, svg: fullBleedSvg },
 ]
+
+// Android (Capacitor `npx cap add android` varsayılan logosunun yerine).
+if (existsSync(ANDROID_RES)) {
+  for (const [density, factor] of Object.entries(DENSITIES)) {
+    const launcher = 48 * factor
+    const foreground = 108 * factor
+    const dir = resolve(ANDROID_RES, `mipmap-${density}`)
+    targets.push(
+      { path: resolve(dir, 'ic_launcher.png'), width: launcher, height: launcher, svg: cardSvg },
+      { path: resolve(dir, 'ic_launcher_round.png'), width: launcher, height: launcher, svg: roundSvg },
+      { path: resolve(dir, 'ic_launcher_foreground.png'), width: foreground, height: foreground, svg: adaptiveForegroundSvg },
+    )
+    const [w, h] = SPLASH_PORTRAIT[density]
+    targets.push(
+      { path: resolve(ANDROID_RES, `drawable-port-${density}`, 'splash.png'), width: w, height: h, svg: splashSvg(w, h) },
+      { path: resolve(ANDROID_RES, `drawable-land-${density}`, 'splash.png'), width: h, height: w, svg: splashSvg(h, w) },
+    )
+  }
+  targets.push({ path: resolve(ANDROID_RES, 'drawable', 'splash.png'), width: 480, height: 320, svg: splashSvg(480, 320) })
+}
 
 mkdirSync(OUT_DIR, { recursive: true })
 
 const browser = await chromium.launch()
 const page = await browser.newPage()
 
-for (const { file, size, svg } of targets) {
-  await page.setViewportSize({ width: size, height: size })
+for (const { path, width, height, svg } of targets) {
+  await page.setViewportSize({ width, height })
   await page.setContent(
-    `<html><body style="margin:0;background:transparent">${svg.replace('<svg ', `<svg width="${size}" height="${size}" `)}</body></html>`,
+    `<html><body style="margin:0;background:transparent">${svg.replace('<svg ', `<svg width="${width}" height="${height}" `)}</body></html>`,
   )
-  await page.locator('svg').screenshot({ path: resolve(OUT_DIR, file), omitBackground: true })
-  console.log(`✓ public/icons/${file} (${size}×${size})`)
+  await page.locator('svg').screenshot({ path, omitBackground: true })
+  console.log(`✓ ${path.replace(resolve(import.meta.dirname, '..'), '.')} (${width}×${height})`)
 }
 
 await browser.close()

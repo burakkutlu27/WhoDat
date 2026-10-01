@@ -68,6 +68,8 @@ NOMIC.md
 *.jks
 *.keystore
 android/keystore.properties
+# Firebase yapılandırması (Faz 5): projeye özgü anahtar içerir, repoya girmez
+android/app/google-services.json
 
 # Veri script'lerinin ağ önbelleği (scripts/enrich-attributes.mjs)
 scripts/.cache/

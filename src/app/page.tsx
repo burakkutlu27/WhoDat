@@ -471,6 +471,10 @@ export default function Home() {
               >
                 İsim Öner
               </button>
+              <span>•</span>
+              <Link href="/gizlilik" className="hover:text-pencil-red transition-colors">
+                Gizlilik
+              </Link>
             </div>
 
             <div className="flex items-center gap-3">
