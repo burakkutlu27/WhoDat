@@ -1,6 +1,6 @@
 'use client'
 
-import { Bot, Brain, Check, CheckCircle2, ChevronDown, ChevronUp, Clock, Copy, Crown, Dices, Gauge, Layers, Loader2, LogOut, MessageSquare, Mic, Pencil, Play, Send, Settings2, Shuffle, Target, Users, X, Zap } from 'lucide-react'
+import { Bot, Brain, Check, CheckCircle2, ChevronDown, ChevronUp, Clock, Copy, Crown, Dices, Gauge, Layers, Loader2, LogOut, MessageSquare, Mic, Pencil, Play, Send, Settings2, Share2, Shuffle, Target, Users, X, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
@@ -16,6 +16,7 @@ import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import { MAX_PLAYERS } from '@/lib/game/rules'
 import type { AutoAssignResult, BotLevel, FamousPerson, FamousPersonCategory, SubmitNamesResult } from '@/lib/game/types'
+import { canShareInvite, shareRoomInvite } from '@/lib/native'
 import { useGameState } from '@/lib/useGameState'
 
 const BOT_LEVEL_LABELS: Record<BotLevel, string> = { kolay: 'Kolay Bot', orta: 'Orta Bot', zor: 'Zor Bot' }
@@ -378,6 +379,20 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             <span className="text-[11px] font-sans text-ink-faded mt-1.5">
               Kopyalamak ve arkadaşlarını davet etmek için koda tıkla
             </span>
+            {/* Telefonda/uygulamada sistemin paylaşım menüsü (WhatsApp vb.); masaüstünde kopyalama yeterli. */}
+            {canShareInvite() && (
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!(await shareRoomInvite(state.room.roomCode))) await handleCopyCode()
+                }}
+                data-testid="share-invite-button"
+                className="btn-outline mt-2 flex min-h-11 items-center gap-2 px-4 font-display text-lg font-bold"
+              >
+                <Share2 className="h-4 w-4" />
+                <span>Davet Et</span>
+              </button>
+            )}
           </div>
 
           {/* 2. OYUN BİLGİLERİ: Sade ve temiz rozetler */}

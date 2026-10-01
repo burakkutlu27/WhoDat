@@ -14,6 +14,7 @@ const {
   autoAssignNames,
   createRoom,
   getGameState,
+  getPlayerRoundNameId,
   removeBot,
   setCommunicationMode,
   startGame,
@@ -134,7 +135,9 @@ describe('runBotTick', () => {
   it('bot, insanın sorusuna hedef hakkındaki doğru cevabı verir (zor bot)', async () => {
     const { roomId, hostId } = await startedGame()
     fake.tables.rooms[0]!.current_player_id = hostId
-    const hostTarget = fake.tables.names.find((name) => name.id === fake.tables.rooms[0]!.current_identity_id)!
+    // Sıra elle verildiği için current_identity_id hâlâ ilk oyuncunun ismi olabilir; host'un kendi ismine bak.
+    const hostTargetId = getPlayerRoundNameId(roomId, hostId)
+    const hostTarget = fake.tables.names.find((name) => name.id === hostTargetId)!
 
     const { voteId } = await withRoomRuntime(roomId, () => askTextQuestion(roomId, hostId, { questionId: 'qb-01' }))
     await tick(roomId)

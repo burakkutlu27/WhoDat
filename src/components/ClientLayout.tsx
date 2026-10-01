@@ -1,6 +1,7 @@
 'use client'
 
 import FloatingDoodles from '@/components/FloatingDoodles'
+import NativeBridge from '@/components/NativeBridge'
 import Navbar from '@/components/Navbar'
 import ServiceWorkerRegistrar from '@/components/ServiceWorkerRegistrar'
 import VersionDisplay from '@/components/VersionDisplay'
@@ -19,6 +20,7 @@ export default function ClientLayout({
         <main className="relative">{children}</main>
         <VersionDisplay />
         <ServiceWorkerRegistrar />
+        <NativeBridge />
       </div>
     </ThemeProvider>
   )

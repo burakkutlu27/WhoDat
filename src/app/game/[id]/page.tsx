@@ -50,6 +50,7 @@ import { VotingModal } from '@/components/VotingModal'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import type { GuessResult } from '@/lib/game/types'
+import { haptic } from '@/lib/native'
 import { useGameState } from '@/lib/useGameState'
 
 type Feedback = { tone: 'success' | 'error'; text: string }
@@ -104,6 +105,21 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  // Uygulamada titreşimle haber ver: telefon cepteyken sıra veya 30 sn'lik oylama kaçmasın.
+  const isMyTurn = Boolean(state?.you.isYourTurn)
+  useEffect(() => {
+    if (isMyTurn) void haptic('turn')
+  }, [isMyTurn])
+
+  const pendingVote = state?.room.activeVote
+  const voteAwaitingMe =
+    pendingVote?.status === 'open' && !pendingVote.hasVoted && pendingVote.askerId !== state?.you.playerId
+      ? pendingVote.id
+      : null
+  useEffect(() => {
+    if (voteAwaitingMe) void haptic('vote')
+  }, [voteAwaitingMe])
 
   useEffect(() => {
     if (!status) return

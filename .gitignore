@@ -64,6 +64,11 @@ GROK.md
 KORREL.md
 NOMIC.md
 
+# Android imzalama anahtarı — kaybolursa/sızarsa uygulama güncellenemez veya taklit edilir
+*.jks
+*.keystore
+android/keystore.properties
+
 # Veri script'lerinin ağ önbelleği (scripts/enrich-attributes.mjs)
 scripts/.cache/
 
