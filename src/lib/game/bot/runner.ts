@@ -15,6 +15,7 @@ import {
   getRoomDifficulty,
   getRoomMode,
   hasPlayerAskedQuestionInTurn,
+  isTeammate,
   makeGuess,
   passTurn,
   setBotMemory,
@@ -148,7 +149,8 @@ async function playTurn(room: RoomRow, players: PlayerRow[], names: NameRow[], b
 
   const visibleToBot = new Set<string>(memory.wrongGuesses)
   for (const player of players) {
-    if (player.id === bot.id) continue
+    // Takım arkadaşının ismi botun kendi hedefiyle aynı; onu elemek doğru cevabı elemek olurdu.
+    if (isTeammate(roomId, bot.id, player.id)) continue
     const nameId = getPlayerRoundNameId(roomId, player.id)
     const text = names.find((name) => name.id === nameId)?.name_text
     if (text) visibleToBot.add(text)

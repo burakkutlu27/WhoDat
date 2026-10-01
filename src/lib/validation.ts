@@ -154,6 +154,24 @@ export const removeBotSchema = z.object({
   botId: z.string().uuid('Geçersiz bot kimliği.'),
 })
 
+export const teamModeSchema = z.object({
+  enabled: z.boolean(),
+  teamCount: z.number().int().min(2).max(3).optional(),
+})
+
+export const teamActionSchema = z.discriminatedUnion('action', [
+  z.object({ action: z.literal('shuffle') }),
+  z.object({
+    action: z.literal('move'),
+    playerId: z.string().uuid('Geçersiz oyuncu kimliği.'),
+    teamId: z.enum(['red', 'blue', 'green']),
+  }),
+])
+
+export const teamNoteSchema = z.object({
+  message: z.string().trim().min(1, 'Not boş olamaz.').max(200, 'Not en fazla 200 karakter olabilir.'),
+})
+
 export const suggestNameSchema = z.object({
   name: z
     .string()

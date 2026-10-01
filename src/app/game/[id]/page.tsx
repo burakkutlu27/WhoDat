@@ -44,6 +44,8 @@ import {
 import { CategoryIcon } from '@/components/CategoryIcon'
 import { ClueCard } from '@/components/ClueCard'
 import { QuestionPicker } from '@/components/QuestionPicker'
+import { TEAM_STYLES } from '@/components/TeamLobby'
+import { TeamPanel } from '@/components/TeamPanel'
 import { VotingModal } from '@/components/VotingModal'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
@@ -346,6 +348,12 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     }
   }
 
+  // Takım notu oyunun akışını etkilemez; hata panelde gösterilsin diye burada yakalanmaz.
+  const handleSendTeamNote = async (message: string) => {
+    await apiRequest(`/api/rooms/${roomId}/team-note`, { method: 'POST', body: { message } })
+    await refresh()
+  }
+
   const handleTextVoteSubmit = async (answer: boolean) => {
     if (!state?.room.activeVote || isBusy) return
     setIsBusy(true)
@@ -498,6 +506,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const maxLives = state.maxLives ?? 3
   const isReferee = Boolean(state.you.isReferee)
   const isTargetRevealed = Boolean(state.room.targetRevealed)
+  // Takım modu: sıra takım arkadaşında (isim ondan olduğu gibi benden de gizli, oy da veremem).
+  const isTeammateTurn = Boolean(
+    state.room.teamMode &&
+      !state.you.isYourTurn &&
+      currentPlayer &&
+      state.room.teams?.find((team) => team.id === state.you.teamId)?.memberIds.includes(currentPlayer.id),
+  )
 
   return (
     <div className="relative min-h-[calc(100dvh-4rem)] px-3 py-4 sm:px-4 sm:py-8">
@@ -1343,7 +1358,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               ? 'Sorunu sesli sorup "Soru Sordum" butonuna basabilir veya doğrudan tahmin yapabilirsin!'
                               : 'Soru bütçen bitti! Elindeki bilgilerle tahmin et ya da sırayı devret.'
                             : 'Sorunu sor ("Soru Sordum"), tahmin et ("Tahmin Et") veya ismi değiştir ("İsmi Pas Geç")!'
-                        : 'Sana sorulan sorulara dürüstçe yalnızca evet veya hayır deyin.'}
+                        : isTeammateTurn
+                          ? 'Takım arkadaşın ortak isminizi arıyor; cevabı sen de bilmiyorsun. Takım notuyla fikrini paylaş.'
+                          : 'Sana sorulan sorulara dürüstçe yalnızca evet veya hayır deyin.'}
                     </p>
 
                     {/* Modlara Göre Göstergeler */}
@@ -1681,6 +1698,18 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                           <span>Tüm İsimlerinizi Tamamladınız! Diğer oyuncuları izliyorsunuz.</span>
                         </div>
                       )}
+                      {/* Takım modu: sıra takım arkadaşındaysa isim ondan olduğu gibi senden de gizli */}
+                      {!state.currentName && isTeammateTurn && currentPlayer && (
+                        <div
+                          data-testid="teammate-turn-banner"
+                          className="sticky-note sticky-note-yellow mx-auto max-w-md p-5 text-center shadow-md"
+                        >
+                          <p className="font-display text-2xl font-bold text-ink">Takımının sırası!</p>
+                          <p className="mt-1 text-sm text-ink-faded">
+                            {currentPlayer.nickname} ortak isminizi tahmin etmeye çalışıyor. Takım notuyla yardım et.
+                          </p>
+                        </div>
+                      )}
                       {state.currentName && (
                         <motion.div
                           initial={{ opacity: 0, y: 15, rotate: -2, scale: 0.95 }}
@@ -1798,6 +1827,8 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
           {/* Live Scoreboard & ClueCard Sidebar */}
           <aside className="lg:col-span-1 space-y-6">
+            {state.room.teamMode && <TeamPanel state={state} onSendNote={handleSendTeamNote} />}
+
             {/* İpucu Kartı (Tam Metin Modu veya Soru Not Defteri) */}
             <ClueCard
               clueItems={state.you.clueCard}
@@ -1821,6 +1852,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   const initial = player.nickname.charAt(0).toUpperCase()
                   const pLives = typeof player.livesLeft === 'number' ? player.livesLeft : maxLives
                   const isPlayerReferee = player.isHost && isSharedTarget
+                  const playerTeam = state.room.teams?.find((team) => team.memberIds.includes(player.id))
 
                   return (
                     <motion.div
@@ -1853,6 +1885,12 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             )}
                             {player.isHost && (
                               <Crown className="h-4 w-4 shrink-0 text-pencil-yellow" aria-label="Oda Sahibi / Hakem" />
+                            )}
+                            {playerTeam && (
+                              <span
+                                className={`h-3 w-3 shrink-0 rounded-full ${TEAM_STYLES[playerTeam.color].dot}`}
+                                aria-label={playerTeam.name}
+                              />
                             )}
                             <span className="truncate font-display text-xl font-bold text-ink">
                               {player.nickname}

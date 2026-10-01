@@ -11,6 +11,7 @@ import { CategoryIcon } from '@/components/CategoryIcon'
 import { CustomSelect } from '@/components/CustomSelect'
 import { FamousPersonAutocompleteInput } from '@/components/FamousPersonAutocompleteInput'
 import NameSuggestions from '@/components/NameSuggestions'
+import { TeamLobby } from '@/components/TeamLobby'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/famousPeopleData'
 import { MAX_PLAYERS } from '@/lib/game/rules'
@@ -233,6 +234,36 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
       setIsBotBusy(false)
     }
   }
+
+  /** Takım işlemleri: hata varsa (ör. desteklenmeyen mod) alt çubukta gösterilir. */
+  const runTeamAction = async (request: () => Promise<unknown>) => {
+    setIsBotBusy(true)
+    setActionError(null)
+    try {
+      await request()
+      await refresh()
+    } catch (caught) {
+      setActionError(caught instanceof ApiClientError ? caught.message : 'Takım işlemi yapılamadı.')
+    } finally {
+      setIsBotBusy(false)
+    }
+  }
+
+  const handleTeamMode = (teamCount: 0 | 2 | 3) =>
+    runTeamAction(() =>
+      apiRequest(`/api/rooms/${roomId}/teams`, {
+        method: 'PATCH',
+        body: teamCount === 0 ? { enabled: false } : { enabled: true, teamCount },
+      }),
+    )
+
+  const handleShuffleTeams = () =>
+    runTeamAction(() => apiRequest(`/api/rooms/${roomId}/teams`, { method: 'POST', body: { action: 'shuffle' } }))
+
+  const handleMoveTeam = (playerId: string, teamId: string) =>
+    runTeamAction(() =>
+      apiRequest(`/api/rooms/${roomId}/teams`, { method: 'POST', body: { action: 'move', playerId, teamId } }),
+    )
 
   const handleLeave = async () => {
     try {
@@ -1058,6 +1089,50 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             <span className="text-sm font-sans font-semibold text-ink-faded waiting-dots">Canlı Senkronize</span>
           </h2>
 
+          {/* Takım Modu seçici — yalnızca host; Klasik/Hız ve tek kategoride */}
+          {state.you.isHost && (
+            <div className="mb-4 flex flex-wrap items-center gap-2" data-testid="team-mode-selector">
+              <span className="flex items-center gap-1.5 font-display text-base font-bold text-ink-faded">
+                <Users className="h-4 w-4" />
+                <span>Takım Modu:</span>
+              </span>
+              {(state.room.gameMode === 'classic' || state.room.gameMode === 'speed') &&
+              state.room.categoryMode !== 'multi_phase' ? (
+                ([
+                  { count: 0, label: 'Kapalı' },
+                  { count: 2, label: '2 Takım' },
+                  { count: 3, label: '3 Takım' },
+                ] as const).map((option) => {
+                  const active = option.count === 0
+                    ? !state.room.teamMode
+                    : state.room.teamMode && (state.room.teams?.length ?? 0) === option.count
+                  return (
+                    <button
+                      key={option.count}
+                      type="button"
+                      onClick={() => !active && void handleTeamMode(option.count)}
+                      disabled={isBotBusy}
+                      aria-pressed={active}
+                      data-testid={`team-mode-${option.count}`}
+                      className={`min-h-11 rounded-sketch px-3.5 font-sans text-sm font-bold transition-colors ${
+                        active
+                          ? 'bg-pencil-purple text-white'
+                          : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  )
+                })
+              ) : (
+                <span className="text-sm text-ink-extra-faded">Yalnızca Klasik ve Hız modunda, tek kategoride.</span>
+              )}
+            </div>
+          )}
+
+          {state.room.teamMode ? (
+            <TeamLobby state={state} busy={isBotBusy} onShuffle={() => void handleShuffleTeams()} onMove={(p, t) => void handleMoveTeam(p, t)} />
+          ) : (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {state.players.map((player, idx) => {
               const isYou = player.id === state.you.playerId
@@ -1133,6 +1208,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               )
             })}
           </div>
+          )}
 
           {/* Bot Ekle — yalnızca host. Botlar şimdilik Ortak Hedef ve 3 fazlı lobide oynayamıyor. */}
           {state.you.isHost && (

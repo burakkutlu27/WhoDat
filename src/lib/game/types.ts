@@ -101,6 +101,24 @@ export interface PublicPlayer {
   hasGuessCooldown?: boolean
 }
 
+/** Takım içi not (yalnızca o takımın üyelerine gönderilir). */
+export interface TeamNote {
+  id: string
+  senderId: string
+  senderNickname: string
+  message: string
+  createdAt: string
+}
+
+export interface PublicTeam {
+  id: string
+  name: string
+  color: 'red' | 'blue' | 'green'
+  memberIds: string[]
+  /** Üyelerin puan toplamı */
+  score: number
+}
+
 export interface PhaseIntermissionState {
   completedPhase: number
   nextPhase: number
@@ -147,6 +165,9 @@ export interface GameState {
     roundWinnerNickname?: string | null
     /** Tam Metin Modu: Aktif oylama oturumu */
     activeVote?: TextQuestionVote | null
+    /** Takım Modu: açık mı ve takımlar (lobi dahil) */
+    teamMode?: boolean
+    teams?: PublicTeam[]
   }
   players: PublicPlayer[]
   you: {
@@ -179,6 +200,9 @@ export interface GameState {
     hasAskedQuestionThisTurn?: boolean
     /** Oyuncunun şu an çözmeye çalıştığı gizli ismin ID'si (not defteri kapsamı için) */
     targetNameId?: string | null
+    /** Takım Modu: oyuncunun takımı ve takım içi notlar */
+    teamId?: string | null
+    teamNotes?: TeamNote[]
   }
   /** Tahmin sırası sizdeyse null: doğru cevap tahmin edene gönderilmez. */
   currentName: string | null
