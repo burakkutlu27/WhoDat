@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowLeft, Bot, Brain, Check, Feather, Flame, Gauge, Layers, Loader2, MessageSquare, Mic, Pencil, Target, User, Users, Zap } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Bot, Brain, Check, Feather, Flame, Gauge, Layers, Loader2, MessageSquare, Mic, Pencil, Target, User, Users, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useState } from 'react'
@@ -9,9 +9,25 @@ import { CategoryIcon } from '@/components/CategoryIcon'
 import { CustomSelect } from '@/components/CustomSelect'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { getDeviceId } from '@/lib/deviceId'
-import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import { CATEGORIES } from '@/lib/game/categories'
 import { MAX_PLAYERS } from '@/lib/game/rules'
+import { useAppShell } from '@/lib/useAppShell'
 import type { BotLevel, CommunicationMode, DifficultyLevel, FamousPersonCategory, GameMode, LobbyCategoryMode } from '@/lib/game/types'
+
+type WizardStepId = 'ad' | 'mod' | 'iletisim' | 'kategori' | 'zorluk' | 'botlar'
+interface WizardStep {
+  id: WizardStepId
+  label: string
+}
+
+const WIZARD_STEPS: WizardStep[] = [
+  { id: 'ad', label: 'Takma Ad' },
+  { id: 'mod', label: 'Oyun Modu' },
+  { id: 'iletisim', label: 'İletişim' },
+  { id: 'kategori', label: 'Kategori' },
+  { id: 'zorluk', label: 'Zorluk' },
+  { id: 'botlar', label: 'Botlar' },
+]
 
 const BOT_LEVELS: { id: BotLevel; label: string }[] = [
   { id: 'kolay', label: 'Kolay' },
@@ -50,8 +66,40 @@ function CreateRoomForm() {
   const [botLevel, setBotLevel] = useState<BotLevel>('orta')
   const [progress, setProgress] = useState<string | null>(null)
 
+  // Uygulamada (Capacitor/PWA) uzun form yerine adım adım: her adım tek ekrana sığar.
+  // Bölümler yalnızca gizlenir (silinmez) ki seçimler adımlar arasında korunsun.
+  const isAppShell = useAppShell()
+  const [stepIndex, setStepIndex] = useState(0)
+  const steps: WizardStep[] = WIZARD_STEPS.filter((step) => !(vsBots && step.id === 'iletisim'))
+  const currentStep = steps[Math.min(stepIndex, steps.length - 1)]!
+  const isLastStep = currentStep === steps[steps.length - 1]
+  const stepClass = (id: WizardStepId) => (isAppShell && currentStep.id !== id ? 'hidden' : '')
+  // Uygulamada adım başlığı bölüm adını zaten gösteriyor; bölüm etiketi yalnızca ekran okuyuculara kalır.
+  const sectionLabelClass = isAppShell ? 'sr-only' : ''
+
+  const goNext = () => {
+    if (currentStep.id === 'ad' && !nickname.trim()) {
+      setError('Devam etmek için bir takma ad yaz.')
+      return
+    }
+    setError(null)
+    setStepIndex((index) => Math.min(index + 1, steps.length - 1))
+    window.scrollTo(0, 0)
+  }
+
+  const goBack = () => {
+    setError(null)
+    if (stepIndex === 0) router.push('/')
+    else setStepIndex((index) => index - 1)
+  }
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
+    // Uygulamada Enter son adımdan önce formu göndermez, sonraki adıma geçer.
+    if (isAppShell && !isLastStep) {
+      goNext()
+      return
+    }
     if (!nickname.trim() || isSubmitting) return
 
     if (vsBots && gameMode === 'shared_target') {
@@ -112,30 +160,56 @@ function CreateRoomForm() {
   }
 
   return (
-    <div className="relative flex min-h-[calc(100dvh-4rem)] items-center justify-center px-4 py-8">
+    <div
+      className={`relative flex min-h-[calc(100dvh-4rem)] justify-center px-4 ${
+        isAppShell ? 'items-start pt-4 pb-32' : 'items-center py-8'
+      }`}
+    >
       <div className="w-full max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 15, rotate: -1 }}
           animate={{ opacity: 1, y: 0, rotate: 0 }}
           transition={{ duration: 0.4 }}
-          className="paper-card-lg p-6 sm:p-8"
+          className={isAppShell ? 'paper-card-lg w-full p-5' : 'paper-card-lg p-6 sm:p-8'}
         >
-          <div className="mb-6 text-center">
-            <h1 className="font-display text-4xl font-bold text-ink sm:text-5xl">
-              Yeni Oda Oluştur
-            </h1>
-            <p className="mt-1 text-base text-ink-faded">
-              Odanı aç, oyun modunu seç ve arkadaşlarını davet et.
-            </p>
-          </div>
+          {isAppShell ? (
+            /* Uygulama: kısa başlık + hangi adımda olduğun */
+            <div className="mb-5" data-testid="create-wizard-header">
+              <div className="flex items-baseline justify-between gap-2">
+                <h1 className="font-display text-3xl font-bold text-ink">{currentStep.label}</h1>
+                <span className="font-sans text-sm font-bold text-ink-faded">
+                  {stepIndex + 1} / {steps.length}
+                </span>
+              </div>
+              <div className="mt-2 flex gap-1.5" aria-hidden>
+                {steps.map((step, index) => (
+                  <span
+                    key={step.id}
+                    className={`h-1.5 flex-1 rounded-full ${index <= stepIndex ? 'bg-pencil-red' : 'bg-paper-border'}`}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="mb-6 text-center">
+                <h1 className="font-display text-4xl font-bold text-ink sm:text-5xl">
+                  Yeni Oda Oluştur
+                </h1>
+                <p className="mt-1 text-base text-ink-faded">
+                  Odanı aç, oyun modunu seç ve arkadaşlarını davet et.
+                </p>
+              </div>
 
-          <div className="divider-sketch mb-6" />
+              <div className="divider-sketch mb-6" />
+            </>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-            <div>
+            <div className={stepClass('ad')}>
               <label
                 htmlFor="nickname"
-                className="mb-2 flex items-center gap-1.5 font-display text-2xl font-bold text-ink"
+                className={`mb-2 flex items-center gap-1.5 font-display text-2xl font-bold text-ink ${sectionLabelClass}`}
               >
                 <Pencil className="h-5 w-5 text-pencil-yellow" />
                 <span>Takma Adınız</span>
@@ -162,8 +236,8 @@ function CreateRoomForm() {
             </div>
 
             {/* Oyun Modu Seçimi */}
-            <div>
-              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
+            <div className={stepClass('mod')}>
+              <label className={`mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between ${sectionLabelClass}`}>
                 <span className="flex items-center gap-1.5">
                   <Target className="h-5 w-5 text-pencil-yellow" />
                   <span>Oyun Modu</span>
@@ -273,8 +347,8 @@ function CreateRoomForm() {
             </div>
 
             {/* İletişim Tarzı (Sesli vs Tam Metin) */}
-            <div>
-              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
+            <div className={stepClass('iletisim')}>
+              <label className={`mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between ${sectionLabelClass}`}>
                 <span className="flex items-center gap-1.5">
                   <MessageSquare className="h-5 w-5 text-pencil-green" />
                   <span>İletişim Tarzı</span>
@@ -358,8 +432,8 @@ function CreateRoomForm() {
             </div>
 
             {/* Kategori Seçimi */}
-            <div>
-              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
+            <div className={stepClass('kategori')}>
+              <label className={`mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between ${sectionLabelClass}`}>
                 <span className="flex items-center gap-1.5">
                   <Layers className="h-5 w-5 text-pencil-purple" />
                   <span>Kategori Havuzu</span>
@@ -542,8 +616,8 @@ function CreateRoomForm() {
             </div>
 
             {/* Zorluk Seviyesi Seçimi */}
-            <div>
-              <label className="mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between">
+            <div className={stepClass('zorluk')}>
+              <label className={`mb-2 block font-display text-2xl font-bold text-ink flex items-center justify-between ${sectionLabelClass}`}>
                 <span className="flex items-center gap-1.5">
                   <Gauge className="h-5 w-5 text-pencil-orange" />
                   <span>Zorluk Seviyesi</span>
@@ -634,7 +708,7 @@ function CreateRoomForm() {
             </div>
 
             {/* Botlara Karşı Oyna — tek başına oynamak veya eksik oyuncuyu tamamlamak için */}
-            <div className="space-y-3 rounded-sketch-md border-2 border-dashed border-pencil-blue/50 bg-paper-card-alt p-4">
+            <div className={`space-y-3 rounded-sketch-md border-2 border-dashed border-pencil-blue/50 bg-paper-card-alt p-4 ${stepClass('botlar')}`}>
               <button
                 type="button"
                 role="switch"
@@ -719,14 +793,39 @@ function CreateRoomForm() {
               </motion.div>
             )}
 
-            <div className="space-y-3 pt-2">
+            {/* Uygulamada ekranın altına sabit Geri / Devam çubuğu; webde formun sonunda. */}
+            <div
+              className={
+                isAppShell
+                  ? 'fixed inset-x-0 bottom-0 z-30 flex flex-row-reverse gap-3 border-t-2 border-dashed border-paper-border bg-paper-bg/95 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur-sm'
+                  : 'space-y-3 pt-2'
+              }
+            >
+              {/* Ayrı key şart: aynı DOM butonu "button"dan "submit"e dönerse, son adıma geçiren
+                  tıklama formu da gönderiyor ve oda kullanıcı bot ayarlarını görmeden kuruluyordu. */}
+              {isAppShell && !isLastStep ? (
+                <motion.button
+                  key="wizard-next"
+                  type="button"
+                  whileTap={{ scale: 0.98 }}
+                  onClick={goNext}
+                  data-testid="wizard-next"
+                  className="btn-pencil-red flex flex-1 items-center justify-center gap-2 py-3.5 font-display text-2xl font-bold"
+                >
+                  <span>Devam</span>
+                  <ArrowRight className="h-5 w-5" />
+                </motion.button>
+              ) : (
               <motion.button
+                key="create-room-submit"
                 type="submit"
                 whileHover={{ scale: 1.02, rotate: -0.5 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isSubmitting || !nickname.trim()}
                 data-testid="create-room-button"
-                className="btn-pencil-red flex w-full items-center justify-center gap-2 py-4 font-display text-2xl font-bold tracking-wide"
+                className={`btn-pencil-red flex items-center justify-center gap-2 font-display font-bold tracking-wide ${
+                  isAppShell ? 'flex-1 py-3.5 text-xl' : 'w-full py-4 text-2xl'
+                }`}
               >
                 {isSubmitting ? (
                   <>
@@ -737,17 +836,21 @@ function CreateRoomForm() {
                   <span>{vsBots ? 'Botlarla Oyuna Başla' : 'Oda Oluştur'}</span>
                 )}
               </motion.button>
+              )}
 
               <motion.button
                 type="button"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => router.push('/')}
+                onClick={isAppShell ? goBack : () => router.push('/')}
                 disabled={isSubmitting}
-                className="btn-outline flex w-full items-center justify-center gap-2 py-3.5 font-display text-xl font-bold"
+                data-testid="wizard-back"
+                className={`btn-outline flex items-center justify-center gap-2 font-display text-xl font-bold ${
+                  isAppShell ? 'shrink-0 px-4 py-3.5' : 'w-full py-3.5'
+                }`}
               >
                 <ArrowLeft className="h-5 w-5" />
-                <span>Geri Dön</span>
+                <span>{isAppShell ? 'Geri' : 'Geri Dön'}</span>
               </motion.button>
             </div>
           </form>

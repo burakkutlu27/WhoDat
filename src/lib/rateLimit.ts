@@ -40,7 +40,9 @@ export function enforceRateLimit(options: {
   windowMs: number
   message: string
 }): void {
-  if (process.env.PLAYWRIGHT_TEST === '1') {
+  // Yerel geliştirmede (npm run dev) sınır yok: E2E testleri ve emülatör denemeleri art arda çok
+  // oda kurar; sınır devreye girince testler 429 ile kırılıyordu. Üretimde ve unit testlerde geçerli.
+  if (process.env.PLAYWRIGHT_TEST === '1' || process.env.NODE_ENV === 'development') {
     return
   }
 

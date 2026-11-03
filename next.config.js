@@ -38,6 +38,10 @@ const nextConfig = {
   // Sunucu sürümünü dışarıya duyurmaya gerek yok.
   poweredByHeader: false,
 
+  // Yalnızca `next dev` için: Android emülatörü bilgisayara 10.0.2.2 ile bağlanır (npm run cap:dev).
+  // Next dev sunucusu başka origin'den gelen _next/HMR isteklerini engellediği için izin veriliyor.
+  allowedDevOrigins: ['10.0.2.2'],
+
   async headers() {
     return [
       { source: '/:path*', headers: securityHeaders },

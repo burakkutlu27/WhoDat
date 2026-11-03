@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Lightbulb, Trophy } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
@@ -8,10 +9,16 @@ import { useState } from 'react'
 import { StatsModal } from './StatsModal'
 import SuggestNameModal from './SuggestNameModal'
 import ThemeSwitcher from './ThemeSwitcher'
+import { useAppShell } from '@/lib/useAppShell'
 
 export default function Navbar() {
   const [showStats, setShowStats] = useState(false)
   const [showSuggest, setShowSuggest] = useState(false)
+  const pathname = usePathname()
+  const isAppShell = useAppShell()
+
+  // Uygulamada oyun sırasında üst menü yer kaplamasın: istatistik/isim öner/tema oyun içinde gereksiz.
+  if (isAppShell && pathname.startsWith('/game/')) return null
 
   return (
     <>

@@ -7,11 +7,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/gizlilik' },
 }
 
-const LAST_UPDATED = '1 Ekim 2026'
+const LAST_UPDATED = '3 Kasım 2026'
 
 /**
  * Gizlilik politikası — Google Play her uygulama için bir URL istiyor.
- * Yalnızca kodda gerçekten işlenen verileri anlatır; giriş/reklam eklenince güncellenmeli.
+ * Yalnızca kodda gerçekten işlenen verileri anlatır; Play'deki Veri güvenliği formuyla tutarlı kalmalı
+ * (reklam: src/lib/ads.ts). Giriş eklenince güncellenmeli.
  */
 export default function PrivacyPage() {
   return (
@@ -60,12 +61,35 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-2">
+          <h2 className="font-display text-2xl font-bold">Reklamlar (yalnızca Android uygulaması)</h2>
+          <p>
+            Uygulama, maç bittiğinde tam ekran reklam göstermek için <strong>Google AdMob</strong> kullanır; oyun
+            sırasında reklam gösterilmez. Web sitesinde reklam yoktur. AdMob, reklamı göstermek, ölçmek ve kötüye
+            kullanımı önlemek için cihazınızın reklam kimliğini, yaklaşık konumunu (IP adresinden), cihaz ve uygulama
+            bilgilerini ve reklamlarla etkileşimlerinizi işleyebilir.
+          </p>
+          <p>
+            Avrupa Ekonomik Alanı ve Birleşik Krallık gibi onay gerektiren bölgelerde uygulama ilk açılışta Google&apos;ın
+            onay formunu gösterir; kişiselleştirilmiş reklama izin vermezseniz kişiselleştirilmemiş reklam gösterilir.
+            Reklam kimliğinizi Android ayarlarından (Google → Reklamlar) sıfırlayabilir veya silebilirsiniz. Ayrıntılar:{' '}
+            <a
+              href="https://policies.google.com/technologies/partner-sites"
+              className="font-bold text-pencil-red underline"
+              rel="noopener"
+            >
+              Google&apos;ın iş ortağı sitelerdeki veri kullanımı
+            </a>
+            .
+          </p>
+        </section>
+
+        <section className="space-y-2">
           <h2 className="font-display text-2xl font-bold">Kullanmadıklarımız</h2>
           <p>
-            Şu anda reklam, kullanıcı hesabı veya analitik/takip aracı yoktur. Konum, kamera, mikrofon ve kişiler
+            Kullanıcı hesabı veya analitik aracı yoktur. Konum, kamera, mikrofon ve kişiler
             gibi cihaz izinleri istenmez. Uygulama yalnızca davet paylaşımı için sistemin paylaşım menüsünü ve
-            sıranız geldiğinde titreşimi kullanır. Bunlardan biri değişirse (ör. isteğe bağlı Google ile giriş veya
-            reklam eklenirse) bu sayfa önceden güncellenir.
+            sıranız geldiğinde titreşimi kullanır. Bunlardan biri değişirse (ör. isteğe bağlı Google ile giriş
+            eklenirse) bu sayfa önceden güncellenir.
           </p>
         </section>
 
@@ -73,7 +97,8 @@ export default function PrivacyPage() {
           <h2 className="font-display text-2xl font-bold">Hizmet sağlayıcılar</h2>
           <p>
             Veriler <strong>Supabase</strong> (veritabanı) ve <strong>Vercel</strong> (barındırma) altyapısında
-            işlenir. Veriler satılmaz ve reklam amacıyla üçüncü kişilerle paylaşılmaz.
+            işlenir; uygulamadaki reklamlar <strong>Google AdMob</strong> tarafından sunulur (yukarıya bakın). Oyun
+            verileriniz (takma ad, oyun içeriği, istatistikler) satılmaz ve reklam amacıyla paylaşılmaz.
           </p>
         </section>
 

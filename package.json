@@ -12,9 +12,13 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "verify:rls": "node scripts/verify-rls.mjs",
-    "db:types": "supabase gen types typescript --project-id webetqbymdzbzfwifwra > src/lib/database.types.ts"
+    "db:types": "supabase gen types typescript --project-id webetqbymdzbzfwifwra > src/lib/database.types.ts",
+    "cap:dev": "node scripts/cap-sync.mjs dev",
+    "cap:prod": "node scripts/cap-sync.mjs prod",
+    "cap:open": "cap open android"
   },
   "dependencies": {
+    "@capacitor-community/admob": "^8.2.1",
     "@capacitor/app": "^8.1.1",
     "@capacitor/core": "^8.5.2",
     "@capacitor/haptics": "^8.0.2",

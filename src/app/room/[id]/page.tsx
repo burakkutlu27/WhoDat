@@ -13,7 +13,7 @@ import { FamousPersonAutocompleteInput } from '@/components/FamousPersonAutocomp
 import NameSuggestions from '@/components/NameSuggestions'
 import { TeamLobby } from '@/components/TeamLobby'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
-import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import { CATEGORIES } from '@/lib/game/categories'
 import { MAX_PLAYERS } from '@/lib/game/rules'
 import type { AutoAssignResult, BotLevel, FamousPerson, FamousPersonCategory, SubmitNamesResult } from '@/lib/game/types'
 import { canShareInvite, shareRoomInvite } from '@/lib/native'

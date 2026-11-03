@@ -47,10 +47,12 @@ import { QuestionPicker } from '@/components/QuestionPicker'
 import { TEAM_STYLES } from '@/components/TeamLobby'
 import { TeamPanel } from '@/components/TeamPanel'
 import { VotingModal } from '@/components/VotingModal'
+import { resetInterstitialGuard } from '@/lib/ads'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
-import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import { CATEGORIES } from '@/lib/game/categories'
 import type { GuessResult } from '@/lib/game/types'
 import { haptic } from '@/lib/native'
+import { useAppShell } from '@/lib/useAppShell'
 import { useGameState } from '@/lib/useGameState'
 
 type Feedback = { tone: 'success' | 'error'; text: string }
@@ -105,6 +107,16 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  // Yeni maç ("Tekrar Oyna" dahil) başladı: bitişinde maç sonu reklamı yeniden gösterilebilir.
+  useEffect(() => {
+    resetInterstitialGuard(roomId)
+  }, [roomId])
+
+  // Uygulamada (Capacitor/PWA) oyun ekranı tek ekrana sığar: ipucu defteri, skor ve takım
+  // paneli sayfanın altına yığılmak yerine alttaki sekme çubuğundan açılan panelde gösterilir.
+  const isAppShell = useAppShell()
+  const [appSheet, setAppSheet] = useState<'clues' | 'score' | 'team' | null>(null)
 
   // Uygulamada titreşimle haber ver: telefon cepteyken sıra veya 30 sn'lik oylama kaçmasın.
   const isMyTurn = Boolean(state?.you.isYourTurn)
@@ -531,7 +543,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   )
 
   return (
-    <div className="relative min-h-[calc(100dvh-4rem)] px-3 py-4 sm:px-4 sm:py-8">
+    <div
+      className={
+        isAppShell
+          ? 'relative px-3 pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-[calc(env(safe-area-inset-bottom)+5.5rem)]'
+          : 'relative min-h-[calc(100dvh-4rem)] px-3 py-4 sm:px-4 sm:py-8'
+      }
+    >
       <Confetti trigger={showConfetti} />
       <PaperAirplane trigger={showPaperAirplane} />
 
@@ -899,17 +917,17 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         </div>
       )}
 
-      <div className="mx-auto max-w-5xl space-y-4 sm:space-y-6">
-        {/* Game Header Bar */}
+      <div className={`mx-auto max-w-5xl ${isAppShell ? 'space-y-2' : 'space-y-4 sm:space-y-6'}`}>
+        {/* Game Header Bar — uygulamada tek ince satır: oda kodu, etiketler (kayar), çıkış */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="paper-card-lg p-4 sm:p-6"
+          className={isAppShell ? 'paper-card px-2.5 py-1.5' : 'paper-card-lg p-4 sm:p-6'}
         >
-          <div className="flex items-start justify-between gap-3 sm:flex-wrap sm:items-center sm:gap-4">
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <span className="font-display text-2xl font-bold text-ink sm:text-3xl">
+          <div className={isAppShell ? 'flex items-center gap-2' : 'flex items-start justify-between gap-3 sm:flex-wrap sm:items-center sm:gap-4'}>
+            <div className={isAppShell ? 'flex min-w-0 flex-1 items-center gap-2' : 'min-w-0 flex-1'}>
+              <div className="flex shrink-0 items-center gap-2">
+                <span className={isAppShell ? 'hidden' : 'font-display text-2xl font-bold text-ink sm:text-3xl'}>
                   KimBu<span className="inline-block animate-wiggle text-pencil-yellow">?</span>
                 </span>
                 <span className="tag font-mono text-sm font-bold tracking-widest text-pencil-red tag-animate">
@@ -917,7 +935,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                 </span>
               </div>
               {/* Telefonda etiketler tek satırda yatay kayar; başlık kartı ekranın yarısını yemesin. */}
-              <div className="no-scrollbar -mx-1 mt-2 flex items-center gap-2 overflow-x-auto whitespace-nowrap px-1 pb-1 sm:mx-0 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:whitespace-normal sm:px-0 sm:pb-0">
+              <div className={`no-scrollbar ${isAppShell ? 'min-w-0 flex-1' : '-mx-1 mt-2'} flex items-center gap-2 overflow-x-auto whitespace-nowrap px-1 pb-1 sm:mx-0 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:whitespace-normal sm:px-0 sm:pb-0`}>
                 <span className={`tag ${
                   isSpeed
                     ? 'border-pencil-green text-pencil-green font-bold'
@@ -1358,14 +1376,14 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                       </div>
                     )}
 
-                    <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:mt-3 sm:text-4xl">
+                    <h2 className={isAppShell ? 'sr-only' : 'mt-2 font-display text-2xl font-bold text-ink sm:mt-3 sm:text-4xl'}>
                       {state.you.isYourTurn
                         ? isPersistent && (state.you.questionBudgetRemaining ?? 10) === 0
                           ? 'Soru Bütçen Bitti — Karar Anı!'
                           : 'Ben Kimim? Soru Sor & Tahmin Et!'
                         : `${currentPlayer?.nickname ?? 'Oyuncu'} İpucu Arıyor`}
                     </h2>
-                    <p className="mx-auto mt-2 max-w-md text-sm text-ink-faded font-sans sm:text-base">
+                    <p className={isAppShell ? 'sr-only' : 'mx-auto mt-2 max-w-md text-sm text-ink-faded font-sans sm:text-base'}>
                       {state.you.isYourTurn
                         ? isSpeed
                           ? 'Sorunu sesli sor ve "Soru Sordum" butonuna bas, ya da emin olduğunda tahminini yap!'
@@ -1843,19 +1861,43 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
             )}
           </main>
 
-          {/* Live Scoreboard & ClueCard Sidebar */}
-          <aside className="lg:col-span-1 space-y-6">
-            {state.room.teamMode && <TeamPanel state={state} onSendNote={handleSendTeamNote} />}
+          {/* Uygulamada açık panelin arkası: dokununca kapanır */}
+          {isAppShell && appSheet && (
+            <button
+              type="button"
+              aria-label="Paneli kapat"
+              onClick={() => setAppSheet(null)}
+              className="fixed inset-0 z-30 bg-black/40"
+            />
+          )}
+
+          {/* Live Scoreboard & ClueCard Sidebar — uygulamada alttan açılan panel */}
+          <aside
+            data-testid="game-side-panel"
+            className={
+              isAppShell
+                ? appSheet
+                  ? // Sekme çubuğunun hemen üstünde açılır ki aynı sekmeyle kapatılabilsin.
+                  'fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+4rem)] z-40 max-h-[70dvh] space-y-3 overflow-y-auto rounded-t-2xl bg-paper-bg p-3 shadow-2xl'
+                  : 'hidden'
+                : 'lg:col-span-1 space-y-6'
+            }
+          >
+            {state.room.teamMode && (!isAppShell || appSheet === 'team') && (
+              <TeamPanel state={state} onSendNote={handleSendTeamNote} />
+            )}
 
             {/* İpucu Kartı (Tam Metin Modu veya Soru Not Defteri) */}
-            <ClueCard
-              clueItems={state.you.clueCard}
-              communicationMode={state.room.communicationMode}
-              roomId={roomId}
-              targetNameId={state.you.targetNameId}
-            />
+            {(!isAppShell || appSheet === 'clues') && (
+              <ClueCard
+                clueItems={state.you.clueCard}
+                communicationMode={state.room.communicationMode}
+                roomId={roomId}
+                targetNameId={state.you.targetNameId}
+              />
+            )}
 
-            <div className="paper-card-alt p-6">
+            <div className={`paper-card-alt p-6 ${isAppShell && appSheet !== 'score' ? 'hidden' : ''}`}>
               <div className="mb-4 flex items-center justify-between">
                 <h3 className="font-display text-2xl font-bold text-ink flex items-center gap-2">
                   <Trophy className="h-6 w-6 text-pencil-yellow" />
@@ -2029,6 +2071,40 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
           </aside>
         </div>
       </div>
+
+      {/* Uygulama: altta sabit sekme çubuğu (ipuçları / skor / takım panelleri) */}
+      {isAppShell && (
+        <nav
+          data-testid="app-tabbar"
+          className={`fixed inset-x-0 bottom-0 z-40 grid gap-2 border-t-2 border-dashed border-paper-border bg-paper-bg/95 px-3 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] backdrop-blur-sm ${
+            state.room.teamMode ? 'grid-cols-3' : 'grid-cols-2'
+          }`}
+        >
+          {(
+            [
+              { id: 'clues', label: `İpuçları (${state.you.clueCard?.length ?? 0})`, Icon: Lightbulb },
+              { id: 'score', label: 'Skor', Icon: Trophy },
+              ...(state.room.teamMode ? [{ id: 'team' as const, label: 'Takım', Icon: Users }] : []),
+            ] as const
+          ).map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setAppSheet((open) => (open === id ? null : id))}
+              aria-pressed={appSheet === id}
+              data-testid={`app-tab-${id}`}
+              className={`flex min-h-12 items-center justify-center gap-1.5 rounded-sketch border-2 font-display text-lg font-bold transition-colors ${
+                appSheet === id
+                  ? 'border-pencil-yellow bg-pencil-yellow/15 text-ink'
+                  : 'border-dashed border-paper-border bg-paper-card text-ink-faded'
+              }`}
+            >
+              <Icon className="h-4 w-4" />
+              <span>{label}</span>
+            </button>
+          ))}
+        </nav>
+      )}
 
       {/* Soru Seçici Modal */}
       <QuestionPicker

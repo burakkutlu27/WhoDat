@@ -56,6 +56,10 @@ next-env.d.ts
 
 # Plans & Agent files
 plans
+# Kişisel notlar / durum / kurulum rehberleri — yalnızca yerelde kalır
+PROJE_DURUMU.md
+docs/mobil-giris-reklam-kurulum.md
+store/play/listing.md
 AGENTS.md
 CLAUDE.md
 DEEPSEEK.md

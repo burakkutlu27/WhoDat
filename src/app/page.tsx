@@ -24,6 +24,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { AppHome } from '@/components/AppHome'
+import { useAppShell } from '@/lib/useAppShell'
+
 const StatsModal = dynamic(
   () => import('@/components/StatsModal').then((mod) => mod.StatsModal),
   { ssr: false }
@@ -58,6 +61,7 @@ export default function Home() {
   const [showStats, setShowStats] = useState(false)
   const [showSuggest, setShowSuggest] = useState(false)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
+  const isAppShell = useAppShell()
 
   const handleJoinWithCode = (e: React.FormEvent) => {
     e.preventDefault()
@@ -70,6 +74,16 @@ export default function Home() {
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index)
+  }
+
+  // Uygulamada (Capacitor / PWA) tanıtım sayfası yerine tek ekranlık oyun girişi.
+  if (isAppShell) {
+    return (
+      <>
+        <AppHome onOpenStats={() => setShowStats(true)} />
+        <StatsModal isOpen={showStats} onClose={() => setShowStats(false)} />
+      </>
+    )
   }
 
   return (

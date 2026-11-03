@@ -10,8 +10,9 @@ import { CopiedPostIt, PencilLoader } from '@/components/animations'
 import { CategoryIcon } from '@/components/CategoryIcon'
 import { StatsModal } from '@/components/StatsModal'
 import { TEAM_STYLES } from '@/components/TeamLobby'
+import { showInterstitialOnce } from '@/lib/ads'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
-import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import { CATEGORIES } from '@/lib/game/categories'
 import { useGameState } from '@/lib/useGameState'
 
 export default function RoomScoresPage({ params }: { params: Promise<{ id: string }> }) {
@@ -38,6 +39,11 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
       router.replace('/')
     }
   }, [error, router])
+
+  // Maç sonu geçiş reklamı yalnızca bitmiş oyunda; oyun sırasında hiç reklam yok.
+  useEffect(() => {
+    if (status === 'finished') void showInterstitialOnce(roomId)
+  }, [status, roomId])
 
   useEffect(() => {
     if (phase === 'ready' && state) {

@@ -30,8 +30,10 @@ const config: CapacitorConfig = {
   },
   plugins: {
     SplashScreen: {
-      launchShowDuration: 1500,
-      launchAutoHide: false,
+      // Kendiliğinden kapanmalı: kapatmayı web koduna bırakmak, site henüz deploy edilmemişse,
+      // yüklenemezse veya çevrimdışı sayfası açılırsa uygulamayı açılış ekranında kilitliyordu.
+      launchShowDuration: 1200,
+      launchAutoHide: true,
       backgroundColor: '#F5F0E8',
       showSpinner: false,
     },
