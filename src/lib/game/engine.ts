@@ -8,7 +8,26 @@ import { supabaseAdmin } from '../supabaseAdmin'
 import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
 import { QUESTION_BANK_SEED } from './questionBankData'
-import type { AutoAssignResult, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
+import { registerRuntimeStores, withRoomRuntime } from './runtimeState'
+import { lookupAttributes } from './bot/knowledge'
+import {
+  MAX_TEAMS,
+  MIN_TEAMS,
+  TEAM_NOTE_MAX_LENGTH,
+  TEAM_NOTES_PER_TEAM,
+  addToSmallestTeam,
+  areTeammates,
+  interleaveByTeam,
+  moveToTeam,
+  removeFromTeams,
+  shuffleIntoTeams,
+  teamOf,
+  teamStateKey,
+  validateTeams,
+  type TeamConfig,
+  type TeamDefinition,
+} from './teams'
+import type { AutoAssignResult, BotLevel, TeamNote, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -119,6 +138,16 @@ const globalRef = globalThis as unknown as {
   __whoDat_playerPassRightsStore?: Map<string, Map<string, number>>
   __whoDat_classicRetiredNamesStore?: Map<string, Set<string>>
   __whoDat_playerTurnAskedStore?: Map<string, Set<string>>
+  __whoDat_botMemoryStore?: Map<string, Map<string, BotMemory>>
+  __whoDat_teamConfigStore?: Map<string, TeamConfig>
+  __whoDat_teamNotesStore?: Map<string, Map<string, TeamNote[]>>
+}
+
+/** Botun kendi hamlelerinden hatırladıkları (hedef ismi değişince sıfırlanır). */
+export interface BotMemory {
+  /** Botun o an çözmeye çalıştığı ismin kimliği; değişince hafıza sıfırlanır. */
+  targetKey: string | null
+  wrongGuesses: string[]
 }
 
 globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
@@ -138,6 +167,9 @@ globalRef.__whoDat_playerClassicSolvedStore = globalRef.__whoDat_playerClassicSo
 globalRef.__whoDat_playerPassRightsStore = globalRef.__whoDat_playerPassRightsStore ?? new Map()
 globalRef.__whoDat_classicRetiredNamesStore = globalRef.__whoDat_classicRetiredNamesStore ?? new Map()
 globalRef.__whoDat_playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore ?? new Map()
+globalRef.__whoDat_botMemoryStore = globalRef.__whoDat_botMemoryStore ?? new Map()
+globalRef.__whoDat_teamConfigStore = globalRef.__whoDat_teamConfigStore ?? new Map()
+globalRef.__whoDat_teamNotesStore = globalRef.__whoDat_teamNotesStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
 const roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore
@@ -156,12 +188,76 @@ const playerClassicSolvedStore = globalRef.__whoDat_playerClassicSolvedStore
 const playerPassRightsStore = globalRef.__whoDat_playerPassRightsStore
 const classicRetiredNamesStore = globalRef.__whoDat_classicRetiredNamesStore
 const playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore
+const botMemoryStore = globalRef.__whoDat_botMemoryStore
+const teamConfigStore = globalRef.__whoDat_teamConfigStore
+const teamNotesStore = globalRef.__whoDat_teamNotesStore
+
+// Store'lar yalnızca instance içi önbellek; kalıcı kopya room_runtime tablosunda (bkz. runtimeState.ts).
+// Anahtar adları DB'deki JSON'da kullanıldığı için değiştirilmemeli.
+registerRuntimeStores({
+  mode: roomModeStore,
+  communication: roomCommunicationModeStore,
+  difficulty: roomDifficultyStore,
+  category: roomCategoryStore,
+  speed: playerSpeedStore,
+  roundName: playerRoundNameStore,
+  lives: roomLivesStore,
+  usedNames: roomUsedNamesStore,
+  persistent: playerPersistentStore,
+  sharedTarget: sharedTargetStore,
+  activeVote: roomActiveVoteStore,
+  clueCards: playerClueCardStore,
+  submittedPhaseNames: playerSubmittedPhaseNamesStore,
+  classicSolved: playerClassicSolvedStore,
+  passRights: playerPassRightsStore,
+  retiredNames: classicRetiredNamesStore,
+  turnAsked: playerTurnAskedStore,
+  botMemory: botMemoryStore,
+  teams: teamConfigStore,
+  teamNotes: teamNotesStore,
+})
+
+/**
+ * Takım modu: can, isim, pas hakkı, çözüldü bilgisi ve Hız verisi takım başına tek kayıt
+ * olarak (takımın ilk üyesinin anahtarıyla) saklanır. Aşağıdaki erişimciler bu anahtarı
+ * kullandığı için oyun kuralları kodu takımı "tek oyuncu" gibi görür; bir üyenin yanlış
+ * tahmini aynı aksiyon içinde tüm takımın canını düşürür.
+ */
+function stateKey(roomId: string, playerId: string): string {
+  return teamStateKey(teamConfigStore.get(roomId), playerId)
+}
+
+export function getTeamConfig(roomId: string): TeamConfig | undefined {
+  return teamConfigStore.get(roomId)
+}
+
+export function isTeammate(roomId: string, playerId: string, otherId: string): boolean {
+  return playerId === otherId || areTeammates(teamConfigStore.get(roomId), playerId, otherId)
+}
+
+/** Oyuncu ve (takım modunda) takım arkadaşları. */
+export function teamMemberIds(roomId: string, playerId: string): string[] {
+  return teamOf(teamConfigStore.get(roomId), playerId)?.memberIds ?? [playerId]
+}
+
+export function getBotMemory(roomId: string, botId: string): BotMemory {
+  return botMemoryStore.get(roomId)?.get(botId) ?? { targetKey: null, wrongGuesses: [] }
+}
+
+export function setBotMemory(roomId: string, botId: string, memory: BotMemory): void {
+  let roomMap = botMemoryStore.get(roomId)
+  if (!roomMap) {
+    roomMap = new Map()
+    botMemoryStore.set(roomId, roomMap)
+  }
+  roomMap.set(botId, memory)
+}
 
 export const CLASSIC_MODE_MAX_PASSES = 3 // Oyuncu başına oyun boyunca en fazla 3 isim pas geçme hakkı
 
 export function getPlayerPassRights(roomId: string, playerId: string): number {
   const map = playerPassRightsStore.get(roomId)
-  return map?.get(playerId) ?? CLASSIC_MODE_MAX_PASSES
+  return map?.get(stateKey(roomId, playerId)) ?? CLASSIC_MODE_MAX_PASSES
 }
 
 export function setPlayerPassRights(roomId: string, playerId: string, rights: number): void {
@@ -170,7 +266,7 @@ export function setPlayerPassRights(roomId: string, playerId: string, rights: nu
     map = new Map()
     playerPassRightsStore.set(roomId, map)
   }
-  map.set(playerId, Math.max(0, rights))
+  map.set(stateKey(roomId, playerId), Math.max(0, rights))
 }
 
 export function getClassicRetiredNames(roomId: string): Set<string> {
@@ -187,7 +283,7 @@ export function retireClassicName(roomId: string, nameId: string): void {
 }
 
 export function isPlayerClassicSolved(roomId: string, playerId: string): boolean {
-  return playerClassicSolvedStore.get(roomId)?.has(playerId) ?? false
+  return playerClassicSolvedStore.get(roomId)?.has(stateKey(roomId, playerId)) ?? false
 }
 
 export function setPlayerClassicSolved(roomId: string, playerId: string, solved: boolean): void {
@@ -197,9 +293,9 @@ export function setPlayerClassicSolved(roomId: string, playerId: string, solved:
     playerClassicSolvedStore.set(roomId, set)
   }
   if (solved) {
-    set.add(playerId)
+    set.add(stateKey(roomId, playerId))
   } else {
-    set.delete(playerId)
+    set.delete(stateKey(roomId, playerId))
   }
 }
 
@@ -219,13 +315,13 @@ export async function assignNewClassicName(
   const currentlyAssignedToOthers = new Set<string>()
   if (roomNameMap) {
     for (const [pid, nameId] of roomNameMap.entries()) {
-      if (pid !== player.id && nameId) {
+      if (pid !== stateKey(roomId, player.id) && nameId) {
         currentlyAssignedToOthers.add(nameId)
       }
     }
   }
   for (const n of names) {
-    if (n.assigned_to && n.assigned_to !== player.id && (n.used_in_round == null)) {
+    if (n.assigned_to && !isTeammate(roomId, player.id, n.assigned_to) && (n.used_in_round == null)) {
       currentlyAssignedToOthers.add(n.id)
     }
   }
@@ -233,7 +329,7 @@ export async function assignNewClassicName(
   // Kullanılabilir isimler: KESİNLİKLE oyuncunun kendi yazmadığı, emekli olmayan, DB'de used_in_round olmayan ve başka bir oyuncunun elinde olmayan isimler
   const pool = names.filter(
     (n) =>
-      n.submitted_by !== player.id &&
+      !writtenByOwnSide(roomId, n, player.id) &&
       !retiredSet.has(n.id) &&
       (n.used_in_round == null) &&
       !currentlyAssignedToOthers.has(n.id),
@@ -437,14 +533,15 @@ export function clearPlayerClueCardMemory(roomId: string, playerId: string): voi
 }
 
 export async function clearPlayerClueCard(roomId: string, playerId: string): Promise<void> {
-  clearPlayerClueCardMemory(roomId, playerId)
+  const askerIds = teamMemberIds(roomId, playerId)
+  for (const id of askerIds) clearPlayerClueCardMemory(roomId, id)
   try {
     const admin = supabaseAdmin()
     const { data: dbVotes } = await admin
       .from('question_votes')
       .select('id')
       .eq('room_id', roomId)
-      .eq('asker_player_id', playerId)
+      .in('asker_player_id', askerIds)
 
     if (dbVotes && dbVotes.length > 0) {
       const voteIds = dbVotes.map((v) => v.id)
@@ -463,7 +560,7 @@ export async function getPlayerClueCardDb(roomId: string, playerId: string, play
       .from('question_votes')
       .select()
       .eq('room_id', roomId)
-      .eq('asker_player_id', playerId)
+      .in('asker_player_id', teamMemberIds(roomId, playerId))
       .eq('status', 'closed')
       .order('created_at', { ascending: true })
 
@@ -492,7 +589,7 @@ export async function getPlayerClueCardDb(roomId: string, playerId: string, play
     }
 
     const roomPlayers = players || (await loadPlayers(roomId))
-    const totalEligible = Math.max(0, roomPlayers.filter((p) => p.id !== playerId).length)
+    const totalEligible = Math.max(0, roomPlayers.filter((p) => !isTeammate(roomId, playerId, p.id)).length)
 
     const items: ClueCardItem[] = dbVotes.map((v) => {
       const stats = responsesByVote.get(v.id) || { yes: 0, no: 0, total: 0 }
@@ -558,7 +655,7 @@ export async function getActiveTextVote(roomId: string, players?: PlayerRow[]): 
     }
 
     const roomPlayers = players || (await loadPlayers(roomId))
-    const eligibleVoterIds = new Set(roomPlayers.filter((p) => p.id !== dbVote.asker_player_id).map((p) => p.id))
+    const eligibleVoterIds = new Set(roomPlayers.filter((p) => !isTeammate(roomId, dbVote.asker_player_id, p.id)).map((p) => p.id))
     const askerPlayer = roomPlayers.find((p) => p.id === dbVote.asker_player_id)
 
     const voteInternal: TextQuestionVoteInternal = {
@@ -672,7 +769,7 @@ export async function resolveTextVoteInternal(roomId: string, voteId: string): P
   let totalEligible = memVote?.eligibleVoterIds.size ?? 0
   try {
     const players = await loadPlayers(roomId)
-    totalEligible = Math.max(0, players.filter((p) => p.id !== askerId).length)
+    totalEligible = Math.max(0, players.filter((p) => !isTeammate(roomId, askerId!, p.id)).length)
   } catch {
     //
   }
@@ -788,10 +885,11 @@ export function getPlayerSpeedData(roomId: string, playerId: string): PlayerSpee
     map = new Map()
     playerSpeedStore.set(roomId, map)
   }
-  let data = map.get(playerId)
+  const key = stateKey(roomId, playerId)
+  let data = map.get(key)
   if (!data) {
     data = { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false }
-    map.set(playerId, data)
+    map.set(key, data)
   }
   return data
 }
@@ -802,7 +900,7 @@ export function setPlayerSpeedData(roomId: string, playerId: string, data: Playe
     map = new Map()
     playerSpeedStore.set(roomId, map)
   }
-  map.set(playerId, data)
+  map.set(stateKey(roomId, playerId), data)
 }
 
 function resetRoomSpeedRound(roomId: string) {
@@ -826,7 +924,7 @@ function clearRoomSpeedData(roomId: string) {
 }
 
 export function getPlayerRoundNameId(roomId: string, playerId: string): string | null {
-  const val = playerRoundNameStore.get(roomId)?.get(playerId)
+  const val = playerRoundNameStore.get(roomId)?.get(stateKey(roomId, playerId))
   return val && val.trim() ? val.trim() : null
 }
 
@@ -836,11 +934,17 @@ export function setPlayerRoundNameId(roomId: string, playerId: string, nameId: s
     map = new Map()
     playerRoundNameStore.set(roomId, map)
   }
+  const key = stateKey(roomId, playerId)
   if (!nameId || !nameId.trim()) {
-    map.delete(playerId)
+    map.delete(key)
   } else {
-    map.set(playerId, nameId.trim())
+    map.set(key, nameId.trim())
   }
+}
+
+/** İsmi bu oyuncu veya (takım modunda) bir takım arkadaşı mı yazdı: o ismi bu oyuncuya/takıma verme. */
+function writtenByOwnSide(roomId: string, name: { submitted_by: string }, playerId: string): boolean {
+  return isTeammate(roomId, playerId, name.submitted_by)
 }
 
 /**
@@ -864,10 +968,13 @@ export function assignNamesForRound(
   const shuffled = [...names].sort(() => Math.random() - 0.5)
 
   for (const player of players) {
+    // Takım modunda isim takım başına bir kez atanır (state takımın ilk üyesinde tutulur).
+    if (stateKey(roomId, player.id) !== player.id) continue
+    const allowed = (n: NameRow) => !writtenByOwnSide(roomId, n, player.id)
     const candidate =
-      shuffled.find((n) => n.submitted_by !== player.id && !usedAcrossRounds!.has(n.id) && !usedInThisRound.has(n.id)) ||
-      shuffled.find((n) => n.submitted_by !== player.id && !usedInThisRound.has(n.id)) ||
-      shuffled.find((n) => n.submitted_by !== player.id) ||
+      shuffled.find((n) => allowed(n) && !usedAcrossRounds!.has(n.id) && !usedInThisRound.has(n.id)) ||
+      shuffled.find((n) => allowed(n) && !usedInThisRound.has(n.id)) ||
+      shuffled.find((n) => allowed(n)) ||
       null
 
     if (candidate) {
@@ -892,12 +999,12 @@ function getRoomLivesMap(roomId: string): Map<string, number> {
 
 export function getPlayerLives(roomId: string, playerId: string): number {
   const map = getRoomLivesMap(roomId)
-  return map.get(playerId) ?? TOTAL_LIVES_PER_GAME
+  return map.get(stateKey(roomId, playerId)) ?? TOTAL_LIVES_PER_GAME
 }
 
 export function setPlayerLives(roomId: string, playerId: string, lives: number): void {
   const map = getRoomLivesMap(roomId)
-  map.set(playerId, Math.max(0, lives))
+  map.set(stateKey(roomId, playerId), Math.max(0, lives))
 }
 
 export const ROOM_INACTIVITY_TIMEOUT_MS = 60 * 60 * 1000 // 60 dakika
@@ -926,6 +1033,9 @@ export function clearRoomMemoryState(roomId: string): void {
   playerClassicSolvedStore.delete(roomId)
   playerPassRightsStore.delete(roomId)
   classicRetiredNamesStore.delete(roomId)
+  botMemoryStore.delete(roomId)
+  teamConfigStore.delete(roomId)
+  teamNotesStore.delete(roomId)
 }
 
 export async function closeExpiredRoom(roomId: string): Promise<void> {
@@ -1029,7 +1139,10 @@ async function loadPlayers(roomId: string): Promise<PlayerRow[]> {
     .order('created_at', { ascending: true })
     .order('id', { ascending: true })
   if (error) throw error
-  return data ?? []
+  // Takım modunda sıra A1, B1, A2, B2 … diye dönsün diye oyuncular takımlar arasında dizilir;
+  // sıra mantığı bu listenin sırasını izlediği için başka değişiklik gerekmez.
+  const teamConfig = teamConfigStore.get(roomId)
+  return teamConfig?.enabled ? interleaveByTeam(data ?? [], teamConfig.teams) : (data ?? [])
 }
 
 async function loadNames(roomId: string): Promise<NameRow[]> {
@@ -1132,18 +1245,20 @@ export async function createRoom(
       throw hostError
     }
 
-    // In-memory store'ları da hemen senkronize et
-    setRoomModeData(room.id, gameMode)
-    setRoomCommunicationModeData(room.id, communicationMode)
-    setRoomDifficulty(room.id, difficulty)
-    setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+    // Oda route'u henüz yok; runtime kapsamını burada açıp state'i ilk kez yazıyoruz.
+    await withRoomRuntime(room.id, async () => {
+      setRoomModeData(room.id, gameMode)
+      setRoomCommunicationModeData(room.id, communicationMode)
+      setRoomDifficulty(room.id, difficulty)
+      setPlayerSpeedData(room.id, host.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
 
-    setRoomCategoryData(room.id, {
-      categoryMode,
-      category,
-      phaseCategories,
-      currentPhase: 1,
-      totalPhases,
+      setRoomCategoryData(room.id, {
+        categoryMode,
+        category,
+        phaseCategories,
+        currentPhase: 1,
+        totalPhases,
+      })
     })
 
     return { roomId: room.id, roomCode: room.room_code, playerId: host.id }
@@ -1347,6 +1462,14 @@ export async function setRoomCategory(
     throw conflict('game_already_started', 'Oyun başladıktan sonra kategori ayarları değiştirilemez.')
   }
 
+  if (settings.categoryMode === 'multi_phase' && teamConfigStore.get(roomId)?.enabled) {
+    throw badRequest('team_mode_unsupported', 'Takım modu açıkken 3 fazlı kategori seçilemez.')
+  }
+
+  if (settings.categoryMode === 'multi_phase' && hasBots(players)) {
+    throw badRequest('bots_unsupported', 'Botlu odada 3 fazlı kategori henüz desteklenmiyor. Önce botları çıkarın.')
+  }
+
   const updated = setRoomCategoryData(roomId, settings)
 
   try {
@@ -1381,6 +1504,14 @@ export async function setRoomMode(roomId: string, playerId: string, gameMode: Ga
   const room = await loadRoom(roomId)
   if (room.status !== 'waiting') {
     throw conflict('game_already_started', 'Oyun başladıktan sonra mod değiştirilemez.')
+  }
+
+  if ((gameMode === 'shared_target' || gameMode === 'persistent') && teamConfigStore.get(roomId)?.enabled) {
+    throw badRequest('team_mode_unsupported', 'Takım modu açıkken yalnızca Klasik ve Hız modu seçilebilir.')
+  }
+
+  if (gameMode === 'shared_target' && hasBots(players)) {
+    throw badRequest('bots_unsupported', 'Botlu odada Ortak Hedef modu henüz desteklenmiyor. Önce botları çıkarın.')
   }
 
   const modeData = setRoomModeData(roomId, gameMode)
@@ -1430,7 +1561,11 @@ export async function joinRoom(roomCode: string, nickname: string, deviceId?: st
 
   if (playerError) throw playerError
 
-  setPlayerSpeedData(room.id, player.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+  // Katılma isteği oda koduyla gelir; runtime kapsamı oda id'si ancak burada bilindiği için burada açılıyor.
+  await withRoomRuntime(room.id, async () => {
+    setPlayerSpeedData(room.id, player.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+    updateTeams(room.id, (teams) => addToSmallestTeam(teams, player.id))
+  })
 
   try {
     await admin.from('players').update({ questions_this_round: 0, round_scores: [], has_finished_round: false }).eq('id', player.id)
@@ -1439,6 +1574,202 @@ export async function joinRoom(roomCode: string, nickname: string, deviceId?: st
   }
 
   return { roomId: room.id, roomCode: room.room_code, playerId: player.id }
+}
+
+function hasBots(players: PlayerRow[]): boolean {
+  return players.some((player) => player.is_bot)
+}
+
+const BOT_NICKNAMES: Record<BotLevel, string[]> = {
+  kolay: ['Çaylak Bot', 'Uykucu Bot', 'Şaşkın Bot'],
+  orta: ['Meraklı Bot', 'Kurnaz Bot', 'Dedektif Bot'],
+  zor: ['Dahi Bot', 'Profesör Bot', 'Kâhin Bot'],
+}
+
+/**
+ * Lobiye bot ekler (yalnızca host). Bot, isim havuzuna kendi isimlerini hemen yazar ki
+ * insanlar elle isim girse de oyun başlatılabilsin. Botlar yalnızca Tam Metin modunda
+ * oynayabildiği için gerekirse oda Tam Metin'e çevrilir.
+ */
+export async function addBot(roomId: string, playerId: string, level: BotLevel) {
+  const admin = supabaseAdmin()
+  const [room, players] = await Promise.all([loadRoom(roomId), loadPlayers(roomId)])
+  const host = requireMembership(players, playerId)
+
+  if (!host.is_host) throw forbidden('not_host', 'Bot eklemeyi yalnızca oda sahibi yapabilir.')
+  if (room.status !== 'waiting') throw conflict('game_already_started', 'Oyun başladıktan sonra bot eklenemez.')
+  if (players.length >= MAX_PLAYERS) throw conflict('room_full', `Oda dolu (en fazla ${MAX_PLAYERS} oyuncu).`)
+
+  const gameMode = getRoomMode(roomId, room.game_mode)
+  const categoryData = getRoomCategoryData(roomId, room)
+  if (gameMode === 'shared_target' || categoryData.categoryMode === 'multi_phase') {
+    throw badRequest('bots_unsupported', 'Botlar şimdilik Ortak Hedef ve 3 fazlı lobide oynayamıyor.')
+  }
+
+  if (getRoomCommunicationMode(roomId, room.communication_mode) !== 'text') {
+    setRoomCommunicationModeData(roomId, 'text')
+    await admin.from('rooms').update({ communication_mode: 'text' }).eq('id', roomId)
+  }
+
+  const taken = new Set(players.map((player) => player.nickname))
+  const nickname =
+    BOT_NICKNAMES[level].find((candidate) => !taken.has(candidate)) ??
+    `${BOT_NICKNAMES[level][0]} ${players.filter((player) => player.is_bot).length + 1}`
+
+  const { data: bot, error } = await admin
+    .from('players')
+    .insert({ room_id: roomId, nickname, is_host: false, score: 0, is_bot: true, bot_level: level })
+    .select()
+    .single()
+  if (error) throw error
+
+  setPlayerSpeedData(roomId, bot.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
+  updateTeams(roomId, (teams) => addToSmallestTeam(teams, bot.id))
+
+  const names = await loadNames(roomId)
+  const existing = new Set(names.map((name) => name.name_text.toLocaleLowerCase('tr')))
+  const pool = (await getFamousPeople({
+    category: getActivePhaseCategory(categoryData),
+    difficulty: getRoomDifficulty(roomId, room.difficulty),
+    random: true,
+    limit: MAX_NAMES_PER_PLAYER + names.length + 10,
+  })).filter((person) => person.name.length <= 60 && !existing.has(person.name.toLocaleLowerCase('tr')))
+
+  const botNames = pool.slice(0, MAX_NAMES_PER_PLAYER).map((person) => ({
+    room_id: roomId,
+    submitted_by: bot.id,
+    name_text: person.name,
+  }))
+  if (botNames.length > 0) {
+    const { error: namesError } = await admin.from('names').insert(botNames)
+    if (namesError) throw namesError
+  }
+
+  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  return { botId: bot.id, nickname }
+}
+
+/** Lobiden bot çıkarır (yalnızca host); botun havuza yazdığı isimler de silinir. */
+export async function removeBot(roomId: string, playerId: string, botId: string) {
+  const admin = supabaseAdmin()
+  const [room, players] = await Promise.all([loadRoom(roomId), loadPlayers(roomId)])
+  const host = requireMembership(players, playerId)
+
+  if (!host.is_host) throw forbidden('not_host', 'Bot çıkarmayı yalnızca oda sahibi yapabilir.')
+  if (room.status !== 'waiting') throw conflict('game_already_started', 'Oyun başladıktan sonra bot çıkarılamaz.')
+
+  const bot = players.find((player) => player.id === botId)
+  if (!bot || !bot.is_bot) throw notFound('bot_not_found', 'Bot bulunamadı.')
+
+  await admin.from('names').delete().eq('room_id', roomId).eq('submitted_by', botId)
+  await admin.from('players').delete().eq('id', botId)
+  playerSpeedStore.get(roomId)?.delete(botId)
+  updateTeams(roomId, (teams) => removeFromTeams(teams, botId))
+
+  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  return { removed: true }
+}
+
+/** Takım üyeliklerini günceller; takım modu kapalıysa dokunmaz. */
+function updateTeams(roomId: string, change: (teams: TeamDefinition[]) => TeamDefinition[]): void {
+  const config = teamConfigStore.get(roomId)
+  if (!config?.enabled) return
+  teamConfigStore.set(roomId, { ...config, teams: change(config.teams) })
+}
+
+async function touchRoom(roomId: string, status: string | null): Promise<void> {
+  // Takım state'i runtime'da; istemcilerin yenilenmesi için rooms üzerinden realtime sinyali.
+  await supabaseAdmin().from('rooms').update({ status }).eq('id', roomId)
+}
+
+async function requireLobbyHost(roomId: string, playerId: string, action: string) {
+  const [room, players] = await Promise.all([loadRoom(roomId), loadPlayers(roomId)])
+  const player = requireMembership(players, playerId)
+  if (!player.is_host) throw forbidden('not_host', `${action} yalnızca oda sahibi yapabilir.`)
+  if (room.status !== 'waiting') throw conflict('game_already_started', 'Oyun başladıktan sonra takımlar değiştirilemez.')
+  return { room, players }
+}
+
+/** Takım modunu açar/kapatır (yalnızca host). Açılırken oyuncular takımlara rastgele dağıtılır. */
+export async function setTeamMode(roomId: string, playerId: string, settings: { enabled: boolean; teamCount?: number }) {
+  const { room, players } = await requireLobbyHost(roomId, playerId, 'Takım modunu')
+
+  if (!settings.enabled) {
+    teamConfigStore.set(roomId, { enabled: false, teams: [] })
+    await touchRoom(roomId, room.status)
+    return { enabled: false }
+  }
+
+  const gameMode = getRoomMode(roomId, room.game_mode)
+  if (gameMode !== 'classic' && gameMode !== 'speed') {
+    throw badRequest('team_mode_unsupported', 'Takım modu şimdilik yalnızca Klasik ve Hız modunda oynanabilir.')
+  }
+  if (getRoomCategoryData(roomId, room).categoryMode === 'multi_phase') {
+    throw badRequest('team_mode_unsupported', 'Takım modu şimdilik 3 fazlı lobide oynanamaz.')
+  }
+
+  const teamCount = Math.min(MAX_TEAMS, Math.max(MIN_TEAMS, settings.teamCount ?? MIN_TEAMS))
+  teamConfigStore.set(roomId, { enabled: true, teams: shuffleIntoTeams(players.map((p) => p.id), teamCount) })
+  await touchRoom(roomId, room.status)
+  return { enabled: true, teamCount }
+}
+
+/** Oyuncuları takımlara yeniden rastgele dağıtır (yalnızca host). */
+export async function shuffleTeams(roomId: string, playerId: string) {
+  const { room, players } = await requireLobbyHost(roomId, playerId, 'Takımları karıştırmayı')
+  const config = teamConfigStore.get(roomId)
+  if (!config?.enabled) throw badRequest('team_mode_off', 'Takım modu kapalı.')
+  teamConfigStore.set(roomId, { ...config, teams: shuffleIntoTeams(players.map((p) => p.id), config.teams.length) })
+  await touchRoom(roomId, room.status)
+  return { shuffled: true }
+}
+
+/** Oyuncuyu bir takıma taşır: herkes kendini, host herkesi (botlar dahil) taşıyabilir. */
+export async function moveToTeamInLobby(roomId: string, playerId: string, targetPlayerId: string, teamId: string) {
+  const [room, players] = await Promise.all([loadRoom(roomId), loadPlayers(roomId)])
+  const actor = requireMembership(players, playerId)
+  requireMembership(players, targetPlayerId)
+  if (room.status !== 'waiting') throw conflict('game_already_started', 'Oyun başladıktan sonra takımlar değiştirilemez.')
+  if (targetPlayerId !== playerId && !actor.is_host) {
+    throw forbidden('not_host', 'Başka bir oyuncunun takımını yalnızca oda sahibi değiştirebilir.')
+  }
+  const config = teamConfigStore.get(roomId)
+  if (!config?.enabled) throw badRequest('team_mode_off', 'Takım modu kapalı.')
+  if (!config.teams.some((team) => team.id === teamId)) throw notFound('team_not_found', 'Takım bulunamadı.')
+
+  updateTeams(roomId, (teams) => moveToTeam(teams, targetPlayerId, teamId))
+  await touchRoom(roomId, room.status)
+  return { moved: true }
+}
+
+/** Takım içi not: yalnızca gönderenin takımına görünür, oyunun akışını etkilemez. */
+export async function postTeamNote(roomId: string, playerId: string, message: string) {
+  const players = await loadPlayers(roomId)
+  const sender = requireMembership(players, playerId)
+  const team = teamOf(teamConfigStore.get(roomId), playerId)
+  if (!team) throw badRequest('team_mode_off', 'Takım notu yalnızca takım modunda gönderilebilir.')
+  if (team.memberIds.length < 2) throw badRequest('solo_team', 'Takımınızda not gönderecek başka oyuncu yok.')
+
+  const text = message.trim().slice(0, TEAM_NOTE_MAX_LENGTH)
+  if (!text) throw badRequest('empty_note', 'Not boş olamaz.')
+
+  let roomNotes = teamNotesStore.get(roomId)
+  if (!roomNotes) {
+    roomNotes = new Map()
+    teamNotesStore.set(roomId, roomNotes)
+  }
+  const note: TeamNote = {
+    id: randomUUID(),
+    senderId: sender.id,
+    senderNickname: sender.nickname,
+    message: text,
+    createdAt: new Date().toISOString(),
+  }
+  roomNotes.set(team.id, [...(roomNotes.get(team.id) ?? []), note].slice(-TEAM_NOTES_PER_TEAM))
+
+  const room = await loadRoom(roomId)
+  await touchRoom(roomId, room.status)
+  return { note }
 }
 
 export async function getGameState(roomId: string, viewerId: string): Promise<GameState> {
@@ -1452,6 +1783,8 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
   const submitters = new Set(names.map((name) => name.submitted_by))
 
   const isViewerTurn = room.current_player_id === viewerId
+  const teamConfig = teamConfigStore.get(roomId)
+  const viewerTeam = teamOf(teamConfig, viewerId)
   const currentName = names.find((name) => name.id === room.current_identity_id) ?? null
   
   // INV-1: gameMode daima kaydedilen sabit moddur
@@ -1493,6 +1826,8 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       id: player.id,
       nickname: player.nickname,
       isHost: isPlayerHost,
+      isBot: Boolean(player.is_bot),
+      botLevel: player.is_bot ? (player.bot_level as BotLevel | null) ?? undefined : undefined,
       score,
       hasSubmittedNames: isSharedTarget ? true : submitters.has(player.id),
       livesLeft: getPlayerLives(roomId, player.id),
@@ -1523,9 +1858,11 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
   const viewerPersistent = getPlayerPersistentData(roomId, viewer.id)
   const isViewerClassicSolved = isPlayerClassicSolved(roomId, viewer.id)
 
+  // Takımlar oynanabilir değilse (eşit değil, boş takım …) başlat butonu baştan pasif kalsın.
+  const teamsReady = !teamConfig?.enabled || validateTeams(teamConfig.teams, players.map((p) => p.id)) === null
   const canStart = isSharedTarget
     ? (players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS && Boolean(sharedData.targetName))
-    : (allPlayersSubmittedNames && players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS)
+    : (allPlayersSubmittedNames && teamsReady && players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS)
 
   const communicationMode = getRoomCommunicationMode(roomId, room.communication_mode)
   let rawActiveVote = await getActiveTextVote(roomId, players)
@@ -1613,6 +1950,15 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       questionLog: isSharedTarget ? sharedData.questionLog : undefined,
       roundWinnerNickname: isSharedTarget ? roundWinner : undefined,
       activeVote: formattedActiveVote,
+      teamMode: Boolean(teamConfig?.enabled),
+      teams: teamConfig?.enabled
+        ? teamConfig.teams.map((team) => ({
+            ...team,
+            score: publicPlayers
+              .filter((player) => team.memberIds.includes(player.id))
+              .reduce((sum, player) => sum + (player.score ?? 0), 0),
+          }))
+        : undefined,
     },
     players: publicPlayers,
     you: {
@@ -1644,8 +1990,15 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
         getPlayerRoundNameId(roomId, viewer.id) ||
         names.find((n) => n.assigned_to === viewer.id && (n.used_in_round == null))?.id ||
         null,
+      teamId: viewerTeam?.id ?? null,
+      // Notlar yalnızca izleyenin kendi takımından: rakip takımın konuşmaları gönderilmez.
+      teamNotes: viewerTeam ? (teamNotesStore.get(roomId)?.get(viewerTeam.id) ?? []) : undefined,
     },
-    currentName: isViewerTurn ? null : (currentName?.name_text ?? null),
+    // Takım modunda isim sırası gelen oyuncunun tüm takımından gizlenir (takım ortak ismi tahmin ediyor).
+    currentName:
+      room.current_player_id && isTeammate(roomId, viewerId, room.current_player_id)
+        ? null
+        : (currentName?.name_text ?? null),
     namesTotal: isSharedTarget ? 1 : names.length,
     namesRemaining: isSharedTarget
       ? 1
@@ -1681,6 +2034,17 @@ export async function submitNames(roomId: string, playerId: string, names: strin
 
   if (unique.length < MAX_NAMES_PER_PLAYER) {
     throw badRequest('missing_names', `Lütfen ${MAX_NAMES_PER_PLAYER} ismi de eksiksiz doldurun.`)
+  }
+
+  // Botlar yalnızca veri setindeki kişiler hakkında soru cevaplayıp tahmin edebilir.
+  if (hasBots(players)) {
+    const unknown = unique.filter((name) => !lookupAttributes(name))
+    if (unknown.length > 0) {
+      throw badRequest(
+        'unknown_name_for_bots',
+        `Botlu odada isimler listeden seçilmeli. Tanınmayan: ${unknown.join(', ')}`,
+      )
+    }
   }
 
   if (unique.length > MAX_NAMES_PER_PLAYER) {
@@ -2060,6 +2424,18 @@ export async function startGame(roomId: string, playerId: string) {
   const isSpeed = gameMode === 'speed'
   const isPersistent = gameMode === 'persistent'
   const isSharedTarget = gameMode === 'shared_target'
+
+  const teamConfig = teamConfigStore.get(roomId)
+  if (teamConfig?.enabled) {
+    if (gameMode !== 'classic' && gameMode !== 'speed') {
+      throw badRequest('team_mode_unsupported', 'Takım modu şimdilik yalnızca Klasik ve Hız modunda oynanabilir.')
+    }
+    if (getRoomCategoryData(roomId, room).categoryMode === 'multi_phase') {
+      throw badRequest('team_mode_unsupported', 'Takım modu şimdilik 3 fazlı lobide oynanamaz.')
+    }
+    const teamError = validateTeams(teamConfig.teams, players.map((p) => p.id))
+    if (teamError) throw badRequest(teamError.code, teamError.message)
+  }
 
   if (!isSharedTarget) {
     const names = await loadNames(roomId)
@@ -2580,7 +2956,7 @@ async function advanceTurn(
     // nextPlayer'ın bu turdaki ATANMIŞ SABİT İSMİNİ al (tur içinde ASLA değişmez!)
     let nextNameId = getPlayerRoundNameId(room.id, nextPlayer.id)
     if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
-      const candidate = names.find((n) => n.submitted_by !== nextPlayer.id) || names[0]
+      const candidate = names.find((n) => !writtenByOwnSide(room.id, n, nextPlayer.id)) || names[0]
       nextNameId = candidate?.id ?? null
       if (nextNameId) setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
     }
@@ -2630,7 +3006,7 @@ async function advanceTurn(
     // nextPlayer'ın atanmış sabit ismini al
     let nextNameId = getPlayerRoundNameId(room.id, nextPlayer.id)
     if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
-      const candidate = names.find((n) => n.submitted_by !== nextPlayer.id) || names[0]
+      const candidate = names.find((n) => !writtenByOwnSide(room.id, n, nextPlayer.id)) || names[0]
       nextNameId = candidate?.id ?? null
       if (nextNameId) setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
     }
@@ -2773,6 +3149,14 @@ export async function passTurn(roomId: string, playerId: string) {
   if (gameMode === 'speed') {
     return handleSpeedModeAskQuestion(room, players, names, playerId)
   } else if (gameMode === 'persistent') {
+    // Sesli modda bu buton "Cevap Hayır" demek: sorulan soru bütçeden düşer, sıra geçer.
+    // Metin modunda soru askTextQuestion'da zaten sayıldı; bütçesi biten oyuncunun da
+    // sırayı bırakabilmesi gerekir. Bu iki durumda buton saf pas'tır.
+    const pData = getPlayerPersistentData(room.id, playerId)
+    const commMode = getRoomCommunicationMode(room.id, room.communication_mode)
+    if (commMode === 'text' || pData.questionBudgetRemaining <= 0) {
+      return handlePersistentModePassTurn(room, players, names)
+    }
     return handlePersistentModeAskQuestion(room, players, names, playerId)
   } else if (gameMode === 'classic') {
     return handleClassicModePassTurn(room, players, names)
@@ -3038,6 +3422,17 @@ async function handlePersistentModeAskQuestion(
   }
 }
 
+async function handlePersistentModePassTurn(room: RoomRow, players: PlayerRow[], names: NameRow[]) {
+  const outcome = await advanceTurn(room, players, names)
+  return {
+    message: 'Sırayı devrettiniz.',
+    finished: outcome.finished,
+    phaseChanged: outcome.phaseChanged,
+    newPhase: outcome.newPhase,
+    newCategory: outcome.newCategory,
+  }
+}
+
 async function handlePersistentModeGuess(
   room: RoomRow,
   players: PlayerRow[],
@@ -3132,19 +3527,15 @@ async function handlePersistentModeGuess(
     }
   }
 
-  // Can hâlâ var — sıra geçer
-  const outcome = await advanceTurn(room, players, names)
+  // Can hâlâ var — Israrcı Mod: sıra oyuncuda kalır (yalnızca can bitince, isim bilinince veya pas'ta geçer).
+  // Can değişikliği yalnızca runtime state'te; istemcilerin yenilenmesi için realtime'ı tetikle.
   await admin.from('rooms').update({ status: room.status }).eq('id', room.id)
 
   return {
     correct: false,
-    message: `Yanlış tahmin! 1 can kaybettiniz (Kalan Can: ${newLives}). Sıra diğer oyuncuya geçti.`,
+    message: `Yanlış tahmin! 1 can kaybettiniz (Kalan Can: ${newLives}). Sormaya veya tahmin etmeye devam edebilirsiniz.`,
     livesLeft: newLives,
-    turnPassed: true,
-    finished: outcome.finished,
-    phaseChanged: outcome.phaseChanged,
-    newPhase: outcome.newPhase,
-    newCategory: outcome.newCategory,
+    turnPassed: false,
   }
 }
 
@@ -3670,6 +4061,9 @@ export async function setCommunicationMode(
   if (room.status !== 'waiting') {
     throw conflict('game_already_started', 'Oyun başladıktan sonra iletişim modu değiştirilemez.')
   }
+  if (mode === 'voice' && hasBots(players)) {
+    throw badRequest('bots_need_text_mode', 'Botlar yalnızca Tam Metin modunda oynayabilir. Önce botları çıkarın.')
+  }
 
   setRoomCommunicationModeData(roomId, mode)
   try {
@@ -3736,7 +4130,8 @@ export async function askTextQuestion(
   }
 
   // Oy kullanabilecek oyuncular: Hedef sahibi (Asker) hariç tüm oyuncular
-  const eligibleVoterIds = new Set(players.filter((p) => p.id !== playerId).map((p) => p.id))
+  // Soranın takım arkadaşları da cevabı bilmiyor; oy veremezler.
+  const eligibleVoterIds = new Set(players.filter((p) => !isTeammate(roomId, playerId, p.id)).map((p) => p.id))
   if (eligibleVoterIds.size === 0) {
     throw badRequest('not_enough_voters', 'Oylama için odada başka oyuncu bulunmuyor.')
   }
@@ -3759,7 +4154,8 @@ export async function askTextQuestion(
   }
 
   roomActiveVoteStore.set(roomId, voteInternal)
-  setPlayerAskedQuestionInTurn(roomId, playerId, true)
+  // Tur başına 1 soru sınırı Israrcı Mod için geçerli değil; orada sınır soru bütçesidir.
+  if (gameMode !== 'persistent') setPlayerAskedQuestionInTurn(roomId, playerId, true)
 
   // DB'ye oylama kaydı ekle
   try {
@@ -3850,10 +4246,13 @@ export async function submitTextVote(
     throw conflict('vote_closed', 'Bu oylama oturumu sona ermiştir.')
   }
 
+  // Israrcı Mod'da oylama sonucu sırayı devretmez; oyuncu bütçesiyle sormaya devam eder.
+  const keepsTurnAfterVote = getRoomMode(roomId, (await loadRoom(roomId)).game_mode) === 'persistent'
+
   if (Date.now() >= vote.closesAt) {
     const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
     const resolvedClue = await resolveTextVoteInternal(roomId, voteId)
-    if (resolvedClue && resolvedClue.majority !== 'yes' && room.status === 'playing') {
+    if (resolvedClue && resolvedClue.majority !== 'yes' && room.status === 'playing' && !keepsTurnAfterVote) {
       await advanceTurn(room, players, names)
     }
     throw conflict('vote_expired', 'Oylama süresi (30 saniye) doldu.')
@@ -3894,9 +4293,16 @@ export async function submitTextVote(
     clueCardItem = await resolveTextVoteInternal(roomId, voteId)
     isResolved = true
 
-    if (room.status === 'playing') {
+    if (room.status === 'playing' && !keepsTurnAfterVote) {
       await advanceTurn(room, players, names)
       turnPassed = true
+    } else {
+      // Sıra değişmedi; ipucu kartı yalnızca runtime state'te, istemcilere realtime sinyali gönder.
+      try {
+        await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
+      } catch {
+        //
+      }
     }
   } else {
     // Soru AÇIK KALMAYA DEVAM EDİYOR! Realtime tetikle
@@ -3908,7 +4314,7 @@ export async function submitTextVote(
   }
 
   const message = clueCardItem
-    ? `Cevap: ${clueCardItem.yesCount} Evet, ${clueCardItem.noCount} Hayır (${clueCardItem.majority === 'yes' ? 'EVET' : clueCardItem.majority === 'no' ? 'HAYIR' : 'EŞİTLİK'}). Sıra bir sonraki oyuncuya geçti.`
+    ? `Cevap: ${clueCardItem.yesCount} Evet, ${clueCardItem.noCount} Hayır (${clueCardItem.majority === 'yes' ? 'EVET' : clueCardItem.majority === 'no' ? 'HAYIR' : 'EŞİTLİK'}).${turnPassed ? ' Sıra bir sonraki oyuncuya geçti.' : ''}`
     : 'Oyunuz kaydedildi. Diğer oyuncuların oyları bekleniyor...'
 
   return {
@@ -4007,6 +4413,11 @@ export async function leaveRoom(roomId: string, playerId: string) {
 
   const { error } = await admin.from('players').delete().eq('id', playerId)
   if (error) throw error
+
+  // Yalnızca lobide takımdan çıkar: oyun sırasında takım state'i ilk üyenin anahtarında tutulur,
+  // üyelik değişirse takımın canı/ismi kaybolurdu. Ayrılan oyuncu artık oyuncu listesinde
+  // olmadığı için sıra onu zaten atlar.
+  if (room.status === 'waiting') updateTeams(roomId, (teams) => removeFromTeams(teams, playerId))
 
   if (remaining.length === 0) {
     clearRoomMemoryState(roomId)

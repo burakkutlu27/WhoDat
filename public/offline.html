@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F5F0E8" />
+    <title>Bağlantı Yok | KimBu</title>
+    <!-- Service worker çevrimdışı sayfası: dış kaynak yüklenemeyeceği için her şey satır içi. -->
+    <style>
+      :root { --paper-bg: #F5F0E8; --paper-card: #FFFDF7; --paper-border: #C9BFA8; --ink: #2D2A26; --ink-faded: #635D54; --red: #D94F3D; }
+      @media (prefers-color-scheme: dark) {
+        :root { --paper-bg: #1A1814; --paper-card: #252118; --paper-border: #3D362C; --ink: #E8E0D4; --ink-faded: #B2AAA0; --red: #E8614F; }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; min-height: 100dvh; display: grid; place-items: center;
+        padding: max(1.5rem, env(safe-area-inset-top)) 1.5rem max(1.5rem, env(safe-area-inset-bottom));
+        background: var(--paper-bg); color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      }
+      .card {
+        max-width: 22rem; text-align: center; padding: 2rem 1.5rem;
+        background: var(--paper-card); border: 2px dashed var(--paper-border); border-radius: 14px 8px 16px 6px;
+      }
+      h1 { margin: 1rem 0 0.5rem; font-size: 1.5rem; }
+      p { margin: 0 0 1.5rem; color: var(--ink-faded); line-height: 1.5; }
+      button {
+        font: inherit; font-weight: 700; color: #fff; background: var(--red);
+        border: 0; border-radius: 10px 6px 12px 4px; padding: 0.85rem 1.5rem; min-height: 44px; cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <img src="/icons/icon-192.png" width="72" height="72" alt="" />
+      <h1>İnternet bağlantısı yok</h1>
+      <p>KimBu canlı oynanan bir oyun; devam etmek için bağlantı gerekiyor. Bağlandığında kaldığın yerden sürer.</p>
+      <button type="button" onclick="location.reload()">Tekrar Dene</button>
+    </main>
+    <script>
+      // Bağlantı geri gelince kendiliğinden yenile.
+      window.addEventListener('online', function () { location.reload() })
+    </script>
+  </body>
+</html>

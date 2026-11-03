@@ -2,7 +2,8 @@
 
 import { Check, Clock, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { motion } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
+import { createPortal } from 'react-dom'
 
 import { InkStamp } from '@/components/animations/InkStamp'
 import { PencilLoader } from '@/components/animations/PencilLoader'
@@ -15,7 +16,25 @@ interface VotingModalProps {
   isBusy: boolean
 }
 
+// Tailwind `sm` kırılımının altı.
+const MOBILE_QUERY = '(max-width: 639px)'
+
+function subscribeToMobileQuery(onChange: () => void) {
+  const query = window.matchMedia(MOBILE_QUERY)
+  query.addEventListener('change', onChange)
+  return () => query.removeEventListener('change', onChange)
+}
+
+function useIsMobile() {
+  return useSyncExternalStore(
+    subscribeToMobileQuery,
+    () => window.matchMedia(MOBILE_QUERY).matches,
+    () => false,
+  )
+}
+
 export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps) {
+  const isMobile = useIsMobile()
   const [localSeconds, setLocalSeconds] = useState(() => {
     const ms = new Date(vote.closesAt).getTime() - Date.now()
     return Math.max(0, Math.ceil(ms / 1000))
@@ -31,12 +50,24 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
 
   const progressPercent = Math.max(0, Math.min(100, (localSeconds / 30) * 100))
 
-  return (
+  // Telefonda kart sayfanın ortasında kalıyor ve seçmen kaydırmazsa 30 sn'lik oylamayı
+  // kaçırıyordu. Oy bekleyen seçmen için kart ekranın altına sabitlenir. Kart, sayfa
+  // geçiş animasyonunun transform'lu kapsayıcısında durduğu için `fixed` ancak body'ye
+  // portal ile taşındığında ekrana göre konumlanır.
+  const pinned = isMobile && !isAsker && !vote.hasVoted
+
+  const card = (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: -10 }}
+      initial={{ opacity: 0, scale: 0.95, y: pinned ? 20 : -10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-sketch-xl shadow-xl space-y-4 text-center relative overflow-hidden"
+      role={pinned ? 'dialog' : undefined}
+      aria-label={pinned ? 'Canlı soru oylaması' : undefined}
+      className={`paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-sketch-xl shadow-xl space-y-4 text-center overflow-hidden ${
+        pinned
+          ? 'fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-40 max-h-[75dvh] overflow-y-auto'
+          : 'relative'
+      }`}
     >
       {/* Top Countdown Bar */}
       <div className="absolute top-0 left-0 right-0 h-2 bg-paper-border">
@@ -129,5 +160,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
       )}
     </motion.div>
   )
+
+  return pinned ? createPortal(card, document.body) : card
 }
 

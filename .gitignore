@@ -56,6 +56,10 @@ next-env.d.ts
 
 # Plans & Agent files
 plans
+# Kişisel notlar / durum / kurulum rehberleri — yalnızca yerelde kalır
+PROJE_DURUMU.md
+docs/mobil-giris-reklam-kurulum.md
+store/play/listing.md
 AGENTS.md
 CLAUDE.md
 DEEPSEEK.md
@@ -63,6 +67,16 @@ GEMINI.md
 GROK.md
 KORREL.md
 NOMIC.md
+
+# Android imzalama anahtarı — kaybolursa/sızarsa uygulama güncellenemez veya taklit edilir
+*.jks
+*.keystore
+android/keystore.properties
+# Firebase yapılandırması (Faz 5): projeye özgü anahtar içerir, repoya girmez
+android/app/google-services.json
+
+# Veri script'lerinin ağ önbelleği (scripts/enrich-attributes.mjs)
+scripts/.cache/
 
 # Playwright & E2E Test Results
 test-results/

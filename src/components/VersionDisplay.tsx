@@ -16,7 +16,8 @@ export default function VersionDisplay() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-20">
+    // Telefonda sabit rozet oyun içeriğinin (skor tablosu, alttaki oylama paneli) üstüne biniyordu.
+    <div className="fixed bottom-4 right-4 z-20 hidden sm:block">
       <button
         onClick={() => setIsVisible(!isVisible)}
         className="rounded-sketch-sm border-2 border-dashed border-paper-border bg-paper-card px-3 py-1 font-mono text-xs text-ink-faded shadow-xs transition-colors hover:border-pencil-yellow hover:text-ink"

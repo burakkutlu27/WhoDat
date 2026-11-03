@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 
 import { apiRequest } from '@/lib/apiClient'
 import { CategoryIcon } from '@/components/CategoryIcon'
-import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import { CATEGORIES } from '@/lib/game/categories'
 import type { DifficultyLevel, FamousPerson, FamousPersonCategory } from '@/lib/game/types'
 
 interface NameSuggestionsProps {

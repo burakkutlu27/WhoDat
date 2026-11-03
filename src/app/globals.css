@@ -64,6 +64,12 @@
     background-color: var(--paper-bg);
     color: var(--ink);
     position: relative;
+    /* viewport-fit=cover ile içerik çentik/yuvarlak köşe altına taşar; yatay modda kenarları koru. */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    /* iOS yatay çevirmede yazıları kendiliğinden büyütmesin. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body::before {

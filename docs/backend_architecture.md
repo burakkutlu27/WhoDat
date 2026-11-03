@@ -178,3 +178,20 @@ graph TD
 | `question_votes` | Canlı metin modu oylama oturumları (`status: open/closed`, `opened_at`, `closes_at`, `question_text`, `asker_player_id`). |
 | `question_vote_responses` | Oylamaya seçmen oyuncuların verdiği EVET/HAYIR cevapları (`answer: boolean`). |
 | `question_bank` | 100+ kategorize edilmiş hazır soru bankası. |
+| `room_runtime` | Oda başına oyun runtime state'i (can, pas hakkı, bütçe, Ortak Hedef, açık oylama …) JSON olarak + iyimser kilit `version`. Anon'a tamamen kapalı, realtime'da yok. |
+
+---
+
+## 7. Runtime State ve Serverless (Oda Kapsamı)
+
+Motor bazı state'leri hız ve basitlik için senkron bellek Map'lerinde tutar. Serverless ortamda
+her istek farklı bir instance'a düşebildiği için bu Map'ler yalnızca **instance içi önbellektir**;
+kalıcı kopya `room_runtime` tablosundadır (`src/lib/game/runtimeState.ts`).
+
+- Tüm `/api/rooms/[id]/*` handler'ları `roomRoute()` ile sarılıdır; istek bir **oda kapsamında** çalışır.
+- **Giriş:** DB'deki `version`, instance'ın bildiği sürümden farklıysa bellek DB'den yüklenir.
+- **Çıkış:** bellek değiştiyse `update … where version = n` ile yazılır. 0 satır dönerse başka bir
+  instance araya yazmıştır → `409 state_conflict`, önbellek atılır. GET istekleri bir kez yeniden denenir.
+- Aynı instance'taki eşzamanlı istekler oda bazında sıraya girer; iç içe çağrılar kilitlenmez.
+- Yeni bir bellek store'u eklenirse `engine.ts`'teki `registerRuntimeStores` listesine eklenmelidir,
+  aksi halde instance'lar arasında taşınmaz.

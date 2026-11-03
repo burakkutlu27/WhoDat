@@ -1,6 +1,6 @@
 import React from 'react'
 import { Clapperboard, Dices, Landmark, Palette, Star, Trophy } from 'lucide-react'
-import type { FamousPersonCategory } from '@/lib/game/famousPeopleData'
+import type { FamousPersonCategory } from '@/lib/game/types'
 
 interface CategoryIconProps {
   category?: FamousPersonCategory | string | null

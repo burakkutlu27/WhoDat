@@ -1,6 +1,6 @@
 'use client'
 
-import { Brain, Check, CheckCircle2, ChevronDown, ChevronUp, Clock, Copy, Crown, Dices, Gauge, Layers, Loader2, LogOut, MessageSquare, Mic, Pencil, Play, Send, Settings2, Shuffle, Target, Users, Zap } from 'lucide-react'
+import { Bot, Brain, Check, CheckCircle2, ChevronDown, ChevronUp, Clock, Copy, Crown, Dices, Gauge, Layers, Loader2, LogOut, MessageSquare, Mic, Pencil, Play, Send, Settings2, Share2, Shuffle, Target, Users, X, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
@@ -11,10 +11,15 @@ import { CategoryIcon } from '@/components/CategoryIcon'
 import { CustomSelect } from '@/components/CustomSelect'
 import { FamousPersonAutocompleteInput } from '@/components/FamousPersonAutocompleteInput'
 import NameSuggestions from '@/components/NameSuggestions'
+import { TeamLobby } from '@/components/TeamLobby'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
-import { CATEGORIES } from '@/lib/game/famousPeopleData'
-import type { AutoAssignResult, FamousPerson, FamousPersonCategory, SubmitNamesResult } from '@/lib/game/types'
+import { CATEGORIES } from '@/lib/game/categories'
+import { MAX_PLAYERS } from '@/lib/game/rules'
+import type { AutoAssignResult, BotLevel, FamousPerson, FamousPersonCategory, SubmitNamesResult } from '@/lib/game/types'
+import { canShareInvite, shareRoomInvite } from '@/lib/native'
 import { useGameState } from '@/lib/useGameState'
+
+const BOT_LEVEL_LABELS: Record<BotLevel, string> = { kolay: 'Kolay Bot', orta: 'Orta Bot', zor: 'Zor Bot' }
 
 const NAME_SLOTS = 3
 
@@ -43,9 +48,15 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const [duplicates, setDuplicates] = useState<string[]>([])
   const [copied, setCopied] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [isBotBusy, setIsBotBusy] = useState(false)
 
   const status = state?.room.status
   const isSharedTarget = state?.room.gameMode === 'shared_target'
+
+  // Oda kurma/katılma formundaki kaydırma konumu taşınıyor, telefonda lobi ortadan açılıyordu.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   useEffect(() => {
     if (!status) return
@@ -188,6 +199,73 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
     }
   }
 
+  /** Lobi ayarı değiştirir; sunucu reddederse (ör. botlu odada sesli mod) sebebi gösterir. */
+  const changeSetting = async (path: 'mode' | 'communication' | 'category', body: Record<string, unknown>) => {
+    setActionError(null)
+    try {
+      await apiRequest(`/api/rooms/${roomId}/${path}`, { method: 'PATCH', body })
+      await refresh()
+    } catch (caught) {
+      setActionError(caught instanceof ApiClientError ? caught.message : 'Ayar değiştirilemedi.')
+    }
+  }
+
+  const handleAddBot = async (level: BotLevel) => {
+    setIsBotBusy(true)
+    setActionError(null)
+    try {
+      await apiRequest(`/api/rooms/${roomId}/bots`, { method: 'POST', body: { level } })
+      await refresh()
+    } catch (caught) {
+      setActionError(caught instanceof ApiClientError ? caught.message : 'Bot eklenemedi.')
+    } finally {
+      setIsBotBusy(false)
+    }
+  }
+
+  const handleRemoveBot = async (botId: string) => {
+    setIsBotBusy(true)
+    setActionError(null)
+    try {
+      await apiRequest(`/api/rooms/${roomId}/bots?botId=${encodeURIComponent(botId)}`, { method: 'DELETE' })
+      await refresh()
+    } catch (caught) {
+      setActionError(caught instanceof ApiClientError ? caught.message : 'Bot çıkarılamadı.')
+    } finally {
+      setIsBotBusy(false)
+    }
+  }
+
+  /** Takım işlemleri: hata varsa (ör. desteklenmeyen mod) alt çubukta gösterilir. */
+  const runTeamAction = async (request: () => Promise<unknown>) => {
+    setIsBotBusy(true)
+    setActionError(null)
+    try {
+      await request()
+      await refresh()
+    } catch (caught) {
+      setActionError(caught instanceof ApiClientError ? caught.message : 'Takım işlemi yapılamadı.')
+    } finally {
+      setIsBotBusy(false)
+    }
+  }
+
+  const handleTeamMode = (teamCount: 0 | 2 | 3) =>
+    runTeamAction(() =>
+      apiRequest(`/api/rooms/${roomId}/teams`, {
+        method: 'PATCH',
+        body: teamCount === 0 ? { enabled: false } : { enabled: true, teamCount },
+      }),
+    )
+
+  const handleShuffleTeams = () =>
+    runTeamAction(() => apiRequest(`/api/rooms/${roomId}/teams`, { method: 'POST', body: { action: 'shuffle' } }))
+
+  const handleMoveTeam = (playerId: string, teamId: string) =>
+    runTeamAction(() =>
+      apiRequest(`/api/rooms/${roomId}/teams`, { method: 'POST', body: { action: 'move', playerId, teamId } }),
+    )
+
   const handleLeave = async () => {
     try {
       await apiRequest(`/api/rooms/${roomId}/leave`, { method: 'POST' })
@@ -202,7 +280,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
   if (phase === 'error' || !state) {
     return (
-      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+      <div className="flex min-h-[calc(100dvh-4rem)] items-center justify-center p-4">
         <div className="max-w-md text-center">
           <h1 className="mb-2 font-display text-3xl font-bold text-ink">Oda Açılamadı</h1>
           <p className="mb-6 text-sm text-ink-faded">
@@ -229,10 +307,16 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
   const hasSubmitted = isSharedTarget ? Boolean(state.room.sharedTargetName) : state.you.submittedNames.length > 0
 
+  // Ortak Hedef'te oyuncular isim göndermez; "0/3 hazır" yanıltıcı olur.
+  const readyLabel = isSharedTarget
+    ? ''
+    : ` (${state.players.filter((player) => player.hasSubmittedNames).length}/${state.players.length} hazır)`
+
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
+    // pb-44: telefonda alttaki sabit "Oyunu Başlat" çubuğu son içeriğin üstüne binmesin.
+    <div className="relative min-h-[calc(100dvh-4rem)] px-3 pt-4 pb-44 sm:px-4 sm:py-8">
       <Confetti trigger={showConfetti} />
-      <div className="mx-auto max-w-4xl space-y-6">
+      <div className="mx-auto max-w-4xl space-y-4 sm:space-y-6">
         {/* Header Card */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
@@ -295,6 +379,20 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             <span className="text-[11px] font-sans text-ink-faded mt-1.5">
               Kopyalamak ve arkadaşlarını davet etmek için koda tıkla
             </span>
+            {/* Telefonda/uygulamada sistemin paylaşım menüsü (WhatsApp vb.); masaüstünde kopyalama yeterli. */}
+            {canShareInvite() && (
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!(await shareRoomInvite(state.room.roomCode))) await handleCopyCode()
+                }}
+                data-testid="share-invite-button"
+                className="btn-outline mt-2 flex min-h-11 items-center gap-2 px-4 font-display text-lg font-bold"
+              >
+                <Share2 className="h-4 w-4" />
+                <span>Davet Et</span>
+              </button>
+            )}
           </div>
 
           {/* 2. OYUN BİLGİLERİ: Sade ve temiz rozetler */}
@@ -422,8 +520,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         type="button"
                         onClick={async () => {
                           if (state.room.gameMode === 'classic') return
-                          await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'classic' } })
-                          await refresh()
+                          await changeSetting('mode', { gameMode: 'classic' })
                         }}
                         className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                           state.room.gameMode === 'classic'
@@ -438,8 +535,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         type="button"
                         onClick={async () => {
                           if (state.room.gameMode === 'speed') return
-                          await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'speed' } })
-                          await refresh()
+                          await changeSetting('mode', { gameMode: 'speed' })
                         }}
                         className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                           state.room.gameMode === 'speed'
@@ -454,8 +550,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         type="button"
                         onClick={async () => {
                           if (state.room.gameMode === 'persistent') return
-                          await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'persistent' } })
-                          await refresh()
+                          await changeSetting('mode', { gameMode: 'persistent' })
                         }}
                         className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                           state.room.gameMode === 'persistent'
@@ -470,8 +565,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         type="button"
                         onClick={async () => {
                           if (state.room.gameMode === 'shared_target') return
-                          await apiRequest(`/api/rooms/${roomId}/mode`, { method: 'PATCH', body: { gameMode: 'shared_target' } })
-                          await refresh()
+                          await changeSetting('mode', { gameMode: 'shared_target' })
                         }}
                         className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                           state.room.gameMode === 'shared_target'
@@ -498,8 +592,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         type="button"
                         onClick={async () => {
                           if (state.room.communicationMode === 'voice') return
-                          await apiRequest(`/api/rooms/${roomId}/communication`, { method: 'PATCH', body: { communicationMode: 'voice' } })
-                          await refresh()
+                          await changeSetting('communication', { communicationMode: 'voice' })
                         }}
                         className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                           state.room.communicationMode !== 'text'
@@ -514,8 +607,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         type="button"
                         onClick={async () => {
                           if (state.room.communicationMode === 'text') return
-                          await apiRequest(`/api/rooms/${roomId}/communication`, { method: 'PATCH', body: { communicationMode: 'text' } })
-                          await refresh()
+                          await changeSetting('communication', { communicationMode: 'text' })
                         }}
                         className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                           state.room.communicationMode === 'text'
@@ -542,8 +634,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         type="button"
                         onClick={async () => {
                           if (state.room.categoryMode === 'single') return
-                          await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'single' } })
-                          await refresh()
+                          await changeSetting('category', { categoryMode: 'single' })
                         }}
                         className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                           state.room.categoryMode !== 'multi_phase'
@@ -558,8 +649,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         type="button"
                         onClick={async () => {
                           if (state.room.categoryMode === 'multi_phase') return
-                          await apiRequest(`/api/rooms/${roomId}/category`, { method: 'PATCH', body: { categoryMode: 'multi_phase' } })
-                          await refresh()
+                          await changeSetting('category', { categoryMode: 'multi_phase' })
                         }}
                         className={`px-3.5 py-1.5 text-sm font-sans font-bold rounded-sketch transition-all flex items-center gap-1.5 ${
                           state.room.categoryMode === 'multi_phase'
@@ -919,12 +1009,6 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 selectedNames={names.filter(Boolean)}
               />
 
-              {actionError && (
-                <div role="alert" className="alert-error mt-4">
-                  {actionError}
-                </div>
-              )}
-
               <div className="mt-6 flex flex-wrap gap-2">
                 <motion.button
                   whileHover={{ scale: 1.01, rotate: -0.5 }}
@@ -1020,6 +1104,50 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             <span className="text-sm font-sans font-semibold text-ink-faded waiting-dots">Canlı Senkronize</span>
           </h2>
 
+          {/* Takım Modu seçici — yalnızca host; Klasik/Hız ve tek kategoride */}
+          {state.you.isHost && (
+            <div className="mb-4 flex flex-wrap items-center gap-2" data-testid="team-mode-selector">
+              <span className="flex items-center gap-1.5 font-display text-base font-bold text-ink-faded">
+                <Users className="h-4 w-4" />
+                <span>Takım Modu:</span>
+              </span>
+              {(state.room.gameMode === 'classic' || state.room.gameMode === 'speed') &&
+              state.room.categoryMode !== 'multi_phase' ? (
+                ([
+                  { count: 0, label: 'Kapalı' },
+                  { count: 2, label: '2 Takım' },
+                  { count: 3, label: '3 Takım' },
+                ] as const).map((option) => {
+                  const active = option.count === 0
+                    ? !state.room.teamMode
+                    : state.room.teamMode && (state.room.teams?.length ?? 0) === option.count
+                  return (
+                    <button
+                      key={option.count}
+                      type="button"
+                      onClick={() => !active && void handleTeamMode(option.count)}
+                      disabled={isBotBusy}
+                      aria-pressed={active}
+                      data-testid={`team-mode-${option.count}`}
+                      className={`min-h-11 rounded-sketch px-3.5 font-sans text-sm font-bold transition-colors ${
+                        active
+                          ? 'bg-pencil-purple text-white'
+                          : 'border border-paper-border bg-paper-card text-ink-faded hover:text-ink'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  )
+                })
+              ) : (
+                <span className="text-sm text-ink-extra-faded">Yalnızca Klasik ve Hız modunda, tek kategoride.</span>
+              )}
+            </div>
+          )}
+
+          {state.room.teamMode ? (
+            <TeamLobby state={state} busy={isBotBusy} onShuffle={() => void handleShuffleTeams()} onMove={(p, t) => void handleMoveTeam(p, t)} />
+          ) : (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {state.players.map((player, idx) => {
               const isYou = player.id === state.you.playerId
@@ -1042,10 +1170,12 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   <div className="flex min-w-0 items-center gap-3">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: -5 }}
-                      className="flex h-10 w-10 shrink-0 items-center justify-center bg-pencil-red font-display text-lg font-bold text-white shadow-sm"
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center font-display text-lg font-bold text-white shadow-sm ${
+                        player.isBot ? 'bg-pencil-blue' : 'bg-pencil-red'
+                      }`}
                       style={{ borderRadius: '8px 4px 10px 6px' }}
                     >
-                      {initial}
+                      {player.isBot ? <Bot className="h-5 w-5" aria-label="Bot" /> : initial}
                     </motion.div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
@@ -1058,11 +1188,27 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                         {isYou && (
                           <span className="tag tag-you tag-animate text-xs">SEN</span>
                         )}
+                        {player.isBot && player.botLevel && (
+                          <span className="tag shrink-0 border-pencil-blue text-xs text-pencil-blue">
+                            {BOT_LEVEL_LABELS[player.botLevel]}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  {player.hasSubmittedNames ? (
+                  {player.isBot && state.you.isHost ? (
+                    <button
+                      type="button"
+                      onClick={() => void handleRemoveBot(player.id)}
+                      disabled={isBotBusy}
+                      aria-label={`${player.nickname} botunu çıkar`}
+                      data-testid="remove-bot-button"
+                      className="flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-sketch text-ink-faded transition-colors hover:bg-pencil-red/10 hover:text-pencil-red disabled:opacity-50"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  ) : player.hasSubmittedNames ? (
                     <span className="tag tag-ready tag-animate text-xs">
                       <Check className="h-4 w-4" />
                       Hazır
@@ -1077,10 +1223,55 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
               )
             })}
           </div>
+          )}
+
+          {/* Bot Ekle — yalnızca host. Botlar şimdilik Ortak Hedef ve 3 fazlı lobide oynayamıyor. */}
+          {state.you.isHost && (
+            <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-dashed border-paper-border pt-4">
+              <span className="flex items-center gap-1.5 font-display text-base font-bold text-ink-faded">
+                <Bot className="h-4 w-4 text-pencil-blue" />
+                <span>Bot Ekle:</span>
+              </span>
+              {isSharedTarget || state.room.categoryMode === 'multi_phase' ? (
+                <span className="text-sm text-ink-extra-faded">
+                  Botlar şimdilik Ortak Hedef ve 3 fazlı lobide oynayamıyor.
+                </span>
+              ) : state.players.length >= MAX_PLAYERS ? (
+                <span className="text-sm text-ink-extra-faded">Oda dolu ({MAX_PLAYERS} oyuncu).</span>
+              ) : (
+                (['kolay', 'orta', 'zor'] as const).map((level) => (
+                  <button
+                    key={level}
+                    type="button"
+                    onClick={() => void handleAddBot(level)}
+                    disabled={isBotBusy}
+                    data-testid={`add-bot-${level}`}
+                    className="min-h-11 rounded-sketch border border-pencil-blue bg-paper-card px-3.5 py-1.5 font-sans text-sm font-bold text-pencil-blue transition-colors hover:bg-pencil-blue hover:text-white disabled:opacity-50"
+                  >
+                    + {BOT_LEVEL_LABELS[level]}
+                  </button>
+                ))
+              )}
+              {state.room.communicationMode !== 'text' && !isSharedTarget && state.room.categoryMode !== 'multi_phase' && (
+                <span className="w-full text-xs text-ink-extra-faded">
+                  Bot eklenince oda Tam Metin moduna geçer (botlar sesli oynayamaz).
+                </span>
+              )}
+            </div>
+          )}
         </section>
 
-        {/* Start Game Action */}
-        <section className="paper-card p-6 text-center">
+        {/* Start Game Action — telefonda ekranın altına sabit: lobi uzun, host "Başlat" için en alta kaydırmasın */}
+        <section
+          data-testid="lobby-action-bar"
+          className="paper-card p-6 text-center max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:z-30 max-sm:rounded-none max-sm:border-x-0 max-sm:border-b-0 max-sm:p-3 max-sm:pb-[calc(env(safe-area-inset-bottom)+0.75rem)] max-sm:shadow-[0_-4px_14px_rgba(0,0,0,0.10)]"
+        >
+          {/* Hata burada: çubuk her zaman görünür, ayar/bot/isim hatası kaçmaz. */}
+          {actionError && (
+            <div role="alert" className="alert-error mb-3 text-left text-sm sm:text-base">
+              {actionError}
+            </div>
+          )}
           {state.you.isHost ? (
             <>
               <motion.button
@@ -1089,9 +1280,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                 onClick={() => void handleStart()}
                 disabled={isStarting || !state.canStart}
                 data-testid="start-game-button"
-                className={`flex w-full items-center justify-center gap-2 py-4 font-display text-2xl font-bold text-white transition-all ${
+                className={`flex w-full items-center justify-center gap-2 py-3 font-display text-xl font-bold transition-all sm:py-4 sm:text-2xl ${
                   state.canStart
-                    ? 'btn-pencil-green animate-wiggle'
+                    ? 'btn-pencil-green animate-wiggle text-white'
                     : 'cursor-not-allowed border-2 border-dashed border-paper-border bg-paper-card text-ink-extra-faded'
                 }`}
                 style={state.canStart ? undefined : { borderRadius: '8px 12px 6px 14px' }}
@@ -1108,21 +1299,21 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
                   </>
                 )}
               </motion.button>
-              <p className="mt-3 font-display text-lg text-ink-faded" aria-live="polite">
+              <p className="mt-2 font-display text-sm text-ink-faded sm:mt-3 sm:text-lg" aria-live="polite">
                 {state.players.length < 2
                   ? 'Oyunu başlatmak için en az 2 oyuncu olmalıdır.'
                   : !state.allPlayersSubmittedNames
-                    ? 'Tüm oyuncuların isimlerini tamamlaması bekleniyor...'
+                    ? `Tüm oyuncuların isimlerini tamamlaması bekleniyor...${readyLabel}`
                     : 'Herkes hazır! Oyunu başlatabilirsiniz.'}
               </p>
             </>
           ) : (
-            <div className="py-2 text-ink-faded" aria-live="polite">
-              <p className="font-display text-2xl font-bold flex items-center justify-center gap-2">
+            <div className="py-1 text-ink-faded sm:py-2" aria-live="polite">
+              <p className="font-display text-base font-bold flex items-center justify-center gap-2 sm:text-2xl">
                 <Clock className="h-5 w-5 animate-spin" style={{ animationDuration: '5s' }} />
-                <span>Oda sahibinin oyunu başlatması bekleniyor...</span>
+                <span>Oda sahibinin oyunu başlatması bekleniyor...{readyLabel}</span>
               </p>
-              <p className="mt-1 text-base text-ink-extra-faded">
+              <p className="mt-1 hidden text-base text-ink-extra-faded sm:block">
                 Oyun başladığında ekranınız otomatik olarak güncellenecektir.
               </p>
             </div>
@@ -1135,7 +1326,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
 function RoomSkeleton() {
   return (
-    <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
+    <div className="min-h-[calc(100dvh-4rem)] px-4 py-8">
       <div className="mx-auto max-w-4xl space-y-6" aria-busy="true" aria-label="Oda yükleniyor">
         <div className="h-28 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />
         <div className="h-64 animate-pulse rounded-xl border-2 border-dashed border-paper-border bg-paper-card" />

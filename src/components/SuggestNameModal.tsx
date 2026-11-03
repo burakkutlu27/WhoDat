@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CategoryIcon } from '@/components/CategoryIcon'
-import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import { CATEGORIES } from '@/lib/game/categories'
 import type { FamousPersonCategory } from '@/lib/game/types'
 
 interface SuggestNameModalProps {

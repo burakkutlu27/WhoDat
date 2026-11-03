@@ -14,6 +14,8 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
   "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
+  "worker-src 'self'",
+  "manifest-src 'self'",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -36,8 +38,16 @@ const nextConfig = {
   // Sunucu sürümünü dışarıya duyurmaya gerek yok.
   poweredByHeader: false,
 
+  // Yalnızca `next dev` için: Android emülatörü bilgisayara 10.0.2.2 ile bağlanır (npm run cap:dev).
+  // Next dev sunucusu başka origin'den gelen _next/HMR isteklerini engellediği için izin veriliyor.
+  allowedDevOrigins: ['10.0.2.2'],
+
   async headers() {
-    return [{ source: '/:path*', headers: securityHeaders }]
+    return [
+      { source: '/:path*', headers: securityHeaders },
+      // SW dosyası HTTP önbelleğinde kalırsa güncellemeler kullanıcıya geç ulaşır.
+      { source: '/sw.js', headers: [{ key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' }] },
+    ]
   },
 }
 

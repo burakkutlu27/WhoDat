@@ -201,6 +201,8 @@ export type Database = {
           room_id: string
           round_scores: Json
           score: number | null
+          is_bot: boolean
+          bot_level: string | null
         }
         Insert: {
           created_at?: string
@@ -208,6 +210,8 @@ export type Database = {
           has_finished_round?: boolean
           id?: string
           is_host?: boolean | null
+          is_bot?: boolean
+          bot_level?: string | null
           nickname: string
           questions_this_round?: number
           room_id: string
@@ -220,6 +224,8 @@ export type Database = {
           has_finished_round?: boolean
           id?: string
           is_host?: boolean | null
+          is_bot?: boolean
+          bot_level?: string | null
           nickname?: string
           questions_this_round?: number
           room_id?: string
@@ -350,6 +356,38 @@ export type Database = {
           },
         ]
       }
+      room_runtime: {
+        Row: {
+          room_id: string
+          state: Json
+          version: number
+          updated_at: string
+          bot_next_action_at: string | null
+        }
+        Insert: {
+          room_id: string
+          state?: Json
+          version?: number
+          updated_at?: string
+          bot_next_action_at?: string | null
+        }
+        Update: {
+          room_id?: string
+          state?: Json
+          version?: number
+          updated_at?: string
+          bot_next_action_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'room_runtime_room_id_fkey'
+            columns: ['room_id']
+            isOneToOne: true
+            referencedRelation: 'rooms'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       rooms: {
         Row: {
           category_mode: string | null
@@ -460,5 +498,6 @@ export type PlayerProfileRow = Database['public']['Tables']['player_profiles']['
 export type GameResultRow = Database['public']['Tables']['game_results']['Row']
 export type QuestionVoteRow = Database['public']['Tables']['question_votes']['Row']
 export type QuestionVoteResponseRow = Database['public']['Tables']['question_vote_responses']['Row']
+export type RoomRuntimeRow = Database['public']['Tables']['room_runtime']['Row']
 
 export type RoomStatus = 'waiting' | 'playing' | 'finished' | 'closed'

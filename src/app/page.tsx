@@ -3,6 +3,7 @@
 import {
   ArrowRight,
   BookOpen,
+  Bot,
   ChevronDown,
   Globe,
   HelpCircle,
@@ -22,6 +23,9 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+
+import { AppHome } from '@/components/AppHome'
+import { useAppShell } from '@/lib/useAppShell'
 
 const StatsModal = dynamic(
   () => import('@/components/StatsModal').then((mod) => mod.StatsModal),
@@ -57,6 +61,7 @@ export default function Home() {
   const [showStats, setShowStats] = useState(false)
   const [showSuggest, setShowSuggest] = useState(false)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
+  const isAppShell = useAppShell()
 
   const handleJoinWithCode = (e: React.FormEvent) => {
     e.preventDefault()
@@ -71,9 +76,19 @@ export default function Home() {
     setOpenFaqIndex(openFaqIndex === index ? null : index)
   }
 
+  // Uygulamada (Capacitor / PWA) tanıtım sayfası yerine tek ekranlık oyun girişi.
+  if (isAppShell) {
+    return (
+      <>
+        <AppHome onOpenStats={() => setShowStats(true)} />
+        <StatsModal isOpen={showStats} onClose={() => setShowStats(false)} />
+      </>
+    )
+  }
+
   return (
     <>
-      <main className="page-enter mx-auto flex min-h-[calc(100vh-4rem)] max-w-5xl flex-col justify-center px-4 py-8">
+      <main className="page-enter mx-auto flex min-h-[calc(100dvh-4rem)] max-w-5xl flex-col justify-center px-4 py-8">
         {/* Hero Header */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-center sm:text-left">
           <motion.div
@@ -143,6 +158,17 @@ export default function Home() {
               >
                 <Play className="h-5 w-5 fill-current" />
                 <span>Oda Oluştur</span>
+              </motion.button>
+              {/* Arkadaş beklemeden oynamak için: oda kurma formu bot seçenekleri açık gelir. */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => router.push('/room/create?bots=1')}
+                data-testid="play-vs-bots-link"
+                className="btn-outline mt-3 flex w-full items-center justify-center gap-2 py-3.5 font-display text-lg"
+              >
+                <Bot className="h-5 w-5 text-pencil-blue" />
+                <span>Botlara Karşı Oyna</span>
               </motion.button>
             </div>
           </motion.div>
@@ -459,6 +485,10 @@ export default function Home() {
               >
                 İsim Öner
               </button>
+              <span>•</span>
+              <Link href="/gizlilik" className="hover:text-pencil-red transition-colors">
+                Gizlilik
+              </Link>
             </div>
 
             <div className="flex items-center gap-3">

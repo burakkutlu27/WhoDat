@@ -1,6 +1,6 @@
 'use client'
 
-import { Award, BarChart2, Check, Copy, Crown, Layers, Loader2, LogOut, Medal, RefreshCw, Trophy } from 'lucide-react'
+import { Award, BarChart2, Check, Copy, Crown, Layers, Loader2, LogOut, Medal, RefreshCw, Trophy, Users } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
@@ -9,8 +9,10 @@ import Confetti from '@/components/Confetti'
 import { CopiedPostIt, PencilLoader } from '@/components/animations'
 import { CategoryIcon } from '@/components/CategoryIcon'
 import { StatsModal } from '@/components/StatsModal'
+import { TEAM_STYLES } from '@/components/TeamLobby'
+import { showInterstitialOnce } from '@/lib/ads'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
-import { CATEGORIES } from '@/lib/game/famousPeopleData'
+import { CATEGORIES } from '@/lib/game/categories'
 import { useGameState } from '@/lib/useGameState'
 
 export default function RoomScoresPage({ params }: { params: Promise<{ id: string }> }) {
@@ -37,6 +39,11 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
       router.replace('/')
     }
   }, [error, router])
+
+  // Maç sonu geçiş reklamı yalnızca bitmiş oyunda; oyun sırasında hiç reklam yok.
+  useEffect(() => {
+    if (status === 'finished') void showInterstitialOnce(roomId)
+  }, [status, roomId])
 
   useEffect(() => {
     if (phase === 'ready' && state) {
@@ -80,7 +87,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
 
   if (phase === 'loading') {
     return (
-      <div className="min-h-[calc(100vh-4rem)] px-4 py-8">
+      <div className="min-h-[calc(100dvh-4rem)] px-4 py-8">
         <div className="mx-auto max-w-3xl space-y-6 flex flex-col items-center justify-center min-h-[50vh]" aria-busy="true" aria-label="Sonuçlar yükleniyor">
           <PencilLoader size={44} text="Sonuçlar Hesaplanıyor..." color="var(--pencil-yellow)" />
         </div>
@@ -90,7 +97,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
 
   if (phase === 'error' || !state) {
     return (
-      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+      <div className="flex min-h-[calc(100dvh-4rem)] items-center justify-center p-4">
         <div className="max-w-md text-center">
           <h1 className="mb-2 font-display text-3xl font-bold text-ink">
             Sonuçlar Açılamadı
@@ -124,12 +131,16 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
   const youRank = youIndex !== -1 ? youIndex + 1 : null
   const isYouWinner = winners.some((w) => w.id === state.you.playerId)
 
+  const teamStandings = [...(state.room.teams ?? [])].sort((a, b) => b.score - a.score)
+  const topTeamScore = teamStandings[0]?.score ?? 0
+  const winningTeams = teamStandings.filter((team) => team.score === topTeamScore && topTeamScore > 0)
+
   const firstPlace = standings[0]
   const secondPlace = standings[1]
   const thirdPlace = standings[2]
 
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] px-4 py-8">
+    <div className="relative min-h-[calc(100dvh-4rem)] px-4 py-8">
       <Confetti trigger={showConfetti} />
       <div className="mx-auto max-w-3xl space-y-6">
         {/* Victory / Game Over Header Card */}
@@ -246,6 +257,51 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
             </div>
           </div>
         </motion.header>
+
+        {/* Takım Sıralaması — takım puanı üyelerin toplamı */}
+        {state.room.teamMode && teamStandings.length > 0 && (
+          <section className="paper-card p-6 sm:p-8" data-testid="team-standings">
+            <h2 className="mb-4 flex items-center justify-center gap-2 font-display text-3xl font-bold text-ink">
+              <Users className="h-7 w-7 text-pencil-purple" />
+              <span>Takım Sıralaması</span>
+            </h2>
+            <p className="mb-4 text-center font-display text-xl text-ink-faded">
+              {winningTeams.length === 1
+                ? `${winningTeams[0]!.name} kazandı!`
+                : winningTeams.length > 1
+                  ? `Berabere: ${winningTeams.map((team) => team.name).join(', ')}`
+                  : 'Bu oyunda hiçbir takım puan alamadı.'}
+            </p>
+            <ol className="space-y-2.5">
+              {teamStandings.map((team, index) => {
+                const style = TEAM_STYLES[team.color]
+                const isWinner = winningTeams.some((winner) => winner.id === team.id)
+                return (
+                  <li
+                    key={team.id}
+                    className={`flex items-center justify-between gap-3 rounded-sketch-md border-2 p-3.5 ${style.border} ${isWinner ? style.bg : 'bg-paper-card'}`}
+                  >
+                    <span className="min-w-0">
+                      <span className={`flex items-center gap-1.5 font-display text-2xl font-bold ${style.text}`}>
+                        {isWinner && <Trophy className="h-5 w-5 text-pencil-yellow" />}
+                        {index + 1}. {team.name}
+                        {team.id === state.you.teamId && <span className="text-sm font-sans text-ink-faded">(senin takımın)</span>}
+                      </span>
+                      <span className="block truncate text-sm text-ink-faded">
+                        {team.memberIds
+                          .map((id) => state.players.find((player) => player.id === id))
+                          .filter(Boolean)
+                          .map((player) => `${player!.nickname} (${player!.score})`)
+                          .join(' · ')}
+                      </span>
+                    </span>
+                    <span className="shrink-0 font-display text-3xl font-bold text-ink">{team.score} <span className="text-base text-ink-faded">Puan</span></span>
+                  </li>
+                )
+              })}
+            </ol>
+          </section>
+        )}
 
         {/* Hiyerarşik Podyum (Podium) Bölümü */}
         {standings.length >= 2 && (
