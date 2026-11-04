@@ -65,9 +65,6 @@
   :root {
     --safe-bottom: env(safe-area-inset-bottom);
   }
-  html.keyboard-open {
-    --safe-bottom: 0px;
-  }
 
   /* Global Kağıt Dokusu */
   body {
@@ -641,5 +638,11 @@ input:disabled {
   .sticky-note:hover {
     transform: none !important;
   }
+}
+
+/* Katman dışında: sınıfı yalnızca src/lib/native.ts ekliyor; Tailwind o klasörü taramadığı
+   için @layer içinde olsaydı derlemede atılırdı (ilk düzeltme bu yüzden canlıda çalışmadı). */
+html.keyboard-open {
+  --safe-bottom: 0px;
 }
 

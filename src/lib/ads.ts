@@ -85,21 +85,49 @@ export async function showInterstitialOnce(roomId: string): Promise<void> {
   await showInterstitial()
 }
 
-/** Geliştirmede reklamı denemek için her maçı bitirmek gerekmesin (üretimde buton hiç çıkmaz). */
-export const canTestAds = process.env.NODE_ENV !== 'production'
+/**
+ * Reklamı cihazda denemek için her maçı bitirmek gerekmesin. Uygulama canlı siteyi açtığı için
+ * düğme üretimde de çalışmalı; ama herkes görmesin diye gizli: ana sayfa başlığına 5 dokunuş
+ * cihazda açar (bkz. AppHome). Geliştirmede her zaman açık.
+ */
+const AD_TEST_KEY = 'kimbu_ad_test'
 
-export async function showTestInterstitial(): Promise<void> {
-  if (!canTestAds || !isNativeApp()) return
-  await showInterstitial()
+export function isAdTestUnlocked(): boolean {
+  if (process.env.NODE_ENV !== 'production') return true
+  try {
+    return localStorage.getItem(AD_TEST_KEY) === '1'
+  } catch {
+    return false
+  }
 }
 
-async function showInterstitial(): Promise<void> {
-  if (!(await initAds())) return
+export function unlockAdTest(): void {
+  try {
+    localStorage.setItem(AD_TEST_KEY, '1')
+  } catch {
+    // Depolama kapalıysa düğme yalnızca bu oturumda görünür.
+  }
+}
+
+/**
+ * Her zaman Google'ın test birimiyle: geliştiricinin kendi gerçek reklamına dokunması AdMob
+ * hesabını askıya aldırabilir. Hata metnini döndürür ki cihazda sebep görülebilsin.
+ */
+export async function showTestInterstitial(): Promise<string | null> {
+  if (!isNativeApp()) return 'Reklam yalnızca uygulamada gösterilir.'
+  return showInterstitial(GOOGLE_TEST_INTERSTITIAL, true)
+}
+
+async function showInterstitial(adId = interstitialId, isTesting = useTestAds): Promise<string | null> {
+  if (!(await initAds())) return 'Reklam altyapısı başlatılamadı.'
   try {
     const { AdMob } = await import('@capacitor-community/admob')
-    await AdMob.prepareInterstitial({ adId: interstitialId, isTesting: useTestAds })
+    await AdMob.prepareInterstitial({ adId, isTesting })
     await AdMob.showInterstitial()
+    return null
   } catch (error) {
-    console.warn(`[ads] geçiş reklamı gösterilemedi: ${describe(error)}`)
+    const reason = describe(error)
+    console.warn(`[ads] geçiş reklamı gösterilemedi: ${reason}`)
+    return reason
   }
 }

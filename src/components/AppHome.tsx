@@ -4,10 +4,12 @@ import { ArrowRight, Bot, Play, Trophy } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
-import { canTestAds, showTestInterstitial } from '@/lib/ads'
+import { isAdTestUnlocked, showTestInterstitial, unlockAdTest } from '@/lib/ads'
 import { isNativeApp } from '@/lib/native'
+
+const AD_TEST_TAPS = 5
 
 interface AppHomeProps {
   onOpenStats: () => void
@@ -21,6 +23,25 @@ interface AppHomeProps {
 export function AppHome({ onOpenStats }: AppHomeProps) {
   const router = useRouter()
   const [code, setCode] = useState('')
+  // AppHome yalnızca istemcide çizilir (useAppShell), localStorage okumak güvenli.
+  const [adTestVisible, setAdTestVisible] = useState(() => isNativeApp() && isAdTestUnlocked())
+  const [adTestStatus, setAdTestStatus] = useState<string | null>(null)
+  const titleTaps = useRef(0)
+
+  const onTitleTap = () => {
+    if (adTestVisible || !isNativeApp()) return
+    titleTaps.current += 1
+    if (titleTaps.current >= AD_TEST_TAPS) {
+      unlockAdTest()
+      setAdTestVisible(true)
+    }
+  }
+
+  const runAdTest = async () => {
+    setAdTestStatus('Reklam yükleniyor…')
+    const error = await showTestInterstitial()
+    setAdTestStatus(error ? `Reklam gösterilemedi: ${error}` : null)
+  }
 
   const join = (event: React.FormEvent) => {
     event.preventDefault()
@@ -41,7 +62,7 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
         animate={{ opacity: 1, y: 0 }}
         className="text-center"
       >
-        <h1 className="font-display text-5xl font-bold text-ink">Ben Kimim?</h1>
+        <h1 onClick={onTitleTap} className="select-none font-display text-5xl font-bold text-ink">Ben Kimim?</h1>
         <p className="mt-1 font-display text-2xl text-pencil-red">Kimliğini bul, puanları kap.</p>
       </motion.header>
 
@@ -104,10 +125,10 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
           <Trophy className="h-5 w-5 text-pencil-yellow" />
           <span>İstatistiklerim</span>
         </button>
-        {canTestAds && isNativeApp() && (
+        {adTestVisible && (
           <button
             type="button"
-            onClick={() => void showTestInterstitial()}
+            onClick={() => void runAdTest()}
             data-testid="test-ad-button"
             className="flex min-h-11 items-center px-2 font-sans text-sm text-pencil-blue underline"
           >
@@ -118,6 +139,11 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
           Gizlilik
         </Link>
       </footer>
+      {adTestStatus && (
+        <p role="status" className="-mt-3 text-center font-sans text-sm text-ink-faded">
+          {adTestStatus}
+        </p>
+      )}
     </main>
   )
 }

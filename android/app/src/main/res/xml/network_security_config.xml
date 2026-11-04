@@ -3,8 +3,18 @@
   Şifresiz (http) bağlantı yalnızca yerel geliştirme sunucusu için açık (npm run cap:dev).
   10.0.2.2 = emülatörden bilgisayar; localhost = gerçek cihazda `adb reverse tcp:3100 tcp:3100`.
   Canlı site https olduğu için mağaza sürümünü etkilemez; başka hiçbir alan adına http izni yok.
+
+  ISRG Root X1: sitenin Let's Encrypt sertifikası bu köke dayanıyor, Android 7.0 ise kökü
+  tanımıyor (7.1.1'de eklendi) ve uygulama beyaz ekranda kalıyordu. Sistem kökleri de güvenilir
+  kalır; yalnızca eksik kök eklenir, doğrulama gevşetilmez.
 -->
 <network-security-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="@raw/isrg_root_x1" />
+        </trust-anchors>
+    </base-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="false">10.0.2.2</domain>
         <domain includeSubdomains="false">localhost</domain>
