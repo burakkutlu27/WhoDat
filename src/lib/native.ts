@@ -104,7 +104,36 @@ export async function initNativeShell(navigate: (path: string) => void): Promise
     }),
   ])
 
+  const stopKeyboardWatch = watchKeyboard()
+
   return () => {
+    stopKeyboardWatch()
     for (const handle of handles) void handle.remove()
+  }
+}
+
+/**
+ * Klavye açıkken <html>'e `keyboard-open` ekler (globals.css'te --safe-bottom'ı sıfırlar).
+ * Ayrı Keyboard eklentisi yerine yükseklikten anlıyoruz: Capacitor klavye açılınca WebView'i
+ * küçülttüğü için innerHeight belirgin şekilde düşer. Geri tuşuyla kapatmayı da yakalar.
+ */
+function watchKeyboard(): () => void {
+  let fullHeight = window.innerHeight
+  let lastWidth = window.innerWidth
+
+  const update = () => {
+    // Döndürmede tam yükseklik değişir; genişlik değiştiyse referansı baştan al.
+    if (window.innerWidth !== lastWidth) {
+      lastWidth = window.innerWidth
+      fullHeight = window.innerHeight
+    }
+    fullHeight = Math.max(fullHeight, window.innerHeight)
+    document.documentElement.classList.toggle('keyboard-open', fullHeight - window.innerHeight > 150)
+  }
+
+  window.addEventListener('resize', update)
+  return () => {
+    window.removeEventListener('resize', update)
+    document.documentElement.classList.remove('keyboard-open')
   }
 }

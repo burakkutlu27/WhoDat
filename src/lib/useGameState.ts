@@ -40,8 +40,10 @@ export function useGameState(roomId: string): UseGameStateResult {
 
   const mounted = useRef(true)
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const inFlight = useRef<Promise<void> | null>(null)
+  const rerun = useRef(false)
 
-  const refresh = useCallback(async () => {
+  const fetchState = useCallback(async () => {
     try {
       const next = await apiRequest<GameState>(`/api/rooms/${roomId}/state`)
       if (!mounted.current) return
@@ -60,6 +62,34 @@ export function useGameState(roomId: string): UseGameStateResult {
     }
   }, [roomId])
 
+  /**
+   * Aynı anda tek /state isteği. Sunucu odanın isteklerini sıraya sokuyor; poll'lar üst üste
+   * binince kuyruk saniyede büyüyor, oy/tahmin POST'u o kuyruğun arkasında 20+ sn bekleyip
+   * oylama kapandıktan sonra işleniyordu. İstek sürerken gelen çağrı bir tur daha ister
+   * ki aksiyondan sonraki `await refresh()` aksiyon sonrası durumu görsün.
+   */
+  const refresh = useCallback((): Promise<void> => {
+    if (inFlight.current) {
+      rerun.current = true
+      return inFlight.current
+    }
+    const run = async () => {
+      do {
+        rerun.current = false
+        await fetchState()
+      } while (rerun.current && mounted.current)
+    }
+    inFlight.current = run().finally(() => {
+      inFlight.current = null
+    })
+    return inFlight.current
+  }, [fetchState])
+
+  /** Zamanlayıcı poll'u: istek sürüyorsa atlanır (kuyruğa tur eklemez). */
+  const poll = useCallback(() => {
+    if (!inFlight.current) void refresh()
+  }, [refresh])
+
   const scheduleRefresh = useCallback(() => {
     if (debounceTimer.current) clearTimeout(debounceTimer.current)
     debounceTimer.current = setTimeout(() => void refresh(), REFRESH_DEBOUNCE_MS)
@@ -68,9 +98,6 @@ export function useGameState(roomId: string): UseGameStateResult {
   useEffect(() => {
     mounted.current = true
 
-    // refresh() ilk satırında await ettiği için senkron setState çağırmaz; kural
-    // async fonksiyonun içini izleyemediği için burada yanlış pozitif veriyor.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     void refresh()
 
     const client = supabaseBrowser()
@@ -111,9 +138,9 @@ export function useGameState(roomId: string): UseGameStateResult {
     const isPlaying = state?.room.status === 'playing'
     const hasActiveVote = state?.room.activeVote?.status === 'open'
     const intervalMs = hasActiveVote ? 1000 : isWaiting ? 2000 : isPlaying ? 2000 : FALLBACK_POLL_MS
-    const interval = setInterval(() => void refresh(), intervalMs)
+    const interval = setInterval(poll, intervalMs)
     return () => clearInterval(interval)
-  }, [state?.room.status, state?.room.activeVote?.status, refresh])
+  }, [state?.room.status, state?.room.activeVote?.status, poll])
 
   // Telefonda sekme/uygulama arka plandayken tarayıcı zamanlayıcıları ve WebSocket'i
   // uyutur; geri dönüldüğünde bir sonraki poll'u beklemeden hemen tazele.

@@ -32,7 +32,7 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
     <main
       data-testid="app-home"
       // 4rem + 2px: navbar yüksekliği ve alt çizgisi; çentik boşluğu navbar'ın üst padding'inde.
-      className="page-enter mx-auto flex min-h-[calc(100dvh-4rem-2px-env(safe-area-inset-top))] max-w-md flex-col justify-between gap-5 px-5 pt-6 pb-[calc(env(safe-area-inset-bottom)+1.25rem)]"
+      className="page-enter mx-auto flex min-h-[calc(100dvh-4rem-2px-env(safe-area-inset-top))] max-w-md flex-col justify-between gap-5 px-5 pt-6 pb-[calc(var(--safe-bottom)+1.25rem)]"
     >
       {/* Başlık ve eylemler ekranın ortasında birlikte; alt bilgi en altta. */}
       <div className="flex flex-1 flex-col justify-center gap-8">

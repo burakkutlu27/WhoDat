@@ -1,6 +1,6 @@
 'use client'
 
-import { Check, Clock, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { Check, Clock, Loader2, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useEffect, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
@@ -50,6 +50,23 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
 
   const progressPercent = Math.max(0, Math.min(100, (localSeconds / 30) * 100))
 
+  // İstek sürerken iki buton da aynı gri görünüyordu; seçilen şık vurgulu kalsın.
+  const [pendingAnswer, setPendingAnswer] = useState<boolean | null>(null)
+  const handleVote = async (answer: boolean) => {
+    setPendingAnswer(answer)
+    try {
+      await onVote(answer)
+    } finally {
+      setPendingAnswer(null)
+    }
+  }
+  const choiceClass = (answer: boolean) =>
+    pendingAnswer === null
+      ? ''
+      : pendingAnswer === answer
+        ? '!opacity-100 ring-4 ring-ink ring-offset-2 ring-offset-paper-card'
+        : '!opacity-25'
+
   // Telefonda kart sayfanın ortasında kalıyor ve seçmen kaydırmazsa 30 sn'lik oylamayı
   // kaçırıyordu. Oy bekleyen seçmen için kart ekranın altına sabitlenir. Kart, sayfa
   // geçiş animasyonunun transform'lu kapsayıcısında durduğu için `fixed` ancak body'ye
@@ -65,7 +82,7 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
       aria-label={pinned ? 'Canlı soru oylaması' : undefined}
       className={`paper-card-alt p-5 sm:p-6 border-2 border-pencil-orange rounded-sketch-xl shadow-xl space-y-4 text-center overflow-hidden ${
         pinned
-          ? 'fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-40 max-h-[75dvh] overflow-y-auto'
+          ? 'fixed inset-x-3 bottom-[calc(var(--safe-bottom)+0.75rem)] z-40 max-h-[75dvh] overflow-y-auto'
           : 'relative'
       }`}
     >
@@ -137,10 +154,10 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
                 color="green"
                 data-testid="vote-yes"
                 disabled={isBusy}
-                onClick={() => void onVote(true)}
-                className="btn-pencil-green w-full py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                onClick={() => void handleVote(true)}
+                className={`btn-pencil-green w-full py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg ${choiceClass(true)}`}
               >
-                <ThumbsUp className="h-6 w-6" />
+                {pendingAnswer === true ? <Loader2 className="h-6 w-6 animate-spin" /> : <ThumbsUp className="h-6 w-6" />}
                 <span>EVET</span>
               </InkStamp>
 
@@ -148,10 +165,10 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
                 color="red"
                 data-testid="vote-no"
                 disabled={isBusy}
-                onClick={() => void onVote(false)}
-                className="btn-pencil-red w-full py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                onClick={() => void handleVote(false)}
+                className={`btn-pencil-red w-full py-4 font-display text-2xl font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg ${choiceClass(false)}`}
               >
-                <ThumbsDown className="h-6 w-6" />
+                {pendingAnswer === false ? <Loader2 className="h-6 w-6 animate-spin" /> : <ThumbsDown className="h-6 w-6" />}
                 <span>HAYIR</span>
               </InkStamp>
             </div>

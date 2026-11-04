@@ -797,7 +797,7 @@ function CreateRoomForm() {
             <div
               className={
                 isAppShell
-                  ? 'fixed inset-x-0 bottom-0 z-30 flex flex-row-reverse gap-3 border-t-2 border-dashed border-paper-border bg-paper-bg/95 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur-sm'
+                  ? 'fixed inset-x-0 bottom-0 z-30 flex flex-row-reverse gap-3 border-t-2 border-dashed border-paper-border bg-paper-bg/95 px-4 pt-3 pb-[calc(var(--safe-bottom)+0.75rem)] backdrop-blur-sm'
                   : 'space-y-3 pt-2'
               }
             >
