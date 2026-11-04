@@ -1096,12 +1096,9 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
 
         {/* Players Grid Section */}
         <section className="paper-card-alt p-6 sm:p-8">
-          <h2 className="mb-4 font-display text-2xl font-bold text-ink flex items-center justify-between">
-            <span className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-pencil-blue" />
-              <span>Lobideki Oyuncular ({state.players.length})</span>
-            </span>
-            <span className="text-sm font-sans font-semibold text-ink-faded waiting-dots">Canlı Senkronize</span>
+          <h2 className="mb-4 font-display text-2xl font-bold text-ink flex items-center gap-2">
+            <Users className="h-5 w-5 text-pencil-blue" />
+            <span>Lobideki Oyuncular ({state.players.length})</span>
           </h2>
 
           {/* Takım Modu seçici — yalnızca host; Klasik/Hız ve tek kategoride */}
@@ -1264,7 +1261,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
         {/* Start Game Action — telefonda ekranın altına sabit: lobi uzun, host "Başlat" için en alta kaydırmasın */}
         <section
           data-testid="lobby-action-bar"
-          className="paper-card p-6 text-center max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:z-30 max-sm:rounded-none max-sm:border-x-0 max-sm:border-b-0 max-sm:p-3 max-sm:pb-[calc(env(safe-area-inset-bottom)+0.75rem)] max-sm:shadow-[0_-4px_14px_rgba(0,0,0,0.10)]"
+          className="paper-card p-6 text-center max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:z-30 max-sm:rounded-none max-sm:border-x-0 max-sm:border-b-0 max-sm:p-3 max-sm:pb-[calc(var(--safe-bottom)+0.75rem)] max-sm:shadow-[0_-4px_14px_rgba(0,0,0,0.10)]"
         >
           {/* Hata burada: çubuk her zaman görünür, ayar/bot/isim hatası kaçmaz. */}
           {actionError && (

@@ -127,9 +127,12 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
   const standings = [...state.players].sort((a, b) => b.score - a.score)
   const topScore = standings[0]?.score ?? 0
   const winners = standings.filter((player) => player.score === topScore && topScore > 0)
-  const youIndex = standings.findIndex((p) => p.id === state.you.playerId)
-  const youRank = youIndex !== -1 ? youIndex + 1 : null
+  // Eşit puanlılar aynı sırayı paylaşır (1, 1, 3): başlık, podyum ve tablo aynı şeyi söylesin.
+  const rankOf = (score: number) => standings.filter((p) => p.score > score).length + 1
+  const you = standings.find((p) => p.id === state.you.playerId)
+  const youRank = you ? rankOf(you.score) : null
   const isYouWinner = winners.some((w) => w.id === state.you.playerId)
+  const coWinners = winners.filter((w) => w.id !== state.you.playerId)
 
   const teamStandings = [...(state.room.teams ?? [])].sort((a, b) => b.score - a.score)
   const topTeamScore = teamStandings[0]?.score ?? 0
@@ -138,6 +141,10 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
   const firstPlace = standings[0]
   const secondPlace = standings[1]
   const thirdPlace = standings[2]
+  const secondRank = secondPlace ? rankOf(secondPlace.score) : 2
+  const thirdRank = thirdPlace ? rankOf(thirdPlace.score) : 3
+  // Puanlı beraberlikte 2. basamaktaki oyuncu da şampiyon görünür.
+  const secondTied = secondRank === 1 && topScore > 0
 
   return (
     <div className="relative min-h-[calc(100dvh-4rem)] px-4 py-8">
@@ -184,7 +191,9 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
           </motion.div>
 
           <h1 className="font-display text-4xl sm:text-5xl font-bold text-ink">
-            {isYouWinner
+            {isYouWinner && coWinners.length > 0
+              ? 'Berabere! Ortak Şampiyon 🤝'
+              : isYouWinner
               ? 'Tebrikler Şampiyon! 🎉'
               : youRank === 2 || youRank === 3
                 ? `${youRank}. Oldunuz! Harika Mücadele 👏`
@@ -194,6 +203,11 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
           {winners.length === 0 ? (
             <p className="mt-2 text-base text-ink-faded">
               Bu oyunda kimse puan alamadı.
+            </p>
+          ) : isYouWinner && coWinners.length > 0 ? (
+            <p className="mt-2 text-xl text-ink font-display">
+              <strong className="text-pencil-yellow font-bold text-2xl">{topScore} Puan</strong> ile zirveyi{' '}
+              <span className="font-bold">{coWinners.map((w) => w.nickname).join(', ')}</span> ile paylaştınız!
             </p>
           ) : isYouWinner ? (
             <p className="mt-2 text-xl text-ink font-display">
@@ -273,7 +287,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                   : 'Bu oyunda hiçbir takım puan alamadı.'}
             </p>
             <ol className="space-y-2.5">
-              {teamStandings.map((team, index) => {
+              {teamStandings.map((team) => {
                 const style = TEAM_STYLES[team.color]
                 const isWinner = winningTeams.some((winner) => winner.id === team.id)
                 return (
@@ -284,7 +298,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                     <span className="min-w-0">
                       <span className={`flex items-center gap-1.5 font-display text-2xl font-bold ${style.text}`}>
                         {isWinner && <Trophy className="h-5 w-5 text-pencil-yellow" />}
-                        {index + 1}. {team.name}
+                        {teamStandings.filter((t) => t.score > team.score).length + 1}. {team.name}
                         {team.id === state.you.teamId && <span className="text-sm font-sans text-ink-faded">(senin takımın)</span>}
                       </span>
                       <span className="block truncate text-sm text-ink-faded">
@@ -327,7 +341,11 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                 >
                   <div className="mb-2 text-center w-full px-1">
                     <div className="flex items-center justify-center gap-1">
-                      <Medal className="h-5 w-5 text-ink-faded shrink-0" />
+                      {secondTied ? (
+                        <Crown className="h-5 w-5 text-pencil-yellow shrink-0" />
+                      ) : (
+                        <Medal className="h-5 w-5 text-ink-faded shrink-0" />
+                      )}
                       <span className="font-display text-lg sm:text-xl font-bold text-ink truncate">
                         {secondPlace.nickname}
                       </span>
@@ -335,19 +353,28 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                     {secondPlace.id === state.you.playerId && (
                       <span className="tag tag-you text-xs mt-0.5 inline-block">SEN</span>
                     )}
-                    <div className="font-display font-bold text-base text-ink-faded mt-0.5">
+                    <div className={`font-display font-bold text-base mt-0.5 ${secondTied ? 'text-pencil-yellow' : 'text-ink-faded'}`}>
                       {secondPlace.score} <span className="text-xs font-sans">P</span>
                     </div>
                   </div>
                   <div
-                    className="w-full h-32 sm:h-36 bg-gradient-to-b from-paper-card-alt to-paper-card border-4 border-ink-faded/60 rounded-t-sketch flex flex-col items-center justify-center shadow-md relative"
+                    className={`w-full h-32 sm:h-36 border-4 rounded-t-sketch flex flex-col items-center justify-center shadow-md relative ${
+                      secondTied
+                        ? 'bg-gradient-to-b from-pencil-yellow/20 to-pencil-yellow/10 border-pencil-yellow'
+                        : 'bg-gradient-to-b from-paper-card-alt to-paper-card border-ink-faded/60'
+                    }`}
                     style={{ borderRadius: '12px 12px 0 0' }}
                   >
-                    <span className="font-display text-5xl sm:text-6xl font-black text-ink-faded/40 select-none">
-                      2
+                    {secondTied && (
+                      <div className="absolute -top-3.5 px-2.5 py-0.5 bg-pencil-yellow text-white text-xs font-display font-bold rounded-full shadow-xs uppercase tracking-wider">
+                        Şampiyon
+                      </div>
+                    )}
+                    <span className={`font-display text-5xl sm:text-6xl font-black select-none ${secondTied ? 'text-pencil-yellow' : 'text-ink-faded/40'}`}>
+                      {secondRank}
                     </span>
-                    <span className="text-xs font-sans font-bold text-ink-faded uppercase tracking-wider mt-1">
-                      2. Sıra
+                    <span className={`text-xs font-sans font-bold uppercase tracking-wider mt-1 ${secondTied ? 'text-pencil-yellow' : 'text-ink-faded'}`}>
+                      {secondRank}. Sıra
                     </span>
                   </div>
                 </motion.div>
@@ -418,11 +445,16 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                     className="w-full h-24 sm:h-28 bg-gradient-to-b from-pencil-orange/15 to-paper-card border-4 border-pencil-orange/60 rounded-t-sketch flex flex-col items-center justify-center shadow-md relative"
                     style={{ borderRadius: '12px 12px 0 0' }}
                   >
+                    {thirdRank === 1 && topScore > 0 && (
+                      <div className="absolute -top-3.5 px-2.5 py-0.5 bg-pencil-yellow text-white text-xs font-display font-bold rounded-full shadow-xs uppercase tracking-wider">
+                        Şampiyon
+                      </div>
+                    )}
                     <span className="font-display text-4xl sm:text-5xl font-black text-pencil-orange/40 select-none">
-                      3
+                      {thirdRank}
                     </span>
                     <span className="text-xs font-sans font-bold text-pencil-orange uppercase tracking-wider mt-1">
-                      3. Sıra
+                      {thirdRank}. Sıra
                     </span>
                   </div>
                 </motion.div>
@@ -443,7 +475,8 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
           <ol className="space-y-3">
             {standings.map((player, index) => {
               const isYou = player.id === state.you.playerId
-              const isWinner = index === 0 && player.score > 0
+              const rank = rankOf(player.score)
+              const isWinner = rank === 1 && player.score > 0
 
               return (
                 <motion.li
@@ -463,24 +496,24 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                   <div className="flex items-center gap-4 min-w-0">
                     <div
                       className={`flex h-11 w-11 shrink-0 items-center justify-center font-display text-xl font-bold ${
-                        index === 0
+                        rank === 1
                           ? 'bg-pencil-yellow text-white'
-                          : index === 1
+                          : rank === 2
                             ? 'bg-ink-faded text-white'
-                            : index === 2
+                            : rank === 3
                               ? 'bg-pencil-orange text-white'
                               : 'bg-paper-card text-ink-faded border-2 border-dashed border-paper-border'
                       }`}
                       style={{ borderRadius: '8px 4px 10px 6px' }}
                     >
-                      {index === 0 ? (
+                      {rank === 1 ? (
                         <Crown className="h-6 w-6 text-white" />
-                      ) : index === 1 ? (
+                      ) : rank === 2 ? (
                         <Medal className="h-6 w-6 text-white" />
-                      ) : index === 2 ? (
+                      ) : rank === 3 ? (
                         <Award className="h-6 w-6 text-white" />
                       ) : (
-                        index + 1
+                        rank
                       )}
                     </div>
 

@@ -59,6 +59,16 @@
     --grain-opacity: 0.04;
   }
 
+  /* Alt safe-area: env() yerine bu kullanılır. Capacitor (viewport-fit=cover) klavye açılınca
+     WebView'i zaten klavyenin üstüne kadar küçültüyor, ama env(safe-area-inset-bottom) gezinme
+     çubuğu yüksekliğini vermeye devam ediyor; alt barlar klavyenin üstünde boşluk bırakıyordu. */
+  :root {
+    --safe-bottom: env(safe-area-inset-bottom);
+  }
+  html.keyboard-open {
+    --safe-bottom: 0px;
+  }
+
   /* Global Kağıt Dokusu */
   body {
     background-color: var(--paper-bg);

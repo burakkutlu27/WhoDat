@@ -56,7 +56,7 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ duration: 0.25 }}
-          className="paper-card-lg max-w-2xl w-full p-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] sm:p-7 max-h-[92dvh] sm:max-h-[90dvh] flex flex-col shadow-2xl border-2 border-pencil-blue max-sm:rounded-b-none"
+          className="paper-card-lg max-w-2xl w-full p-4 pb-[calc(var(--safe-bottom)+1rem)] sm:p-7 max-h-[92dvh] sm:max-h-[90dvh] flex flex-col shadow-2xl border-2 border-pencil-blue max-sm:rounded-b-none"
         >
           {/* Header */}
           <div className="flex items-center justify-between border-b border-paper-border pb-4">

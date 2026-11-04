@@ -397,6 +397,8 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         tone: 'error',
         text: caught instanceof ApiClientError ? caught.message : 'Oy iletilemedi.',
       })
+      // Oylama arada kapanmış olabilir; eski kart ekranda kalmasın.
+      await refresh()
     } finally {
       setIsBusy(false)
     }
@@ -546,7 +548,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     <div
       className={
         isAppShell
-          ? 'relative px-3 pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-[calc(env(safe-area-inset-bottom)+5.5rem)]'
+          ? 'relative px-3 pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-[calc(var(--safe-bottom)+5.5rem)]'
           : 'relative min-h-[calc(100dvh-4rem)] px-3 py-4 sm:px-4 sm:py-8'
       }
     >
@@ -1878,7 +1880,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               isAppShell
                 ? appSheet
                   ? // Sekme çubuğunun hemen üstünde açılır ki aynı sekmeyle kapatılabilsin.
-                  'fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+4rem)] z-40 max-h-[70dvh] space-y-3 overflow-y-auto rounded-t-2xl bg-paper-bg p-3 shadow-2xl'
+                  'fixed inset-x-0 bottom-[calc(var(--safe-bottom)+4rem)] z-40 max-h-[70dvh] space-y-3 overflow-y-auto rounded-t-2xl bg-paper-bg p-3 shadow-2xl'
                   : 'hidden'
                 : 'lg:col-span-1 space-y-6'
             }
@@ -2076,7 +2078,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
       {isAppShell && (
         <nav
           data-testid="app-tabbar"
-          className={`fixed inset-x-0 bottom-0 z-40 grid gap-2 border-t-2 border-dashed border-paper-border bg-paper-bg/95 px-3 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] backdrop-blur-sm ${
+          className={`fixed inset-x-0 bottom-0 z-40 grid gap-2 border-t-2 border-dashed border-paper-border bg-paper-bg/95 px-3 pt-2 pb-[calc(var(--safe-bottom)+0.5rem)] backdrop-blur-sm ${
             state.room.teamMode ? 'grid-cols-3' : 'grid-cols-2'
           }`}
         >

@@ -1,5 +1,12 @@
--- Odalara güncellenme / son hareket zamanı ekler, trigger ile otomatik günceller,
--- eski odaları kapatan fonksiyon tanımlar ve mevcut tüm açık odaları 'closed' yapar.
+-- Odalara güncellenme / son hareket zamanı ekler, trigger ile otomatik günceller ve
+-- eski odaları kapatan fonksiyonu tanımlar.
+--
+-- Prod'a 2026-11-04'te uygulandı (o güne dek uygulanmamıştı: motorun "değişti" sinyali
+-- olan rooms.updated_at güncellemeleri sessizce hata veriyor, oda süresi kuruluş anından
+-- sayılıyordu). Uygulamadan önce iki değişiklik yapıldı:
+--   * "tüm açık odaları kapat" test temizliği çıkarıldı (canlıdaki oyunları bitirirdi),
+--   * close_expired_rooms anon/authenticated'a kapatıldı (security definer; herkes
+--     p_inactivity_minutes = 0 ile tüm odaları kapatabilirdi).
 
 -- 1. rooms tablosuna updated_at sütunu ekle
 alter table public.rooms
@@ -17,7 +24,7 @@ begin
   new.updated_at = now();
   return new;
 end;
-$$ language plpgsql;
+$$ language plpgsql set search_path = '';
 
 drop trigger if exists on_rooms_updated on public.rooms;
 create trigger on_rooms_updated
@@ -43,10 +50,8 @@ begin
   get diagnostics v_count = row_count;
   return v_count;
 end;
-$$ language plpgsql security definer;
+$$ language plpgsql security definer set search_path = '';
 
--- 6. Test aşaması temizliği: Mevcut tüm açık odaları 'closed' durumuna getir
-update public.rooms
-   set status = 'closed',
-       is_game_active = false
- where status != 'closed';
+-- Yalnızca sunucu (service_role) çağırır.
+revoke execute on function public.close_expired_rooms(integer) from public, anon, authenticated;
+grant execute on function public.close_expired_rooms(integer) to service_role;

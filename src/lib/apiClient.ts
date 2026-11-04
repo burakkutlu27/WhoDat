@@ -21,23 +21,43 @@ export class ApiClientError extends Error {
 
 const GENERIC_MESSAGE = 'Sunucuya ulaşılamadı. İnternet bağlantınızı kontrol edin.'
 
+/**
+ * Yanıt gelmeyen istek sayfanın meşgul durumunu (isBusy) hiç bırakmıyor, oyuncu kendi
+ * sırasında kilitli kalıyordu. Sunucu fonksiyonu bundan uzun sürmemeli.
+ */
+const REQUEST_TIMEOUT_MS = 20000
+
 export async function apiRequest<T>(
   path: string,
   options: { method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'; body?: unknown; signal?: AbortSignal } = {},
 ): Promise<T> {
   const { method = 'GET', body, signal } = options
 
+  const controller = new AbortController()
+  let timedOut = false
+  const timer = setTimeout(() => {
+    timedOut = true
+    controller.abort()
+  }, REQUEST_TIMEOUT_MS)
+  const forwardAbort = () => controller.abort()
+  if (signal?.aborted) controller.abort()
+  signal?.addEventListener('abort', forwardAbort)
+
   let response: Response
   try {
     response = await fetch(path, {
       method,
-      signal,
+      signal: controller.signal,
       headers: body ? { 'Content-Type': 'application/json' } : undefined,
       body: body ? JSON.stringify(body) : undefined,
     })
   } catch (error) {
+    if (timedOut) throw new ApiClientError('timeout', 'Sunucu yanıt vermedi. Lütfen tekrar deneyin.', 0)
     if (error instanceof DOMException && error.name === 'AbortError') throw error
     throw new ApiClientError('network_error', GENERIC_MESSAGE, 0)
+  } finally {
+    clearTimeout(timer)
+    signal?.removeEventListener('abort', forwardAbort)
   }
 
   const payload = await response.json().catch(() => null)
