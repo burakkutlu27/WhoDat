@@ -82,7 +82,51 @@ export function resetInterstitialGuard(roomId: string): void {
 /** Maç sonu geçiş reklamı. Hata olursa sessizce geçer; oyunu asla engellemez. */
 export async function showInterstitialOnce(roomId: string): Promise<void> {
   if (!isNativeApp() || alreadyShownFor(roomId)) return
+  // Bu maçın reklamı burada gösterildi; ana sayfaya dönüşte ikincisi çıkmasın.
+  clearInterstitialPending()
   await showInterstitial()
+}
+
+/**
+ * Maçtan ana sayfaya dönüş reklamı. Skor ekranına hiç gelinmeden çıkılan maçlarda (botlu
+ * oyunda "Çık", maç ortasında ayrılma) reklam hiç gösterilmiyordu. Oyun ekranı açılınca
+ * işaretlenir, ana sayfa açılınca bir kez gösterilir. Uygulama açılışında işaret olmadığı
+ * için reklam çıkmaz.
+ */
+const PENDING_KEY = 'kimbu_ad_pending'
+
+/** `test`: ana sayfadaki test düğmesi; dönüşte Google'ın test birimi gösterilir. */
+export function markInterstitialPending(kind: 'match' | 'test' = 'match'): void {
+  try {
+    // Test işareti, araya giren bir maç işaretiyle ezilmesin (test birimi güvenli olan).
+    if (kind === 'match' && sessionStorage.getItem(PENDING_KEY) === 'test') return
+    sessionStorage.setItem(PENDING_KEY, kind)
+  } catch {
+    // Depolama kapalıysa dönüş reklamı yok; maç sonu reklamı yine çalışır.
+  }
+}
+
+function clearInterstitialPending(): void {
+  try {
+    sessionStorage.removeItem(PENDING_KEY)
+  } catch {
+    // Depolama kapalı.
+  }
+}
+
+/** Bekleyen dönüş reklamını gösterir. Test işaretinde hata metnini döndürür (cihazda görünsün). */
+export async function showPendingInterstitial(): Promise<{ kind: 'match' | 'test'; error: string | null } | null> {
+  if (!isNativeApp()) return null
+  let kind: string | null
+  try {
+    kind = sessionStorage.getItem(PENDING_KEY)
+  } catch {
+    return null
+  }
+  if (kind !== 'match' && kind !== 'test') return null
+  clearInterstitialPending()
+  const error = kind === 'test' ? await showInterstitial(GOOGLE_TEST_INTERSTITIAL, true) : await showInterstitial()
+  return { kind, error }
 }
 
 /**
@@ -110,14 +154,9 @@ export function unlockAdTest(): void {
 }
 
 /**
- * Her zaman Google'ın test birimiyle: geliştiricinin kendi gerçek reklamına dokunması AdMob
- * hesabını askıya aldırabilir. Hata metnini döndürür ki cihazda sebep görülebilsin.
+ * Test düğmesi her zaman Google'ın test birimini kullanır (markInterstitialPending('test')):
+ * geliştiricinin kendi gerçek reklamına dokunması AdMob hesabını askıya aldırabilir.
  */
-export async function showTestInterstitial(): Promise<string | null> {
-  if (!isNativeApp()) return 'Reklam yalnızca uygulamada gösterilir.'
-  return showInterstitial(GOOGLE_TEST_INTERSTITIAL, true)
-}
-
 async function showInterstitial(adId = interstitialId, isTesting = useTestAds): Promise<string | null> {
   if (!(await initAds())) return 'Reklam altyapısı başlatılamadı.'
   try {

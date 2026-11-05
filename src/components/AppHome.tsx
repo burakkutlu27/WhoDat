@@ -4,9 +4,9 @@ import { ArrowRight, Bot, Play, Trophy } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { isAdTestUnlocked, showTestInterstitial, unlockAdTest } from '@/lib/ads'
+import { isAdTestUnlocked, markInterstitialPending, showPendingInterstitial, unlockAdTest } from '@/lib/ads'
 import { isNativeApp } from '@/lib/native'
 
 const AD_TEST_TAPS = 5
@@ -34,14 +34,28 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
     if (titleTaps.current >= AD_TEST_TAPS) {
       unlockAdTest()
       setAdTestVisible(true)
+      // Gizli dokunuşun algılandığı görünsün; düğme altta, gözden kaçabiliyor.
+      setAdTestStatus('Reklam testi açıldı: alttaki "Test reklamı"na dokun.')
     }
   }
 
-  const runAdTest = async () => {
-    setAdTestStatus('Reklam yükleniyor…')
-    const error = await showTestInterstitial()
-    setAdTestStatus(error ? `Reklam gösterilemedi: ${error}` : null)
+  // Maçtan dönüşteki akışın aynısı: başka sayfaya git, ana sayfaya geri gelince reklam çıkar.
+  const runAdTest = () => {
+    markInterstitialPending('test')
+    router.push('/gizlilik')
   }
+
+  useEffect(() => {
+    let active = true
+    void showPendingInterstitial().then((result) => {
+      if (active && result?.kind === 'test') {
+        setAdTestStatus(result.error ? `Test reklamı gösterilemedi: ${result.error}` : 'Test reklamı gösterildi.')
+      }
+    })
+    return () => {
+      active = false
+    }
+  }, [])
 
   const join = (event: React.FormEvent) => {
     event.preventDefault()
@@ -128,7 +142,7 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
         {adTestVisible && (
           <button
             type="button"
-            onClick={() => void runAdTest()}
+            onClick={runAdTest}
             data-testid="test-ad-button"
             className="flex min-h-11 items-center px-2 font-sans text-sm text-pencil-blue underline"
           >
