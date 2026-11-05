@@ -5,15 +5,18 @@ import { isNativeApp } from './native'
 /**
  * AdMob geçiş reklamı (yalnızca uygulamada; web'de her fonksiyon hiçbir şey yapmaz).
  *
- * Reklam birimi kimliği NEXT_PUBLIC_ADMOB_INTERSTITIAL_ID'den gelir. Kimlik yoksa veya üretim
- * dışındaysak Google'ın resmi test birimi kullanılır: geliştirici kendi gerçek reklamını görüp
- * tıklarsa AdMob hesabı askıya alınabilir.
+ * Reklam birimi kimliği gizli değildir (AndroidManifest.xml'deki APPLICATION_ID gibi istemciye
+ * gömülür). Üretimde varsayılan olarak KimBu geçiş reklamı birimi kullanılır; gerekirse
+ * NEXT_PUBLIC_ADMOB_INTERSTITIAL_ID ile ezilebilir. Geliştirme ortamında ise Google'ın resmi
+ * test birimi kullanılır: geliştirici kendi gerçek reklamını görüp tıklarsa AdMob hesabı
+ * askıya alınabilir.
  */
 
 const GOOGLE_TEST_INTERSTITIAL = 'ca-app-pub-3940256099942544/1033173712'
-const configuredId = process.env.NEXT_PUBLIC_ADMOB_INTERSTITIAL_ID?.trim()
-const useTestAds = process.env.NODE_ENV !== 'production' || !configuredId
-const interstitialId = useTestAds ? GOOGLE_TEST_INTERSTITIAL : configuredId!
+const DEFAULT_PROD_INTERSTITIAL = 'ca-app-pub-2960863530366414/6445160781'
+const configuredId = process.env.NEXT_PUBLIC_ADMOB_INTERSTITIAL_ID?.trim() || DEFAULT_PROD_INTERSTITIAL
+const useTestAds = process.env.NODE_ENV !== 'production'
+const interstitialId = useTestAds ? GOOGLE_TEST_INTERSTITIAL : configuredId
 
 let initPromise: Promise<boolean> | null = null
 
