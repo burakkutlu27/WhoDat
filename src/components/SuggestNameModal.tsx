@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CategoryIcon } from '@/components/CategoryIcon'
 import { CATEGORIES } from '@/lib/game/categories'
-import type { FamousPersonCategory } from '@/lib/game/types'
+import type { FamousPerson, FamousPersonCategory } from '@/lib/game/types'
 
 interface SuggestNameModalProps {
   isOpen: boolean
@@ -34,6 +34,32 @@ export default function SuggestNameModal({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isSuccess, setIsSuccess] = useState(false)
+  // Öneren, ismin oyunda zaten olup olmadığını yazarken görsün; aynı ismi tekrar önermesin.
+  const [existing, setExisting] = useState<{ query: string; people: FamousPerson[] } | null>(null)
+
+  useEffect(() => {
+    const trimmed = name.trim()
+    if (!isOpen || trimmed.length < 2) return
+    let active = true
+    const timer = setTimeout(async () => {
+      try {
+        const res = await apiRequest<{ data: FamousPerson[] }>(
+          `/api/famous-people?q=${encodeURIComponent(trimmed)}&limit=5`,
+        )
+        if (active) setExisting({ query: trimmed, people: res.data ?? [] })
+      } catch {
+        if (active) setExisting(null)
+      }
+    }, 250)
+    return () => {
+      active = false
+      clearTimeout(timer)
+    }
+  }, [name, isOpen])
+
+  const trimmedName = name.trim()
+  const lookup = existing && existing.query === trimmedName && trimmedName.length >= 2 ? existing.people : null
+  const exactMatch = lookup?.find((person) => person.name.toLocaleLowerCase('tr') === trimmedName.toLocaleLowerCase('tr'))
 
   useEffect(() => {
     if (isOpen) {
@@ -190,6 +216,42 @@ export default function SuggestNameModal({
                       required
                       className="paper-input font-display text-xl w-full"
                     />
+                    {trimmedName.length >= 2 && (
+                      <div className="mt-2 text-sm" aria-live="polite" data-testid="suggest-existing">
+                        {lookup === null ? (
+                          <span className="flex items-center gap-1.5 text-ink-faded">
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <span>Oyunda var mı bakılıyor…</span>
+                          </span>
+                        ) : lookup.length === 0 ? (
+                          <span className="flex items-center gap-1.5 font-bold text-pencil-green">
+                            <CheckCircle2 className="h-4 w-4" />
+                            <span>Oyunda bu isim yok, önerebilirsin.</span>
+                          </span>
+                        ) : (
+                          <div className="space-y-1.5">
+                            <span className={`block font-bold ${exactMatch ? 'text-pencil-red' : 'text-ink-faded'}`}>
+                              {exactMatch ? 'Bu isim oyunda zaten var:' : 'Oyunda benzer isimler var:'}
+                            </span>
+                            <ul className="flex flex-wrap gap-1.5">
+                              {lookup.map((person) => (
+                                <li
+                                  key={person.id}
+                                  className={`flex items-center gap-1 rounded-sketch border px-2 py-1 font-sans text-xs font-bold ${
+                                    person === exactMatch
+                                      ? 'border-pencil-red bg-pencil-red/10 text-ink'
+                                      : 'border-paper-border bg-paper-card text-ink-faded'
+                                  }`}
+                                >
+                                  <CategoryIcon category={person.category} className="h-3.5 w-3.5 shrink-0 text-pencil-yellow" />
+                                  <span>{person.name}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* Kategori Seçici */}

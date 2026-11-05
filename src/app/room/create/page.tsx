@@ -294,7 +294,10 @@ function CreateRoomForm() {
                     bgClass: 'bg-pencil-orange/10',
                     badgeBg: 'bg-pencil-orange',
                   },
-                ].map((item) => {
+                ]
+                  // Botlar Ortak Hedef'i oynayamıyor; seçilebilir görünüp en sonda hata vermesin.
+                  .filter((item) => !(vsBots && item.id === 'shared_target'))
+                  .map((item) => {
                   const isSelected = gameMode === item.id
                   const Icon = item.icon
                   return (
@@ -443,8 +446,8 @@ function CreateRoomForm() {
                 </span>
               </label>
 
-              {/* Kategori Modu Seçimi: Tek vs 3 Fazlı */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
+              {/* Kategori Modu Seçimi: Tek vs 3 Fazlı — botlar 3 fazlıyı oynayamadığı için botluda gizli */}
+              <div className={`grid grid-cols-2 gap-3 mb-4 ${vsBots ? 'hidden' : ''}`}>
                 {[
                   {
                     id: 'single' as const,
@@ -716,6 +719,7 @@ function CreateRoomForm() {
                 onClick={() => {
                   setVsBots((value) => !value)
                   if (gameMode === 'shared_target') setGameMode('classic')
+                  if (categoryMode === 'multi_phase') setCategoryMode('single')
                 }}
                 data-testid="vs-bots-toggle"
                 className="flex w-full min-h-11 items-center justify-between gap-3 text-left"

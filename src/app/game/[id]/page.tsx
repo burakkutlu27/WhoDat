@@ -47,7 +47,7 @@ import { QuestionPicker } from '@/components/QuestionPicker'
 import { TEAM_STYLES } from '@/components/TeamLobby'
 import { TeamPanel } from '@/components/TeamPanel'
 import { VotingModal } from '@/components/VotingModal'
-import { resetInterstitialGuard } from '@/lib/ads'
+import { markInterstitialPending, resetInterstitialGuard } from '@/lib/ads'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/categories'
 import type { GuessResult } from '@/lib/game/types'
@@ -108,9 +108,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     window.scrollTo(0, 0)
   }, [])
 
-  // Yeni maç ("Tekrar Oyna" dahil) başladı: bitişinde maç sonu reklamı yeniden gösterilebilir.
+  // Yeni maç ("Tekrar Oyna" dahil) başladı: bitişinde maç sonu reklamı yeniden gösterilebilir;
+  // maç bitmeden çıkılırsa (ör. botlu oyunda "Çık") reklam ana sayfaya dönüşte gösterilir.
   useEffect(() => {
     resetInterstitialGuard(roomId)
+    markInterstitialPending()
   }, [roomId])
 
   // Uygulamada (Capacitor/PWA) oyun ekranı tek ekrana sığar: ipucu defteri, skor ve takım

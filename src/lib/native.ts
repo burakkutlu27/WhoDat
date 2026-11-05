@@ -8,6 +8,32 @@ import { Capacitor } from '@capacitor/core'
  */
 
 const SITE_URL = 'https://whodat.burakkutlu.com'
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.burakkutlu.kimbu'
+
+/**
+ * Yüklü uygulamanın versionCode'u Supabase'deki eşiğin altındaysa true. Kontrol web kodunda
+ * olduğu için eski sürümlerde de çalışır. Hata olursa (ağ, eşik okunamadı) false: uygulamayı
+ * kilitlemek, güncel olmamasından daha kötü.
+ */
+export async function isUpdateRequired(): Promise<boolean> {
+  if (!isNativeApp()) return false
+  try {
+    const { App } = await import('@capacitor/app')
+    const [info, config] = await Promise.all([
+      App.getInfo(),
+      fetch('/api/app-version', { cache: 'no-store' }).then((res) => res.json() as Promise<{ minAndroidBuild?: number }>),
+    ])
+    const installed = Number.parseInt(info.build, 10)
+    return Number.isFinite(installed) && installed < (config.minAndroidBuild ?? 0)
+  } catch {
+    return false
+  }
+}
+
+/** Play Store sayfasını açar; Capacitor başka alan adlarını sistemde (Play uygulamasında) açar. */
+export function openPlayStore(): void {
+  window.location.href = PLAY_STORE_URL
+}
 
 export function isNativeApp(): boolean {
   return Capacitor.isNativePlatform()
