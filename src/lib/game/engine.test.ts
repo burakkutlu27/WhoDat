@@ -1000,6 +1000,18 @@ describe('Ortak Hedef Modu (shared_target)', () => {
     expect(hostState.room.sharedTargetName).toBe('Barış Manço')
     expect(hostState.room.targetRevealed).toBe(false)
   })
+
+  it('Ortak Hedef modunda sırası gelen yarışmacı ayrıldığında oyun yanlışlıkla bitmez, sıra diğer yarışmacıya geçer', async () => {
+    const { room, host, p1, p2, tables } = sharedTargetRoom()
+    fake = createSupabaseFake(tables)
+    await setRoomTarget(room.id, host.id, 'Albert Einstein')
+
+    // Sıra p1'deyken p1 odadan ayrılır (geriye host ve p2 olmak üzere 2 kişi kalır)
+    await leaveRoom(room.id, p1.id)
+
+    expect(tables.rooms[0]!.status).toBe('playing')
+    expect(tables.rooms[0]!.current_player_id).toBe(p2.id)
+  })
 })
 
 describe('Kategoriye Özel Lobi & 3 Fazlı Karışık Lobi', () => {
@@ -1293,10 +1305,10 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
       code: 'not_your_turn',
     })
 
-    // Sıradaki oyuncu soru sorar
-    const askRes = await askTextQuestion(roomId, currentAskerId, { questionId: 'qb-01' })
+    // Sıradaki oyuncu soru sorar (cevabı veride sabit olmayan subjektif soru: qb-16)
+    const askRes = await askTextQuestion(roomId, currentAskerId, { questionId: 'qb-16' })
     expect(askRes.voteId).toBeDefined()
-    expect(askRes.questionText).toBe('Gerçek hayatta yaşamış veya yaşayan bir insan mıyım?')
+    expect(askRes.questionText).toBe('Genel olarak olumlu / "iyi" tarafta bir karakter miyim?')
 
     // Oylama oturumu aktif
     const stateDuring = await getGameState(roomId, currentAskerId)
@@ -1330,7 +1342,7 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     const askerStateAfter = await getGameState(roomId, currentAskerId)
     expect(askerStateAfter.you.clueCard).toHaveLength(1)
     expect(askerStateAfter.you.clueCard?.[0]?.questionText).toBe(
-      'Gerçek hayatta yaşamış veya yaşayan bir insan mıyım?',
+      'Genel olarak olumlu / "iyi" tarafta bir karakter miyim?',
     )
     expect(askerStateAfter.you.clueCard?.[0]?.yesCount).toBe(1)
     expect(askerStateAfter.you.clueCard?.[0]?.noCount).toBe(1)
@@ -1390,6 +1402,32 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
 
     const stateAfter = await getGameState(roomId, askerId)
     expect(stateAfter.you.questionBudgetRemaining).toBe(9)
+  })
+
+  it('Tam Metin modunda oylama süresi (30 sn) dolduğunda getGameState oylamayı kapatır ve sırayı devreder', async () => {
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic', {
+      communicationMode: 'text',
+    })
+    const guest1 = buildPlayer(roomId, { nickname: 'Guest1', is_host: false })
+    const guest2 = buildPlayer(roomId, { nickname: 'Guest2', is_host: false })
+    fake.tables.players.push(guest1, guest2)
+
+    await autoAssignNames(roomId, hostId)
+    await startGame(roomId, hostId)
+
+    const stateBefore = await getGameState(roomId, hostId)
+    const askerId = stateBefore.room.currentPlayerId!
+
+    const askRes = await askTextQuestion(roomId, askerId, { questionText: 'Süre aşımı testi mi?' })
+
+    // DB'deki ve bellekteki oylama süresini geçmişe çek
+    const pastIso = new Date(Date.now() - 5000).toISOString()
+    const dbVote = fake.tables.question_votes?.find((v) => v.id === askRes.voteId)
+    if (dbVote) dbVote.closes_at = pastIso
+
+    const stateAfter = await getGameState(roomId, askerId)
+    expect(stateAfter.room.activeVote).toBeNull()
+    expect(stateAfter.room.currentPlayerId).not.toBe(askerId)
   })
 
   it('2 kişilik Klasik modda hiçbir oyuncu kendi yazdığı ismi almaz ve havuz bitince erken tamamlanır', async () => {

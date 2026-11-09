@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { buildPlayer, buildRoom, createSupabaseFake } from '@/test/supabaseFake'
 import {
-  closeAllRooms,
   closeExpiredRooms,
   getGameState,
   isRoomExpired,
@@ -102,20 +101,6 @@ describe('Oda Zaman Aşımı ve Otomatik Kapanma (Room Expiration)', () => {
       expect(fake.tables.rooms.find((r) => r.id === staleRoom2.id)?.status).toBe('closed')
       expect(fake.tables.rooms.find((r) => r.id === freshRoom.id)?.status).toBe('waiting')
       expect(fake.tables.rooms.find((r) => r.id === alreadyClosed.id)?.status).toBe('closed')
-    })
-
-    it('closeAllRooms tüm açık odaları kapatır', async () => {
-      const room1 = buildRoom({ status: 'waiting' })
-      const room2 = buildRoom({ status: 'playing', is_game_active: true })
-      const closedRoom = buildRoom({ status: 'closed' })
-
-      fake.tables.rooms = [room1, room2, closedRoom]
-
-      const count = await closeAllRooms()
-
-      expect(count).toBe(2)
-      expect(fake.tables.rooms.every((r) => r.status === 'closed')).toBe(true)
-      expect(fake.tables.rooms.every((r) => !r.is_game_active)).toBe(true)
     })
   })
 })

@@ -198,10 +198,24 @@ function staleRuntime() {
   return conflict('state_conflict', 'Oyun durumu aynı anda güncellendi. Lütfen tekrar deneyin.')
 }
 
+const ROOM_LOCK_TIMEOUT_MS = 10_000
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      reject(conflict('state_conflict', 'Oyun işlemi zaman aşımına uğradı. Lütfen tekrar deneyin.'))
+    }, timeoutMs)
+  })
+  return Promise.race([promise, timeoutPromise]).finally(() => {
+    if (timer) clearTimeout(timer)
+  })
+}
+
 /** Aynı instance'taki eşzamanlı istekleri oda bazında sıraya sokar. */
 async function runExclusive<T>(roomId: string, task: () => Promise<T>): Promise<T> {
   const previous = runtime.locks.get(roomId) ?? Promise.resolve()
-  const current = previous.catch(() => undefined).then(task)
+  const current = previous.catch(() => undefined).then(() => withTimeout(task(), ROOM_LOCK_TIMEOUT_MS))
   const tail = current.catch(() => undefined)
   runtime.locks.set(roomId, tail)
   try {

@@ -115,11 +115,6 @@ export function useGameState(roomId: string): UseGameStateResult {
         { event: '*', schema: 'public', table: 'players', filter: `room_id=eq.${roomId}` },
         scheduleRefresh,
       )
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'question_votes', filter: `room_id=eq.${roomId}` },
-        scheduleRefresh,
-      )
       .subscribe((status) => {
         if (!mounted.current) return
         setRealtimeConnected(status === 'SUBSCRIBED')

@@ -207,10 +207,32 @@ export async function runBotTick(roomId: string): Promise<void> {
   if (!(await claimSlot(roomId, delay))) return
 
   try {
-    if (work.kind === 'vote') await castVote(roomId, work)
-    else await playTurn(room, players, names, work.bot)
+    if (work.kind === 'vote') {
+      await castVote(roomId, work)
+    } else {
+      await playTurn(room, players, names, work.bot)
+      const mem = getBotMemory(roomId, work.bot.id)
+      if (mem.consecutiveErrors) {
+        setBotMemory(roomId, work.bot.id, { ...mem, consecutiveErrors: 0 })
+      }
+    }
   } catch (error) {
-    if (error instanceof ApiError) return
+    if (error instanceof ApiError) {
+      if (work.kind === 'turn') {
+        const mem = getBotMemory(roomId, work.bot.id)
+        const nextErrors = (mem.consecutiveErrors ?? 0) + 1
+        setBotMemory(roomId, work.bot.id, { ...mem, consecutiveErrors: nextErrors })
+        if (nextErrors >= 2) {
+          try {
+            await passTurn(roomId, work.bot.id)
+            setBotMemory(roomId, work.bot.id, { ...mem, consecutiveErrors: 0 })
+          } catch {
+            //
+          }
+        }
+      }
+      return
+    }
     throw error
   }
 }

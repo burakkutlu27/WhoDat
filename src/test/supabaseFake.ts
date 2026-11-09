@@ -200,9 +200,14 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
       case 'insert':
       case 'upsert': {
         const conflictColumns = this.operation === 'insert' ? ['id'] : this.conflictColumns
+        const isCompositeConflict = conflictColumns.length > 1 || conflictColumns[0] !== 'id'
 
         for (const incoming of this.payload) {
-          const record: Row = { id: (incoming.id as string) ?? randomUUID(), ...incoming }
+          const hasId = 'id' in incoming && incoming.id !== undefined
+          const record: Row =
+            isCompositeConflict || this.table === 'question_vote_responses'
+              ? { ...incoming }
+              : { id: (incoming.id as string) ?? randomUUID(), ...incoming }
           if (this.table === 'rooms' && !record.updated_at) {
             record.updated_at = (record.created_at as string) ?? new Date().toISOString()
           }
@@ -222,6 +227,9 @@ class QueryBuilder implements PromiseLike<Result<Row[] | Row | null>> {
             this.rows[existingIndex] = { ...this.rows[existingIndex], ...record }
             affected.push(this.rows[existingIndex]!)
           } else {
+            if (!hasId && this.table !== 'question_vote_responses' && this.table !== 'room_runtime') {
+              record.id = randomUUID()
+            }
             this.rows.push(record)
             affected.push(record)
           }

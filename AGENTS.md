@@ -94,11 +94,12 @@ Büyük/karmaşık bir görev geldiğinde direkt koda geçme:
 > yapısı vb.). Yukarıdaki kurallar tüm projelerde ortak, buradan sonrası
 > projeye özel.
 
-- Dil/Framework:
-- Kurulum komutu:
-- Test komutu:
-- Lint/format komutu:
-- Build/çalıştırma komutu:
+- Dil/Framework: Next.js (App Router), TypeScript, Tailwind CSS, Capacitor (Android)
+- Kurulum komutu: `npm install`
+- Test komutu: `npm test`
+- Lint/format komutu: `npm run lint`
+- Build/çalıştırma komutu: `npm run build` / `npm run dev`
+- Bilgi Grafiği & Token Tasarrufu (Graphify): Kod tabanı mimarisini, toplulukları ve çağrı yollarını anlamak için `graphify-out/GRAPH_REPORT.md` ve `graphify-out/graph.json` dosyalarından yararlan. Değişikliklerden sonra grafiği artımlı güncellemek için: `graphify update .` (token harcamaz, yerel SHA256 önbellekli).
 
 <!-- BEGIN:nextjs-agent-rules -->
 
