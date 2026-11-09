@@ -388,11 +388,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     if (!state?.room.activeVote || isBusy) return
     setIsBusy(true)
     try {
-      const result = await apiRequest<{ message: string; isResolved: boolean }>(`/api/rooms/${roomId}/vote`, {
+      const result = await apiRequest<{ message: string; isResolved: boolean; wrongAnswerPenalty?: boolean }>(`/api/rooms/${roomId}/vote`, {
         method: 'POST',
         body: { voteId: state.room.activeVote.id, answer },
       })
-      setFeedback({ tone: 'success', text: result.message })
+      setFeedback({ tone: result.wrongAnswerPenalty ? 'error' : 'success', text: result.message })
       await refresh()
     } catch (caught) {
       setFeedback({

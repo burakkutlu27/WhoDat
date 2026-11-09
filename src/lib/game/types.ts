@@ -71,6 +71,11 @@ export interface TextQuestionVote {
 /** Bot zorluk seviyesi — oda zorluk seviyesiyle aynı adlandırma. */
 export type BotLevel = DifficultyLevel
 
+export interface AssignedCharacterSummary {
+  name: string
+  status: 'solved' | 'missed' | 'passed'
+}
+
 export interface PublicPlayer {
   id: string
   nickname: string
@@ -99,6 +104,8 @@ export interface PublicPlayer {
   skippedQuestionTurn?: boolean
   /** Ortak Hedef Modu: Buzzer tahmin cooldown'ı */
   hasGuessCooldown?: boolean
+  /** Oyun sonunda (status === 'finished') oyuncunun bu maçta tahmin etmeye çalıştığı gizli karakterler */
+  assignedCharacters?: AssignedCharacterSummary[]
 }
 
 /** Takım içi not (yalnızca o takımın üyelerine gönderilir). */

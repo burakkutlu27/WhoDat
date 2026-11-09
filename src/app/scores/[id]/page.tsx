@@ -230,6 +230,38 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
             </p>
           )}
 
+          {/* Oyuncunun kendi gizli karakter(ler)i özeti */}
+          {(() => {
+            const youPlayer = state.players.find((p) => p.id === state.you.playerId)
+            const myChars = youPlayer?.assignedCharacters ?? []
+            if (myChars.length === 0) return null
+            const missedOrPassed = myChars.filter((c) => c.status !== 'solved')
+            return (
+              <div className="mt-4 inline-flex flex-wrap items-center justify-center gap-2 rounded-sketch-md border-2 border-dashed border-paper-border bg-paper-card-alt px-4 py-2.5 text-sm font-sans">
+                <span className="font-bold text-ink-faded">
+                  {missedOrPassed.length > 0 ? 'Tahmin Etmeye Çalıştığın Karakter:' : 'Çözdüğün Karakter:'}
+                </span>
+                {myChars.map((char, idx) => (
+                  <span
+                    key={idx}
+                    className={`inline-flex items-center gap-1 rounded px-2 py-0.5 font-display text-base font-bold ${
+                      char.status === 'solved'
+                        ? 'bg-pencil-green/15 text-pencil-green border border-pencil-green/30'
+                        : char.status === 'passed'
+                          ? 'bg-pencil-orange/15 text-pencil-orange border border-pencil-orange/30'
+                          : 'bg-pencil-red/15 text-pencil-red border border-pencil-red/30'
+                    }`}
+                  >
+                    <span>{char.name}</span>
+                    <span className="text-xs font-sans font-semibold">
+                      ({char.status === 'solved' ? 'Bilindi' : char.status === 'passed' ? 'Pas Geçildi' : 'Bulunamadı'})
+                    </span>
+                  </span>
+                ))}
+              </div>
+            )
+          })()}
+
           {/* Kategori ve Faz Özeti */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
             {state.room.categoryMode === 'multi_phase' ? (
@@ -571,6 +603,34 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
                               <span>Elendi (0 Puan)</span>
                             </span>
                           )}
+                        </div>
+                      )}
+
+                      {/* Oyuncunun Gizli Karakter(ler)i */}
+                      {player.assignedCharacters && player.assignedCharacters.length > 0 && (
+                        <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-xs font-sans">
+                          <span className="text-ink-faded font-semibold">Gizli Karakter:</span>
+                          {player.assignedCharacters.map((char, cIdx) => (
+                            <span
+                              key={cIdx}
+                              className={`inline-flex items-center gap-1 rounded px-2 py-0.5 font-semibold border ${
+                                char.status === 'solved'
+                                  ? 'bg-pencil-green/10 text-pencil-green border-pencil-green/30'
+                                  : char.status === 'passed'
+                                    ? 'bg-pencil-orange/10 text-pencil-orange border-pencil-orange/30'
+                                    : 'bg-pencil-red/10 text-pencil-red border-pencil-red/30'
+                              }`}
+                            >
+                              <span>
+                                {char.status === 'solved' ? '✓' : char.status === 'passed' ? '↷' : '✗'} {char.name}
+                              </span>
+                              {char.status !== 'solved' && (
+                                <span className="opacity-80">
+                                  ({char.status === 'passed' ? 'Pas' : 'Bulunamadı'})
+                                </span>
+                              )}
+                            </span>
+                          ))}
                         </div>
                       )}
 

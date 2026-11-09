@@ -9,7 +9,7 @@ import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
 import { QUESTION_BANK_SEED } from './questionBankData'
 import { registerRuntimeStores, withRoomRuntime } from './runtimeState'
-import { lookupAttributes } from './bot/knowledge'
+import { answerFor, lookupAttributes, questionIdForText } from './bot/knowledge'
 import {
   MAX_TEAMS,
   MIN_TEAMS,
@@ -27,7 +27,7 @@ import {
   type TeamConfig,
   type TeamDefinition,
 } from './teams'
-import type { AutoAssignResult, BotLevel, TeamNote, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
+import type { AssignedCharacterSummary, AutoAssignResult, BotLevel, TeamNote, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -141,6 +141,8 @@ const globalRef = globalThis as unknown as {
   __whoDat_botMemoryStore?: Map<string, Map<string, BotMemory>>
   __whoDat_teamConfigStore?: Map<string, TeamConfig>
   __whoDat_teamNotesStore?: Map<string, Map<string, TeamNote[]>>
+  __whoDat_playerCharacterHistoryStore?: Map<string, Map<string, AssignedCharacterSummary[]>>
+  __whoDat_playerPenaltyStore?: Map<string, Map<string, number>>
 }
 
 /** Botun kendi hamlelerinden hatırladıkları (hedef ismi değişince sıfırlanır). */
@@ -170,6 +172,8 @@ globalRef.__whoDat_playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStor
 globalRef.__whoDat_botMemoryStore = globalRef.__whoDat_botMemoryStore ?? new Map()
 globalRef.__whoDat_teamConfigStore = globalRef.__whoDat_teamConfigStore ?? new Map()
 globalRef.__whoDat_teamNotesStore = globalRef.__whoDat_teamNotesStore ?? new Map()
+globalRef.__whoDat_playerCharacterHistoryStore = globalRef.__whoDat_playerCharacterHistoryStore ?? new Map()
+globalRef.__whoDat_playerPenaltyStore = globalRef.__whoDat_playerPenaltyStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
 const roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore
@@ -191,6 +195,8 @@ const playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore
 const botMemoryStore = globalRef.__whoDat_botMemoryStore
 const teamConfigStore = globalRef.__whoDat_teamConfigStore
 const teamNotesStore = globalRef.__whoDat_teamNotesStore
+const playerCharacterHistoryStore = globalRef.__whoDat_playerCharacterHistoryStore
+const playerPenaltyStore = globalRef.__whoDat_playerPenaltyStore
 
 // Store'lar yalnızca instance içi önbellek; kalıcı kopya room_runtime tablosunda (bkz. runtimeState.ts).
 // Anahtar adları DB'deki JSON'da kullanıldığı için değiştirilmemeli.
@@ -215,6 +221,8 @@ registerRuntimeStores({
   botMemory: botMemoryStore,
   teams: teamConfigStore,
   teamNotes: teamNotesStore,
+  characterHistory: playerCharacterHistoryStore,
+  penalties: playerPenaltyStore,
 })
 
 /**
@@ -254,6 +262,50 @@ export function setBotMemory(roomId: string, botId: string, memory: BotMemory): 
 }
 
 export const CLASSIC_MODE_MAX_PASSES = 3 // Oyuncu başına oyun boyunca en fazla 3 isim pas geçme hakkı
+export const WRONG_ANSWER_PENALTY = 5 // Doğrulanabilir soruya yanlış cevap veren oyuncuya uygulanan puan cezası
+
+export function recordPlayerCharacter(
+  roomId: string,
+  playerId: string,
+  nameText: string,
+  status: 'solved' | 'missed' | 'passed',
+): void {
+  const clean = nameText.trim()
+  if (!clean) return
+  let roomMap = playerCharacterHistoryStore.get(roomId)
+  if (!roomMap) {
+    roomMap = new Map()
+    playerCharacterHistoryStore.set(roomId, roomMap)
+  }
+  const key = stateKey(roomId, playerId)
+  const list = roomMap.get(key) ?? []
+  const existingIdx = list.findIndex((item) => item.name.toLocaleLowerCase('tr') === clean.toLocaleLowerCase('tr'))
+  if (existingIdx >= 0) {
+    list[existingIdx] = { name: clean, status }
+  } else {
+    list.push({ name: clean, status })
+  }
+  roomMap.set(key, list)
+}
+
+export function getPlayerCharacterHistory(roomId: string, playerId: string): AssignedCharacterSummary[] {
+  return playerCharacterHistoryStore.get(roomId)?.get(stateKey(roomId, playerId)) ?? []
+}
+
+export function getPlayerPenalty(roomId: string, playerId: string): number {
+  return playerPenaltyStore.get(roomId)?.get(playerId) ?? 0
+}
+
+export function addPlayerPenalty(roomId: string, playerId: string, points: number): number {
+  let map = playerPenaltyStore.get(roomId)
+  if (!map) {
+    map = new Map()
+    playerPenaltyStore.set(roomId, map)
+  }
+  const next = (map.get(playerId) ?? 0) + points
+  map.set(playerId, next)
+  return next
+}
 
 export function getPlayerPassRights(roomId: string, playerId: string): number {
   const map = playerPassRightsStore.get(roomId)
@@ -344,6 +396,7 @@ export async function assignNewClassicName(
 
   const picked = pool[Math.floor(Math.random() * pool.length)]!
   setPlayerRoundNameId(roomId, player.id, picked.id)
+  recordPlayerCharacter(roomId, player.id, picked.name_text, 'missed')
   setPlayerLives(roomId, player.id, TOTAL_LIVES_PER_GAME)
   setPlayerClassicSolved(roomId, player.id, false)
   try {
@@ -982,6 +1035,7 @@ export function assignNamesForRound(
       usedInThisRound.add(candidate.id)
       assignments.set(player.id, candidate.id)
       setPlayerRoundNameId(roomId, player.id, candidate.id)
+      recordPlayerCharacter(roomId, player.id, candidate.name_text, 'missed')
     }
   }
 
@@ -1036,6 +1090,8 @@ export function clearRoomMemoryState(roomId: string): void {
   botMemoryStore.delete(roomId)
   teamConfigStore.delete(roomId)
   teamNotesStore.delete(roomId)
+  playerCharacterHistoryStore.delete(roomId)
+  playerPenaltyStore.delete(roomId)
 }
 
 export async function closeExpiredRoom(roomId: string): Promise<void> {
@@ -1810,17 +1866,33 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     const speedScore = speed.roundScores.reduce((sum, s) => sum + s, 0)
     const isPlayerHost = player.is_host ?? false
     const isClassicSolved = isPlayerClassicSolved(roomId, player.id)
+    const penaltyPoints = getPlayerPenalty(roomId, player.id)
 
     let score: number
     if (isSpeed) {
-      score = speed.roundScores.length > 0 ? speedScore : (player.score ?? 0)
+      score = (speed.roundScores.length > 0 ? speedScore : (player.score ?? 0)) - (speed.roundScores.length > 0 ? penaltyPoints : 0)
     } else if (isPersistent) {
-      score = pData.roundScore
+      score = pData.roundScore - penaltyPoints
     } else {
       score = player.score ?? 0
     }
 
     const hasPenalty = isSharedTarget ? (sharedData.playerPenalties.get(player.id) ?? false) : false
+
+    let assignedCharacters: AssignedCharacterSummary[] | undefined
+    if (room.status === 'finished' && !isSharedTarget) {
+      const history = getPlayerCharacterHistory(roomId, player.id)
+      if (history.length > 0) {
+        assignedCharacters = history
+      } else {
+        const roundNameId = getPlayerRoundNameId(roomId, player.id)
+        const roundName = roundNameId ? names.find((n) => n.id === roundNameId) : null
+        if (roundName) {
+          const solved = isClassic ? isClassicSolved : isPersistent ? pData.nameSolved : score > 0
+          assignedCharacters = [{ name: roundName.name_text, status: solved ? 'solved' : 'missed' }]
+        }
+      }
+    }
 
     return {
       id: player.id,
@@ -1841,11 +1913,12 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       questionBudgetRemaining: isPersistent ? pData.questionBudgetRemaining : undefined,
       passRightsRemaining: isClassic ? getPlayerPassRights(roomId, player.id) : undefined,
       nameSolved: isClassic ? isClassicSolved : isPersistent ? pData.nameSolved : undefined,
-      persistentScore: isPersistent ? pData.roundScore : undefined,
+      persistentScore: isPersistent ? pData.roundScore - penaltyPoints : undefined,
       // Ortak Hedef Modu alanları
       isReferee: isSharedTarget ? isPlayerHost : undefined,
       skippedQuestionTurn: isSharedTarget ? hasPenalty : undefined,
       hasGuessCooldown: isSharedTarget ? hasPenalty : undefined,
+      assignedCharacters,
     }
   })
 
@@ -2451,6 +2524,8 @@ export async function startGame(roomId: string, playerId: string) {
   }
   clearRoomSpeedData(roomId)
   clearRoomPersistentData(roomId)
+  playerCharacterHistoryStore.delete(roomId)
+  playerPenaltyStore.delete(roomId)
 
   await admin
     .from('players')
@@ -2834,6 +2909,7 @@ export async function transitionToNextPhase(
   const firstPlayer = players[0]!
   const availableFirstName = newAssignedNames.find((n) => n.submitted_by !== firstPlayer.id) || newAssignedNames[0]!
   setPlayerRoundNameId(room.id, firstPlayer.id, availableFirstName.id)
+  recordPlayerCharacter(room.id, firstPlayer.id, availableFirstName.name_text, 'missed')
 
   const currentRound = (room.game_round ?? 1) + 1
 
@@ -2958,7 +3034,10 @@ async function advanceTurn(
     if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
       const candidate = names.find((n) => !writtenByOwnSide(room.id, n, nextPlayer.id)) || names[0]
       nextNameId = candidate?.id ?? null
-      if (nextNameId) setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+      if (nextNameId && candidate) {
+        setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+        recordPlayerCharacter(room.id, nextPlayer.id, candidate.name_text, 'missed')
+      }
     }
 
     const { data, error } = await admin
@@ -3008,7 +3087,10 @@ async function advanceTurn(
     if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
       const candidate = names.find((n) => !writtenByOwnSide(room.id, n, nextPlayer.id)) || names[0]
       nextNameId = candidate?.id ?? null
-      if (nextNameId) setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+      if (nextNameId && candidate) {
+        setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+        recordPlayerCharacter(room.id, nextPlayer.id, candidate.name_text, 'missed')
+      }
     }
 
     const { data, error } = await admin
@@ -3185,9 +3267,15 @@ async function handleSpeedModeAskQuestion(
   const newQuestions = incrementQuestionCount(room.id, playerId)
   const reachedLimit = newQuestions >= SPEED_MODE_MAX_QUESTIONS
 
+  const currentNameId = getPlayerRoundNameId(room.id, playerId) || room.current_identity_id
+  const currentNameText = currentNameId ? (names.find((n) => n.id === currentNameId)?.name_text ?? null) : null
+
   if (reachedLimit) {
+    if (currentNameText) {
+      recordPlayerCharacter(room.id, playerId, currentNameText, 'missed')
+    }
     const updatedRoundScores = [...speedData.roundScores, 0]
-    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0)
+    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0) - getPlayerPenalty(room.id, playerId)
     setPlayerSpeedData(room.id, playerId, {
       questionsThisRound: newQuestions,
       roundScores: updatedRoundScores,
@@ -3214,7 +3302,7 @@ async function handleSpeedModeAskQuestion(
   const updatedPlayers = players.map((p) => {
     if (p.id !== playerId) return p
     const speed = getPlayerSpeedData(room.id, playerId)
-    const totalScore = speed.roundScores.reduce((sum, s) => sum + s, 0)
+    const totalScore = speed.roundScores.reduce((sum, s) => sum + s, 0) - getPlayerPenalty(room.id, playerId)
     return {
       ...p,
       score: totalScore,
@@ -3232,7 +3320,7 @@ async function handleSpeedModeAskQuestion(
   }).length
 
   const msg = reachedLimit
-    ? '20 soru limitine ulaşıldı! Bu turdan 0 puan aldınız.'
+    ? `20 soru limitine ulaşıldı!${currentNameText ? ` Gizli karakteriniz "${currentNameText}" idi.` : ''} Bu turdan 0 puan aldınız.`
     : remainingUnfinished <= 1
       ? `Sorunuz kaydedildi (Soru: ${newQuestions}). Sıra sizde devam ediyor.`
       : `Sorunuz kaydedildi (Soru: ${newQuestions}). Sıra bir sonraki oyuncuya geçti.`
@@ -3259,10 +3347,11 @@ async function handleSpeedModeGuess(
 
   if (isCorrect) {
     // Doğru tahmin! Sorulan soru sayısına göre puan hesapla
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'solved')
     const qCount = speedData.questionsThisRound
     const roundScore = calculateSpeedScore(qCount)
     const updatedRoundScores = [...speedData.roundScores, roundScore]
-    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0)
+    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0) - getPlayerPenalty(room.id, playerId)
 
     setPlayerSpeedData(room.id, playerId, {
       questionsThisRound: qCount,
@@ -3316,8 +3405,11 @@ async function handleSpeedModeGuess(
   // Yanlış tahmin: INV-3 uyarınca soru sayısını 1 artır (host dahil HERKES için)
   const newQuestions = incrementQuestionCount(room.id, playerId)
   const reachedLimit = newQuestions >= SPEED_MODE_MAX_QUESTIONS
+  if (reachedLimit) {
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'missed')
+  }
   const updatedRoundScores = reachedLimit ? [...speedData.roundScores, 0] : speedData.roundScores
-  const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0)
+  const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0) - getPlayerPenalty(room.id, playerId)
 
   setPlayerSpeedData(room.id, playerId, {
     questionsThisRound: newQuestions,
@@ -3365,7 +3457,7 @@ async function handleSpeedModeGuess(
   }).length
 
   const msg = reachedLimit
-    ? 'Yanlış tahmin ve 20 soru limitine ulaşıldı! Bu turdan 0 puan aldınız.'
+    ? `Yanlış tahmin ve 20 soru limitine ulaşıldı! Gizli karakteriniz "${targetNameText}" idi. Bu turdan 0 puan aldınız.`
     : remainingUnfinished <= 1
       ? 'Yanlış tahmin! Sıra sizde devam ediyor.'
       : 'Yanlış tahmin! Sıra diğer oyuncuya geçti.'
@@ -3464,7 +3556,9 @@ async function handlePersistentModeGuess(
 
   if (isCorrect) {
     // Doğru tahmin — puan hesapla (az soru = yüksek puan)
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'solved')
     const roundScore = calculatePersistentScore(pData.totalQuestionsUsed)
+    const finalScore = roundScore - getPlayerPenalty(room.id, playerId)
     setPlayerPersistentData(room.id, playerId, {
       ...pData,
       nameSolved: true,
@@ -3473,7 +3567,7 @@ async function handlePersistentModeGuess(
 
     // DB'ye puanı yaz
     try {
-      await admin.from('players').update({ score: roundScore }).eq('id', playerId)
+      await admin.from('players').update({ score: finalScore }).eq('id', playerId)
     } catch {
       await admin.rpc('increment_player_score', {
         p_player_id: playerId,
@@ -3501,14 +3595,15 @@ async function handlePersistentModeGuess(
   setPlayerLives(room.id, playerId, newLives)
 
   if (newLives <= 0) {
-    // Elendi — puan 0
+    // Elendi — puan 0 (varsa ceza düşülür)
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'missed')
     setPlayerPersistentData(room.id, playerId, {
       ...pData,
       roundScore: 0,
     })
 
     try {
-      await admin.from('players').update({ score: 0 }).eq('id', playerId)
+      await admin.from('players').update({ score: -getPlayerPenalty(room.id, playerId) }).eq('id', playerId)
     } catch {
       // ignore
     }
@@ -3517,7 +3612,7 @@ async function handlePersistentModeGuess(
 
     return {
       correct: false,
-      message: 'Yanlış tahmin! Can hakkınız bitti ve oyundan elendiniz.',
+      message: `Yanlış tahmin! Can hakkınız bitti ve oyundan elendiniz. Gizli karakteriniz: "${targetNameText}" idi.`,
       livesLeft: 0,
       turnPassed: true,
       finished: outcome.finished,
@@ -3874,11 +3969,16 @@ async function handleClassicModeGiveUp(
     }
   }
 
+  let passedNameText: string | null = null
   if (currentNameId) {
     retireClassicName(room.id, currentNameId)
     await supabaseAdmin().from('names').update({ used_in_round: 1, assigned_to: null }).eq('id', currentNameId)
     const foundName = names.find((n) => n.id === currentNameId)
-    if (foundName) foundName.used_in_round = 1
+    if (foundName) {
+      foundName.used_in_round = 1
+      passedNameText = foundName.name_text
+      recordPlayerCharacter(room.id, playerId, foundName.name_text, 'passed')
+    }
   }
 
   // Not defterini / ipucu kartını temizle (yeni isme geçiliyor)
@@ -3890,10 +3990,12 @@ async function handleClassicModeGiveUp(
 
   const outcome = await advanceTurn(room, players, freshNames)
 
+  const passedReveal = passedNameText ? ` (Pas geçilen gizli karakter: "${passedNameText}")` : ''
+
   return {
     message: nextNameId
-      ? `İsmi pas geçtiniz (Kalan Pas Hakkı: ${newPassRights}/3). Yeni bir gizli isim atandı (3 deneme hakkı). Sıra diğer oyuncuya geçti.`
-      : `İsmi pas geçtiniz (Kalan Pas Hakkı: ${newPassRights}/3). Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`,
+      ? `İsmi pas geçtiniz${passedReveal} — Kalan Pas Hakkı: ${newPassRights}/3. Yeni bir gizli isim atandı (3 deneme hakkı). Sıra diğer oyuncuya geçti.`
+      : `İsmi pas geçtiniz${passedReveal} — Kalan Pas Hakkı: ${newPassRights}/3. Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`,
     livesLeft: TOTAL_LIVES_PER_GAME,
     passRightsLeft: newPassRights,
     turnPassed: true,
@@ -3928,6 +4030,7 @@ async function handleClassicModeGuess(
 
   if (isCorrect) {
     // Doğru tahmin! Bu isim başarıyla çözüldü, emekliye ayrılır (+10 puan)
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'solved')
     if (currentNameId) {
       retireClassicName(room.id, currentNameId)
       await supabaseAdmin().from('names').update({ used_in_round: 1, assigned_to: null }).eq('id', currentNameId)
@@ -3979,6 +4082,7 @@ async function handleClassicModeGuess(
 
   if (newLives <= 0) {
     // Deneme hakkı tükendi -> Bu isim elendi, yeni isim atanır (deneme hakkı 3'e resetlenir)
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'missed')
     if (currentNameId) {
       retireClassicName(room.id, currentNameId)
       await supabaseAdmin().from('names').update({ used_in_round: 1, assigned_to: null }).eq('id', currentNameId)
@@ -3997,8 +4101,8 @@ async function handleClassicModeGuess(
     return {
       correct: false,
       message: nextNameId
-        ? '3 deneme hakkınız bitti, bu isim elendi. Size yeni bir gizli isim atandı (3 hak). Sıra diğer oyuncuya geçti.'
-        : '3 deneme hakkınız bitti, bu isim elendi ve havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.',
+        ? `3 deneme hakkınız bitti! Bilemediğiniz gizli karakter: "${targetNameText}". Size yeni bir gizli isim atandı (3 hak). Sıra diğer oyuncuya geçti.`
+        : `3 deneme hakkınız bitti! Bilemediğiniz gizli karakter: "${targetNameText}". Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`,
       livesLeft: TOTAL_LIVES_PER_GAME,
       turnPassed: true,
       finished: outcome.finished,
@@ -4218,7 +4322,7 @@ export async function submitTextVote(
   answer: boolean,
 ) {
   const players = await loadPlayers(roomId)
-  requireMembership(players, voterPlayerId)
+  const voter = requireMembership(players, voterPlayerId)
 
   let vote = await getActiveTextVote(roomId, players)
   if (!vote || vote.id !== voteId) {
@@ -4246,11 +4350,12 @@ export async function submitTextVote(
     throw conflict('vote_closed', 'Bu oylama oturumu sona ermiştir.')
   }
 
+  const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
+  const gameMode = getRoomMode(roomId, room.game_mode)
   // Israrcı Mod'da oylama sonucu sırayı devretmez; oyuncu bütçesiyle sormaya devam eder.
-  const keepsTurnAfterVote = getRoomMode(roomId, (await loadRoom(roomId)).game_mode) === 'persistent'
+  const keepsTurnAfterVote = gameMode === 'persistent'
 
   if (Date.now() >= vote.closesAt) {
-    const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
     const resolvedClue = await resolveTextVoteInternal(roomId, voteId)
     if (resolvedClue && resolvedClue.majority !== 'yes' && room.status === 'playing' && !keepsTurnAfterVote) {
       await advanceTurn(room, players, names)
@@ -4266,7 +4371,50 @@ export async function submitTextVote(
     throw forbidden('not_eligible_voter', 'Bu soru için oy kullanma yetkiniz bulunmamaktadır.')
   }
 
-  vote.responses.set(voterPlayerId, answer)
+  const alreadyVoted = vote.responses.has(voterPlayerId)
+
+  // Sorulan sorunun gerçek (doğrulanabilir) cevabı biliniyorsa yanlış cevaba ceza uygula
+  const askerTargetId =
+    getPlayerRoundNameId(roomId, vote.askerId) ||
+    (room.current_player_id === vote.askerId ? room.current_identity_id : null) ||
+    names.find((n) => n.assigned_to === vote.askerId && (n.used_in_round == null))?.id ||
+    null
+  const askerTargetName = askerTargetId
+    ? (names.find((n) => n.id === askerTargetId)?.name_text ?? null)
+    : null
+  const questionId = questionIdForText(vote.questionText)
+  const expectedAnswer = questionId && askerTargetName ? answerFor(questionId, askerTargetName) : null
+
+  let effectiveAnswer = answer
+  let wrongAnswerPenalty = false
+  let penaltyNotice = ''
+
+  if (!voter.is_bot && expectedAnswer !== null && answer !== expectedAnswer) {
+    wrongAnswerPenalty = true
+    effectiveAnswer = expectedAnswer
+    const expectedLabel = expectedAnswer ? 'EVET' : 'HAYIR'
+    penaltyNotice = `⚠️ Yanlış cevap verdiniz! "${askerTargetName}" için doğru cevap "${expectedLabel}" olmalıydı (-${WRONG_ANSWER_PENALTY} Puan Ceza uygulandı, doğru cevap kaydedildi). `
+
+    if (!alreadyVoted) {
+      const totalPenalty = addPlayerPenalty(roomId, voterPlayerId, WRONG_ANSWER_PENALTY)
+      let newScore = (voter.score ?? 0) - WRONG_ANSWER_PENALTY
+      if (gameMode === 'speed') {
+        const speed = getPlayerSpeedData(roomId, voterPlayerId)
+        newScore = speed.roundScores.reduce((sum, s) => sum + s, 0) - totalPenalty
+      } else if (gameMode === 'persistent') {
+        const pData = getPlayerPersistentData(roomId, voterPlayerId)
+        newScore = pData.roundScore - totalPenalty
+      }
+      voter.score = newScore
+      try {
+        await supabaseAdmin().from('players').update({ score: newScore }).eq('id', voterPlayerId)
+      } catch {
+        // DB hatasında memory store üzerinden devam
+      }
+    }
+  }
+
+  vote.responses.set(voterPlayerId, effectiveAnswer)
 
   // DB'ye oyu kaydet
   try {
@@ -4274,7 +4422,7 @@ export async function submitTextVote(
       {
         vote_id: voteId,
         responder_player_id: voterPlayerId,
-        answer,
+        answer: effectiveAnswer,
         responded_at: new Date().toISOString(),
       },
       { onConflict: 'vote_id,responder_player_id' },
@@ -4289,7 +4437,6 @@ export async function submitTextVote(
   let turnPassed = false
 
   if (vote.responses.size >= vote.eligibleVoterIds.size) {
-    const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
     clueCardItem = await resolveTextVoteInternal(roomId, voteId)
     isResolved = true
 
@@ -4313,16 +4460,18 @@ export async function submitTextVote(
     }
   }
 
-  const message = clueCardItem
+  const baseMessage = clueCardItem
     ? `Cevap: ${clueCardItem.yesCount} Evet, ${clueCardItem.noCount} Hayır (${clueCardItem.majority === 'yes' ? 'EVET' : clueCardItem.majority === 'no' ? 'HAYIR' : 'EŞİTLİK'}).${turnPassed ? ' Sıra bir sonraki oyuncuya geçti.' : ''}`
     : 'Oyunuz kaydedildi. Diğer oyuncuların oyları bekleniyor...'
 
   return {
-    message,
+    message: `${penaltyNotice}${baseMessage}`,
     hasVoted: true,
     isResolved,
     clueCardItem,
     turnPassed,
+    wrongAnswerPenalty,
+    penaltyPoints: wrongAnswerPenalty ? WRONG_ANSWER_PENALTY : 0,
   }
 }
 
@@ -4345,6 +4494,8 @@ export async function resetGame(roomId: string, playerId: string) {
   playerClassicSolvedStore.delete(roomId)
   playerPassRightsStore.delete(roomId)
   classicRetiredNamesStore.delete(roomId)
+  playerCharacterHistoryStore.delete(roomId)
+  playerPenaltyStore.delete(roomId)
 
   const categoryData = getRoomCategoryData(roomId)
   categoryData.currentPhase = 1
