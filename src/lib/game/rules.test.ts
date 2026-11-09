@@ -4,11 +4,9 @@ import {
   ROOM_CODE_LENGTH,
   calculatePersistentScore,
   calculateSpeedScore,
-  distributeNames,
   estimatePersistentScore,
   estimateSpeedScore,
   generateRoomCode,
-  selectNameForPlayer,
   selectNextPlayer,
   selectNextSharedTargetAsker,
 } from './rules'
@@ -31,58 +29,17 @@ describe('selectNextPlayer', () => {
     expect(selectNextPlayer(players, null)?.id).toBe('p1')
   })
 
+  it('mevcut oyuncu activePlayerIds kümesinde değilse bile listedeki bir sonraki aktif oyuncuyu seçer', () => {
+    const active = new Set(['p1', 'p3'])
+    expect(selectNextPlayer(players, 'p2', active)?.id).toBe('p3')
+  })
+
   it('oyuncu kalmamışsa null döner', () => {
     expect(selectNextPlayer([], 'p1')).toBeNull()
   })
 
   it('tek oyunculu odada aynı oyuncuda kalır', () => {
     expect(selectNextPlayer([{ id: 'p1' }], 'p1')?.id).toBe('p1')
-  })
-})
-
-describe('selectNameForPlayer', () => {
-  const names = [
-    { id: 'n1', submitted_by: 'p1' },
-    { id: 'n2', submitted_by: 'p2' },
-    { id: 'n3', submitted_by: 'p3' },
-  ]
-
-  it('oyuncunun kendi yazdığı ismi seçmez', () => {
-    // random() = 0 ilk elemanı seçer; p1 elendiği için n2 kalmalı.
-    expect(selectNameForPlayer(names, 'p1', () => 0)?.id).toBe('n2')
-  })
-
-  it('yalnızca kendi isimleri kaldıysa oyunu kilitlemez', () => {
-    const onlyOwn = [{ id: 'n1', submitted_by: 'p1' }]
-    expect(selectNameForPlayer(onlyOwn, 'p1', () => 0)?.id).toBe('n1')
-  })
-
-  it('hiç isim yoksa null döner', () => {
-    expect(selectNameForPlayer([], 'p1')).toBeNull()
-  })
-})
-
-describe('distributeNames', () => {
-  const names = [{ id: 'n1' }, { id: 'n2' }, { id: 'n3' }, { id: 'n4' }, { id: 'n5' }]
-
-  it('her ismi tam olarak bir kez dağıtır', () => {
-    const result = distributeNames(names, players, () => 0)
-    expect(result).toHaveLength(names.length)
-    expect(new Set(result.map((entry) => entry.nameId)).size).toBe(names.length)
-  })
-
-  it('isimleri oyunculara dengeli dağıtır', () => {
-    const result = distributeNames(names, players, () => 0)
-    const counts = players.map(
-      (player) => result.filter((entry) => entry.playerId === player.id).length,
-    )
-    // 5 isim / 3 oyuncu => kimse diğerinden birden fazla isim fazla almamalı.
-    expect(Math.max(...counts) - Math.min(...counts)).toBeLessThanOrEqual(1)
-  })
-
-  it('oyuncu ya da isim yoksa boş döner', () => {
-    expect(distributeNames(names, [], () => 0)).toEqual([])
-    expect(distributeNames([], players, () => 0)).toEqual([])
   })
 })
 

@@ -95,6 +95,31 @@ const checks = [
     pass: (r) => r.status >= 400 || r.body === '[]',
   },
   {
+    label: 'rooms.room_code okunamıyor (açık oda kodları listelenemez)',
+    run: () => request('GET', 'rooms?select=room_code&limit=1'),
+    pass: (r) => r.status >= 400,
+  },
+  {
+    label: 'players.device_id okunamıyor (cihaz kimliği sızmaz)',
+    run: () => request('GET', 'players?select=device_id&limit=1'),
+    pass: (r) => r.status >= 400,
+  },
+  {
+    label: 'question_votes okunamıyor',
+    run: () => request('GET', 'question_votes?select=id&limit=1'),
+    pass: (r) => r.status !== 200 || r.body === '[]',
+  },
+  {
+    label: 'question_vote_responses yazılamıyor',
+    run: () =>
+      request('POST', 'question_vote_responses', {
+        vote_id: crypto.randomUUID(),
+        responder_player_id: crypto.randomUUID(),
+        answer: true,
+      }),
+    pass: (r) => r.status >= 400,
+  },
+  {
     label: 'rooms tablosu silinemiyor',
     run: () => request('DELETE', 'rooms?status=eq.__nonexistent__'),
     pass: (r) => r.status >= 400,

@@ -112,49 +112,21 @@ export function selectNextPlayer<T extends PlayerLike>(
   if (candidates.length === 0) return null
 
   const currentIndex = candidates.findIndex((player) => player.id === currentPlayerId)
-  if (currentIndex === -1) return candidates[0]!
-
-  return candidates[(currentIndex + 1) % candidates.length]!
-}
-
-/**
- * Oyuncuya tahmin ettirilecek ismi seçer.
- *
- * Oyuncunun kendi yazdığı ismi tahmin etmesi anlamsız olacağı için önce başkalarının
- * isimleri denenir. Yalnızca kendi isimleri kalmışsa oyunun kilitlenmemesi için
- * onlardan biri seçilir.
- */
-export function selectNameForPlayer<T extends NameLike>(
-  availableNames: T[],
-  playerId: string,
-  random: () => number = Math.random,
-): T | null {
-  if (availableNames.length === 0) return null
-
-  const fromOthers = availableNames.filter((name) => name.submitted_by !== playerId)
-  const pool = fromOthers.length > 0 ? fromOthers : availableNames
-
-  return pool[Math.floor(random() * pool.length)] ?? null
-}
-
-/** İsimleri oyunculara round-robin ile dağıtır. */
-export function distributeNames<TName extends { id: string }, TPlayer extends PlayerLike>(
-  names: TName[],
-  players: TPlayer[],
-  random: () => number = Math.random,
-): Array<{ nameId: string; playerId: string }> {
-  if (players.length === 0 || names.length === 0) return []
-
-  const shuffled = [...names]
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1))
-    ;[shuffled[i], shuffled[j]] = [shuffled[j]!, shuffled[i]!]
+  if (currentIndex !== -1) {
+    return candidates[(currentIndex + 1) % candidates.length]!
   }
 
-  return shuffled.map((name, index) => ({
-    nameId: name.id,
-    playerId: players[index % players.length]!.id,
-  }))
+  if (activePlayerIds && currentPlayerId) {
+    const fullIndex = players.findIndex((player) => player.id === currentPlayerId)
+    if (fullIndex !== -1) {
+      for (let offset = 1; offset <= players.length; offset++) {
+        const candidate = players[(fullIndex + offset) % players.length]!
+        if (activePlayerIds.has(candidate.id)) return candidate
+      }
+    }
+  }
+
+  return candidates[0]!
 }
 
 /**

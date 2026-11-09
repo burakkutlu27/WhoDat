@@ -27,15 +27,3 @@ export function getDeviceId(): string {
     return ''
   }
 }
-
-/**
- * Cihaz kimliğinin mevcut olup olmadığını kontrol eder.
- */
-export function hasDeviceId(): boolean {
-  if (typeof window === 'undefined') return false
-  try {
-    return Boolean(localStorage.getItem(DEVICE_ID_STORAGE_KEY))
-  } catch {
-    return false
-  }
-}

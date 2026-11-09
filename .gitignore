@@ -83,3 +83,9 @@ test-results/
 playwright-report/
 blob-report/
 playwright/.cache/
+
+# Graphify Knowledge Graph
+graphify-out/
+
+# Graphify Knowledge Graph
+graphify-out/

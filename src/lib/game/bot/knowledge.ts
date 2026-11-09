@@ -106,10 +106,13 @@ const EVALUATORS: Record<string, Evaluator> = {
 export const ANSWERABLE_QUESTION_IDS = Object.keys(EVALUATORS).filter((id) => id !== 'qb-16' && id !== 'qb-17')
 
 const questionIdByText = new Map(QUESTION_BANK_SEED.map((question) => [question.textTr, question.id]))
+const questionIdByNormalizedText = new Map(
+  QUESTION_BANK_SEED.map((question) => [normalizeGuess(question.textTr), question.id]),
+)
 
 /** İpucu kartı soru metnini saklıyor; metinden bankadaki soruya dön. Özel sorular null. */
 export function questionIdForText(questionText: string): string | null {
-  return questionIdByText.get(questionText) ?? null
+  return questionIdByText.get(questionText) ?? questionIdByNormalizedText.get(normalizeGuess(questionText)) ?? null
 }
 
 /**

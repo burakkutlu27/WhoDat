@@ -8,8 +8,8 @@ import { supabaseAdmin } from '../supabaseAdmin'
 import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
 import { fuzzyMatch } from './matching'
 import { QUESTION_BANK_SEED } from './questionBankData'
-import { registerRuntimeStores, withRoomRuntime } from './runtimeState'
-import { lookupAttributes } from './bot/knowledge'
+import { evictRoomRuntime, registerRuntimeStores, withRoomRuntime } from './runtimeState'
+import { answerFor, lookupAttributes, questionIdForText } from './bot/knowledge'
 import {
   MAX_TEAMS,
   MIN_TEAMS,
@@ -27,7 +27,7 @@ import {
   type TeamConfig,
   type TeamDefinition,
 } from './teams'
-import type { AutoAssignResult, BotLevel, TeamNote, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
+import type { AssignedCharacterSummary, AutoAssignResult, BotLevel, TeamNote, ClueCardItem, CommunicationMode, DeviceStats, DifficultyLevel, FamousPerson, FamousPersonCategory, GameMode, GameState, GuessResult, LobbyCategoryMode, NameSuggestion, PublicPlayer, RecentGameItem, SharedQuestionItem, SuggestNamePayload, TextQuestionVote } from './types'
 import {
   DEFAULT_SHARED_TARGET_ROUNDS,
   DEFAULT_SPEED_ROUNDS,
@@ -141,6 +141,8 @@ const globalRef = globalThis as unknown as {
   __whoDat_botMemoryStore?: Map<string, Map<string, BotMemory>>
   __whoDat_teamConfigStore?: Map<string, TeamConfig>
   __whoDat_teamNotesStore?: Map<string, Map<string, TeamNote[]>>
+  __whoDat_playerCharacterHistoryStore?: Map<string, Map<string, AssignedCharacterSummary[]>>
+  __whoDat_playerPenaltyStore?: Map<string, Map<string, number>>
 }
 
 /** Botun kendi hamlelerinden hatırladıkları (hedef ismi değişince sıfırlanır). */
@@ -148,6 +150,8 @@ export interface BotMemory {
   /** Botun o an çözmeye çalıştığı ismin kimliği; değişince hafıza sıfırlanır. */
   targetKey: string | null
   wrongGuesses: string[]
+  /** Ardışık başarısız hamle sayısı; botun sonsuz döngüde takılmasını önler. */
+  consecutiveErrors?: number
 }
 
 globalRef.__whoDat_roomModeStore = globalRef.__whoDat_roomModeStore ?? new Map()
@@ -170,6 +174,8 @@ globalRef.__whoDat_playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStor
 globalRef.__whoDat_botMemoryStore = globalRef.__whoDat_botMemoryStore ?? new Map()
 globalRef.__whoDat_teamConfigStore = globalRef.__whoDat_teamConfigStore ?? new Map()
 globalRef.__whoDat_teamNotesStore = globalRef.__whoDat_teamNotesStore ?? new Map()
+globalRef.__whoDat_playerCharacterHistoryStore = globalRef.__whoDat_playerCharacterHistoryStore ?? new Map()
+globalRef.__whoDat_playerPenaltyStore = globalRef.__whoDat_playerPenaltyStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
 const roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore
@@ -191,6 +197,8 @@ const playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore
 const botMemoryStore = globalRef.__whoDat_botMemoryStore
 const teamConfigStore = globalRef.__whoDat_teamConfigStore
 const teamNotesStore = globalRef.__whoDat_teamNotesStore
+const playerCharacterHistoryStore = globalRef.__whoDat_playerCharacterHistoryStore
+const playerPenaltyStore = globalRef.__whoDat_playerPenaltyStore
 
 // Store'lar yalnızca instance içi önbellek; kalıcı kopya room_runtime tablosunda (bkz. runtimeState.ts).
 // Anahtar adları DB'deki JSON'da kullanıldığı için değiştirilmemeli.
@@ -215,6 +223,8 @@ registerRuntimeStores({
   botMemory: botMemoryStore,
   teams: teamConfigStore,
   teamNotes: teamNotesStore,
+  characterHistory: playerCharacterHistoryStore,
+  penalties: playerPenaltyStore,
 })
 
 /**
@@ -254,6 +264,50 @@ export function setBotMemory(roomId: string, botId: string, memory: BotMemory): 
 }
 
 export const CLASSIC_MODE_MAX_PASSES = 3 // Oyuncu başına oyun boyunca en fazla 3 isim pas geçme hakkı
+export const WRONG_ANSWER_PENALTY = 5 // Doğrulanabilir soruya yanlış cevap veren oyuncuya uygulanan puan cezası
+
+export function recordPlayerCharacter(
+  roomId: string,
+  playerId: string,
+  nameText: string,
+  status: 'solved' | 'missed' | 'passed',
+): void {
+  const clean = nameText.trim()
+  if (!clean) return
+  let roomMap = playerCharacterHistoryStore.get(roomId)
+  if (!roomMap) {
+    roomMap = new Map()
+    playerCharacterHistoryStore.set(roomId, roomMap)
+  }
+  const key = stateKey(roomId, playerId)
+  const list = roomMap.get(key) ?? []
+  const existingIdx = list.findIndex((item) => item.name.toLocaleLowerCase('tr') === clean.toLocaleLowerCase('tr'))
+  if (existingIdx >= 0) {
+    list[existingIdx] = { name: clean, status }
+  } else {
+    list.push({ name: clean, status })
+  }
+  roomMap.set(key, list)
+}
+
+export function getPlayerCharacterHistory(roomId: string, playerId: string): AssignedCharacterSummary[] {
+  return playerCharacterHistoryStore.get(roomId)?.get(stateKey(roomId, playerId)) ?? []
+}
+
+export function getPlayerPenalty(roomId: string, playerId: string): number {
+  return playerPenaltyStore.get(roomId)?.get(playerId) ?? 0
+}
+
+export function addPlayerPenalty(roomId: string, playerId: string, points: number): number {
+  let map = playerPenaltyStore.get(roomId)
+  if (!map) {
+    map = new Map()
+    playerPenaltyStore.set(roomId, map)
+  }
+  const next = (map.get(playerId) ?? 0) + points
+  map.set(playerId, next)
+  return next
+}
 
 export function getPlayerPassRights(roomId: string, playerId: string): number {
   const map = playerPassRightsStore.get(roomId)
@@ -344,6 +398,7 @@ export async function assignNewClassicName(
 
   const picked = pool[Math.floor(Math.random() * pool.length)]!
   setPlayerRoundNameId(roomId, player.id, picked.id)
+  recordPlayerCharacter(roomId, player.id, picked.name_text, 'missed')
   setPlayerLives(roomId, player.id, TOTAL_LIVES_PER_GAME)
   setPlayerClassicSolved(roomId, player.id, false)
   try {
@@ -617,10 +672,15 @@ export async function getPlayerClueCardDb(roomId: string, playerId: string, play
   }
 }
 
-export async function getActiveTextVote(roomId: string, players?: PlayerRow[]): Promise<TextQuestionVoteInternal | null> {
+export async function getActiveTextVote(
+  roomId: string,
+  players?: PlayerRow[],
+  options?: { resolveIfExpired?: boolean },
+): Promise<TextQuestionVoteInternal | null> {
+  const resolveIfExpired = options?.resolveIfExpired ?? true
   try {
     const admin = supabaseAdmin()
-    const { data: dbVote } = await admin
+    const { data: dbVote, error: dbVoteErr } = await admin
       .from('question_votes')
       .select()
       .eq('room_id', roomId)
@@ -628,6 +688,8 @@ export async function getActiveTextVote(roomId: string, players?: PlayerRow[]): 
       .order('created_at', { ascending: false })
       .limit(1)
       .maybeSingle()
+
+    if (dbVoteErr) throw dbVoteErr
 
     if (!dbVote) {
       roomActiveVoteStore.delete(roomId)
@@ -637,15 +699,17 @@ export async function getActiveTextVote(roomId: string, players?: PlayerRow[]): 
     const openedAtTime = dbVote.opened_at ? new Date(dbVote.opened_at).getTime() : Date.now()
     const closesAtTime = dbVote.closes_at ? new Date(dbVote.closes_at).getTime() : openedAtTime + TEXT_VOTE_DURATION_MS
 
-    if (Date.now() >= closesAtTime) {
+    if (resolveIfExpired && Date.now() >= closesAtTime) {
       await resolveTextVoteInternal(roomId, dbVote.id)
       return null
     }
 
-    const { data: dbResponses } = await admin
+    const { data: dbResponses, error: respErr } = await admin
       .from('question_vote_responses')
       .select()
       .eq('vote_id', dbVote.id)
+
+    if (respErr) throw respErr
 
     const responses = new Map<string, boolean>()
     if (dbResponses) {
@@ -676,7 +740,7 @@ export async function getActiveTextVote(roomId: string, players?: PlayerRow[]): 
   } catch {
     const memVote = roomActiveVoteStore.get(roomId)
     if (memVote && memVote.status === 'open') {
-      if (Date.now() >= memVote.closesAt) {
+      if (resolveIfExpired && Date.now() >= memVote.closesAt) {
         await resolveTextVoteInternal(roomId, memVote.id)
         return null
       }
@@ -796,6 +860,25 @@ export async function resolveTextVoteInternal(roomId: string, voteId: string): P
 function clearRoomTextVoteData(roomId: string) {
   roomActiveVoteStore.delete(roomId)
   clearRoomTurnAskedData(roomId)
+}
+
+async function clearRoomVotesDb(roomId: string): Promise<void> {
+  clearRoomTextVoteData(roomId)
+  playerClueCardStore.delete(roomId)
+  try {
+    const admin = supabaseAdmin()
+    const { data: votes } = await admin
+      .from('question_votes')
+      .select('id')
+      .eq('room_id', roomId)
+    if (votes && votes.length > 0) {
+      const voteIds = votes.map((v) => v.id)
+      await admin.from('question_vote_responses').delete().in('vote_id', voteIds)
+    }
+    await admin.from('question_votes').delete().eq('room_id', roomId)
+  } catch {
+    // DB hatası durumunda memory zaten temizlendi
+  }
 }
 
 // --- Ortak Hedef Modu Store Helpers ---
@@ -982,6 +1065,7 @@ export function assignNamesForRound(
       usedInThisRound.add(candidate.id)
       assignments.set(player.id, candidate.id)
       setPlayerRoundNameId(roomId, player.id, candidate.id)
+      recordPlayerCharacter(roomId, player.id, candidate.name_text, 'missed')
     }
   }
 
@@ -1021,6 +1105,7 @@ export function isRoomExpired(room: RoomRow, timeoutMs: number = ROOM_INACTIVITY
 export function clearRoomMemoryState(roomId: string): void {
   roomModeStore.delete(roomId)
   roomCommunicationModeStore.delete(roomId)
+  roomDifficultyStore.delete(roomId)
   roomCategoryStore.delete(roomId)
   playerSpeedStore.delete(roomId)
   playerRoundNameStore.delete(roomId)
@@ -1030,12 +1115,17 @@ export function clearRoomMemoryState(roomId: string): void {
   sharedTargetStore.delete(roomId)
   roomActiveVoteStore.delete(roomId)
   playerClueCardStore.delete(roomId)
+  playerSubmittedPhaseNamesStore.delete(roomId)
   playerClassicSolvedStore.delete(roomId)
   playerPassRightsStore.delete(roomId)
   classicRetiredNamesStore.delete(roomId)
+  playerTurnAskedStore.delete(roomId)
   botMemoryStore.delete(roomId)
   teamConfigStore.delete(roomId)
   teamNotesStore.delete(roomId)
+  playerCharacterHistoryStore.delete(roomId)
+  playerPenaltyStore.delete(roomId)
+  evictRoomRuntime(roomId)
 }
 
 export async function closeExpiredRoom(roomId: string): Promise<void> {
@@ -1065,56 +1155,23 @@ export async function closeExpiredRooms(inactivityMinutes: number = 60): Promise
 
   try {
     const cutoff = new Date(Date.now() - inactivityMinutes * 60 * 1000).toISOString()
-    const { data: expiredRooms, error: selectErr } = await admin
-      .from('rooms')
-      .select('id')
-      .neq('status', 'closed')
-      .lt('updated_at', cutoff)
-
-    if (selectErr || !expiredRooms || expiredRooms.length === 0) return 0
-
-    const expiredIds = expiredRooms.map((r) => r.id)
-    for (const id of expiredIds) {
-      clearRoomMemoryState(id)
-    }
-
-    const { error: updateErr } = await admin
+    const { data: closedRooms, error: updateErr } = await admin
       .from('rooms')
       .update({ status: 'closed', is_game_active: false })
       .neq('status', 'closed')
       .lt('updated_at', cutoff)
+      .select('id')
 
     if (updateErr) throw updateErr
-    return expiredIds.length
-  } catch (err) {
-    console.error('closeExpiredRooms fallback hatası:', err)
-    return 0
-  }
-}
+    if (!closedRooms || closedRooms.length === 0) return 0
 
-export async function closeAllRooms(): Promise<number> {
-  const admin = supabaseAdmin()
-  try {
-    const { data: openRooms, error: selectErr } = await admin
-      .from('rooms')
-      .select('id')
-      .neq('status', 'closed')
-
-    if (selectErr || !openRooms) return 0
-
-    for (const r of openRooms) {
+    for (const r of closedRooms) {
       clearRoomMemoryState(r.id)
     }
 
-    const { error: updateErr } = await admin
-      .from('rooms')
-      .update({ status: 'closed', is_game_active: false })
-      .neq('status', 'closed')
-
-    if (updateErr) throw updateErr
-    return openRooms.length
+    return closedRooms.length
   } catch (err) {
-    console.error('closeAllRooms hatası:', err)
+    console.error('closeExpiredRooms fallback hatası:', err)
     return 0
   }
 }
@@ -1280,45 +1337,32 @@ export async function savePlayerGameResult(
   if (!player.device_id) return
   try {
     const admin = supabaseAdmin()
-    let profileId: string | null = null
-    const { data: existingProfile } = await admin
+    const { data: profile, error: profileErr } = await admin
       .from('player_profiles')
+      .upsert({ device_id: player.device_id }, { onConflict: 'device_id' })
       .select('id')
-      .eq('device_id', player.device_id)
       .maybeSingle()
 
-    if (existingProfile?.id) {
-      profileId = existingProfile.id
-    } else {
-      const { data: newProfile } = await admin
-        .from('player_profiles')
-        .insert({ device_id: player.device_id })
-        .select('id')
-        .maybeSingle()
-      profileId = newProfile?.id ?? null
-    }
-
+    if (profileErr) throw profileErr
+    const profileId = profile?.id ?? null
     if (!profileId) return
 
-    // İdempotency: Aynı oyun ve profil için daha önce kayıt atılmış mı?
-    const { data: existingResult } = await admin
+    // İdempotency: (game_room_id, player_profile_id) üzerinde atomik upsert (kopya satır oluşmaz)
+    const { error: resultErr } = await admin
       .from('game_results')
-      .select('id')
-      .eq('game_room_id', roomId)
-      .eq('player_profile_id', profileId)
-      .maybeSingle()
-
-    if (!existingResult) {
-      await admin.from('game_results').insert({
-        player_profile_id: profileId,
-        game_room_id: roomId,
-        game_mode: gameMode,
-        score: player.score ?? 0,
-        placement,
-        survived,
-        played_at: new Date().toISOString(),
-      })
-    }
+      .upsert(
+        {
+          player_profile_id: profileId,
+          game_room_id: roomId,
+          game_mode: gameMode,
+          score: player.score ?? 0,
+          placement,
+          survived,
+          played_at: new Date().toISOString(),
+        },
+        { onConflict: 'game_room_id,player_profile_id', ignoreDuplicates: true },
+      )
+    if (resultErr) throw resultErr
   } catch (err) {
     console.error('savePlayerGameResult error:', err)
   }
@@ -1472,19 +1516,14 @@ export async function setRoomCategory(
 
   const updated = setRoomCategoryData(roomId, settings)
 
-  try {
-    await admin.from('rooms').update({
-      category_mode: updated.categoryMode,
-      selected_category: updated.category,
-      phase_categories: updated.phaseCategories,
-      current_phase: updated.currentPhase,
-      total_phases: updated.totalPhases,
-    }).eq('id', roomId)
-  } catch {
-    // Sütun yoksa yut
-  }
-
-  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  await admin.from('rooms').update({
+    category_mode: updated.categoryMode,
+    selected_category: updated.category,
+    phase_categories: updated.phaseCategories,
+    current_phase: updated.currentPhase,
+    total_phases: updated.totalPhases,
+    updated_at: new Date().toISOString(),
+  }).eq('id', roomId)
 
   return updated
 }
@@ -1516,13 +1555,11 @@ export async function setRoomMode(roomId: string, playerId: string, gameMode: Ga
 
   const modeData = setRoomModeData(roomId, gameMode)
 
-  try {
-    await admin.from('rooms').update({ game_mode: gameMode, total_rounds: modeData.totalRounds }).eq('id', roomId)
-  } catch {
-    // Sütun yoksa yut
-  }
-
-  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  await admin.from('rooms').update({
+    game_mode: gameMode,
+    total_rounds: modeData.totalRounds,
+    updated_at: new Date().toISOString(),
+  }).eq('id', roomId)
 
   return { gameMode: modeData.gameMode, totalRounds: modeData.totalRounds }
 }
@@ -1539,41 +1576,55 @@ export async function joinRoom(roomCode: string, nickname: string, deviceId?: st
   if (error) throw error
   if (!room) throw notFound('room_not_found', 'Oda bulunamadı. Oda kodunu kontrol edin.')
 
-  if (room.status !== 'closed' && isRoomExpired(room)) {
-    await closeExpiredRoom(room.id)
-    room.status = 'closed'
-  }
+  // Katılma işleminin tamamını (limit kontrolü, insert ve takım ataması) oda kilidi içinde çalıştırıyoruz
+  // ki eşzamanlı katılımlar MAX_PLAYERS sınırını aşmasın ve hata durumunda hayalet oyuncu kalmasın.
+  return withRoomRuntime(room.id, async () => {
+    const freshRoom = await loadRoom(room.id)
 
-  if (room.status === 'finished' || room.status === 'closed') {
-    throw conflict('room_closed', 'Bu oda yeni oyuncu kabul etmiyor.')
-  }
+    if (freshRoom.status === 'finished' || freshRoom.status === 'closed') {
+      throw conflict('room_closed', 'Bu oda yeni oyuncu kabul etmiyor.')
+    }
+    if (freshRoom.status === 'playing') {
+      throw conflict('game_already_started', 'Oyun devam ederken odaya katılınamaz.')
+    }
 
-  const players = await loadPlayers(room.id)
-  if (players.length >= MAX_PLAYERS) {
-    throw conflict('room_full', `Oda dolu (en fazla ${MAX_PLAYERS} oyuncu).`)
-  }
+    const players = await loadPlayers(room.id)
+    if (players.length >= MAX_PLAYERS) {
+      throw conflict('room_full', `Oda dolu (en fazla ${MAX_PLAYERS} oyuncu).`)
+    }
 
-  const { data: player, error: playerError } = await admin
-    .from('players')
-    .insert({ room_id: room.id, nickname, is_host: false, score: 0, device_id: deviceId || null })
-    .select()
-    .single()
+    const { data: player, error: playerError } = await admin
+      .from('players')
+      .insert({
+        room_id: room.id,
+        nickname,
+        is_host: false,
+        score: 0,
+        device_id: deviceId || null,
+        questions_this_round: 0,
+        round_scores: [],
+        has_finished_round: false,
+      })
+      .select()
+      .single()
 
-  if (playerError) throw playerError
+    if (playerError) throw playerError
 
-  // Katılma isteği oda koduyla gelir; runtime kapsamı oda id'si ancak burada bilindiği için burada açılıyor.
-  await withRoomRuntime(room.id, async () => {
-    setPlayerSpeedData(room.id, player.id, { questionsThisRound: 0, roundScores: [], finishedCurrentRound: false })
-    updateTeams(room.id, (teams) => addToSmallestTeam(teams, player.id))
+    try {
+      setPlayerSpeedData(room.id, player.id, {
+        questionsThisRound: 0,
+        roundScores: [],
+        finishedCurrentRound: false,
+      })
+      updateTeams(room.id, (teams) => addToSmallestTeam(teams, player.id))
+      await touchRoom(room.id)
+    } catch (runtimeErr) {
+      await admin.from('players').delete().eq('id', player.id)
+      throw runtimeErr
+    }
+
+    return { roomId: room.id, roomCode: room.room_code, playerId: player.id }
   })
-
-  try {
-    await admin.from('players').update({ questions_this_round: 0, round_scores: [], has_finished_round: false }).eq('id', player.id)
-  } catch {
-    // Sütun yoksa yut
-  }
-
-  return { roomId: room.id, roomCode: room.room_code, playerId: player.id }
 }
 
 function hasBots(players: PlayerRow[]): boolean {
@@ -1645,7 +1696,7 @@ export async function addBot(roomId: string, playerId: string, level: BotLevel) 
     if (namesError) throw namesError
   }
 
-  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  await touchRoom(roomId)
   return { botId: bot.id, nickname }
 }
 
@@ -1666,7 +1717,7 @@ export async function removeBot(roomId: string, playerId: string, botId: string)
   playerSpeedStore.get(roomId)?.delete(botId)
   updateTeams(roomId, (teams) => removeFromTeams(teams, botId))
 
-  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  await touchRoom(roomId)
   return { removed: true }
 }
 
@@ -1677,9 +1728,10 @@ function updateTeams(roomId: string, change: (teams: TeamDefinition[]) => TeamDe
   teamConfigStore.set(roomId, { ...config, teams: change(config.teams) })
 }
 
-async function touchRoom(roomId: string, status: string | null): Promise<void> {
-  // Takım state'i runtime'da; istemcilerin yenilenmesi için rooms üzerinden realtime sinyali.
-  await supabaseAdmin().from('rooms').update({ status }).eq('id', roomId)
+async function touchRoom(roomId: string, _status?: string | null): Promise<void> {
+  // Runtime state değiştiğinde istemcilerin yenilenmesi için rooms.updated_at üzerinden realtime sinyali.
+  // status değerini geri yazmıyoruz ki eşzamanlı biten bir oyunu yanlışlıkla 'playing'e döndürmeyelim.
+  await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
 }
 
 async function requireLobbyHost(roomId: string, playerId: string, action: string) {
@@ -1810,17 +1862,33 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     const speedScore = speed.roundScores.reduce((sum, s) => sum + s, 0)
     const isPlayerHost = player.is_host ?? false
     const isClassicSolved = isPlayerClassicSolved(roomId, player.id)
+    const penaltyPoints = getPlayerPenalty(roomId, player.id)
 
     let score: number
     if (isSpeed) {
-      score = speed.roundScores.length > 0 ? speedScore : (player.score ?? 0)
+      score = (speed.roundScores.length > 0 ? speedScore : (player.score ?? 0)) - (speed.roundScores.length > 0 ? penaltyPoints : 0)
     } else if (isPersistent) {
-      score = pData.roundScore
+      score = pData.roundScore - penaltyPoints
     } else {
       score = player.score ?? 0
     }
 
     const hasPenalty = isSharedTarget ? (sharedData.playerPenalties.get(player.id) ?? false) : false
+
+    let assignedCharacters: AssignedCharacterSummary[] | undefined
+    if (room.status === 'finished' && !isSharedTarget) {
+      const history = getPlayerCharacterHistory(roomId, player.id)
+      if (history.length > 0) {
+        assignedCharacters = history
+      } else {
+        const roundNameId = getPlayerRoundNameId(roomId, player.id)
+        const roundName = roundNameId ? names.find((n) => n.id === roundNameId) : null
+        if (roundName) {
+          const solved = isClassic ? isClassicSolved : isPersistent ? pData.nameSolved : score > 0
+          assignedCharacters = [{ name: roundName.name_text, status: solved ? 'solved' : 'missed' }]
+        }
+      }
+    }
 
     return {
       id: player.id,
@@ -1841,11 +1909,12 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
       questionBudgetRemaining: isPersistent ? pData.questionBudgetRemaining : undefined,
       passRightsRemaining: isClassic ? getPlayerPassRights(roomId, player.id) : undefined,
       nameSolved: isClassic ? isClassicSolved : isPersistent ? pData.nameSolved : undefined,
-      persistentScore: isPersistent ? pData.roundScore : undefined,
+      persistentScore: isPersistent ? pData.roundScore - penaltyPoints : undefined,
       // Ortak Hedef Modu alanları
       isReferee: isSharedTarget ? isPlayerHost : undefined,
       skippedQuestionTurn: isSharedTarget ? hasPenalty : undefined,
       hasGuessCooldown: isSharedTarget ? hasPenalty : undefined,
+      assignedCharacters,
     }
   })
 
@@ -1865,12 +1934,12 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     : (allPlayersSubmittedNames && teamsReady && players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS)
 
   const communicationMode = getRoomCommunicationMode(roomId, room.communication_mode)
-  let rawActiveVote = await getActiveTextVote(roomId, players)
+  let rawActiveVote = await getActiveTextVote(roomId, players, { resolveIfExpired: false })
 
-  // Süresi dolmuş açık oylama varsa sonuçlandır ve Hayır ise turu devret
+  // Süresi dolmuş açık oylama varsa sonuçlandır ve (Israrcı Mod hariç) turu devret
   if (rawActiveVote && rawActiveVote.status === 'open' && Date.now() >= rawActiveVote.closesAt) {
     const clueItem = await resolveTextVoteInternal(roomId, rawActiveVote.id)
-    if (clueItem && room.status === 'playing') {
+    if (clueItem && room.status === 'playing' && !isPersistent) {
       await advanceTurn(room, players, names)
       const freshRoom = await loadRoom(roomId)
       room.current_player_id = freshRoom.current_player_id
@@ -2082,7 +2151,7 @@ export async function submitNames(roomId: string, playerId: string, names: strin
     )
   }
 
-  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  await touchRoom(roomId)
 
   return { accepted, duplicates }
 }
@@ -2391,7 +2460,7 @@ export async function autoAssignNames(
   const { error } = await admin.from('names').insert(assignedNames)
   if (error) throw error
 
-  await admin.from('rooms').update({ status: room.status }).eq('id', roomId)
+  await touchRoom(roomId)
 
   return {
     assignedCount: assignedNames.length,
@@ -2451,6 +2520,9 @@ export async function startGame(roomId: string, playerId: string) {
   }
   clearRoomSpeedData(roomId)
   clearRoomPersistentData(roomId)
+  await clearRoomVotesDb(roomId)
+  playerCharacterHistoryStore.delete(roomId)
+  playerPenaltyStore.delete(roomId)
 
   await admin
     .from('players')
@@ -2815,14 +2887,14 @@ export async function transitionToNextPhase(
   const { error: insertErr } = await admin.from('names').insert(newAssignedNames)
   if (insertErr) throw insertErr
 
-  // 3. Bellek içi tur atama store'larını bu faz için sıfırla
+  // 3. Bellek içi tur atama store'larını ve eski fazın oylama/ipucu kayıtlarını sıfırla
   playerRoundNameStore.delete(room.id)
   roomUsedNamesStore.delete(room.id)
   resetRoomSpeedRound(room.id)
   classicRetiredNamesStore.delete(room.id)
   playerClassicSolvedStore.delete(room.id)
   playerPassRightsStore.delete(room.id)
-  playerClueCardStore.delete(room.id)
+  await clearRoomVotesDb(room.id)
 
   // 4. Canları ve pas haklarını yenile — yeni fazda herkes tam can ve 3 pas hakkıyla başlar
   roomLivesStore.delete(room.id)
@@ -2834,6 +2906,7 @@ export async function transitionToNextPhase(
   const firstPlayer = players[0]!
   const availableFirstName = newAssignedNames.find((n) => n.submitted_by !== firstPlayer.id) || newAssignedNames[0]!
   setPlayerRoundNameId(room.id, firstPlayer.id, availableFirstName.id)
+  recordPlayerCharacter(room.id, firstPlayer.id, availableFirstName.name_text, 'missed')
 
   const currentRound = (room.game_round ?? 1) + 1
 
@@ -2883,6 +2956,11 @@ async function advanceTurn(
   const gameMode = getRoomMode(room.id, room.game_mode)
   const categoryData = getRoomCategoryData(room.id, room)
 
+  if (gameMode === 'shared_target') {
+    await handleSharedTargetPassTurn(room, players)
+    return { claimed: true, finished: false }
+  }
+
   if (gameMode === 'speed') {
     const currentRound = room.game_round ?? 1
     const totalRounds = room.total_rounds || DEFAULT_SPEED_ROUNDS
@@ -2899,36 +2977,36 @@ async function advanceTurn(
       }
 
       if (currentRound >= totalRounds) {
-        // Tüm turlar bitti -> Oyun tamamlandı
-        const { data } = await admin
+        // Tüm turlar bitti -> Oyun tamamlandı (atomik CAS: yalnızca henüz bitmemişse)
+        const { data, error } = await admin
           .from('rooms')
           .update({ status: 'finished', is_game_active: false, current_identity_id: null })
           .eq('id', room.id)
+          .neq('status', 'finished')
           .select('id')
-        await recordGameResults(room.id)
-        return { claimed: (data?.length ?? 0) > 0, finished: true, nextRoundStarted: false }
+        if (error) throw error
+        const claimed = (data?.length ?? 0) > 0
+        if (claimed) await recordGameResults(room.id)
+        return { claimed, finished: true, nextRoundStarted: false }
       }
 
       // Sıradaki tura geçiş (startNextRound)
       const nextRound = currentRound + 1
       resetRoomSpeedRound(room.id)
 
-      try {
-        await admin
-          .from('players')
-          .update({ questions_this_round: 0, has_finished_round: false })
-          .eq('room_id', room.id)
-      } catch {
-        // Sütun yoksa yut
-      }
+      await admin
+        .from('players')
+        .update({ questions_this_round: 0, has_finished_round: false })
+        .eq('room_id', room.id)
 
       // Yeni round için isim havuzundan çakışmasız YENİ isimler ata (isimler yeniden YAZILMAZ, sadece atama yenilenir)
       assignNamesForRound(room.id, players, names)
 
-      const firstPlayer = players[0]!
+      const firstPlayer = players[0]
+      if (!firstPlayer) return { claimed: false, finished: false, nextRoundStarted: false }
       const nextNameId = getPlayerRoundNameId(room.id, firstPlayer.id)
 
-      const { data, error } = await admin
+      let query = admin
         .from('rooms')
         .update({
           game_round: nextRound,
@@ -2936,7 +3014,8 @@ async function advanceTurn(
           current_identity_id: nextNameId,
         })
         .eq('id', room.id)
-        .select('id')
+      if (room.current_player_id) query = query.eq('current_player_id', room.current_player_id)
+      const { data, error } = await query.select('id')
 
       if (error) throw error
       return { claimed: (data?.length ?? 0) > 0, finished: false, nextRoundStarted: true }
@@ -2958,17 +3037,21 @@ async function advanceTurn(
     if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
       const candidate = names.find((n) => !writtenByOwnSide(room.id, n, nextPlayer.id)) || names[0]
       nextNameId = candidate?.id ?? null
-      if (nextNameId) setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+      if (nextNameId && candidate) {
+        setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+        recordPlayerCharacter(room.id, nextPlayer.id, candidate.name_text, 'missed')
+      }
     }
 
-    const { data, error } = await admin
+    let query = admin
       .from('rooms')
       .update({
         current_player_id: nextPlayer.id,
         current_identity_id: nextNameId,
       })
       .eq('id', room.id)
-      .select('id')
+    if (room.current_player_id) query = query.eq('current_player_id', room.current_player_id)
+    const { data, error } = await query.select('id')
 
     if (error) throw error
     return { claimed: (data?.length ?? 0) > 0, finished: false, nextRoundStarted: false }
@@ -2984,13 +3067,16 @@ async function advanceTurn(
       }
 
       // Tüm oyuncular solved veya eliminated → oyun biter
-      const { data } = await admin
+      const { data, error } = await admin
         .from('rooms')
         .update({ status: 'finished', is_game_active: false, current_identity_id: null })
         .eq('id', room.id)
+        .neq('status', 'finished')
         .select('id')
-      await recordGameResults(room.id)
-      return { claimed: (data?.length ?? 0) > 0, finished: true }
+      if (error) throw error
+      const claimed = (data?.length ?? 0) > 0
+      if (claimed) await recordGameResults(room.id)
+      return { claimed, finished: true }
     }
 
     const nextPlayer = selectNextPlayer(
@@ -3008,17 +3094,21 @@ async function advanceTurn(
     if (!nextNameId || !names.some((n) => n.id === nextNameId)) {
       const candidate = names.find((n) => !writtenByOwnSide(room.id, n, nextPlayer.id)) || names[0]
       nextNameId = candidate?.id ?? null
-      if (nextNameId) setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+      if (nextNameId && candidate) {
+        setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
+        recordPlayerCharacter(room.id, nextPlayer.id, candidate.name_text, 'missed')
+      }
     }
 
-    const { data, error } = await admin
+    let query = admin
       .from('rooms')
       .update({
         current_player_id: nextPlayer.id,
         current_identity_id: nextNameId,
       })
       .eq('id', room.id)
-      .select('id')
+    if (room.current_player_id) query = query.eq('current_player_id', room.current_player_id)
+    const { data, error } = await query.select('id')
 
     if (error) throw error
     return { claimed: (data?.length ?? 0) > 0, finished: false }
@@ -3033,13 +3123,16 @@ async function advanceTurn(
       return startPhaseIntermission(room, players, categoryData)
     }
 
-    const { data } = await admin
+    const { data, error } = await admin
       .from('rooms')
       .update({ status: 'finished', is_game_active: false, current_identity_id: null })
       .eq('id', room.id)
+      .neq('status', 'finished')
       .select('id')
-    await recordGameResults(room.id)
-    return { claimed: (data?.length ?? 0) > 0, finished: true }
+    if (error) throw error
+    const claimed = (data?.length ?? 0) > 0
+    if (claimed) await recordGameResults(room.id)
+    return { claimed, finished: true }
   }
 
   const nextPlayer = selectNextPlayer(
@@ -3068,7 +3161,7 @@ async function advanceTurn(
     return advanceTurn(room, players, names)
   }
 
-  const { data, error } = await admin
+  let query = admin
     .from('rooms')
     .update({
       current_player_id: nextPlayer.id,
@@ -3076,7 +3169,8 @@ async function advanceTurn(
       game_round: currentRound + 1,
     })
     .eq('id', room.id)
-    .select('id')
+  if (room.current_player_id) query = query.eq('current_player_id', room.current_player_id)
+  const { data, error } = await query.select('id')
 
   if (error) throw error
   return { claimed: (data?.length ?? 0) > 0, finished: false }
@@ -3185,9 +3279,15 @@ async function handleSpeedModeAskQuestion(
   const newQuestions = incrementQuestionCount(room.id, playerId)
   const reachedLimit = newQuestions >= SPEED_MODE_MAX_QUESTIONS
 
+  const currentNameId = getPlayerRoundNameId(room.id, playerId) || room.current_identity_id
+  const currentNameText = currentNameId ? (names.find((n) => n.id === currentNameId)?.name_text ?? null) : null
+
   if (reachedLimit) {
+    if (currentNameText) {
+      recordPlayerCharacter(room.id, playerId, currentNameText, 'missed')
+    }
     const updatedRoundScores = [...speedData.roundScores, 0]
-    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0)
+    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0) - getPlayerPenalty(room.id, playerId)
     setPlayerSpeedData(room.id, playerId, {
       questionsThisRound: newQuestions,
       roundScores: updatedRoundScores,
@@ -3214,7 +3314,7 @@ async function handleSpeedModeAskQuestion(
   const updatedPlayers = players.map((p) => {
     if (p.id !== playerId) return p
     const speed = getPlayerSpeedData(room.id, playerId)
-    const totalScore = speed.roundScores.reduce((sum, s) => sum + s, 0)
+    const totalScore = speed.roundScores.reduce((sum, s) => sum + s, 0) - getPlayerPenalty(room.id, playerId)
     return {
       ...p,
       score: totalScore,
@@ -3232,7 +3332,7 @@ async function handleSpeedModeAskQuestion(
   }).length
 
   const msg = reachedLimit
-    ? '20 soru limitine ulaşıldı! Bu turdan 0 puan aldınız.'
+    ? `20 soru limitine ulaşıldı!${currentNameText ? ` Gizli karakteriniz "${currentNameText}" idi.` : ''} Bu turdan 0 puan aldınız.`
     : remainingUnfinished <= 1
       ? `Sorunuz kaydedildi (Soru: ${newQuestions}). Sıra sizde devam ediyor.`
       : `Sorunuz kaydedildi (Soru: ${newQuestions}). Sıra bir sonraki oyuncuya geçti.`
@@ -3259,10 +3359,11 @@ async function handleSpeedModeGuess(
 
   if (isCorrect) {
     // Doğru tahmin! Sorulan soru sayısına göre puan hesapla
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'solved')
     const qCount = speedData.questionsThisRound
     const roundScore = calculateSpeedScore(qCount)
     const updatedRoundScores = [...speedData.roundScores, roundScore]
-    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0)
+    const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0) - getPlayerPenalty(room.id, playerId)
 
     setPlayerSpeedData(room.id, playerId, {
       questionsThisRound: qCount,
@@ -3270,25 +3371,20 @@ async function handleSpeedModeGuess(
       finishedCurrentRound: true,
     })
 
-    try {
+    const { data: rpcScore, error: rpcErr } = await admin.rpc('increment_player_score', {
+      p_player_id: playerId,
+      p_delta: roundScore,
+    })
+    if (rpcErr || rpcScore === null) {
       await admin.from('players').update({
         score: newTotalScore,
       }).eq('id', playerId)
-    } catch {
-      await admin.rpc('increment_player_score', {
-        p_player_id: playerId,
-        p_delta: roundScore,
-      })
     }
 
-    try {
-      await admin.from('players').update({
-        round_scores: updatedRoundScores,
-        has_finished_round: true,
-      }).eq('id', playerId)
-    } catch {
-      // Sütun yoksa yut
-    }
+    await admin.from('players').update({
+      round_scores: updatedRoundScores,
+      has_finished_round: true,
+    }).eq('id', playerId)
 
     const updatedPlayers = players.map((p) =>
       p.id === playerId
@@ -3316,8 +3412,11 @@ async function handleSpeedModeGuess(
   // Yanlış tahmin: INV-3 uyarınca soru sayısını 1 artır (host dahil HERKES için)
   const newQuestions = incrementQuestionCount(room.id, playerId)
   const reachedLimit = newQuestions >= SPEED_MODE_MAX_QUESTIONS
+  if (reachedLimit) {
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'missed')
+  }
   const updatedRoundScores = reachedLimit ? [...speedData.roundScores, 0] : speedData.roundScores
-  const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0)
+  const newTotalScore = updatedRoundScores.reduce((sum, s) => sum + s, 0) - getPlayerPenalty(room.id, playerId)
 
   setPlayerSpeedData(room.id, playerId, {
     questionsThisRound: newQuestions,
@@ -3365,7 +3464,7 @@ async function handleSpeedModeGuess(
   }).length
 
   const msg = reachedLimit
-    ? 'Yanlış tahmin ve 20 soru limitine ulaşıldı! Bu turdan 0 puan aldınız.'
+    ? `Yanlış tahmin ve 20 soru limitine ulaşıldı! Gizli karakteriniz "${targetNameText}" idi. Bu turdan 0 puan aldınız.`
     : remainingUnfinished <= 1
       ? 'Yanlış tahmin! Sıra sizde devam ediyor.'
       : 'Yanlış tahmin! Sıra diğer oyuncuya geçti.'
@@ -3464,21 +3563,26 @@ async function handlePersistentModeGuess(
 
   if (isCorrect) {
     // Doğru tahmin — puan hesapla (az soru = yüksek puan)
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'solved')
     const roundScore = calculatePersistentScore(pData.totalQuestionsUsed)
+    const finalScore = roundScore - getPlayerPenalty(room.id, playerId)
     setPlayerPersistentData(room.id, playerId, {
       ...pData,
       nameSolved: true,
       roundScore,
     })
 
-    // DB'ye puanı yaz
-    try {
-      await admin.from('players').update({ score: roundScore }).eq('id', playerId)
-    } catch {
-      await admin.rpc('increment_player_score', {
+    // DB'ye puanı yaz (atomik skor artışı ile eşzamanlı oylama cezalarını ezmez)
+    const prevRoundScore = pData.roundScore ?? 0
+    const delta = roundScore - prevRoundScore
+    if (delta !== 0) {
+      const { error: rpcErr } = await admin.rpc('increment_player_score', {
         p_player_id: playerId,
-        p_delta: roundScore,
+        p_delta: delta,
       })
+      if (rpcErr) {
+        await admin.from('players').update({ score: finalScore }).eq('id', playerId)
+      }
     }
 
     const outcome = await advanceTurn(room, players, names)
@@ -3501,14 +3605,15 @@ async function handlePersistentModeGuess(
   setPlayerLives(room.id, playerId, newLives)
 
   if (newLives <= 0) {
-    // Elendi — puan 0
+    // Elendi — puan 0 (varsa ceza düşülür)
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'missed')
     setPlayerPersistentData(room.id, playerId, {
       ...pData,
       roundScore: 0,
     })
 
     try {
-      await admin.from('players').update({ score: 0 }).eq('id', playerId)
+      await admin.from('players').update({ score: -getPlayerPenalty(room.id, playerId) }).eq('id', playerId)
     } catch {
       // ignore
     }
@@ -3517,7 +3622,7 @@ async function handlePersistentModeGuess(
 
     return {
       correct: false,
-      message: 'Yanlış tahmin! Can hakkınız bitti ve oyundan elendiniz.',
+      message: `Yanlış tahmin! Can hakkınız bitti ve oyundan elendiniz. Gizli karakteriniz: "${targetNameText}" idi.`,
       livesLeft: 0,
       turnPassed: true,
       finished: outcome.finished,
@@ -3529,7 +3634,7 @@ async function handlePersistentModeGuess(
 
   // Can hâlâ var — Israrcı Mod: sıra oyuncuda kalır (yalnızca can bitince, isim bilinince veya pas'ta geçer).
   // Can değişikliği yalnızca runtime state'te; istemcilerin yenilenmesi için realtime'ı tetikle.
-  await admin.from('rooms').update({ status: room.status }).eq('id', room.id)
+  await touchRoom(room.id)
 
   return {
     correct: false,
@@ -3590,7 +3695,7 @@ export async function askSharedQuestion(
   setSharedTargetRoomData(roomId, sharedData)
 
   // Realtime tetikle
-  await supabaseAdmin().from('rooms').update({ status: room.status }).eq('id', roomId)
+  await touchRoom(roomId)
 
   return {
     message: 'Sorunuz hakeme iletildi, cevap bekleniyor...',
@@ -3630,7 +3735,10 @@ export async function answerSharedQuestion(
   sharedData.pendingQuestion = null
 
   // Sıradaki soru soranı seç (cezalılar atlanır ve cezaları tüketilir)
-  const host = players.find((p) => p.is_host)!
+  const host = players.find((p) => p.is_host)
+  if (!host) {
+    throw conflict('host_missing', 'Odada aktif bir Hakem (Oda Sahibi) bulunamadı.')
+  }
   const penalizedSet = new Set(
     Array.from(sharedData.playerPenalties.entries())
       .filter(([, hasPenalty]) => hasPenalty)
@@ -3665,7 +3773,10 @@ export async function answerSharedQuestion(
 }
 
 async function handleSharedTargetPassTurn(room: RoomRow, players: PlayerRow[]) {
-  const host = players.find((p) => p.is_host)!
+  const host = players.find((p) => p.is_host)
+  if (!host) {
+    throw conflict('host_missing', 'Odada aktif bir Hakem (Oda Sahibi) bulunamadı.')
+  }
   const sharedData = getSharedTargetRoomData(room.id)
   const penalizedSet = new Set(
     Array.from(sharedData.playerPenalties.entries())
@@ -3686,10 +3797,12 @@ async function handleSharedTargetPassTurn(room: RoomRow, players: PlayerRow[]) {
   setSharedTargetRoomData(room.id, sharedData)
 
   if (nextPlayer) {
-    await supabaseAdmin()
+    let query = supabaseAdmin()
       .from('rooms')
       .update({ current_player_id: nextPlayer.id })
       .eq('id', room.id)
+    if (room.current_player_id) query = query.eq('current_player_id', room.current_player_id)
+    await query
   }
 
   return { message: `Sıra ${nextPlayer?.nickname ?? 'diğer oyuncuya'} geçti.` }
@@ -3702,7 +3815,8 @@ async function handleSharedTargetGuess(
   guess: string,
 ): Promise<GuessResult> {
   const admin = supabaseAdmin()
-  const player = players.find((p) => p.id === playerId)!
+  const player = players.find((p) => p.id === playerId)
+  if (!player) throw notFound('player_not_in_room', 'Bu odada değilsiniz.')
 
   if (player.is_host) {
     throw forbidden('host_cannot_guess', 'Hakem (Host) tahmin yapamaz.')
@@ -3726,13 +3840,12 @@ async function handleSharedTargetGuess(
     const roundScore = SHARED_TARGET_POINTS_PER_WIN
     const newTotal = (player.score ?? 0) + roundScore
 
-    try {
+    const { error: rpcErr } = await admin.rpc('increment_player_score', {
+      p_player_id: playerId,
+      p_delta: roundScore,
+    })
+    if (rpcErr) {
       await admin.from('players').update({ score: newTotal }).eq('id', playerId)
-    } catch {
-      await admin.rpc('increment_player_score', {
-        p_player_id: playerId,
-        p_delta: roundScore,
-      })
     }
 
     const currentRound = room.game_round ?? 1
@@ -3740,11 +3853,20 @@ async function handleSharedTargetGuess(
     const isGameFinished = currentRound >= totalRounds
 
     if (isGameFinished) {
-      await admin.from('rooms').update({
-        status: 'finished',
-        is_game_active: false,
-      }).eq('id', room.id)
-      await recordGameResults(room.id)
+      const { data: finRows } = await admin
+        .from('rooms')
+        .update({
+          status: 'finished',
+          is_game_active: false,
+        })
+        .eq('id', room.id)
+        .neq('status', 'finished')
+        .select('id')
+      if ((finRows?.length ?? 0) > 0) {
+        await recordGameResults(room.id)
+      }
+    } else {
+      await touchRoom(room.id)
     }
 
     setSharedTargetRoomData(room.id, sharedData)
@@ -3763,7 +3885,7 @@ async function handleSharedTargetGuess(
   sharedData.playerPenalties.set(playerId, true)
   setSharedTargetRoomData(room.id, sharedData)
 
-  await admin.from('rooms').update({ status: room.status }).eq('id', room.id)
+  await touchRoom(room.id)
 
   return {
     correct: false,
@@ -3792,6 +3914,12 @@ export async function startNextSharedTargetRound(
     throw conflict('game_already_finished', 'Tüm turlar tamamlandı.')
   }
 
+  const contestants = players.filter((p) => !p.is_host)
+  const firstPlayer = contestants[0]
+  if (!firstPlayer) {
+    throw badRequest('not_enough_players', 'Sonraki turu başlatmak için odada en az bir yarışmacı olmalıdır.')
+  }
+
   const nextRound = currentRound + 1
   const sharedData = getSharedTargetRoomData(roomId)
   sharedData.targetName = nextTargetName.trim()
@@ -3801,9 +3929,6 @@ export async function startNextSharedTargetRound(
   sharedData.questionLog = []
   sharedData.playerPenalties.clear()
   setSharedTargetRoomData(roomId, sharedData)
-
-  const contestants = players.filter((p) => !p.is_host)
-  const firstPlayer = contestants[0]!
 
   const { error } = await admin
     .from('rooms')
@@ -3874,11 +3999,16 @@ async function handleClassicModeGiveUp(
     }
   }
 
+  let passedNameText: string | null = null
   if (currentNameId) {
     retireClassicName(room.id, currentNameId)
     await supabaseAdmin().from('names').update({ used_in_round: 1, assigned_to: null }).eq('id', currentNameId)
     const foundName = names.find((n) => n.id === currentNameId)
-    if (foundName) foundName.used_in_round = 1
+    if (foundName) {
+      foundName.used_in_round = 1
+      passedNameText = foundName.name_text
+      recordPlayerCharacter(room.id, playerId, foundName.name_text, 'passed')
+    }
   }
 
   // Not defterini / ipucu kartını temizle (yeni isme geçiliyor)
@@ -3890,10 +4020,12 @@ async function handleClassicModeGiveUp(
 
   const outcome = await advanceTurn(room, players, freshNames)
 
+  const passedReveal = passedNameText ? ` (Pas geçilen gizli karakter: "${passedNameText}")` : ''
+
   return {
     message: nextNameId
-      ? `İsmi pas geçtiniz (Kalan Pas Hakkı: ${newPassRights}/3). Yeni bir gizli isim atandı (3 deneme hakkı). Sıra diğer oyuncuya geçti.`
-      : `İsmi pas geçtiniz (Kalan Pas Hakkı: ${newPassRights}/3). Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`,
+      ? `İsmi pas geçtiniz${passedReveal} — Kalan Pas Hakkı: ${newPassRights}/3. Yeni bir gizli isim atandı (3 deneme hakkı). Sıra diğer oyuncuya geçti.`
+      : `İsmi pas geçtiniz${passedReveal} — Kalan Pas Hakkı: ${newPassRights}/3. Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`,
     livesLeft: TOTAL_LIVES_PER_GAME,
     passRightsLeft: newPassRights,
     turnPassed: true,
@@ -3928,6 +4060,7 @@ async function handleClassicModeGuess(
 
   if (isCorrect) {
     // Doğru tahmin! Bu isim başarıyla çözüldü, emekliye ayrılır (+10 puan)
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'solved')
     if (currentNameId) {
       retireClassicName(room.id, currentNameId)
       await supabaseAdmin().from('names').update({ used_in_round: 1, assigned_to: null }).eq('id', currentNameId)
@@ -3979,6 +4112,7 @@ async function handleClassicModeGuess(
 
   if (newLives <= 0) {
     // Deneme hakkı tükendi -> Bu isim elendi, yeni isim atanır (deneme hakkı 3'e resetlenir)
+    recordPlayerCharacter(room.id, playerId, targetNameText, 'missed')
     if (currentNameId) {
       retireClassicName(room.id, currentNameId)
       await supabaseAdmin().from('names').update({ used_in_round: 1, assigned_to: null }).eq('id', currentNameId)
@@ -3997,8 +4131,8 @@ async function handleClassicModeGuess(
     return {
       correct: false,
       message: nextNameId
-        ? '3 deneme hakkınız bitti, bu isim elendi. Size yeni bir gizli isim atandı (3 hak). Sıra diğer oyuncuya geçti.'
-        : '3 deneme hakkınız bitti, bu isim elendi ve havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.',
+        ? `3 deneme hakkınız bitti! Bilemediğiniz gizli karakter: "${targetNameText}". Size yeni bir gizli isim atandı (3 hak). Sıra diğer oyuncuya geçti.`
+        : `3 deneme hakkınız bitti! Bilemediğiniz gizli karakter: "${targetNameText}". Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`,
       livesLeft: TOTAL_LIVES_PER_GAME,
       turnPassed: true,
       finished: outcome.finished,
@@ -4120,12 +4254,20 @@ export async function askTextQuestion(
   }
 
   // Önceki açık oylama var mı kontrol et
-  const existingVote = await getActiveTextVote(roomId, players)
+  const existingVote = await getActiveTextVote(roomId, players, { resolveIfExpired: false })
   if (existingVote && existingVote.status === 'open') {
     if (Date.now() >= existingVote.closesAt) {
       await resolveTextVoteInternal(roomId, existingVote.id)
     } else {
       throw conflict('vote_already_active', 'Şu anda devam eden bir oylama var.')
+    }
+  }
+
+  // Hız Modunda 20 soru limitine ulaşıldıysa oyuncu bu turu 이미 tamamlamıştır
+  if (gameMode === 'speed') {
+    const speed = getPlayerSpeedData(roomId, playerId)
+    if (speed.finishedCurrentRound || speed.questionsThisRound >= SPEED_MODE_MAX_QUESTIONS) {
+      throw conflict('round_question_limit_reached', 'Bu turdaki 20 soru limitinizi doldurdunuz.')
     }
   }
 
@@ -4176,10 +4318,34 @@ export async function askTextQuestion(
   // Soru sayısını veya bütçesini güncelle
   if (gameMode === 'speed') {
     const speed = getPlayerSpeedData(roomId, playerId)
+    const newQuestions = speed.questionsThisRound + 1
+    const reachedLimit = newQuestions >= SPEED_MODE_MAX_QUESTIONS
+    const updatedRoundScores = reachedLimit ? [...speed.roundScores, 0] : speed.roundScores
+    if (reachedLimit) {
+      const names = await loadNames(roomId)
+      const currentNameId = getPlayerRoundNameId(roomId, playerId) || room.current_identity_id
+      const currentNameText = currentNameId ? (names.find((n) => n.id === currentNameId)?.name_text ?? null) : null
+      if (currentNameText) {
+        recordPlayerCharacter(roomId, playerId, currentNameText, 'missed')
+      }
+    }
     setPlayerSpeedData(roomId, playerId, {
-      ...speed,
-      questionsThisRound: speed.questionsThisRound + 1,
+      questionsThisRound: newQuestions,
+      roundScores: updatedRoundScores,
+      finishedCurrentRound: reachedLimit,
     })
+    try {
+      await supabaseAdmin()
+        .from('players')
+        .update({
+          questions_this_round: newQuestions,
+          has_finished_round: reachedLimit,
+          round_scores: updatedRoundScores,
+        })
+        .eq('id', playerId)
+    } catch {
+      //
+    }
   } else if (gameMode === 'persistent') {
     const pData = getPlayerPersistentData(roomId, playerId)
     pData.questionBudgetRemaining = Math.max(0, pData.questionBudgetRemaining - 1)
@@ -4198,7 +4364,7 @@ export async function askTextQuestion(
 
   // Realtime tetikle
   try {
-    await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
+    await touchRoom(roomId)
   } catch {
     //
   }
@@ -4218,9 +4384,9 @@ export async function submitTextVote(
   answer: boolean,
 ) {
   const players = await loadPlayers(roomId)
-  requireMembership(players, voterPlayerId)
+  const voter = requireMembership(players, voterPlayerId)
 
-  let vote = await getActiveTextVote(roomId, players)
+  let vote = await getActiveTextVote(roomId, players, { resolveIfExpired: false })
   if (!vote || vote.id !== voteId) {
     // DB'den doğrudan kontrol et
     const { data: dbVote } = await supabaseAdmin()
@@ -4235,7 +4401,7 @@ export async function submitTextVote(
     if (dbVote.status !== 'open') {
       throw conflict('vote_closed', 'Bu oylama oturumu sona ermiştir.')
     }
-    vote = await getActiveTextVote(roomId, players)
+    vote = await getActiveTextVote(roomId, players, { resolveIfExpired: false })
   }
 
   if (!vote) {
@@ -4246,13 +4412,14 @@ export async function submitTextVote(
     throw conflict('vote_closed', 'Bu oylama oturumu sona ermiştir.')
   }
 
+  const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
+  const gameMode = getRoomMode(roomId, room.game_mode)
   // Israrcı Mod'da oylama sonucu sırayı devretmez; oyuncu bütçesiyle sormaya devam eder.
-  const keepsTurnAfterVote = getRoomMode(roomId, (await loadRoom(roomId)).game_mode) === 'persistent'
+  const keepsTurnAfterVote = gameMode === 'persistent'
 
   if (Date.now() >= vote.closesAt) {
-    const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
     const resolvedClue = await resolveTextVoteInternal(roomId, voteId)
-    if (resolvedClue && resolvedClue.majority !== 'yes' && room.status === 'playing' && !keepsTurnAfterVote) {
+    if (resolvedClue && room.status === 'playing' && !keepsTurnAfterVote) {
       await advanceTurn(room, players, names)
     }
     throw conflict('vote_expired', 'Oylama süresi (30 saniye) doldu.')
@@ -4266,7 +4433,56 @@ export async function submitTextVote(
     throw forbidden('not_eligible_voter', 'Bu soru için oy kullanma yetkiniz bulunmamaktadır.')
   }
 
-  vote.responses.set(voterPlayerId, answer)
+  const alreadyVoted = vote.responses.has(voterPlayerId)
+
+  // Sorulan sorunun gerçek (doğrulanabilir) cevabı biliniyorsa yanlış cevaba ceza uygula
+  const askerTargetId =
+    getPlayerRoundNameId(roomId, vote.askerId) ||
+    (room.current_player_id === vote.askerId ? room.current_identity_id : null) ||
+    names.find((n) => n.assigned_to === vote.askerId && (n.used_in_round == null))?.id ||
+    null
+  const askerTargetName = askerTargetId
+    ? (names.find((n) => n.id === askerTargetId)?.name_text ?? null)
+    : null
+  const questionId = questionIdForText(vote.questionText)
+  const expectedAnswer = questionId && askerTargetName ? answerFor(questionId, askerTargetName) : null
+
+  let effectiveAnswer = answer
+  let wrongAnswerPenalty = false
+  let penaltyNotice = ''
+
+  if (!voter.is_bot && expectedAnswer !== null && answer !== expectedAnswer) {
+    wrongAnswerPenalty = true
+    effectiveAnswer = expectedAnswer
+    const expectedLabel = expectedAnswer ? 'EVET' : 'HAYIR'
+    penaltyNotice = `⚠️ Yanlış cevap verdiniz! "${askerTargetName}" için doğru cevap "${expectedLabel}" olmalıydı (-${WRONG_ANSWER_PENALTY} Puan Ceza uygulandı, doğru cevap kaydedildi). `
+
+    if (!alreadyVoted) {
+      const totalPenalty = addPlayerPenalty(roomId, voterPlayerId, WRONG_ANSWER_PENALTY)
+      let newScore = (voter.score ?? 0) - WRONG_ANSWER_PENALTY
+      if (gameMode === 'speed') {
+        const speed = getPlayerSpeedData(roomId, voterPlayerId)
+        newScore = speed.roundScores.reduce((sum, s) => sum + s, 0) - totalPenalty
+      } else if (gameMode === 'persistent') {
+        const pData = getPlayerPersistentData(roomId, voterPlayerId)
+        newScore = pData.roundScore - totalPenalty
+      }
+      voter.score = newScore
+      try {
+        const { error: rpcErr } = await supabaseAdmin().rpc('increment_player_score', {
+          p_player_id: voterPlayerId,
+          p_delta: -WRONG_ANSWER_PENALTY,
+        })
+        if (rpcErr) {
+          await supabaseAdmin().from('players').update({ score: newScore }).eq('id', voterPlayerId)
+        }
+      } catch {
+        // DB hatasında memory store üzerinden devam
+      }
+    }
+  }
+
+  vote.responses.set(voterPlayerId, effectiveAnswer)
 
   // DB'ye oyu kaydet
   try {
@@ -4274,7 +4490,7 @@ export async function submitTextVote(
       {
         vote_id: voteId,
         responder_player_id: voterPlayerId,
-        answer,
+        answer: effectiveAnswer,
         responded_at: new Date().toISOString(),
       },
       { onConflict: 'vote_id,responder_player_id' },
@@ -4289,7 +4505,6 @@ export async function submitTextVote(
   let turnPassed = false
 
   if (vote.responses.size >= vote.eligibleVoterIds.size) {
-    const [room, names] = await Promise.all([loadRoom(roomId), loadNames(roomId)])
     clueCardItem = await resolveTextVoteInternal(roomId, voteId)
     isResolved = true
 
@@ -4299,7 +4514,7 @@ export async function submitTextVote(
     } else {
       // Sıra değişmedi; ipucu kartı yalnızca runtime state'te, istemcilere realtime sinyali gönder.
       try {
-        await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
+        await touchRoom(roomId)
       } catch {
         //
       }
@@ -4307,22 +4522,24 @@ export async function submitTextVote(
   } else {
     // Soru AÇIK KALMAYA DEVAM EDİYOR! Realtime tetikle
     try {
-      await supabaseAdmin().from('rooms').update({ updated_at: new Date().toISOString() }).eq('id', roomId)
+      await touchRoom(roomId)
     } catch {
       //
     }
   }
 
-  const message = clueCardItem
+  const baseMessage = clueCardItem
     ? `Cevap: ${clueCardItem.yesCount} Evet, ${clueCardItem.noCount} Hayır (${clueCardItem.majority === 'yes' ? 'EVET' : clueCardItem.majority === 'no' ? 'HAYIR' : 'EŞİTLİK'}).${turnPassed ? ' Sıra bir sonraki oyuncuya geçti.' : ''}`
     : 'Oyunuz kaydedildi. Diğer oyuncuların oyları bekleniyor...'
 
   return {
-    message,
+    message: `${penaltyNotice}${baseMessage}`,
     hasVoted: true,
     isResolved,
     clueCardItem,
     turnPassed,
+    wrongAnswerPenalty,
+    penaltyPoints: wrongAnswerPenalty ? WRONG_ANSWER_PENALTY : 0,
   }
 }
 
@@ -4341,10 +4558,12 @@ export async function resetGame(roomId: string, playerId: string) {
   clearRoomSpeedData(roomId)
   clearRoomPersistentData(roomId)
   clearRoomSharedTargetData(roomId)
-  clearRoomTextVoteData(roomId)
+  await clearRoomVotesDb(roomId)
   playerClassicSolvedStore.delete(roomId)
   playerPassRightsStore.delete(roomId)
   classicRetiredNamesStore.delete(roomId)
+  playerCharacterHistoryStore.delete(roomId)
+  playerPenaltyStore.delete(roomId)
 
   const categoryData = getRoomCategoryData(roomId)
   categoryData.currentPhase = 1
@@ -4383,12 +4602,13 @@ export async function leaveRoom(roomId: string, playerId: string) {
   const room = await loadRoom(roomId)
   const wasCurrentPlayer = room.current_player_id === playerId
   const remaining = players.filter((player) => player.id !== playerId)
+  const remainingHumans = remaining.filter((player) => !player.is_bot)
   const leavingPlayer = players.find((player) => player.id === playerId)!
   const gameMode = getRoomMode(roomId, room.game_mode)
 
   if (room.status === 'playing') {
-    if (remaining.length < 2) {
-      // 2 kişilik veya tek kalan maçta biri çıktığında maç hükmen biter:
+    if (remaining.length < 2 || remainingHumans.length === 0) {
+      // 2 kişilik maçta biri çıktığında veya odada hiç insan oyuncu kalmadığında maç hükmen biter:
       // Terk eden mağlup (sonuncu), kalan oyuncu(lar) galip (1.lik)
       await savePlayerGameResult(roomId, gameMode, leavingPlayer, players.length, false)
       for (const remPlayer of remaining) {
@@ -4400,13 +4620,39 @@ export async function leaveRoom(roomId: string, playerId: string) {
         .from('rooms')
         .update({ status: 'finished', is_game_active: false, current_identity_id: null })
         .eq('id', roomId)
+    } else if (gameMode === 'shared_target' && leavingPlayer.is_host) {
+      // Ortak Hedef modunda Hakem (Host) ayrılırsa yeni host hedefi bilmediği için tur iptal edilir, lobiye dönülür
+      clearRoomSharedTargetData(roomId)
+      await admin
+        .from('rooms')
+        .update({
+          status: 'waiting',
+          is_game_active: false,
+          current_player_id: null,
+          current_identity_id: null,
+        })
+        .eq('id', roomId)
     } else {
       // 3 veya daha fazla oyuncu varsa terk eden sonuncu olarak kaydedilir, oyun devam eder
       await savePlayerGameResult(roomId, gameMode, leavingPlayer, players.length, false)
 
       if (wasCurrentPlayer) {
         const names = await loadNames(roomId)
-        await advanceTurn(room, remaining, names)
+        if (gameMode === 'shared_target') {
+          await handleSharedTargetPassTurn(room, remaining)
+        } else {
+          // Ayrılan oyuncuyu bitmiş/çözmüş işaretleyip tam players listesiyle ilerletiyoruz ki
+          // selectNextPlayer ayrılanın listedeki konumuna göre doğru bir sonraki oyuncuyu bulsun (başa sarmasın).
+          if (gameMode === 'speed') {
+            const speed = getPlayerSpeedData(roomId, playerId)
+            setPlayerSpeedData(roomId, playerId, { ...speed, finishedCurrentRound: true })
+          } else if (gameMode === 'persistent') {
+            setPlayerLives(roomId, playerId, 0)
+          } else {
+            setPlayerClassicSolved(roomId, playerId, true)
+          }
+          await advanceTurn(room, players, names)
+        }
       }
     }
   }
@@ -4419,14 +4665,14 @@ export async function leaveRoom(roomId: string, playerId: string) {
   // olmadığı için sıra onu zaten atlar.
   if (room.status === 'waiting') updateTeams(roomId, (teams) => removeFromTeams(teams, playerId))
 
-  if (remaining.length === 0) {
+  if (remaining.length === 0 || remainingHumans.length === 0) {
     clearRoomMemoryState(roomId)
     await admin.from('rooms').update({ status: 'closed', is_game_active: false }).eq('id', roomId)
     return { roomClosed: true }
   }
 
-  if (leavingPlayer?.is_host && remaining.length > 0) {
-    await admin.from('players').update({ is_host: true }).eq('id', remaining[0]!.id)
+  if (leavingPlayer?.is_host && remainingHumans.length > 0) {
+    await admin.from('players').update({ is_host: true }).eq('id', remainingHumans[0]!.id)
   }
 
   return { roomClosed: false }
