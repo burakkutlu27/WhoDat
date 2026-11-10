@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { isNativeApp } from '@/lib/native'
+import { useAppShell } from '@/lib/useAppShell'
 
 interface VersionInfo {
   version: string
@@ -9,9 +11,17 @@ interface VersionInfo {
 
 export default function VersionDisplay() {
   const [isVisible, setIsVisible] = useState(false)
+  const isAppShell = useAppShell()
+  const isNative = isNativeApp()
+
+  // Mobilde (Capacitor/Android, Galaxy Fold/tablet dahil) ve uygulama kabuğunda ASLA gösterilmez.
+  // Play Store'daki yerel sürüm (1.0.2 / build 3 vb.) ile web sürümü karışmamalıdır.
+  if (isNative || isAppShell) {
+    return null
+  }
 
   const versionInfo: VersionInfo = {
-    version: '3.8.0',
+    version: '3.9.0',
     environment: process.env.NODE_ENV || 'development'
   }
 

@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useMemo, useState } from 'react'
 
 import { QUESTION_BANK_SEED, QUESTION_TAGS, type QuestionBankItem } from '@/lib/game/questionBankData'
+import { playSound } from '@/lib/audio'
 
 interface QuestionPickerProps {
   isOpen: boolean
@@ -33,12 +34,14 @@ export function QuestionPicker({ isOpen, onClose, onSelectQuestion, isBusy }: Qu
 
   const handlePickQuestion = async (q: QuestionBankItem) => {
     if (isBusy) return
+    playSound('check-tick')
     await onSelectQuestion({ questionId: q.id, questionText: q.textTr })
   }
 
   const handleCustomSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!customQuestion.trim() || isBusy) return
+    playSound('pencil-scribble')
     await onSelectQuestion({ questionText: customQuestion.trim() })
   }
 

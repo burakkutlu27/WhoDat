@@ -46,6 +46,8 @@ export function initAds(): Promise<boolean> {
       } catch (error) {
         console.warn(`[ads] onay bilgisi alınamadı: ${describe(error)}`)
       }
+      // SDK başarıyla açıldıktan sonra ilk geçiş reklamını arka planda önceden indir:
+      void preloadInterstitial()
       return true
     } catch (error) {
       // Reklam altyapısı çalışmasa da oyun çalışmalı.
@@ -156,6 +158,37 @@ export function unlockAdTest(): void {
   }
 }
 
+let isInterstitialPrepared = false
+let preparePromise: Promise<boolean> | null = null
+
+/**
+ * Geçiş reklamını arka planda önceden indirip RAM'e alır (preload/pre-cache).
+ * Bu sayede maç bittiğinde veya ana sayfaya dönüldüğünde reklam gecikmesiz (0ms) açılır.
+ */
+export async function preloadInterstitial(adId = interstitialId, isTesting = useTestAds): Promise<boolean> {
+  if (!isNativeApp()) return false
+  if (!(await initAds())) return false
+  if (isInterstitialPrepared) return true
+  if (preparePromise) return preparePromise
+
+  preparePromise = (async () => {
+    try {
+      const { AdMob } = await import('@capacitor-community/admob')
+      await AdMob.prepareInterstitial({ adId, isTesting })
+      isInterstitialPrepared = true
+      return true
+    } catch (error) {
+      console.warn(`[ads] preload başarısız: ${describe(error)}`)
+      isInterstitialPrepared = false
+      return false
+    } finally {
+      preparePromise = null
+    }
+  })()
+
+  return preparePromise
+}
+
 /**
  * Test düğmesi her zaman Google'ın test birimini kullanır (markInterstitialPending('test')):
  * geliştiricinin kendi gerçek reklamına dokunması AdMob hesabını askıya aldırabilir.
@@ -164,10 +197,16 @@ async function showInterstitial(adId = interstitialId, isTesting = useTestAds): 
   if (!(await initAds())) return 'Reklam altyapısı başlatılamadı.'
   try {
     const { AdMob } = await import('@capacitor-community/admob')
-    await AdMob.prepareInterstitial({ adId, isTesting })
+    if (!isInterstitialPrepared) {
+      await AdMob.prepareInterstitial({ adId, isTesting })
+    }
+    isInterstitialPrepared = false
     await AdMob.showInterstitial()
+    // Gösterimden hemen sonra bir sonraki reklamı arka planda önceden hazırla:
+    void preloadInterstitial(adId, isTesting)
     return null
   } catch (error) {
+    isInterstitialPrepared = false
     const reason = describe(error)
     console.warn(`[ads] geçiş reklamı gösterilemedi: ${reason}`)
     return reason

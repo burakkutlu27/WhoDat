@@ -143,6 +143,7 @@ const globalRef = globalThis as unknown as {
   __whoDat_teamNotesStore?: Map<string, Map<string, TeamNote[]>>
   __whoDat_playerCharacterHistoryStore?: Map<string, Map<string, AssignedCharacterSummary[]>>
   __whoDat_playerPenaltyStore?: Map<string, Map<string, number>>
+  __whoDat_roomLastBotActionStore?: Map<string, { botNickname: string; guess: string; correct: boolean; message?: string; timestamp: number }>
 }
 
 /** Botun kendi hamlelerinden hatırladıkları (hedef ismi değişince sıfırlanır). */
@@ -176,6 +177,7 @@ globalRef.__whoDat_teamConfigStore = globalRef.__whoDat_teamConfigStore ?? new M
 globalRef.__whoDat_teamNotesStore = globalRef.__whoDat_teamNotesStore ?? new Map()
 globalRef.__whoDat_playerCharacterHistoryStore = globalRef.__whoDat_playerCharacterHistoryStore ?? new Map()
 globalRef.__whoDat_playerPenaltyStore = globalRef.__whoDat_playerPenaltyStore ?? new Map()
+globalRef.__whoDat_roomLastBotActionStore = globalRef.__whoDat_roomLastBotActionStore ?? new Map()
 
 const roomModeStore = globalRef.__whoDat_roomModeStore
 const roomCommunicationModeStore = globalRef.__whoDat_roomCommunicationModeStore
@@ -199,6 +201,28 @@ const teamConfigStore = globalRef.__whoDat_teamConfigStore
 const teamNotesStore = globalRef.__whoDat_teamNotesStore
 const playerCharacterHistoryStore = globalRef.__whoDat_playerCharacterHistoryStore
 const playerPenaltyStore = globalRef.__whoDat_playerPenaltyStore
+const roomLastBotActionStore = globalRef.__whoDat_roomLastBotActionStore!
+
+export function setRoomLastBotAction(
+  roomId: string,
+  action: { botNickname: string; guess: string; correct: boolean; message?: string },
+): void {
+  roomLastBotActionStore.set(roomId, { ...action, timestamp: Date.now() })
+}
+
+export function getRoomLastBotAction(
+  roomId: string,
+): { botNickname: string; guess: string; correct: boolean; message?: string } | null {
+  const item = roomLastBotActionStore.get(roomId)
+  if (!item) return null
+  if (Date.now() - item.timestamp > 20000) return null
+  return {
+    botNickname: item.botNickname,
+    guess: item.guess,
+    correct: item.correct,
+    message: item.message,
+  }
+}
 
 // Store'lar yalnızca instance içi önbellek; kalıcı kopya room_runtime tablosunda (bkz. runtimeState.ts).
 // Anahtar adları DB'deki JSON'da kullanıldığı için değiştirilmemeli.
@@ -2028,6 +2052,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
               .reduce((sum, player) => sum + (player.score ?? 0), 0),
           }))
         : undefined,
+      lastBotAction: getRoomLastBotAction(roomId),
     },
     players: publicPlayers,
     you: {
@@ -3613,7 +3638,7 @@ async function handlePersistentModeGuess(
     })
 
     try {
-      await admin.from('players').update({ score: -getPlayerPenalty(room.id, playerId) }).eq('id', playerId)
+      await admin.from('players').update({ score: Math.max(0, -getPlayerPenalty(room.id, playerId)) }).eq('id', playerId)
     } catch {
       // ignore
     }
@@ -4459,25 +4484,29 @@ export async function submitTextVote(
 
     if (!alreadyVoted) {
       const totalPenalty = addPlayerPenalty(roomId, voterPlayerId, WRONG_ANSWER_PENALTY)
-      let newScore = (voter.score ?? 0) - WRONG_ANSWER_PENALTY
+      let newScore = Math.max(0, (voter.score ?? 0) - WRONG_ANSWER_PENALTY)
       if (gameMode === 'speed') {
         const speed = getPlayerSpeedData(roomId, voterPlayerId)
-        newScore = speed.roundScores.reduce((sum, s) => sum + s, 0) - totalPenalty
+        newScore = Math.max(0, speed.roundScores.reduce((sum, s) => sum + s, 0) - totalPenalty)
       } else if (gameMode === 'persistent') {
         const pData = getPlayerPersistentData(roomId, voterPlayerId)
-        newScore = pData.roundScore - totalPenalty
+        newScore = Math.max(0, pData.roundScore - totalPenalty)
       }
+      const prevScore = voter.score ?? 0
       voter.score = newScore
-      try {
-        const { error: rpcErr } = await supabaseAdmin().rpc('increment_player_score', {
-          p_player_id: voterPlayerId,
-          p_delta: -WRONG_ANSWER_PENALTY,
-        })
-        if (rpcErr) {
-          await supabaseAdmin().from('players').update({ score: newScore }).eq('id', voterPlayerId)
+      const delta = newScore - prevScore
+      if (delta !== 0) {
+        try {
+          const { error: rpcErr } = await supabaseAdmin().rpc('increment_player_score', {
+            p_player_id: voterPlayerId,
+            p_delta: delta,
+          })
+          if (rpcErr) {
+            await supabaseAdmin().from('players').update({ score: newScore }).eq('id', voterPlayerId)
+          }
+        } catch {
+          // DB hatasında memory store üzerinden devam
         }
-      } catch {
-        // DB hatasında memory store üzerinden devam
       }
     }
   }
