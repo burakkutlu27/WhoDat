@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
 import { isAdTestUnlocked, markInterstitialPending, showPendingInterstitial, unlockAdTest } from '@/lib/ads'
+import { playSound } from '@/lib/audio'
 import { isNativeApp } from '@/lib/native'
 
 const AD_TEST_TAPS = 5
@@ -59,6 +60,7 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
 
   const join = (event: React.FormEvent) => {
     event.preventDefault()
+    playSound('button-tap')
     const trimmed = code.trim().toUpperCase()
     router.push(trimmed.length === 6 ? `/room/join?code=${trimmed}` : '/room/join')
   }
@@ -88,7 +90,10 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
       >
         <motion.button
           whileTap={{ scale: 0.97 }}
-          onClick={() => router.push('/room/create')}
+          onClick={() => {
+            playSound('button-tap')
+            router.push('/room/create')
+          }}
           data-testid="create-room-link"
           className="btn-pencil-red flex w-full items-center justify-center gap-2 py-4 font-display text-2xl shadow-md"
         >
@@ -98,7 +103,10 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
 
         <motion.button
           whileTap={{ scale: 0.97 }}
-          onClick={() => router.push('/room/create?bots=1')}
+          onClick={() => {
+            playSound('dice-roll')
+            router.push('/room/create?bots=1')
+          }}
           data-testid="play-vs-bots-link"
           className="btn-outline flex w-full items-center justify-center gap-2 py-4 font-display text-xl"
         >

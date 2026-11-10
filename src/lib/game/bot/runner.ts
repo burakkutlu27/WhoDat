@@ -19,6 +19,7 @@ import {
   makeGuess,
   passTurn,
   setBotMemory,
+  setRoomLastBotAction,
   submitTextVote,
 } from '../engine'
 import { FAMOUS_PEOPLE_SEED } from '../famousPeopleData'
@@ -46,6 +47,9 @@ import { questionIdForText } from './knowledge'
 const TURN_DELAY_MS: [number, number] = [1500, 4000]
 const VOTE_DELAY_MS: [number, number] = [1000, 2500]
 
+/** Oda bazında botların soru-cevap tutarlılık hafızası: Aynı hedefe aynı soruda asla çelişmezler. */
+const botVoteMemoryStore = new Map<string, Map<string, boolean>>()
+
 type BotWork =
   | { kind: 'vote'; bot: PlayerRow; voteId: string; questionText: string; askerTargetName: string | null }
   | { kind: 'turn'; bot: PlayerRow }
@@ -72,7 +76,10 @@ async function findWork(room: RoomRow, players: PlayerRow[], names: NameRow[]): 
   if (vote && vote.status === 'open') {
     const voter = bots.find((bot) => vote.eligibleVoterIds.has(bot.id) && !vote.responses.has(bot.id))
     if (!voter) return null // Oylama sürerken sıradaki oyuncu hamle yapamaz.
-    const askerTargetId = getPlayerRoundNameId(room.id, vote.askerId) ?? room.current_identity_id
+    const askerTargetId =
+      getPlayerRoundNameId(room.id, vote.askerId) ||
+      names.find((n) => n.assigned_to === vote.askerId && (n.used_in_round == null))?.id ||
+      room.current_identity_id
     return {
       kind: 'vote',
       bot: voter,
@@ -177,6 +184,12 @@ async function playTurn(room: RoomRow, players: PlayerRow[], names: NameRow[], b
   } else if (action.type === 'guess') {
     const result = await makeGuess(roomId, bot.id, action.name)
     if (!result.correct) memory = { ...memory, wrongGuesses: [...memory.wrongGuesses, action.name] }
+    setRoomLastBotAction(roomId, {
+      botNickname: bot.nickname,
+      guess: action.name,
+      correct: result.correct,
+      message: result.message,
+    })
   } else {
     await passTurn(roomId, bot.id)
   }
@@ -186,9 +199,25 @@ async function playTurn(room: RoomRow, players: PlayerRow[], names: NameRow[], b
 async function castVote(roomId: string, work: Extract<BotWork, { kind: 'vote' }>): Promise<void> {
   const level = (work.bot.bot_level ?? 'orta') as BotLevel
   const questionId = questionIdForText(work.questionText)
-  // Bot bilmediği (özel metinli veya verisi olmayan) soruda da oy verir; aksi halde oylama
-  // 30 sn zaman aşımını beklerdi. İnsan seçmenler varsa çoğunluğu onlar belirler.
-  const answer = (work.askerTargetName ? voteAnswer(questionId, work.askerTargetName, level) : null) ?? Math.random() < 0.5
+
+  // Botların aynı oda ve aynı hedef için çelişkili (farklı) oy vermesini önleyen tutarlılık önbelleği
+  const cacheKey = `${(work.askerTargetName || 'target').toLocaleLowerCase('tr')}:${questionId || work.questionText.trim().toLocaleLowerCase('tr')}`
+  let roomVoteMap = botVoteMemoryStore.get(roomId)
+  if (!roomVoteMap) {
+    roomVoteMap = new Map()
+    botVoteMemoryStore.set(roomId, roomVoteMap)
+  }
+
+  let answer: boolean
+  if (roomVoteMap.has(cacheKey)) {
+    answer = roomVoteMap.get(cacheKey)!
+  } else {
+    // Bot bilmediği (özel metinli veya verisi olmayan) soruda da oy verir; aksi halde oylama
+    // 30 sn zaman aşımını beklerdi. İnsan seçmenler varsa çoğunluğu onlar belirler.
+    answer = (work.askerTargetName ? voteAnswer(questionId, work.askerTargetName, level) : null) ?? Math.random() < 0.5
+    roomVoteMap.set(cacheKey, answer)
+  }
+
   await submitTextVote(roomId, work.bot.id, work.voteId, answer)
 }
 

@@ -11,6 +11,7 @@ import { CategoryIcon } from '@/components/CategoryIcon'
 import { StatsModal } from '@/components/StatsModal'
 import { TEAM_STYLES } from '@/components/TeamLobby'
 import { showInterstitialOnce } from '@/lib/ads'
+import { playSound } from '@/lib/audio'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/categories'
 import { useGameState } from '@/lib/useGameState'
@@ -49,6 +50,7 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
     if (phase === 'ready' && state) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowConfetti(true)
+      playSound('game-victory')
     }
   }, [phase, state])
 

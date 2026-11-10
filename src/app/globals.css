@@ -406,13 +406,13 @@
   .rounded-sketch-xl { border-radius: 18px 8px 20px 10px; }
 
   /* Floating Doodle Konum ve Zamanlama Sınıfları */
-  .doodle-pos-1 { top: 12%; left: 3%; opacity: 0.06; animation-delay: 0s; will-change: transform; }
-  .doodle-pos-2 { top: 8%; right: 5%; opacity: 0.05; animation-delay: 2s; will-change: transform; }
-  .doodle-pos-3 { bottom: 18%; left: 4%; opacity: 0.05; animation-delay: 4s; will-change: transform; }
-  .doodle-pos-4 { bottom: 25%; right: 3%; opacity: 0.05; animation-delay: 1s; will-change: transform; }
-  .doodle-pos-5 { top: 45%; left: 2%; opacity: 0.04; animation-delay: 3s; will-change: transform; }
-  .doodle-pos-6 { top: 55%; right: 2%; opacity: 0.04; animation-delay: 5s; will-change: transform; }
-  .doodle-pos-7 { top: 5%; left: 40%; opacity: 0.04; animation-delay: 3.5s; will-change: transform; }
+  .doodle-pos-1 { top: 12%; left: 3%; opacity: 0.06; animation-delay: 0s; }
+  .doodle-pos-2 { top: 8%; right: 5%; opacity: 0.05; animation-delay: 2s; }
+  .doodle-pos-3 { bottom: 18%; left: 4%; opacity: 0.05; animation-delay: 4s; }
+  .doodle-pos-4 { bottom: 25%; right: 3%; opacity: 0.05; animation-delay: 1s; }
+  .doodle-pos-5 { top: 45%; left: 2%; opacity: 0.04; animation-delay: 3s; }
+  .doodle-pos-6 { top: 55%; right: 2%; opacity: 0.04; animation-delay: 5s; }
+  .doodle-pos-7 { top: 5%; left: 40%; opacity: 0.04; animation-delay: 3.5s; }
 
   /* Elle çizilmiş altı çizili efekt */
   .underline-sketch {

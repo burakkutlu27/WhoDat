@@ -47,7 +47,8 @@ import { QuestionPicker } from '@/components/QuestionPicker'
 import { TEAM_STYLES } from '@/components/TeamLobby'
 import { TeamPanel } from '@/components/TeamPanel'
 import { VotingModal } from '@/components/VotingModal'
-import { markInterstitialPending, resetInterstitialGuard } from '@/lib/ads'
+import { markInterstitialPending, preloadInterstitial, resetInterstitialGuard } from '@/lib/ads'
+import { playSound } from '@/lib/audio'
 import { ApiClientError, apiRequest } from '@/lib/apiClient'
 import { CATEGORIES } from '@/lib/game/categories'
 import type { GuessResult } from '@/lib/game/types'
@@ -113,6 +114,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   useEffect(() => {
     resetInterstitialGuard(roomId)
     markInterstitialPending()
+    void preloadInterstitial()
   }, [roomId])
 
   // Uygulamada (Capacitor/PWA) oyun ekranı tek ekrana sığar: ipucu defteri, skor ve takım
@@ -120,10 +122,13 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const isAppShell = useAppShell()
   const [appSheet, setAppSheet] = useState<'clues' | 'score' | 'team' | null>(null)
 
-  // Uygulamada titreşimle haber ver: telefon cepteyken sıra veya 30 sn'lik oylama kaçmasın.
+  // Uygulamada titreşim ve sesle haber ver: telefon cepteyken sıra veya 30 sn'lik oylama kaçmasın.
   const isMyTurn = Boolean(state?.you.isYourTurn)
   useEffect(() => {
-    if (isMyTurn) void haptic('turn')
+    if (isMyTurn) {
+      void haptic('turn')
+      playSound('card-flip')
+    }
   }, [isMyTurn])
 
   const pendingVote = state?.room.activeVote
@@ -132,7 +137,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
       ? pendingVote.id
       : null
   useEffect(() => {
-    if (voteAwaitingMe) void haptic('vote')
+    if (voteAwaitingMe) {
+      void haptic('vote')
+      playSound('vote-ping')
+    }
   }, [voteAwaitingMe])
 
   useEffect(() => {
@@ -229,6 +237,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
       }
 
       if (result.correct) {
+        if (result.finished) {
+          playSound('game-victory')
+        } else {
+          playSound('correct-guess')
+        }
         setGuessResultModal({ isCorrect: true, message: result.message, guessText: guess.trim() })
         setFeedback({ tone: 'success', text: result.message })
         setGuess('')
@@ -240,6 +253,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
           await refresh()
         }, 3500)
       } else {
+        playSound('wrong-guess')
         setGuessResultModal({ isCorrect: false, message: result.message, guessText: guess.trim() })
         setFeedback({ tone: 'error', text: result.message })
         setGuess('')
@@ -357,6 +371,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   }
 
   const handleTextQuestionSubmit = async (params: { questionId?: string; questionText: string }) => {
+    playSound('pencil-scribble')
     setIsBusy(true)
     setShowPaperAirplane(true)
     setTimeout(() => setShowPaperAirplane(false), 1400)
@@ -453,6 +468,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     if (isBusy) return
     setIsBusy(true)
     try {
+      playSound('card-flip')
       const result = await apiRequest<{ message: string }>(`/api/rooms/${roomId}/pass`, { method: 'POST' })
       setGuess('')
       if (result.message.includes('limit') || !isSpeed) {
@@ -476,6 +492,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     if (isBusy) return
     setIsBusy(true)
     try {
+      playSound('card-flip')
       const result = await apiRequest<{ message: string }>(`/api/rooms/${roomId}/pass-name`, { method: 'POST' })
       setGuess('')
       setFeedback({ tone: 'success', text: result.message })
@@ -921,7 +938,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         </div>
       )}
 
-      <div className={`mx-auto max-w-5xl ${isAppShell ? 'space-y-2' : 'space-y-4 sm:space-y-6'}`}>
+      <div className={`mx-auto ${isAppShell ? 'max-w-2xl space-y-3' : 'max-w-5xl space-y-4 sm:space-y-6'}`}>
         {/* Game Header Bar — uygulamada tek ince satır: oda kodu, etiketler (kayar), çıkış */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
@@ -1041,9 +1058,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         </motion.header>
 
 
-        <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-3">
+        <div className={isAppShell ? 'w-full' : 'grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-3'}>
           {/* Main Play Arena */}
-          <main className="lg:col-span-2 space-y-6">
+          <main className={isAppShell ? 'w-full space-y-6' : 'lg:col-span-2 space-y-6'}>
             <PageFlipTransition key={`${state.room.gameRound}-${state.room.currentPhase || 1}-${state.room.currentPlayerId}`} type="flip">
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
@@ -1616,7 +1633,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                                 type="button"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                onClick={() => setIsQuestionPickerOpen(true)}
+                                onClick={() => {
+                                  playSound('modal-open')
+                                  setIsQuestionPickerOpen(true)
+                                }}
                                 disabled={isBusy}
                                 data-testid="ask-question-button"
                                 className="btn-pencil-yellow w-full py-3 font-display text-lg font-bold flex items-center justify-center gap-2 shadow-md border-2 border-pencil-yellow sm:py-4 sm:text-xl"
@@ -1802,6 +1822,22 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     <span>{feedback.text}</span>
                   </motion.div>
                 )}
+                {!feedback && state?.room.lastBotAction && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`mx-auto max-w-md text-center font-display text-base font-bold flex items-center justify-center gap-2 p-3 rounded-sketch-lg shadow-sm border ${
+                      state.room.lastBotAction.correct
+                        ? 'bg-pencil-green/15 text-pencil-green border-pencil-green/30'
+                        : 'bg-paper-card-alt text-ink-faded border-paper-border'
+                    }`}
+                  >
+                    <span>🤖</span>
+                    <span>
+                      <strong className="text-ink">{state.room.lastBotAction.botNickname}</strong> &quot;{state.room.lastBotAction.guess}&quot; tahmininde bulundu {state.room.lastBotAction.correct ? '✓ (Doğru!)' : '✗ (Yanlış)'}
+                    </span>
+                  </motion.div>
+                )}
               </div>
             </motion.div>
             </PageFlipTransition>
@@ -1882,7 +1918,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
               isAppShell
                 ? appSheet
                   ? // Sekme çubuğunun hemen üstünde açılır ki aynı sekmeyle kapatılabilsin.
-                  'fixed inset-x-0 bottom-[calc(var(--safe-bottom)+4rem)] z-40 max-h-[70dvh] space-y-3 overflow-y-auto rounded-t-2xl bg-paper-bg p-3 shadow-2xl'
+                  'fixed inset-x-0 bottom-[calc(var(--safe-bottom)+4rem)] z-40 max-h-[70dvh] space-y-3 overflow-y-auto rounded-t-2xl bg-paper-bg p-3 shadow-2xl sm:mx-auto sm:max-w-2xl'
                   : 'hidden'
                 : 'lg:col-span-1 space-y-6'
             }
@@ -2080,33 +2116,43 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
       {isAppShell && (
         <nav
           data-testid="app-tabbar"
-          className={`fixed inset-x-0 bottom-0 z-40 grid gap-2 border-t-2 border-dashed border-paper-border bg-paper-bg/95 px-3 pt-2 pb-[calc(var(--safe-bottom)+0.5rem)] backdrop-blur-sm ${
-            state.room.teamMode ? 'grid-cols-3' : 'grid-cols-2'
-          }`}
+          className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-dashed border-paper-border bg-paper-bg/95 px-3 pt-2 pb-[calc(var(--safe-bottom)+0.5rem)] backdrop-blur-sm"
         >
-          {(
-            [
-              { id: 'clues', label: `İpuçları (${state.you.clueCard?.length ?? 0})`, Icon: Lightbulb },
-              { id: 'score', label: 'Skor', Icon: Trophy },
-              ...(state.room.teamMode ? [{ id: 'team' as const, label: 'Takım', Icon: Users }] : []),
-            ] as const
-          ).map(({ id, label, Icon }) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => setAppSheet((open) => (open === id ? null : id))}
-              aria-pressed={appSheet === id}
-              data-testid={`app-tab-${id}`}
-              className={`flex min-h-12 items-center justify-center gap-1.5 rounded-sketch border-2 font-display text-lg font-bold transition-colors ${
-                appSheet === id
-                  ? 'border-pencil-yellow bg-pencil-yellow/15 text-ink'
-                  : 'border-dashed border-paper-border bg-paper-card text-ink-faded'
-              }`}
-            >
-              <Icon className="h-4 w-4" />
-              <span>{label}</span>
-            </button>
-          ))}
+          <div
+            className={`mx-auto max-w-2xl grid gap-2 ${
+              state.room.teamMode ? 'grid-cols-3' : 'grid-cols-2'
+            }`}
+          >
+            {(
+              [
+                { id: 'clues', label: `İpuçları (${state.you.clueCard?.length ?? 0})`, Icon: Lightbulb },
+                { id: 'score', label: 'Skor', Icon: Trophy },
+                ...(state.room.teamMode ? [{ id: 'team' as const, label: 'Takım', Icon: Users }] : []),
+              ] as const
+            ).map(({ id, label, Icon }) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => {
+                  setAppSheet((open) => {
+                    const next = open === id ? null : id
+                    if (next) playSound('modal-open')
+                    return next
+                  })
+                }}
+                aria-pressed={appSheet === id}
+                data-testid={`app-tab-${id}`}
+                className={`flex min-h-12 items-center justify-center gap-1.5 rounded-sketch border-2 font-display text-lg font-bold transition-colors ${
+                  appSheet === id
+                    ? 'border-pencil-yellow bg-pencil-yellow/15 text-ink'
+                    : 'border-dashed border-paper-border bg-paper-card text-ink-faded'
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
         </nav>
       )}
 

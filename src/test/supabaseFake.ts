@@ -301,7 +301,7 @@ export function createSupabaseFake(
       rpc(name: string, args: Record<string, unknown> = {}) {
         if (name === 'increment_player_score') {
           const player = tables.players.find((candidate) => candidate.id === args.p_player_id)
-          if (player) player.score = (player.score ?? 0) + (args.p_delta as number)
+          if (player) player.score = Math.max(0, (player.score ?? 0) + (args.p_delta as number))
           return Promise.resolve({ data: player?.score ?? null, error: null })
         }
         if (name === 'close_expired_rooms') {

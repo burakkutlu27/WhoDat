@@ -53,8 +53,8 @@ const EVALUATORS: Record<string, Evaluator> = {
   'qb-01': needs((a) => a.r),
   // Kurgusal veya hayal ürünü bir karakter miyim?
   'qb-02': needs((a) => !a.r),
-  // Şu anda hayatta mıyım?
-  'qb-03': needs((a) => (a.r ? a.a : null)),
+  // Şu anda hayatta mıyım? (Kurgusal karakterler biyolojik olarak hayatta değildir)
+  'qb-03': needs((a) => (a.r ? a.a : false)),
   // Bir kadın mıyım?
   'qb-04': needs((a) => (a.g === null ? null : a.g === 'f')),
   // Bir erkek miyim?

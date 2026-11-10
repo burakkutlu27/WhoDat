@@ -7,6 +7,7 @@ import { createPortal } from 'react-dom'
 
 import { InkStamp } from '@/components/animations/InkStamp'
 import { PencilLoader } from '@/components/animations/PencilLoader'
+import { playSound } from '@/lib/audio'
 import type { TextQuestionVote } from '@/lib/game/types'
 
 interface VotingModalProps {
@@ -41,10 +42,16 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
   })
 
   useEffect(() => {
+    let lastTickedSecond = -1
     const interval = setInterval(() => {
       const ms = new Date(vote.closesAt).getTime() - Date.now()
-      setLocalSeconds(Math.max(0, Math.ceil(ms / 1000)))
-    }, 500)
+      const secs = Math.max(0, Math.ceil(ms / 1000))
+      setLocalSeconds(secs)
+      if (secs > 0 && secs <= 5 && secs !== lastTickedSecond) {
+        lastTickedSecond = secs
+        playSound('countdown-tick')
+      }
+    }, 250)
     return () => clearInterval(interval)
   }, [vote.closesAt])
 

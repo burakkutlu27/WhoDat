@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Lightbulb, Trophy } from 'lucide-react'
 import { motion } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { StatsModal } from './StatsModal'
 import SuggestNameModal from './SuggestNameModal'
@@ -17,11 +17,12 @@ export default function Navbar() {
   const pathname = usePathname()
   const isAppShell = useAppShell()
 
-  // Rota değiştiğinde (ör. lobi -> oyun başlıyor -> oyun sonu) açık kalan modalları kapat.
-  useEffect(() => {
+  const [prevPathname, setPrevPathname] = useState(pathname)
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname)
     setShowStats(false)
     setShowSuggest(false)
-  }, [pathname])
+  }
 
   // Uygulamada oyun sırasında üst menü yer kaplamasın: istatistik/isim öner/tema oyun içinde gereksiz.
   if (isAppShell && pathname.startsWith('/game/')) return null

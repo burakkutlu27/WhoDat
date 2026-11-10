@@ -175,6 +175,13 @@ export interface GameState {
     /** Takım Modu: açık mı ve takımlar (lobi dahil) */
     teamMode?: boolean
     teams?: PublicTeam[]
+    /** Botun yaptığı son tahmin/hamle bildirimi (oyuncuların botun ne yaptığını görmesi için) */
+    lastBotAction?: {
+      botNickname: string
+      guess: string
+      correct: boolean
+      message?: string
+    } | null
   }
   players: PublicPlayer[]
   you: {
