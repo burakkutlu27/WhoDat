@@ -489,6 +489,10 @@ export default function Home() {
               <Link href="/gizlilik" className="hover:text-pencil-red transition-colors">
                 Gizlilik
               </Link>
+              <span>•</span>
+              <Link href="/sartlar" className="hover:text-pencil-red transition-colors">
+                Şartlar
+              </Link>
             </div>
 
             <div className="flex items-center gap-3">
