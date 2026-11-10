@@ -157,9 +157,15 @@ export function AppHome({ onOpenStats }: AppHomeProps) {
             Test reklamı
           </button>
         )}
-        <Link href="/gizlilik" className="flex min-h-11 items-center font-sans text-sm text-ink-faded underline">
-          Gizlilik
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/gizlilik" className="flex min-h-11 items-center font-sans text-sm text-ink-faded underline">
+            Gizlilik
+          </Link>
+          <span className="text-ink-faded text-xs">•</span>
+          <Link href="/sartlar" className="flex min-h-11 items-center font-sans text-sm text-ink-faded underline">
+            Şartlar
+          </Link>
+        </div>
       </footer>
       {adTestStatus && (
         <p role="status" className="-mt-3 text-center font-sans text-sm text-ink-faded">

@@ -128,9 +128,13 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <footer className="border-t border-dashed border-paper-border pt-4">
+        <footer className="border-t border-dashed border-paper-border pt-4 flex items-center gap-3">
           <Link href="/" className="font-display text-lg font-bold text-pencil-red underline">
             ← Ana sayfaya dön
+          </Link>
+          <span className="text-ink-faded">•</span>
+          <Link href="/sartlar" className="font-display text-lg font-bold text-pencil-red underline">
+            Hizmet Şartları
           </Link>
         </footer>
       </article>
