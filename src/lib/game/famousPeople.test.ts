@@ -190,10 +190,10 @@ describe('Famous People & Auto-Assign Engine', () => {
       { id: '5', name: 'Tier 5 Person', category: 'unluler', fameTier: 5 },
     ]
 
-    it('kolay zorlukta yalnızca fameTier <= 2 olan isimleri döndürür', () => {
+    it('kolay zorlukta yalnızca fameTier <= 1 olan isimleri döndürür', () => {
       const filtered = filterByDifficulty(samplePeople, 'kolay')
-      expect(filtered.length).toBe(2)
-      expect(filtered.every((p) => (p.fameTier ?? 4) <= 2)).toBe(true)
+      expect(filtered.length).toBe(1)
+      expect(filtered.every((p) => (p.fameTier ?? 4) <= 1)).toBe(true)
     })
 
     it('orta zorlukta yalnızca fameTier <= 3 olan isimleri döndürür (varsayılan)', () => {
@@ -213,11 +213,11 @@ describe('Famous People & Auto-Assign Engine', () => {
   })
 
   describe('getFamousPeople with difficulty parameter', () => {
-    it('difficulty: kolay parametresiyle sorgulandığında en fazla Tier 2 isimler döner', async () => {
+    it('difficulty: kolay parametresiyle sorgulandığında en fazla Tier 1 isimler döner', async () => {
       fake.tables.famous_people = []
       const results = await getFamousPeople({ difficulty: 'kolay', limit: 20, random: true })
       expect(results.length).toBeGreaterThan(0)
-      expect(results.every((r) => (r.fameTier ?? 4) <= 2)).toBe(true)
+      expect(results.every((r) => (r.fameTier ?? 4) <= 1)).toBe(true)
     })
 
     it('difficulty: orta parametresiyle sorgulandığında en fazla Tier 3 isimler döner', async () => {
@@ -235,7 +235,7 @@ describe('Famous People & Auto-Assign Engine', () => {
   })
 
   describe('autoAssignNames with room difficulty', () => {
-    it('odanın zorluk seviyesi kolay ise yalnızca Tier 1 veya 2 isimler atanır', async () => {
+    it('odanın zorluk seviyesi kolay ise yalnızca Tier 1 isimler atanır', async () => {
       fake.tables.famous_people = []
       const room = buildRoom({ status: 'waiting', game_mode: 'classic' })
       const host = buildPlayer(room.id, { nickname: 'Host', is_host: true })
@@ -254,7 +254,7 @@ describe('Famous People & Auto-Assign Engine', () => {
           (s) => s.name.toLocaleLowerCase('tr') === assigned.name_text.toLocaleLowerCase('tr')
         )
         if (seed) {
-          expect(seed.fameTier).toBeLessThanOrEqual(2)
+          expect(seed.fameTier).toBeLessThanOrEqual(1)
         }
       }
     })

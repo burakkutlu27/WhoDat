@@ -2,23 +2,49 @@
 
 import { Check, Clock, Loader2, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { motion } from 'motion/react'
-import { useEffect, useState, useSyncExternalStore } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 
 import { InkStamp } from '@/components/animations/InkStamp'
 import { PencilLoader } from '@/components/animations/PencilLoader'
-import { playSound } from '@/lib/audio'
+import { playSound, stopSound } from '@/lib/audio'
 import type { TextQuestionVote } from '@/lib/game/types'
 
 interface VotingModalProps {
   vote: TextQuestionVote
   isAsker: boolean
+  /** Oylama yapan oyuncunun görebildiği gizli hedef karakter (mobilde kart üstte kapanınca görünmesi için). */
+  targetName?: string | null
   onVote: (answer: boolean) => Promise<void>
   isBusy: boolean
 }
 
 // Tailwind `sm` kırılımının altı.
 const MOBILE_QUERY = '(max-width: 639px)'
+const CLOCK_SKEW_TOLERANCE_MS = 1500
+const DEFAULT_VOTE_DURATION_SECS = 30
+
+function resolveDeadlineMs(closesAt: string, secondsRemaining: number): number {
+  const now = Date.now()
+  const serverFallback = now + Math.max(0, secondsRemaining) * 1000
+  const parsedCloses = Date.parse(closesAt)
+  if (!Number.isFinite(parsedCloses)) return serverFallback
+  const localRemainingMs = parsedCloses - now
+  // İstemci saati sunucudan sapmışsa sunucunun gönderdiği kalan süreyi baz al.
+  if (Math.abs(localRemainingMs - secondsRemaining * 1000) > CLOCK_SKEW_TOLERANCE_MS) {
+    return serverFallback
+  }
+  return parsedCloses
+}
+
+function getTotalVoteSeconds(openedAt: string, closesAt: string): number {
+  const openedMs = Date.parse(openedAt)
+  const closesMs = Date.parse(closesAt)
+  if (Number.isFinite(openedMs) && Number.isFinite(closesMs) && closesMs > openedMs) {
+    return (closesMs - openedMs) / 1000
+  }
+  return DEFAULT_VOTE_DURATION_SECS
+}
 
 function subscribeToMobileQuery(onChange: () => void) {
   const query = window.matchMedia(MOBILE_QUERY)
@@ -34,28 +60,77 @@ function useIsMobile() {
   )
 }
 
-export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps) {
+export function VotingModal({ vote, isAsker, targetName, onVote, isBusy }: VotingModalProps) {
   const isMobile = useIsMobile()
+  const shouldTick = !isAsker && !vote.hasVoted
+  const shouldTickRef = useRef(shouldTick)
+  const deadlineRef = useRef<number | null>(null)
+  const lastVoteKeyRef = useRef<string>('')
+  const totalVoteSeconds = getTotalVoteSeconds(vote.openedAt, vote.closesAt)
+
   const [localSeconds, setLocalSeconds] = useState(() => {
-    const ms = new Date(vote.closesAt).getTime() - Date.now()
-    return Math.max(0, Math.ceil(ms / 1000))
+    const deadlineMs = resolveDeadlineMs(vote.closesAt, vote.secondsRemaining)
+    return Math.max(0, Math.ceil((deadlineMs - Date.now()) / 1000))
   })
 
   useEffect(() => {
+    shouldTickRef.current = shouldTick
+    if (!shouldTick) {
+      stopSound('countdown-tick')
+    }
+  }, [shouldTick])
+
+  useEffect(() => {
+    const voteKey = `${vote.id}:${vote.closesAt}`
+    const now = Date.now()
+    const currentRemaining = deadlineRef.current === null ? null : deadlineRef.current - now
+    // Yeni oy oturumunda veya sunucu süresiyle belirgin kayma oluştuğunda bitiş zamanını güncelle.
+    if (
+      lastVoteKeyRef.current !== voteKey ||
+      currentRemaining === null ||
+      Math.abs(currentRemaining - vote.secondsRemaining * 1000) > CLOCK_SKEW_TOLERANCE_MS + 1000
+    ) {
+      lastVoteKeyRef.current = voteKey
+      deadlineRef.current = resolveDeadlineMs(vote.closesAt, vote.secondsRemaining)
+    }
+
     let lastTickedSecond = -1
-    const interval = setInterval(() => {
-      const ms = new Date(vote.closesAt).getTime() - Date.now()
-      const secs = Math.max(0, Math.ceil(ms / 1000))
+    const tick = () => {
+      const deadlineMs = deadlineRef.current ?? resolveDeadlineMs(vote.closesAt, vote.secondsRemaining)
+      const secs = Math.max(0, Math.ceil((deadlineMs - Date.now()) / 1000))
       setLocalSeconds(secs)
-      if (secs > 0 && secs <= 5 && secs !== lastTickedSecond) {
+      const isVisible = typeof document === 'undefined' || document.visibilityState === 'visible'
+      if (shouldTickRef.current && isVisible && secs > 0 && secs <= 5 && secs !== lastTickedSecond) {
         lastTickedSecond = secs
         playSound('countdown-tick')
+      } else if (!shouldTickRef.current || !isVisible || secs <= 0) {
+        stopSound('countdown-tick')
       }
-    }, 250)
-    return () => clearInterval(interval)
-  }, [vote.closesAt])
+    }
 
-  const progressPercent = Math.max(0, Math.min(100, (localSeconds / 30) * 100))
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        stopSound('countdown-tick')
+        return
+      }
+      // Arka plandan dönünce yerel saati mevcut sunucu kalanıyla eşitle.
+      deadlineRef.current = resolveDeadlineMs(vote.closesAt, vote.secondsRemaining)
+      tick()
+    }
+
+    const syncTimer = setTimeout(tick, 0)
+    const interval = setInterval(tick, 250)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      clearTimeout(syncTimer)
+      clearInterval(interval)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      stopSound('countdown-tick')
+    }
+  }, [vote.id, vote.closesAt, vote.secondsRemaining])
+
+  const progressPercent = Math.max(0, Math.min(100, (localSeconds / totalVoteSeconds) * 100))
 
   // İstek sürerken iki buton da aynı gri görünüyordu; seçilen şık vurgulu kalsın.
   const [pendingAnswer, setPendingAnswer] = useState<boolean | null>(null)
@@ -135,6 +210,12 @@ export function VotingModal({ vote, isAsker, onVote, isBusy }: VotingModalProps)
       ) : (
         /* Responder Screen: Vote Yes / No with InkStamp effects */
         <div className="py-2 space-y-4">
+          {targetName && (
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1 rounded-sketch-md bg-pencil-green/10 border border-pencil-green/40 text-sm font-sans">
+              <span className="text-pencil-green font-semibold">Hedef Karakter:</span>
+              <span className="font-display font-bold text-ink text-base">{targetName}</span>
+            </div>
+          )}
           <div>
             <span className="font-display text-base font-bold text-pencil-blue block">
               {vote.askerNickname} Soruyor:

@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
 
 import { FAMOUS_PEOPLE_SEED } from '../famousPeopleData'
+import { QUESTION_BANK_SEED } from '../questionBankData'
 import { filterByDifficulty } from '../rules'
 import { chooseQuestion, decideAction, filterCandidates, toCandidates, voteAnswer, type BotLevel, type ClueObservation } from './brain'
-import { answerFor, lookupAttributes, questionIdForText } from './knowledge'
+import { ANSWERABLE_QUESTION_IDS, answerFor, lookupAttributes, questionIdForText } from './knowledge'
 
 /** Deterministik rastgelelik (mulberry32). */
 function seeded(seed: number) {
@@ -30,6 +31,79 @@ describe('knowledge', () => {
     expect(answerFor('qb-11', 'Novak Djokovic')).toBe(true)
     expect(answerFor('qb-06', 'Naim Süleymanoğlu')).toBe(true)
     expect(answerFor('qb-03', 'Naim Süleymanoğlu')).toBe(false)
+    expect(answerFor('qb-03', 'Novak Djokovic')).toBe(true)
+    expect(answerFor('qb-03', 'Harry Potter')).toBe(false)
+  })
+
+  it('eklenen dönem, alan ve isim sorularını doğru değerlendirir', () => {
+    expect(answerFor('qb-23', 'Mustafa Kemal Atatürk')).toBe(true)
+    expect(answerFor('qb-25', 'Mustafa Kemal Atatürk')).toBe(true)
+    expect(answerFor('qb-25', 'Novak Djokovic')).toBe(false)
+    expect(answerFor('qb-25', 'Harry Potter')).toBe(false)
+
+    expect(answerFor('qb-26', 'Novak Djokovic')).toBe(true)
+    expect(answerFor('qb-26', 'Brad Pitt')).toBe(false)
+    expect(answerFor('qb-27', 'Brad Pitt')).toBe(true)
+    expect(answerFor('qb-27', 'Mustafa Kemal Atatürk')).toBe(false)
+
+    expect(answerFor('qb-28', 'Vito Corleone (Baba / The Godfather)')).toBe(true)
+    expect(answerFor('qb-28', 'Shakira')).toBe(false)
+    expect(answerFor('qb-29', 'Brad Pitt')).toBe(true)
+    expect(answerFor('qb-29', 'Novak Djokovic')).toBe(false)
+    expect(answerFor('qb-30', 'Novak Djokovic')).toBe(true)
+    expect(answerFor('qb-30', 'Brad Pitt')).toBe(false)
+    expect(answerFor('qb-31', 'İsmet İnönü')).toBe(true)
+    expect(answerFor('qb-31', 'Şenol Güneş')).toBe(false)
+    // Parantez içi ifade harf sorularına dahil edilmez ("Baba" dışında "a" yok)
+    expect(answerFor('qb-32', 'Vito Corleone (Baba / The Godfather)')).toBe(false)
+    expect(answerFor('qb-33', 'Harry Potter')).toBe(true)
+    expect(answerFor('qb-34', 'Harry Potter')).toBe(true)
+    expect(answerFor('qb-35', 'İsmet İnönü')).toBe(true)
+    expect(answerFor('qb-35', 'Şenol Güneş')).toBe(false)
+  })
+
+  it('soru bankasındaki tüm sorular bot tarafından yanıtlanabilir ve tüm veride sıfır null üretir', () => {
+    const expectedIds = QUESTION_BANK_SEED.map((q) => q.id)
+    expect(ANSWERABLE_QUESTION_IDS).toEqual(expectedIds)
+
+    const nulls: string[] = []
+    for (const person of FAMOUS_PEOPLE_SEED) {
+      const attrs = lookupAttributes(person.name)
+      for (const question of QUESTION_BANK_SEED) {
+        if (answerFor(question.id, person.name, attrs) === null) {
+          nulls.push(`${person.name} × ${question.id}`)
+          if (nulls.length >= 10) break
+        }
+      }
+      if (nulls.length >= 10) break
+    }
+    expect(nulls).toEqual([])
+  })
+
+  it('bölge, spor dalı, doğum dönemi ve kurgusal evren sorularını doğru yanıtlar', () => {
+    expect(answerFor('qb-20', 'Novak Djokovic')).toBe(true) // 1987 >= 1950
+    expect(answerFor('qb-20', 'Mustafa Kemal Atatürk')).toBe(false)
+    expect(answerFor('qb-36', 'Leonardo da Vinci')).toBe(true) // < 1800
+    expect(answerFor('qb-37', 'Arda Güler')).toBe(true) // >= 1990
+    expect(answerFor('qb-39', 'Novak Djokovic')).toBe(true) // Avrupa
+    expect(answerFor('qb-40', 'Brad Pitt')).toBe(true) // Kuzey Amerika
+    expect(answerFor('qb-41', 'Lionel Messi')).toBe(true) // Latin Amerika
+    expect(answerFor('qb-44', 'Lionel Messi')).toBe(true) // Futbol
+    expect(answerFor('qb-45', 'LeBron James')).toBe(true) // Basketbol
+    expect(answerFor('qb-46', 'Eda Erdem')).toBe(true) // Voleybol
+    expect(answerFor('qb-47', 'Muhammed Ali')).toBe(true) // Dövüş / güreş
+    expect(answerFor('qb-48', 'Novak Djokovic')).toBe(true) // Bireysel spor
+    expect(answerFor('qb-49', 'Acun Ilıcalı')).toBe(true) // Medya
+    expect(answerFor('qb-51', 'Polat Alemdar')).toBe(true) // Yerli dizi/film
+    expect(answerFor('qb-52', 'Harry Potter')).toBe(true) // Yabancı canlı aksiyon
+    expect(answerFor('qb-55', 'Naruto Uzumaki')).toBe(true) // Anime
+    expect(answerFor('qb-56', 'Super Mario')).toBe(true) // Video oyunu
+    expect(answerFor('qb-57', 'Don Kişot (Don Quijote)')).toBe(true) // Edebiyat/mitoloji
+    expect(answerFor('qb-58', 'Pikachu (Pokemon)')).toBe(true) // Cinsiyetsiz kurgusal varlık
+    expect(answerFor('qb-04', 'Pikachu (Pokemon)')).toBe(false)
+    expect(answerFor('qb-05', 'Pikachu (Pokemon)')).toBe(false)
+    expect(EASY_POOL.length).toBeGreaterThan(0)
+    expect(EASY_POOL.every((p) => p.fameTier === 1)).toBe(true)
   })
 
   it('isim sorularını veri setinde olmayan isimlerde de cevaplar', () => {
@@ -44,9 +118,8 @@ describe('knowledge', () => {
     expect(lookupAttributes('novak djokovic')).not.toBeNull()
   })
 
-  it('verisi olmayan soruda (iyi/kötü karakter) çekimser kalır', () => {
-    expect(answerFor('qb-16', 'Novak Djokovic')).toBeNull()
-    expect(answerFor('qb-17', 'Novak Djokovic')).toBeNull()
+  it('bankada olmayan özel soru kimliğinde çekimser kalır', () => {
+    expect(answerFor('qb-custom-unknown', 'Novak Djokovic')).toBeNull()
   })
 
   it('ipucu kartındaki soru metnini bankadaki soruya çevirir, özel soruda null döner', () => {
@@ -58,7 +131,7 @@ describe('knowledge', () => {
 describe('brain', () => {
   it('seçmen bot doğru oyu verir (zor), bilmediği soruda oy vermez', () => {
     expect(voteAnswer('qb-05', 'Novak Djokovic', 'zor')).toBe(true)
-    expect(voteAnswer('qb-16', 'Novak Djokovic', 'zor')).toBeNull()
+    expect(voteAnswer('qb-custom-unknown', 'Novak Djokovic', 'zor')).toBeNull()
     expect(voteAnswer(null, 'Novak Djokovic', 'zor')).toBeNull()
   })
 
