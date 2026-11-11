@@ -5,7 +5,11 @@ import { randomUUID } from 'node:crypto'
 import type { Database, NameRow, PlayerRow, RoomRow, RoomStatus } from '../database.types'
 import { badRequest, conflict, forbidden, notFound } from '../http'
 import { supabaseAdmin } from '../supabaseAdmin'
-import { FAMOUS_PEOPLE_SEED } from './famousPeopleData'
+import { DEPRECATED_FAMOUS_PEOPLE_KEYS, FAMOUS_PEOPLE_SEED } from './famousPeopleData'
+
+const SEED_BY_KEY = new Map(
+  FAMOUS_PEOPLE_SEED.map((item) => [item.name.toLocaleLowerCase('tr').trim(), item]),
+)
 import { fuzzyMatch } from './matching'
 import { QUESTION_BANK_SEED } from './questionBankData'
 import { evictRoomRuntime, registerRuntimeStores, withRoomRuntime } from './runtimeState'
@@ -2195,7 +2199,7 @@ export async function getFamousPeople(options: {
 
   // Zorluk seviyesine göre maksimum fameTier belirle (08a-zorluk-seviyesi-BASIT.md)
   let difficultyMaxTier: number | undefined = undefined
-  if (difficulty === 'kolay') difficultyMaxTier = 2
+  if (difficulty === 'kolay') difficultyMaxTier = 1
   else if (difficulty === 'orta') difficultyMaxTier = 3
   else if (difficulty === 'zor') difficultyMaxTier = undefined
 
@@ -2224,11 +2228,15 @@ export async function getFamousPeople(options: {
     if (!error && data && data.length > 0) {
       for (const rawItem of data as Array<{ id: string; name: string; category: string; fame_tier?: number | null }>) {
         const key = rawItem.name.toLocaleLowerCase('tr').trim()
+        if (DEPRECATED_FAMOUS_PEOPLE_KEYS.has(key)) continue
+        const seedOverride = SEED_BY_KEY.get(key)
+        const resolvedCategory = seedOverride ? seedOverride.category : rawItem.category
+        if (category !== 'all' && resolvedCategory !== category) continue
         combinedMap.set(key, {
           id: rawItem.id,
-          name: rawItem.name,
-          category: rawItem.category,
-          fameTier: rawItem.fame_tier ?? undefined,
+          name: seedOverride ? seedOverride.name : rawItem.name,
+          category: resolvedCategory,
+          fameTier: seedOverride ? seedOverride.fameTier : (rawItem.fame_tier ?? undefined),
         })
       }
     }

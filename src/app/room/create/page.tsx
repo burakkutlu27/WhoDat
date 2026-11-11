@@ -376,7 +376,7 @@ function CreateRoomForm() {
                   {
                     id: 'text' as const,
                     title: 'Tam Metin / Uzaktan',
-                    desc: 'Sesli konuşma gerekmez! Hazır soru bankası, 15sn Evet/Hayır oylaması ve not defteri.',
+                    desc: 'Sesli konuşma gerekmez! Hazır soru bankası, 30sn Evet/Hayır oylaması ve not defteri.',
                     icon: MessageSquare,
                     color: 'var(--pencil-green)',
                     borderClass: 'border-pencil-green',
@@ -635,8 +635,8 @@ function CreateRoomForm() {
                   {
                     id: 'kolay' as const,
                     title: 'Kolay',
-                    tier: 'Tier 1-2',
-                    desc: 'En popüler ve herkesin bildiği isimler. Rahat ve eğlenceli.',
+                    tier: 'Tier 1',
+                    desc: 'Herkesin ilk bakışta tanıdığı en ikonik isimler. Rahat ve eğlenceli.',
                     icon: Feather,
                     color: 'var(--pencil-green)',
                     borderClass: 'border-pencil-green',

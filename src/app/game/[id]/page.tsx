@@ -1502,7 +1502,17 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
                         {!state.you.isYourTurn && (
                           <div className="text-center font-sans text-sm text-ink-faded">
-                            Senin durumun: <strong className="text-ink">{state.you.questionBudgetRemaining ?? 10}/10 Soru Bütçesi</strong> • <strong className="text-pencil-red">{myLives} Can</strong> • Sıran geldiğinde bilirsen: <strong className="text-pencil-green">+{state.you.estimatedPoints ?? 100} P</strong>
+                            Senin durumun: <strong className="text-ink">{state.you.questionBudgetRemaining ?? 10}/10 Soru Bütçesi</strong> •{' '}
+                            <strong className="text-pencil-red">{myLives} Can</strong> •{' '}
+                            {state.you.nameSolved ? (
+                              <strong className="text-pencil-green">İsmi Bildin (+{state.you.persistentScore ?? 0} P)</strong>
+                            ) : myLives <= 0 ? (
+                              <strong className="text-pencil-red">Tahmin Hakkın Bitti (0 P)</strong>
+                            ) : (
+                              <>
+                                Sıran geldiğinde bilirsen: <strong className="text-pencil-green">+{state.you.estimatedPoints ?? 100} P</strong>
+                              </>
+                            )}
                           </div>
                         )}
                       </div>
@@ -1595,8 +1605,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                   {state.room.activeVote && state.room.activeVote.status === 'open' && (
                     <div className="mb-6">
                       <VotingModal
+                        key={state.room.activeVote.id}
                         vote={state.room.activeVote}
                         isAsker={state.room.activeVote.askerId === state.you.playerId}
+                        targetName={state.currentName}
                         onVote={handleTextVoteSubmit}
                         isBusy={isBusy}
                       />

@@ -173,7 +173,7 @@ export function selectNextSharedTargetAsker<T extends PlayerLike>(
 
 /**
  * Zorluk Seviyesine Göre Ünlüleri Filtreler (08a-zorluk-seviyesi-BASIT.md):
- * - kolay: fameTier <= 2 (Tier 1 veya 2)
+ * - kolay: fameTier <= 1 (yalnızca Tier 1 — en popüler ve herkesin bildiği isimler)
  * - orta: fameTier <= 3 (Tier 1, 2 veya 3)
  * - zor: tüm isimler (Tier 1..5, filtre yok)
  */
@@ -181,7 +181,7 @@ export function filterByDifficulty(
   people: FamousPerson[],
   difficulty: DifficultyLevel = 'orta',
 ): FamousPerson[] {
-  if (difficulty === 'kolay') return people.filter((p) => (p.fameTier ?? 4) <= 2)
+  if (difficulty === 'kolay') return people.filter((p) => (p.fameTier ?? 4) <= 1)
   if (difficulty === 'orta') return people.filter((p) => (p.fameTier ?? 4) <= 3)
   return people // 'zor' -> filtre yok, hepsi
 }

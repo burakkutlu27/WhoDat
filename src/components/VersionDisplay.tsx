@@ -21,7 +21,7 @@ export default function VersionDisplay() {
   }
 
   const versionInfo: VersionInfo = {
-    version: '3.9.0',
+    version: '3.10.0',
     environment: process.env.NODE_ENV || 'development'
   }
 
@@ -67,7 +67,7 @@ export default function VersionDisplay() {
             </div>
             <div className="divider-sketch my-2" />
             <p className="text-xs text-ink-extra-faded">
-              Çoklu Oyuncu Playwright E2E Test Paketi, 192+ Kombinasyon Motor Matrisi, Eşzamanlılık & Race Condition Koruması, 7.450+ İsim Havuzu ve 4 Oyun Modu Aktif
+              7.180+ Doğrulanmış İsim Havuzu, 56 Sıfır-Null Soru Bankası, Tier 1 Kolay Mod, Bot &amp; Takım Modu ve 4 Oyun Modu Aktif
             </p>
           </div>
         </div>

@@ -24,6 +24,48 @@ export type SoundEffect =
 
 const audioCache = new Map<SoundEffect, HTMLAudioElement>()
 let isMuted = false
+let lifecycleListenersAttached = false
+
+function pauseAndResetAudio(audio: HTMLAudioElement): void {
+  try {
+    if (!audio.paused) {
+      audio.pause()
+    }
+    audio.currentTime = 0
+  } catch {
+    // Medya henüz hazır değilse sessizce geç
+  }
+}
+
+/** Belirli bir ses efektini anında durdurur. */
+export function stopSound(effect: SoundEffect): void {
+  const audio = audioCache.get(effect)
+  if (audio) {
+    pauseAndResetAudio(audio)
+  }
+}
+
+/** Çalmakta olan tüm önbellekli ses efektlerini durdurur. */
+export function stopAllSounds(): void {
+  for (const audio of audioCache.values()) {
+    pauseAndResetAudio(audio)
+  }
+}
+
+function attachLifecycleStopListeners(): void {
+  if (lifecycleListenersAttached || typeof window === 'undefined' || typeof document === 'undefined') {
+    return
+  }
+  lifecycleListenersAttached = true
+
+  // Uygulama/sekme arka plana alındığında süren tiktak veya efektlerin çalmasını durdur.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      stopAllSounds()
+    }
+  })
+  window.addEventListener('pagehide', stopAllSounds)
+}
 
 /** Kullanıcı sesleri kapatmış mı kontrol eder / ayarlar. */
 export function isAudioMuted(): boolean {
@@ -37,6 +79,9 @@ export function isAudioMuted(): boolean {
 
 export function setAudioMuted(muted: boolean): void {
   isMuted = muted
+  if (muted) {
+    stopAllSounds()
+  }
   try {
     localStorage.setItem('kimbu_sound_muted', muted ? '1' : '0')
   } catch {
@@ -53,6 +98,9 @@ const EFFECT_FILE_MAP: Partial<Record<SoundEffect, string>> = {
  */
 export function playSound(effect: SoundEffect): void {
   if (typeof window === 'undefined' || isAudioMuted()) return
+  if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return
+
+  attachLifecycleStopListeners()
 
   try {
     let audio = audioCache.get(effect)

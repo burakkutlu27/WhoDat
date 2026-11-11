@@ -1305,10 +1305,10 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
       code: 'not_your_turn',
     })
 
-    // Sıradaki oyuncu soru sorar (cevabı veride sabit olmayan subjektif soru: qb-16)
-    const askRes = await askTextQuestion(roomId, currentAskerId, { questionId: 'qb-16' })
+    // Sıradaki oyuncu serbest metin sorusu sorar (cevabı veride sabit olmayan özel soru)
+    const askRes = await askTextQuestion(roomId, currentAskerId, { questionText: 'Bıyığım var mı?' })
     expect(askRes.voteId).toBeDefined()
-    expect(askRes.questionText).toBe('Genel olarak olumlu / "iyi" tarafta bir karakter miyim?')
+    expect(askRes.questionText).toBe('Bıyığım var mı?')
 
     // Oylama oturumu aktif
     const stateDuring = await getGameState(roomId, currentAskerId)
@@ -1341,9 +1341,7 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     // Askerin İpucu Kartına otomatik eklenmiştir
     const askerStateAfter = await getGameState(roomId, currentAskerId)
     expect(askerStateAfter.you.clueCard).toHaveLength(1)
-    expect(askerStateAfter.you.clueCard?.[0]?.questionText).toBe(
-      'Genel olarak olumlu / "iyi" tarafta bir karakter miyim?',
-    )
+    expect(askerStateAfter.you.clueCard?.[0]?.questionText).toBe('Bıyığım var mı?')
     expect(askerStateAfter.you.clueCard?.[0]?.yesCount).toBe(1)
     expect(askerStateAfter.you.clueCard?.[0]?.noCount).toBe(1)
   })
