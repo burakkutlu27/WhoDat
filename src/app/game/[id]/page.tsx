@@ -74,7 +74,7 @@ const NEXT_ROUND_SUGGESTIONS = [
 export default function GamePage({ params }: { params: Promise<{ id: string }> }) {
   const { id: roomId } = use(params)
   const router = useRouter()
-  const { state, phase, error, degraded, refresh } = useGameState(roomId)
+  const { state, phase, error, degraded, reconnecting, lastSyncedAt, lastSyncLatencyMs, refresh } = useGameState(roomId)
 
   const [guess, setGuess] = useState('')
   const [buzzerGuess, setBuzzerGuess] = useState('')
@@ -146,9 +146,12 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   useEffect(() => {
     if (!status) return
     if (status === 'waiting') router.replace(`/room/${roomId}`)
-    else if (status === 'finished') router.replace(`/scores/${roomId}`)
-    else if (status === 'closed') router.replace('/')
-  }, [status, roomId, router])
+    else if (status === 'finished') {
+      // Son tahmin açıklaması (ör. kaybedilen son can / açılan gizli karakter) kapanmadan skor ekranına atlama.
+      if (guessResultModal) return
+      router.replace(`/scores/${roomId}`)
+    } else if (status === 'closed') router.replace('/')
+  }, [status, roomId, router, guessResultModal])
 
   useEffect(() => {
     if (error?.status === 401 || error?.code === 'wrong_room' || error?.code === 'player_not_in_room') {
@@ -192,16 +195,18 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const [turnShown, setTurnShown] = useState(currentPlayerId)
   if (turnShown !== currentPlayerId) {
     setTurnShown(currentPlayerId)
-    setFeedback(null)
+    // Not: setFeedback(null) burada çağrılmamalı; tahmin/oylama aksiyonları sırayı geçirdiğinde
+    // hemen ardından gelen refresh() açıklama/ceza mesajını siliyordu. Mesajı alttaki zamanlayıcı temizler.
     setGuess('')
   }
 
   // Feedback mesajlarının ekranda kalıcı olmasını önlemek için zamanlayıcı
   useEffect(() => {
     if (!feedback) return
+    const durationMs = feedback.tone === 'error' ? 6500 : 4000
     const timer = setTimeout(() => {
       setFeedback(null)
-    }, 4000)
+    }, durationMs)
     return () => clearTimeout(timer)
   }, [feedback])
 
@@ -407,6 +412,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         method: 'POST',
         body: { voteId: state.room.activeVote.id, answer },
       })
+      if (result.wrongAnswerPenalty) {
+        playSound('wrong-guess')
+      }
       setFeedback({ tone: result.wrongAnswerPenalty ? 'error' : 'success', text: result.message })
       await refresh()
     } catch (caught) {
@@ -521,7 +529,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
     return (
       <div className="min-h-[calc(100dvh-4rem)] px-4 py-8">
         <div className="mx-auto max-w-5xl space-y-6 flex flex-col items-center justify-center min-h-[50vh]" aria-busy="true" aria-label="Oyun yükleniyor">
-          <PencilLoader size={44} text="Oyun Yükleniyor..." color="var(--pencil-yellow)" />
+          <PencilLoader
+            size={44}
+            text={reconnecting ? 'Bağlantı Yeniden Kuruluyor...' : 'Oyun Yükleniyor...'}
+            color="var(--pencil-yellow)"
+          />
         </div>
       </div>
     )
@@ -553,6 +565,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const myLives = state.you.livesLeft ?? 3
   const activePlayerLives = currentPlayer ? (currentPlayer.livesLeft ?? 3) : 3
   const maxLives = state.maxLives ?? 3
+  const maxPassRights = state.maxPassRights ?? 3
   const isReferee = Boolean(state.you.isReferee)
   const isTargetRevealed = Boolean(state.room.targetRevealed)
   // Takım modu: sıra takım arkadaşında (isim ondan olduğu gibi benden de gizli, oy da veremem).
@@ -660,7 +673,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
       {/* Doğru / Yanlış Tahmin Görsel Animasyon Modalı */}
       <AnimatePresence>
         {guessResultModal && (
-          <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
+          <div
+            onClick={() => setGuessResultModal(null)}
+            className="fixed inset-0 z-[110] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm cursor-pointer"
+          >
             <motion.div
               initial={{ scale: 0.75, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -1041,7 +1057,11 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     <span>Hakem Rolündesiniz</span>
                   </span>
                 )}
-                {degraded && <span className="tag border-pencil-orange text-pencil-orange">Canlı bağlantı yok</span>}
+                {degraded && (
+                  <span className="tag border-pencil-orange text-pencil-orange">
+                    {reconnecting ? 'Bağlantı yenileniyor...' : 'Canlı bağlantı yok'}
+                  </span>
+                )}
               </div>
             </div>
             <motion.button
@@ -1594,7 +1614,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                             <span className="hidden sm:inline">Kalan Pas Hakkın:</span>
                           </span>
                           <span className="font-display text-base font-bold text-pencil-orange">
-                            {state.you.passRightsRemaining ?? 3} / 3
+                            {state.you.passRightsRemaining ?? maxPassRights} / {maxPassRights}
                           </span>
                         </div>
                       </div>
@@ -1609,6 +1629,8 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                         vote={state.room.activeVote}
                         isAsker={state.room.activeVote.askerId === state.you.playerId}
                         targetName={state.currentName}
+                        syncedAt={lastSyncedAt ?? undefined}
+                        syncLatencyMs={lastSyncLatencyMs}
                         onVote={handleTextVoteSubmit}
                         isBusy={isBusy}
                       />
@@ -1727,28 +1749,28 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                               </span>
                             </motion.button>
 
-                            {/* Klasik Modda 3. Seçenek: İsmi Pas Geç (Maksimum 3 hak) */}
+                            {/* Klasik Modda 3. Seçenek: İsmi Pas Geç */}
                             {!isSpeed && !isPersistent && (
                               <motion.button
                                 type="button"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => void handlePassName()}
-                                disabled={isBusy || (state.you.passRightsRemaining ?? 3) <= 0}
+                                disabled={isBusy || (state.you.passRightsRemaining ?? maxPassRights) <= 0}
                                 data-testid="give-up-button"
                                 className={`btn-outline flex items-center justify-center gap-1.5 px-4 py-3.5 font-display text-base font-bold border-dashed ${
-                                  (state.you.passRightsRemaining ?? 3) <= 0
+                                  (state.you.passRightsRemaining ?? maxPassRights) <= 0
                                     ? 'opacity-40 cursor-not-allowed border-ink-faded text-ink-faded'
                                     : 'text-pencil-orange hover:border-pencil-orange hover:bg-pencil-orange/10'
                                 }`}
                                 title={
-                                  (state.you.passRightsRemaining ?? 3) <= 0
-                                    ? 'İsmi pas geçme hakkınız (3/3) doldu'
-                                    : 'Can kaybı olmadan mevcut ismi bırakıp yeni bir isim alırsınız (Toplam 3 hak)'
+                                  (state.you.passRightsRemaining ?? maxPassRights) <= 0
+                                    ? `İsmi pas geçme hakkınız (${maxPassRights}/${maxPassRights}) doldu`
+                                    : `Can kaybı olmadan mevcut ismi bırakıp yeni bir isim alırsınız (Toplam ${maxPassRights} hak)`
                                 }
                               >
                                 <SkipForward className="h-4 w-4 text-pencil-orange" />
-                                <span>İsmi Pas Geç ({state.you.passRightsRemaining ?? 3}/3)</span>
+                                <span>İsmi Pas Geç ({state.you.passRightsRemaining ?? maxPassRights}/{maxPassRights})</span>
                               </motion.button>
                             )}
                           </div>

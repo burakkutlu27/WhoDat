@@ -9,33 +9,28 @@ import { InkStamp } from '@/components/animations/InkStamp'
 import { PencilLoader } from '@/components/animations/PencilLoader'
 import { playSound, stopSound } from '@/lib/audio'
 import type { TextQuestionVote } from '@/lib/game/types'
+import {
+  computeRemainingSeconds,
+  resolveDeadlineMs,
+  shouldReanchorDeadline,
+} from '@/lib/voteTimer'
 
 interface VotingModalProps {
   vote: TextQuestionVote
   isAsker: boolean
   /** Oylama yapan oyuncunun görebildiği gizli hedef karakter (mobilde kart üstte kapanınca görünmesi için). */
   targetName?: string | null
+  /** Sunucudan son durum yanıtının geldiği istemci zamanı (ms). */
+  syncedAt?: number
+  /** Son durum isteğinin gidiş-dönüş gecikmesi (ms). */
+  syncLatencyMs?: number
   onVote: (answer: boolean) => Promise<void>
   isBusy: boolean
 }
 
 // Tailwind `sm` kırılımının altı.
 const MOBILE_QUERY = '(max-width: 639px)'
-const CLOCK_SKEW_TOLERANCE_MS = 1500
 const DEFAULT_VOTE_DURATION_SECS = 30
-
-function resolveDeadlineMs(closesAt: string, secondsRemaining: number): number {
-  const now = Date.now()
-  const serverFallback = now + Math.max(0, secondsRemaining) * 1000
-  const parsedCloses = Date.parse(closesAt)
-  if (!Number.isFinite(parsedCloses)) return serverFallback
-  const localRemainingMs = parsedCloses - now
-  // İstemci saati sunucudan sapmışsa sunucunun gönderdiği kalan süreyi baz al.
-  if (Math.abs(localRemainingMs - secondsRemaining * 1000) > CLOCK_SKEW_TOLERANCE_MS) {
-    return serverFallback
-  }
-  return parsedCloses
-}
 
 function getTotalVoteSeconds(openedAt: string, closesAt: string): number {
   const openedMs = Date.parse(openedAt)
@@ -60,17 +55,27 @@ function useIsMobile() {
   )
 }
 
-export function VotingModal({ vote, isAsker, targetName, onVote, isBusy }: VotingModalProps) {
+export function VotingModal({
+  vote,
+  isAsker,
+  targetName,
+  syncedAt,
+  syncLatencyMs = 0,
+  onVote,
+  isBusy,
+}: VotingModalProps) {
   const isMobile = useIsMobile()
   const shouldTick = !isAsker && !vote.hasVoted
   const shouldTickRef = useRef(shouldTick)
   const deadlineRef = useRef<number | null>(null)
   const lastVoteKeyRef = useRef<string>('')
+  const lastSnapshotKeyRef = useRef<string>('')
   const totalVoteSeconds = getTotalVoteSeconds(vote.openedAt, vote.closesAt)
 
   const [localSeconds, setLocalSeconds] = useState(() => {
-    const deadlineMs = resolveDeadlineMs(vote.closesAt, vote.secondsRemaining)
-    return Math.max(0, Math.ceil((deadlineMs - Date.now()) / 1000))
+    const anchorMs = syncedAt ?? Date.now()
+    const deadlineMs = resolveDeadlineMs(vote.closesAt, vote.secondsRemaining, anchorMs, syncLatencyMs)
+    return computeRemainingSeconds(deadlineMs)
   })
 
   useEffect(() => {
@@ -82,22 +87,27 @@ export function VotingModal({ vote, isAsker, targetName, onVote, isBusy }: Votin
 
   useEffect(() => {
     const voteKey = `${vote.id}:${vote.closesAt}`
-    const now = Date.now()
-    const currentRemaining = deadlineRef.current === null ? null : deadlineRef.current - now
-    // Yeni oy oturumunda veya sunucu süresiyle belirgin kayma oluştuğunda bitiş zamanını güncelle.
-    if (
-      lastVoteKeyRef.current !== voteKey ||
-      currentRemaining === null ||
-      Math.abs(currentRemaining - vote.secondsRemaining * 1000) > CLOCK_SKEW_TOLERANCE_MS + 1000
-    ) {
+    const snapshotKey = `${voteKey}:${syncedAt ?? ''}:${vote.secondsRemaining}`
+    const anchorNow = syncedAt ?? Date.now()
+    // Yeni oy oturumunda veya yeni bir sunucu yanıtı geldiğinde süre belirgin kaydıysa
+    // bitiş zamanını güncelle; aynı bayat prop ile yeniden çizimde süreyi sıfırlama.
+    if (lastVoteKeyRef.current !== voteKey || deadlineRef.current === null) {
       lastVoteKeyRef.current = voteKey
-      deadlineRef.current = resolveDeadlineMs(vote.closesAt, vote.secondsRemaining)
+      lastSnapshotKeyRef.current = snapshotKey
+      deadlineRef.current = resolveDeadlineMs(vote.closesAt, vote.secondsRemaining, anchorNow, syncLatencyMs)
+    } else if (
+      lastSnapshotKeyRef.current !== snapshotKey &&
+      shouldReanchorDeadline(deadlineRef.current, vote.secondsRemaining, anchorNow, syncLatencyMs)
+    ) {
+      lastSnapshotKeyRef.current = snapshotKey
+      deadlineRef.current = resolveDeadlineMs(vote.closesAt, vote.secondsRemaining, anchorNow, syncLatencyMs)
     }
 
     let lastTickedSecond = -1
     const tick = () => {
-      const deadlineMs = deadlineRef.current ?? resolveDeadlineMs(vote.closesAt, vote.secondsRemaining)
-      const secs = Math.max(0, Math.ceil((deadlineMs - Date.now()) / 1000))
+      const deadlineMs = deadlineRef.current
+      if (deadlineMs === null) return
+      const secs = computeRemainingSeconds(deadlineMs)
       setLocalSeconds(secs)
       const isVisible = typeof document === 'undefined' || document.visibilityState === 'visible'
       if (shouldTickRef.current && isVisible && secs > 0 && secs <= 5 && secs !== lastTickedSecond) {
@@ -113,22 +123,26 @@ export function VotingModal({ vote, isAsker, targetName, onVote, isBusy }: Votin
         stopSound('countdown-tick')
         return
       }
-      // Arka plandan dönünce yerel saati mevcut sunucu kalanıyla eşitle.
-      deadlineRef.current = resolveDeadlineMs(vote.closesAt, vote.secondsRemaining)
+      // Arka plandan dönünce eski prop `secondsRemaining` ile deadline'ı sıfırlama;
+      // duvar saatine göre geçen süreyi anında yansıt (sunucu yanıtı gelince zaten güncellenir).
       tick()
     }
 
     const syncTimer = setTimeout(tick, 0)
     const interval = setInterval(tick, 250)
     document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('pageshow', tick)
+    window.addEventListener('focus', tick)
 
     return () => {
       clearTimeout(syncTimer)
       clearInterval(interval)
       document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('pageshow', tick)
+      window.removeEventListener('focus', tick)
       stopSound('countdown-tick')
     }
-  }, [vote.id, vote.closesAt, vote.secondsRemaining])
+  }, [vote.id, vote.closesAt, vote.secondsRemaining, syncedAt, syncLatencyMs])
 
   const progressPercent = Math.max(0, Math.min(100, (localSeconds / totalVoteSeconds) * 100))
 

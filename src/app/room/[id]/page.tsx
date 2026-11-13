@@ -26,7 +26,7 @@ const NAME_SLOTS = 3
 export default function RoomPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: roomId } = use(params)
   const router = useRouter()
-  const { state, phase, error, degraded, refresh } = useGameState(roomId)
+  const { state, phase, error, degraded, reconnecting, refresh } = useGameState(roomId)
 
   const [names, setNames] = useState<string[]>(Array(NAME_SLOTS).fill(''))
   const [isEditingNames, setIsEditingNames] = useState(false)
@@ -472,7 +472,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
             </span>
             {degraded && (
               <span className="tag text-xs sm:text-sm border-pencil-orange text-pencil-orange">
-                Canlı bağlantı zayıf
+                {reconnecting ? 'Bağlantı yenileniyor...' : 'Canlı bağlantı zayıf'}
               </span>
             )}
           </div>

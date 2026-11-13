@@ -3,7 +3,7 @@
 import { Award, BarChart2, Check, Copy, Crown, Layers, Loader2, LogOut, Medal, RefreshCw, Trophy, Users } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
-import { use, useEffect, useState } from 'react'
+import { use, useEffect, useRef, useState } from 'react'
 
 import Confetti from '@/components/Confetti'
 import { CopiedPostIt, PencilLoader } from '@/components/animations'
@@ -19,13 +19,15 @@ import { useGameState } from '@/lib/useGameState'
 export default function RoomScoresPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: roomId } = use(params)
   const router = useRouter()
-  const { state, phase, error, refresh } = useGameState(roomId)
+  const { state, phase, error, reconnecting, refresh } = useGameState(roomId)
 
   const [isBusy, setIsBusy] = useState(false)
   const [actionError, setActionError] = useState<string | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
   const [copied, setCopied] = useState(false)
   const [showStats, setShowStats] = useState(false)
+  // useGameState her poll/yenilemede yeni bir state referansı döndürür; kutlama sesi yalnızca ilk açılışta 1 kez çalmalı.
+  const celebratedRoomRef = useRef<string | null>(null)
 
   const status = state?.room.status
 
@@ -47,12 +49,12 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
   }, [status, roomId])
 
   useEffect(() => {
-    if (phase === 'ready' && state) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (phase === 'ready' && state && celebratedRoomRef.current !== roomId) {
+      celebratedRoomRef.current = roomId
       setShowConfetti(true)
       playSound('game-victory')
     }
-  }, [phase, state])
+  }, [phase, state, roomId])
 
   const handleCopyCode = async () => {
     if (!state?.room.roomCode) return
@@ -91,7 +93,11 @@ export default function RoomScoresPage({ params }: { params: Promise<{ id: strin
     return (
       <div className="min-h-[calc(100dvh-4rem)] px-4 py-8">
         <div className="mx-auto max-w-3xl space-y-6 flex flex-col items-center justify-center min-h-[50vh]" aria-busy="true" aria-label="Sonuçlar yükleniyor">
-          <PencilLoader size={44} text="Sonuçlar Hesaplanıyor..." color="var(--pencil-yellow)" />
+          <PencilLoader
+            size={44}
+            text={reconnecting ? 'Bağlantı Yeniden Kuruluyor...' : 'Sonuçlar Hesaplanıyor...'}
+            color="var(--pencil-yellow)"
+          />
         </div>
       </div>
     )

@@ -15,6 +15,7 @@ const {
   createRoom,
   getGameState,
   getPlayerRoundNameId,
+  makeGuess,
   removeBot,
   setCommunicationMode,
   startGame,
@@ -22,6 +23,8 @@ const {
   submitTextVote,
 } = await import('../engine')
 const { withRoomRuntime } = await import('../runtimeState')
+const { FAMOUS_PEOPLE_SEED } = await import('../famousPeopleData')
+const { answerFor, questionIdForText } = await import('./knowledge')
 const { runBotTick } = await import('./runner')
 
 beforeEach(() => {
@@ -161,5 +164,103 @@ describe('runBotTick', () => {
     later(3000)
     await tick(roomId)
     expect((fake.tables.question_vote_responses ?? []).length).toBe(before)
+  })
+
+  it('kolay zorlukta botlu Klasik mod maçı sorular, oylar ve tahminlerle baştan sona tamamlanır', async () => {
+    const { roomId, playerId: hostId } = await createRoom('Host', 'classic', {
+      communicationMode: 'text',
+      difficulty: 'kolay',
+    })
+    const { botId } = await addBot(roomId, hostId, 'zor')
+    await autoAssignNames(roomId, hostId)
+    await startGame(roomId, hostId)
+
+    // Kolay modda atanan tüm isimler fameTier === 1 olmalı
+    const tierByName = new Map(FAMOUS_PEOPLE_SEED.map((p) => [p.name, p.fameTier ?? 4]))
+    for (const row of fake.tables.names) {
+      expect(tierByName.get(row.name_text)).toBe(1)
+    }
+
+    let botMadeGuess = false
+    for (let step = 0; step < 120; step++) {
+      const room = fake.tables.rooms[0]!
+      if (room.status === 'finished') break
+
+      const state = await getGameState(roomId, hostId)
+      const activeVote = state.room.activeVote
+
+      if (activeVote && activeVote.status === 'open') {
+        if (activeVote.askerId !== hostId && !activeVote.hasVoted) {
+          const botTargetId = getPlayerRoundNameId(roomId, botId)
+          const botTargetName = fake.tables.names.find((n) => n.id === botTargetId)?.name_text ?? ''
+          const qId = questionIdForText(activeVote.questionText)
+          const truthful = (qId ? answerFor(qId, botTargetName) : null) ?? true
+          await withRoomRuntime(roomId, () => submitTextVote(roomId, hostId, activeVote.id, truthful))
+        } else {
+          await tick(roomId)
+          later(3000)
+          await tick(roomId)
+        }
+        continue
+      }
+
+      if (room.current_player_id === botId) {
+        await tick(roomId)
+        later(5000)
+        await tick(roomId)
+        const afterState = await getGameState(roomId, hostId)
+        if (afterState.room.lastBotAction?.botNickname) {
+          botMadeGuess = true
+        }
+      } else {
+        // Sıra insan oyuncudayken o turdaki hedefini bilerek oyunu ilerletir
+        const hostTargetId = getPlayerRoundNameId(roomId, hostId)
+        const hostTargetName = fake.tables.names.find((n) => n.id === hostTargetId)?.name_text
+        if (hostTargetName) {
+          await withRoomRuntime(roomId, () => makeGuess(roomId, hostId, hostTargetName))
+        }
+      }
+    }
+
+    const finalRoom = fake.tables.rooms[0]!
+    expect(finalRoom.status).toBe('finished')
+    expect(finalRoom.is_game_active).toBe(false)
+    expect(botMadeGuess).toBe(true)
+  })
+
+  it('kolay bot aynı hedefe aynı soruda (ör. "Bir kadın mıyım?") sonraki turda da tutarlı oy verir', async () => {
+    const { roomId, playerId: hostId } = await createRoom('Host', 'classic', {
+      communicationMode: 'text',
+      difficulty: 'kolay',
+    })
+    await addBot(roomId, hostId, 'kolay')
+    await autoAssignNames(roomId, hostId)
+    await startGame(roomId, hostId)
+
+    const randomSpy = vi.spyOn(Math, 'random')
+    try {
+      // 1. Tur: Math.random = 0.01 -> kolay bot %10 yanılma oranına takılıp ters oy verse bile
+      randomSpy.mockReturnValue(0.01)
+      fake.tables.rooms[0]!.current_player_id = hostId
+      const vote1 = await withRoomRuntime(roomId, () => askTextQuestion(roomId, hostId, { questionId: 'qb-04' }))
+      await tick(roomId)
+      later(3000)
+      await tick(roomId)
+      const firstAnswer = fake.tables.question_vote_responses!.find((r) => r.vote_id === vote1.voteId)?.answer
+      expect(typeof firstAnswer).toBe('boolean')
+
+      // 2. Tur: Math.random = 0.99 olsa bile aynı hedef + aynı soruda ilk cevabıyla çelişmez
+      randomSpy.mockReturnValue(0.99)
+      fake.tables.rooms[0]!.current_player_id = hostId
+      const vote2 = await withRoomRuntime(roomId, () => askTextQuestion(roomId, hostId, { questionId: 'qb-04' }))
+      await tick(roomId)
+      later(3000)
+      await tick(roomId)
+      const secondAnswer = fake.tables.question_vote_responses!.find((r) => r.vote_id === vote2.voteId)?.answer
+
+      expect(secondAnswer).toBe(firstAnswer)
+    } finally {
+      randomSpy.mockRestore()
+    }
   })
 })

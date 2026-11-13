@@ -225,6 +225,8 @@ export interface GameState {
   allPlayersSubmittedNames: boolean
   canStart: boolean
   maxLives: number
+  /** Klasik Mod: oyuncuya tanımlanan toplam isim pas geçme hakkı (botlu odada 2, normalde 3) */
+  maxPassRights?: number
 }
 
 export interface SubmitNamesResult {
