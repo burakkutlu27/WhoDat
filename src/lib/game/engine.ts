@@ -139,6 +139,7 @@ const globalRef = globalThis as unknown as {
   __whoDat_playerClueCardStore?: Map<string, Map<string, ClueCardItem[]>>
   __whoDat_playerSubmittedPhaseNamesStore?: Map<string, Map<string, string[]>>
   __whoDat_playerClassicSolvedStore?: Map<string, Set<string>>
+  __whoDat_playerClassicCompletedCountStore?: Map<string, Map<string, number>>
   __whoDat_playerPassRightsStore?: Map<string, Map<string, number>>
   __whoDat_classicRetiredNamesStore?: Map<string, Set<string>>
   __whoDat_playerTurnAskedStore?: Map<string, Set<string>>
@@ -173,6 +174,7 @@ globalRef.__whoDat_roomActiveVoteStore = globalRef.__whoDat_roomActiveVoteStore 
 globalRef.__whoDat_playerClueCardStore = globalRef.__whoDat_playerClueCardStore ?? new Map()
 globalRef.__whoDat_playerSubmittedPhaseNamesStore = globalRef.__whoDat_playerSubmittedPhaseNamesStore ?? new Map()
 globalRef.__whoDat_playerClassicSolvedStore = globalRef.__whoDat_playerClassicSolvedStore ?? new Map()
+globalRef.__whoDat_playerClassicCompletedCountStore = globalRef.__whoDat_playerClassicCompletedCountStore ?? new Map()
 globalRef.__whoDat_playerPassRightsStore = globalRef.__whoDat_playerPassRightsStore ?? new Map()
 globalRef.__whoDat_classicRetiredNamesStore = globalRef.__whoDat_classicRetiredNamesStore ?? new Map()
 globalRef.__whoDat_playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore ?? new Map()
@@ -197,6 +199,7 @@ const roomActiveVoteStore = globalRef.__whoDat_roomActiveVoteStore
 const playerClueCardStore = globalRef.__whoDat_playerClueCardStore
 const playerSubmittedPhaseNamesStore = globalRef.__whoDat_playerSubmittedPhaseNamesStore
 const playerClassicSolvedStore = globalRef.__whoDat_playerClassicSolvedStore
+const playerClassicCompletedCountStore = globalRef.__whoDat_playerClassicCompletedCountStore
 const playerPassRightsStore = globalRef.__whoDat_playerPassRightsStore
 const classicRetiredNamesStore = globalRef.__whoDat_classicRetiredNamesStore
 const playerTurnAskedStore = globalRef.__whoDat_playerTurnAskedStore
@@ -245,6 +248,7 @@ registerRuntimeStores({
   clueCards: playerClueCardStore,
   submittedPhaseNames: playerSubmittedPhaseNamesStore,
   classicSolved: playerClassicSolvedStore,
+  classicCompletedCount: playerClassicCompletedCountStore,
   passRights: playerPassRightsStore,
   retiredNames: classicRetiredNamesStore,
   turnAsked: playerTurnAskedStore,
@@ -292,6 +296,7 @@ export function setBotMemory(roomId: string, botId: string, memory: BotMemory): 
 }
 
 export const CLASSIC_MODE_MAX_PASSES = 3 // Oyuncu başına oyun boyunca en fazla 3 isim pas geçme hakkı
+export const BOT_CLASSIC_MAX_NAMES = 2 // Botlu Klasik odada kişi başı oynanan maksimum karakter sayısı
 export const WRONG_ANSWER_PENALTY = 5 // Doğrulanabilir soruya yanlış cevap veren oyuncuya uygulanan puan cezası
 
 export function recordPlayerCharacter(
@@ -368,6 +373,32 @@ export function isPlayerClassicSolved(roomId: string, playerId: string): boolean
   return playerClassicSolvedStore.get(roomId)?.has(stateKey(roomId, playerId)) ?? false
 }
 
+function getMaxClassicNamesForPhase(roomId: string, withBots = false): number {
+  if (getRoomCategoryData(roomId).categoryMode === 'multi_phase') return 1
+  return withBots ? BOT_CLASSIC_MAX_NAMES : MAX_NAMES_PER_PLAYER
+}
+
+function getClassicMaxPassRights(roomId: string, players: PlayerRow[]): number {
+  if (getRoomCategoryData(roomId).categoryMode === 'multi_phase') return CLASSIC_MODE_MAX_PASSES
+  return hasBots(players) ? BOT_CLASSIC_MAX_NAMES : CLASSIC_MODE_MAX_PASSES
+}
+
+export function getPlayerClassicCompletedCount(roomId: string, playerId: string): number {
+  return playerClassicCompletedCountStore.get(roomId)?.get(stateKey(roomId, playerId)) ?? 0
+}
+
+export function incrementPlayerClassicCompletedCount(roomId: string, playerId: string): number {
+  let roomMap = playerClassicCompletedCountStore.get(roomId)
+  if (!roomMap) {
+    roomMap = new Map()
+    playerClassicCompletedCountStore.set(roomId, roomMap)
+  }
+  const key = stateKey(roomId, playerId)
+  const next = (roomMap.get(key) ?? 0) + 1
+  roomMap.set(key, next)
+  return next
+}
+
 export function setPlayerClassicSolved(roomId: string, playerId: string, solved: boolean): void {
   let set = playerClassicSolvedStore.get(roomId)
   if (!set) {
@@ -384,6 +415,8 @@ export function setPlayerClassicSolved(roomId: string, playerId: string, solved:
 /**
  * Klasik Mod: Oyuncuya havuzdan daha önce kullanılmamış/emekliye ayrılmamış yeni bir gizli isim atar
  * ve o isim için deneme hakkını 3'e resetler.
+ * 3+ oyunculu odalarda her oyuncu tek fazda en fazla MAX_NAMES_PER_PLAYER (3) karakter
+ * (multi_phase modunda faz başına 1 karakter) oynar.
  * Emekliye ayrılmış isimler ve şu an başka bir oyuncuda olan isimler havuzdan çıkarılır.
  * Oyuncunun kendi yazdığı isim KESİNLİKLE ATANMAZ (fallback yapılmaz).
  */
@@ -391,7 +424,15 @@ export async function assignNewClassicName(
   roomId: string,
   player: PlayerRow,
   names: NameRow[],
+  options?: { hasBots?: boolean },
 ): Promise<string | null> {
+  const withBots = options?.hasBots ?? hasBots(await loadPlayers(roomId))
+  if (getPlayerClassicCompletedCount(roomId, player.id) >= getMaxClassicNamesForPhase(roomId, withBots)) {
+    setPlayerRoundNameId(roomId, player.id, null)
+    setPlayerClassicSolved(roomId, player.id, true)
+    return null
+  }
+
   const retiredSet = getClassicRetiredNames(roomId)
   const roomNameMap = playerRoundNameStore.get(roomId)
   const currentlyAssignedToOthers = new Set<string>()
@@ -1145,6 +1186,7 @@ export function clearRoomMemoryState(roomId: string): void {
   playerClueCardStore.delete(roomId)
   playerSubmittedPhaseNamesStore.delete(roomId)
   playerClassicSolvedStore.delete(roomId)
+  playerClassicCompletedCountStore.delete(roomId)
   playerPassRightsStore.delete(roomId)
   classicRetiredNamesStore.delete(roomId)
   playerTurnAskedStore.delete(roomId)
@@ -1884,6 +1926,8 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
 
   const isClassic = gameMode === 'classic'
 
+  const maxPassRights = getClassicMaxPassRights(roomId, players)
+
   const publicPlayers: PublicPlayer[] = players.map((player) => {
     const speed = getPlayerSpeedData(roomId, player.id)
     const pData = getPlayerPersistentData(roomId, player.id)
@@ -1935,7 +1979,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
         : estimateSpeedScore(speed.questionsThisRound),
       // Israrcı & Klasik Mod alanları
       questionBudgetRemaining: isPersistent ? pData.questionBudgetRemaining : undefined,
-      passRightsRemaining: isClassic ? getPlayerPassRights(roomId, player.id) : undefined,
+      passRightsRemaining: isClassic ? Math.min(getPlayerPassRights(roomId, player.id), maxPassRights) : undefined,
       nameSolved: isClassic ? isClassicSolved : isPersistent ? pData.nameSolved : undefined,
       persistentScore: isPersistent ? pData.roundScore - penaltyPoints : undefined,
       // Ortak Hedef Modu alanları
@@ -2104,6 +2148,7 @@ export async function getGameState(roomId: string, viewerId: string): Promise<Ga
     allPlayersSubmittedNames,
     canStart,
     maxLives: TOTAL_LIVES_PER_GAME,
+    maxPassRights,
   }
 }
 
@@ -2689,10 +2734,12 @@ export async function startGame(roomId: string, playerId: string) {
   // Klasik Mod: Her oyuncuya çakışmasız gizli bir isim ata
   classicRetiredNamesStore.delete(roomId)
   playerClassicSolvedStore.delete(roomId)
+  playerClassicCompletedCountStore.delete(roomId)
   playerPassRightsStore.delete(roomId)
+  const classicMaxPasses = getClassicMaxPassRights(roomId, players)
   for (const p of players) {
     setPlayerLives(roomId, p.id, TOTAL_LIVES_PER_GAME)
-    setPlayerPassRights(roomId, p.id, CLASSIC_MODE_MAX_PASSES)
+    setPlayerPassRights(roomId, p.id, classicMaxPasses)
   }
   const assignments = assignNamesForRound(roomId, players, names)
   for (const [pId, nId] of assignments.entries()) {
@@ -2926,6 +2973,7 @@ export async function transitionToNextPhase(
   resetRoomSpeedRound(room.id)
   classicRetiredNamesStore.delete(room.id)
   playerClassicSolvedStore.delete(room.id)
+  playerClassicCompletedCountStore.delete(room.id)
   playerPassRightsStore.delete(room.id)
   await clearRoomVotesDb(room.id)
 
@@ -3185,7 +3233,7 @@ async function advanceTurn(
       nextNameId = dbAssigned.id
       setPlayerRoundNameId(room.id, nextPlayer.id, nextNameId)
     } else {
-      nextNameId = await assignNewClassicName(room.id, nextPlayer, names)
+      nextNameId = await assignNewClassicName(room.id, nextPlayer, names, { hasBots: hasBots(players) })
     }
   }
 
@@ -4013,10 +4061,12 @@ async function handleClassicModeGiveUp(
   playerId: string,
 ) {
   const player = players.find((p) => p.id === playerId)!
-  const passRights = getPlayerPassRights(room.id, playerId)
+  const withBots = hasBots(players)
+  const maxPasses = getClassicMaxPassRights(room.id, players)
+  const passRights = Math.min(getPlayerPassRights(room.id, playerId), maxPasses)
 
   if (passRights <= 0) {
-    throw badRequest('no_pass_rights', 'İsmi pas geçme hakkınız (toplam 3) tükenmiştir.')
+    throw badRequest('no_pass_rights', `İsmi pas geçme hakkınız (toplam ${maxPasses}) tükenmiştir.`)
   }
 
   const newPassRights = passRights - 1
@@ -4047,18 +4097,23 @@ async function handleClassicModeGiveUp(
   // Not defterini / ipucu kartını temizle (yeni isme geçiliyor)
   await clearPlayerClueCard(room.id, playerId)
 
-  // Taze isim listesi ile yeni isim ata (can kaybı yok, hak 3'e resetlenir)
+  // Taze isim listesi ile yeni isim ata (can kaybı yok, hak 3'e resetlenir; karakter sınırına ulaşıldıysa tur biter)
+  const completedCount = incrementPlayerClassicCompletedCount(room.id, playerId)
+  const reachedCap = completedCount >= getMaxClassicNamesForPhase(room.id, withBots)
   const freshNames = await loadNames(room.id)
-  const nextNameId = await assignNewClassicName(room.id, player, freshNames)
+  const nextNameId = await assignNewClassicName(room.id, player, freshNames, { hasBots: withBots })
 
   const outcome = await advanceTurn(room, players, freshNames)
 
   const passedReveal = passedNameText ? ` (Pas geçilen gizli karakter: "${passedNameText}")` : ''
+  const completedMessage = reachedCap
+    ? `İsmi pas geçtiniz${passedReveal} — Kalan Pas Hakkı: ${newPassRights}/${maxPasses}. Tüm isim haklarınızı tamamladınız! Sıra diğer oyuncuya geçti.`
+    : `İsmi pas geçtiniz${passedReveal} — Kalan Pas Hakkı: ${newPassRights}/${maxPasses}. Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`
 
   return {
     message: nextNameId
-      ? `İsmi pas geçtiniz${passedReveal} — Kalan Pas Hakkı: ${newPassRights}/3. Yeni bir gizli isim atandı (3 deneme hakkı). Sıra diğer oyuncuya geçti.`
-      : `İsmi pas geçtiniz${passedReveal} — Kalan Pas Hakkı: ${newPassRights}/3. Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`,
+      ? `İsmi pas geçtiniz${passedReveal} — Kalan Pas Hakkı: ${newPassRights}/${maxPasses}. Yeni bir gizli isim atandı (3 deneme hakkı). Sıra diğer oyuncuya geçti.`
+      : completedMessage,
     livesLeft: TOTAL_LIVES_PER_GAME,
     passRightsLeft: newPassRights,
     turnPassed: true,
@@ -4118,9 +4173,10 @@ async function handleClassicModeGuess(
       }
     }
 
-    // Taze isim listesi ile yeni isim ata
+    // Taze isim listesi ile yeni isim ata (karakter sınırına ulaşıldıysa oyuncunun turu biter)
+    incrementPlayerClassicCompletedCount(room.id, playerId)
     const freshNames = await loadNames(room.id)
-    const nextNameId = await assignNewClassicName(room.id, player, freshNames)
+    const nextNameId = await assignNewClassicName(room.id, player, freshNames, { hasBots: hasBots(players) })
 
     const outcome = await advanceTurn(room, players, freshNames)
 
@@ -4156,16 +4212,22 @@ async function handleClassicModeGuess(
     // Not defterini / ipucu kartını temizle (yeni isme geçiliyor)
     await clearPlayerClueCard(room.id, playerId)
 
+    const withBots = hasBots(players)
+    const completedCount = incrementPlayerClassicCompletedCount(room.id, playerId)
+    const reachedCap = completedCount >= getMaxClassicNamesForPhase(room.id, withBots)
     const freshNames = await loadNames(room.id)
-    const nextNameId = await assignNewClassicName(room.id, player, freshNames)
+    const nextNameId = await assignNewClassicName(room.id, player, freshNames, { hasBots: withBots })
 
     const outcome = await advanceTurn(room, players, freshNames)
+    const completedMessage = reachedCap
+      ? `3 deneme hakkınız bitti! Bilemediğiniz gizli karakter: "${targetNameText}". Tüm isim haklarınızı tamamladınız! Sıra diğer oyuncuya geçti.`
+      : `3 deneme hakkınız bitti! Bilemediğiniz gizli karakter: "${targetNameText}". Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`
 
     return {
       correct: false,
       message: nextNameId
         ? `3 deneme hakkınız bitti! Bilemediğiniz gizli karakter: "${targetNameText}". Size yeni bir gizli isim atandı (3 hak). Sıra diğer oyuncuya geçti.`
-        : `3 deneme hakkınız bitti! Bilemediğiniz gizli karakter: "${targetNameText}". Havuzda başka isim kalmadı. Sıra diğer oyuncuya geçti.`,
+        : completedMessage,
       livesLeft: TOTAL_LIVES_PER_GAME,
       turnPassed: true,
       finished: outcome.finished,
@@ -4597,6 +4659,7 @@ export async function resetGame(roomId: string, playerId: string) {
   clearRoomSharedTargetData(roomId)
   await clearRoomVotesDb(roomId)
   playerClassicSolvedStore.delete(roomId)
+  playerClassicCompletedCountStore.delete(roomId)
   playerPassRightsStore.delete(roomId)
   classicRetiredNamesStore.delete(roomId)
   playerCharacterHistoryStore.delete(roomId)

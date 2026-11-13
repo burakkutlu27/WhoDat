@@ -1526,6 +1526,132 @@ describe('Tam Metin / Uzaktan Oyun Modu (Text Mode)', () => {
     expect(getPlayerLives(roomId, hostId)).toBe(3)
     expect(getPlayerPassRights(roomId, hostId)).toBe(3) // Pas hakkı hala 3
   })
+
+  async function advanceToPlayerTurn(roomId: string, targetPlayerId: string, maxSteps = 10): Promise<void> {
+    for (let i = 0; i < maxSteps; i++) {
+      const s = await getGameState(roomId, targetPlayerId)
+      if (s.room.status !== 'playing' || !s.room.currentPlayerId || s.room.currentPlayerId === targetPlayerId) {
+        return
+      }
+      await passTurn(roomId, s.room.currentPlayerId)
+    }
+  }
+
+  async function setupThreePlayerBotClassicRoom(botNickname: string) {
+    const { FAMOUS_PEOPLE_SEED } = await import('./famousPeopleData')
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic')
+    const guest = buildPlayer(roomId, { nickname: 'GuestUser', is_host: false })
+    const bot = buildPlayer(roomId, { nickname: botNickname, is_host: false, is_bot: true })
+    fake.tables.players.push(guest, bot)
+
+    await submitNames(roomId, hostId, FAMOUS_PEOPLE_SEED.slice(0, 3).map((p) => p.name))
+    await submitNames(roomId, guest.id, FAMOUS_PEOPLE_SEED.slice(3, 6).map((p) => p.name))
+    await submitNames(roomId, bot.id, FAMOUS_PEOPLE_SEED.slice(6, 9).map((p) => p.name))
+    await startGame(roomId, hostId)
+
+    return { roomId, hostId, guestId: guest.id, botId: bot.id }
+  }
+
+  it('botlu 3+ kişilik Klasik modda kişi başı 2 karakter ve 2 pas sınırı uygulanır', async () => {
+    const { roomId, hostId } = await setupThreePlayerBotClassicRoom('Uykucu Bot')
+
+    await advanceToPlayerTurn(roomId, hostId)
+    const stateBefore = await getGameState(roomId, hostId)
+    expect(stateBefore.maxPassRights).toBe(2)
+    expect(stateBefore.you.passRightsRemaining).toBe(2)
+
+    const pass1 = await giveUp(roomId, hostId)
+    expect(pass1.passRightsLeft).toBe(1)
+
+    await advanceToPlayerTurn(roomId, hostId)
+    const pass2 = await giveUp(roomId, hostId)
+    expect(pass2.passRightsLeft).toBe(0)
+
+    // Botlu odada 2 pas sonunda 3. karakter atanmadan tur tamamlanır
+    const hostAfter2Passes = await getGameState(roomId, hostId)
+    expect(hostAfter2Passes.you.nameSolved).toBe(true)
+    expect(hostAfter2Passes.you.hasFinishedRound).toBe(true)
+    expect(hostAfter2Passes.you.targetNameId).toBeNull()
+    expect(hostAfter2Passes.you.passRightsRemaining).toBe(0)
+    expect(hostAfter2Passes.room.currentPlayerId).not.toBe(hostId)
+  })
+
+  it('botlu 3+ kişilik Klasik modda 1 pas + 1 doğru tahmin yapan oyuncu 2. isim sonunda turunu tamamlar', async () => {
+    const { roomId, hostId } = await setupThreePlayerBotClassicRoom('Çaylak Bot')
+
+    await advanceToPlayerTurn(roomId, hostId)
+    expect((await giveUp(roomId, hostId)).passRightsLeft).toBe(1)
+
+    await advanceToPlayerTurn(roomId, hostId)
+    const hostStateBefore2nd = await getGameState(roomId, hostId)
+    const targetNameRow = fake.tables.names.find((n) => n.id === hostStateBefore2nd.you.targetNameId)
+    expect(targetNameRow).toBeDefined()
+
+    const guessResult = await makeGuess(roomId, hostId, targetNameRow!.name_text)
+    expect(guessResult.correct).toBe(true)
+    expect(guessResult.pointsEarned).toBe(10)
+
+    const hostFinalState = await getGameState(roomId, hostId)
+    expect(hostFinalState.you.nameSolved).toBe(true)
+    expect(hostFinalState.you.hasFinishedRound).toBe(true)
+    expect(hostFinalState.you.targetNameId).toBeNull()
+    expect(hostFinalState.players.find((p) => p.id === hostId)?.score).toBe(10)
+  })
+
+  it('botlu 3+ kişilik Klasik modda bot 1. ismi bildiğinde 2. ismi alır, 2. ismi bildiğinde 3. isim almadan tamamlar', async () => {
+    const { roomId, botId } = await setupThreePlayerBotClassicRoom('Çaylak Bot')
+
+    // 1. doğru tahmin -> Bot hala oyunda, 2. karakteri almalı
+    await advanceToPlayerTurn(roomId, botId)
+    const botState1 = await getGameState(roomId, botId)
+    const name1 = fake.tables.names.find((n) => n.id === botState1.you.targetNameId)!
+    const res1 = await makeGuess(roomId, botId, name1.name_text)
+    expect(res1.correct).toBe(true)
+
+    const botAfter1 = await getGameState(roomId, botId)
+    expect(botAfter1.you.nameSolved).toBe(false)
+    expect(botAfter1.you.targetNameId).not.toBeNull()
+    expect(botAfter1.you.targetNameId).not.toBe(name1.id)
+
+    // 2. doğru tahmin -> Bot 2 isim tamamladığı için artık 3. karakter almamalı
+    await advanceToPlayerTurn(roomId, botId)
+    const botState2 = await getGameState(roomId, botId)
+    const name2 = fake.tables.names.find((n) => n.id === botState2.you.targetNameId)!
+    const res2 = await makeGuess(roomId, botId, name2.name_text)
+    expect(res2.correct).toBe(true)
+
+    const botAfter2 = await getGameState(roomId, botId)
+    expect(botAfter2.you.nameSolved).toBe(true)
+    expect(botAfter2.you.hasFinishedRound).toBe(true)
+    expect(botAfter2.you.targetNameId).toBeNull()
+  })
+
+  it('botsuz 3+ kişilik Klasik modda 3 kez isim pas geçen oyuncuya 4. isim atanmaz ve turu tamamlanır', async () => {
+    const { roomId, playerId: hostId } = await createRoom('HostUser', 'classic')
+    const p2 = buildPlayer(roomId, { nickname: 'Oyuncu2', is_host: false })
+    const p3 = buildPlayer(roomId, { nickname: 'Oyuncu3', is_host: false })
+    fake.tables.players.push(p2, p3)
+
+    await submitNames(roomId, hostId, ['Host A1', 'Host A2', 'Host A3'])
+    await submitNames(roomId, p2.id, ['P2 B1', 'P2 B2', 'P2 B3'])
+    await submitNames(roomId, p3.id, ['P3 C1', 'P3 C2', 'P3 C3'])
+    await startGame(roomId, hostId)
+
+    await advanceToPlayerTurn(roomId, hostId)
+    expect((await giveUp(roomId, hostId)).passRightsLeft).toBe(2)
+
+    await advanceToPlayerTurn(roomId, hostId)
+    expect((await giveUp(roomId, hostId)).passRightsLeft).toBe(1)
+
+    await advanceToPlayerTurn(roomId, hostId)
+    expect((await giveUp(roomId, hostId)).passRightsLeft).toBe(0)
+
+    const hostAfter3Passes = await getGameState(roomId, hostId)
+    expect(hostAfter3Passes.maxPassRights).toBe(3)
+    expect(hostAfter3Passes.you.nameSolved).toBe(true)
+    expect(hostAfter3Passes.you.hasFinishedRound).toBe(true)
+    expect(hostAfter3Passes.you.targetNameId).toBeNull()
+  })
 })
 
 
